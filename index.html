@@ -167,6 +167,16 @@ nav {
 .profile-chip-icon svg { width: 14px; height: 14px; color: var(--text-muted); }
 .profile-chip.selected .profile-chip-icon svg { color: var(--accent); }
 
+.profile-chip-desc {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.profile-chip.selected .profile-chip-desc { color: rgba(201,106,46,0.7); }
+
 .profile-chip-label {
   font-size: 11.5px;
   font-weight: 500;
@@ -175,7 +185,17 @@ nav {
   line-height: 1.2;
 }
 
-.profile-chip.selected .profile-chip-label { color: var(--accent); }
+.profile-chip.selected .profile-chip-desc {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.profile-chip.selected .profile-chip-desc { color: rgba(201,106,46,0.7); }
+
+.profile-chip-label { color: var(--accent); }
 
 /* DIVIDER */
 .input-divider { height: 1px; background: var(--border-light); margin: 18px 0; }
@@ -431,6 +451,74 @@ nav {
 .success-title { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 4px; }
 .success-sub { font-size: 12px; color: #065F46; line-height: 1.45; }
 
+
+/* INFO BUTTON */
+.profile-chip { position: relative; }
+
+.info-btn {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  transition: color 0.15s;
+  z-index: 2;
+}
+
+.info-btn:hover { color: var(--accent); }
+.info-btn svg { width: 10px; height: 10px; }
+
+/* TOOLTIP */
+.tooltip-box {
+  display: none;
+  position: fixed;
+  background: #1F2937;
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 10px 13px;
+  border-radius: 8px;
+  max-width: 240px;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+
+.tooltip-box::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 5px;
+  background: #1F2937;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.tooltip-box.show { display: block; }
+
+/* BRIEF COUNTER FOMO */
+#briefCount { font-weight: 600; color: var(--accent); }
+
+@media (max-width: 560px) {
+  .profile-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-title { font-size: 26px; }
+  .input-bottom { flex-direction: column; gap: 12px; }
+  .input-btn { width: 100%; justify-content: center; }
+  .input-meta { font-size: 10.5px; text-align: center; }
+}
+
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
   .hero-title { font-size: 28px; }
@@ -443,7 +531,7 @@ nav {
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" width="90" height="30" viewBox="0 0 360 120" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="130" height="44" viewBox="0 0 360 120" fill="none">
       <g transform="translate(10,10) scale(0.76)">
         <circle cx="38" cy="50" r="5" fill="#C96A2E"/>
         <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"/>
@@ -486,36 +574,42 @@ nav {
           <svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="profile-chip-label">DSI / CTO</div>
+        <div class="profile-chip-desc">Responsable IT & tech</div>
       </div>
       <div class="profile-chip" onclick="selectProfile(this, 'DG / CEO')">
         <div class="profile-chip-icon">
           <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="profile-chip-label">DG / CEO</div>
+        <div class="profile-chip-desc">Dirigeant d'entreprise</div>
       </div>
       <div class="profile-chip" onclick="selectProfile(this, 'CFO / DAF')">
         <div class="profile-chip-icon">
           <svg viewBox="0 0 14 14" fill="none"><path d="M2 10l3-4 3 2 4-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="profile-chip-label">CFO / DAF</div>
+        <div class="profile-chip-desc">Directeur financier</div>
       </div>
       <div class="profile-chip" onclick="selectProfile(this, 'DRH')">
         <div class="profile-chip-icon">
           <svg viewBox="0 0 14 14" fill="none"><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 12c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="profile-chip-label">DRH</div>
+        <div class="profile-chip-desc">Ressources humaines</div>
       </div>
       <div class="profile-chip" onclick="selectProfile(this, 'Directeur Commercial')">
         <div class="profile-chip-icon">
           <svg viewBox="0 0 14 14" fill="none"><path d="M2 12V6l5-4 5 4v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="8" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg>
         </div>
         <div class="profile-chip-label">Dir. Commercial</div>
+        <div class="profile-chip-desc">Sales & business dev</div>
       </div>
       <div class="profile-chip" onclick="selectProfile(this, 'Autre')">
         <div class="profile-chip-icon">
           <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 5v2.5L9 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="profile-chip-label">Autre</div>
+        <div class="profile-chip-desc">Autre profil</div>
       </div>
     </div>
 
@@ -537,8 +631,8 @@ nav {
     <div class="input-divider"></div>
 
     <div class="input-bottom">
-      <div class="input-meta">
-        Sources : Bloomberg · WSJ · HBR · McKinsey
+      <div class="input-meta" id="sourceMeta">
+        <span id="briefCount">2 847</span> briefs · Bloomberg · WSJ · HBR · McKinsey · FT
       </div>
       <button class="input-btn" onclick="generate()">
         Générer mon brief
@@ -802,6 +896,16 @@ setInterval(() => {
   if (Math.random() > 0.8) { count++; document.getElementById('navCount').textContent = count; }
 }, 10000);
 
+// Brief counter
+let briefCount = 2847;
+setInterval(() => {
+  if (Math.random() > 0.6) {
+    briefCount += Math.floor(Math.random() * 3) + 1;
+    const el = document.getElementById('briefCount');
+    if (el) el.textContent = briefCount.toLocaleString('fr-FR');
+  }
+}, 12000);
+
 function selectProfile(el, name) {
   document.querySelectorAll('.profile-chip').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
@@ -977,6 +1081,43 @@ async function unlock() {
     document.getElementById(id+'wrap').querySelector('.locked-content').style.filter = 'none';
   });
 }
+
+
+function showTooltip(e, text) {
+  e.stopPropagation();
+  const box = document.getElementById('tooltipBox');
+  const tooltip_text = document.getElementById('tooltipText');
+  tooltip_text.textContent = text;
+  
+  const rect = e.currentTarget.getBoundingClientRect();
+  const boxWidth = 240;
+  
+  let left = rect.left + rect.width/2 - boxWidth/2;
+  if (left < 8) left = 8;
+  if (left + boxWidth > window.innerWidth - 8) left = window.innerWidth - boxWidth - 8;
+  
+  box.style.left = left + 'px';
+  box.style.top = (rect.top - 10 + window.scrollY) + 'px';
+  box.style.transform = 'translateY(-100%)';
+  box.classList.add('show');
+}
+
+document.addEventListener('click', () => {
+  document.getElementById('tooltipBox').classList.remove('show');
+});
+
+// Brief counter animation
+function animateBriefCount() {
+  const el = document.getElementById('briefCount');
+  let val = 2847;
+  setInterval(() => {
+    if (Math.random() > 0.6) {
+      val += Math.floor(Math.random() * 3) + 1;
+      el.textContent = val.toLocaleString('fr-FR');
+    }
+  }, 7000);
+}
+animateBriefCount();
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('topicInput').addEventListener('keydown', e => { if(e.key==='Enter') generate(); });
