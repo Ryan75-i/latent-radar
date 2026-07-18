@@ -686,7 +686,35 @@ nav {
 
 <!-- DASHBOARD -->
 <div class="dashboard" id="dashboard">
-  <div class="dash-top">
+  
+  <!-- CREDITS BAR -->
+  <div id="creditsBar" style="display:none;align-items:center;justify-content:space-between;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 16px;margin-bottom:12px;">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#92400E;font-weight:500;">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4H13L9.5 7l1.5 4L7 9 3.5 11 5 7 1.5 5H6.5L7 1z" fill="#D97706"/></svg>
+      <span>Il te reste <strong id="creditsNum" style="font-size:15px;color:#D97706;">5</strong> briefs cette semaine</span>
+    </div>
+    <span style="font-size:11px;color:#B45309;font-weight:500;">Reset lundi</span>
+  </div>
+
+  <!-- RATE LIMIT BOX -->
+  <div id="rateLimitBox" style="display:none;align-items:center;gap:12px;background:#FEF3EC;border:1px solid #FDE8D5;border-radius:10px;padding:16px 20px;margin-bottom:16px;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C96A2E" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="#C96A2E" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:#C96A2E;margin-bottom:2px;">Brief déjà généré récemment</div>
+      <div style="font-size:12px;color:#92400E;">Donne ton email pour débloquer 5 briefs par semaine. Prochain accès libre dans <strong id="rateLimitHours">48</strong>h.</div>
+    </div>
+  </div>
+
+  <!-- NO CREDITS BOX -->
+  <div id="noCreditsBox" style="display:none;align-items:center;gap:12px;background:#FEF3EC;border:1px solid #FDE8D5;border-radius:10px;padding:16px 20px;margin-bottom:16px;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C96A2E" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="#C96A2E" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:#C96A2E;margin-bottom:2px;">Tu as utilisé tes 5 briefs cette semaine</div>
+      <div style="font-size:12px;color:#92400E;">Tes crédits se renouvellent chaque lundi matin. À bientôt !</div>
+    </div>
+  </div>
+
+<div class="dash-top">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <div class="dash-back" onclick="resetForm()">
         <svg viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -746,6 +774,27 @@ let selectedProfile = '';
 let timerInterval;
 let count = 183;
 let briefCount = 2847;
+let userToken = localStorage.getItem('faro_token') || null;
+let creditsRemaining = parseInt(localStorage.getItem('faro_credits') || '0');
+
+// Init credits display if token exists
+function initCredits() {
+  if (userToken && creditsRemaining > 0) {
+    showCreditsBar();
+  }
+}
+
+function showCreditsBar() {
+  const bar = document.getElementById('creditsBar');
+  if (bar) {
+    bar.style.display = 'flex';
+    document.getElementById('creditsNum').textContent = creditsRemaining;
+  }
+}
+
+function hideGate() {
+  document.getElementById('gateBox').style.display = 'none';
+}
 
 setInterval(() => {
   if (Math.random() > 0.8) {
@@ -810,6 +859,12 @@ async function generate() {
     return;
   }
 
+  // Check credits if token exists
+  if (userToken && creditsRemaining <= 0) {
+    showNoCredits();
+    return;
+  }
+
   document.getElementById('mainLayout').style.display = 'none';
   document.getElementById('loading').classList.add('show');
   document.getElementById('dashboard').classList.remove('show');
@@ -817,15 +872,38 @@ async function generate() {
   const srcInt = animateSources();
 
   try {
+    const body = {prospect: selectedProfile, subject: topic};
+    if (userToken) body.token = userToken;
+
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({prospect: selectedProfile, subject: topic})
+      body: JSON.stringify(body)
     });
+
     clearInterval(srcInt);
     document.getElementById('loading').classList.remove('show');
+
+    if (res.status === 429) {
+      const errData = await res.json();
+      resetForm();
+      if (errData.error === 'rate_limit') {
+        showRateLimit(errData.hours_remaining);
+      } else if (errData.error === 'no_credits') {
+        showNoCredits();
+      }
+      return;
+    }
+
     if (!res.ok) throw new Error();
     const data = await res.json();
+
+    // Update credits if token
+    if (userToken) {
+      creditsRemaining = Math.max(0, creditsRemaining - 1);
+      localStorage.setItem('faro_credits', creditsRemaining);
+    }
+
     renderDash(data);
   } catch(e) {
     clearInterval(srcInt);
@@ -833,6 +911,21 @@ async function generate() {
     resetForm();
     alert('Erreur. Vérifie ta connexion et réessaie.');
   }
+}
+
+function showRateLimit(hours) {
+  document.getElementById('mainLayout').style.display = '';
+  const box = document.getElementById('rateLimitBox');
+  if (box) {
+    document.getElementById('rateLimitHours').textContent = hours || 48;
+    box.style.display = 'flex';
+  }
+}
+
+function showNoCredits() {
+  document.getElementById('mainLayout').style.display = '';
+  const box = document.getElementById('noCreditsBox');
+  if (box) box.style.display = 'flex';
 }
 
 function resetForm() {
@@ -953,6 +1046,7 @@ async function unlock() {
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  initCredits();
   document.getElementById('topicInput').addEventListener('keydown',e=>{if(e.key==='Enter')generate();});
   document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
 });
