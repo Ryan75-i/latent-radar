@@ -10,27 +10,26 @@ export default async function handler(req, res) {
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_ANON_KEY;
-  const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown').split(',')[0].trim();
+  const ip = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim();
+  const now = new Date();
 
   try {
-    // 1. Vérifier si email existe déjà
-    const existingRes = await fetch(`${supabaseUrl}/rest/v1/tokens?email=eq.${encodeURIComponent(email)}&select=token,credits_remaining,reset_at&order=created_at.desc&limit=1`, {
-      headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` }
-    });
+    // 1. Vérifier si token existe déjà pour cet email
+    const existingRes = await fetch(
+      `${supabaseUrl}/rest/v1/tokens?email=eq.${encodeURIComponent(email)}&select=token,credits_remaining,reset_at&order=created_at.desc&limit=1`,
+      { headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` } }
+    );
     const existing = await existingRes.json();
 
-    let token;
-    let credits_remaining;
-    let reset_at;
+    let token, credits_remaining, reset_at;
 
     if (existing && existing.length > 0) {
-      // Email déjà connu : retourner le token existant
+      // Email connu : retourner token existant
       token = existing[0].token;
       credits_remaining = existing[0].credits_remaining;
       reset_at = existing[0].reset_at;
 
-      // Vérifier si reset nécessaire
-      const now = new Date();
+      // Reset si semaine expirée
       if (now > new Date(reset_at)) {
         reset_at = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
         credits_remaining = 5;
@@ -40,28 +39,50 @@ export default async function handler(req, res) {
           body: JSON.stringify({ credits_remaining: 5, credits_used: 0, reset_at })
         });
       }
+
     } else {
-      // Nouvel email : créer token + enregistrer subscriber
-      const now = new Date();
+      // Nouvel email : créer token
       reset_at = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
-      credits_remaining = 4; // 1 déjà utilisé pour ce brief
+      credits_remaining = 4;
 
       const tokenRes = await fetch(`${supabaseUrl}/rest/v1/tokens`, {
         method: 'POST',
-        headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=representation'
+        },
         body: JSON.stringify({ email, credits_remaining, credits_used: 1, reset_at })
       });
       const tokenData = await tokenRes.json();
-      token = tokenData[0].token;
+      token = tokenData[0]?.token;
 
-      // Enregistrer subscriber
-      await fetch(`${supabaseUrl}/rest/v1/subscribers`, {
+      // Enregistrer dans subscribers (insert simple)
+      const subRes = await fetch(`${supabaseUrl}/rest/v1/subscribers`, {
         method: 'POST',
-        headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates' },
-        body: JSON.stringify({ email, prospect, subject, source: 'faro-tool', ip, created_at: now.toISOString() })
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        },
+        body: JSON.stringify({
+          email,
+          prospect: prospect || null,
+          subject: subject || null,
+          source: 'faro-tool',
+          ip,
+          created_at: now.toISOString()
+        })
       });
 
-      // Reset rate limit IP pour cet utilisateur
+      if (!subRes.ok) {
+        const subErr = await subRes.text();
+        console.error('subscribers insert error:', subErr);
+      }
+
+      // Reset rate limit IP
       await fetch(`${supabaseUrl}/rest/v1/rate_limits?ip=eq.${encodeURIComponent(ip)}`, {
         method: 'PATCH',
         headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json' },
