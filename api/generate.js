@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { prospect, subject, token } = req.body;
+  const { prospect, subject, company, meetingType, token } = req.body;
   if (!prospect || !subject) return res.status(400).json({ error: 'Missing fields' });
 
   const supabaseUrl = process.env.SUPABASE_URL;
@@ -28,7 +28,6 @@ export default async function handler(req, res) {
       const now = new Date();
       const resetAt = new Date(record.reset_at);
 
-      // Reset hebdomadaire si expiré
       if (now > resetAt) {
         await fetch(`${supabaseUrl}/rest/v1/tokens?token=eq.${token}`, {
           method: 'PATCH',
@@ -42,7 +41,6 @@ export default async function handler(req, res) {
         return res.status(429).json({ error: 'no_credits', reset_at: record.reset_at });
       }
 
-      // Décrémenter les crédits
       await fetch(`${supabaseUrl}/rest/v1/tokens?token=eq.${token}`, {
         method: 'PATCH',
         headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json' },
@@ -68,7 +66,6 @@ export default async function handler(req, res) {
         }
       }
 
-      // Upsert rate limit
       await fetch(`${supabaseUrl}/rest/v1/rate_limits`, {
         method: 'POST',
         headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates' },
@@ -86,50 +83,103 @@ export default async function handler(req, res) {
     });
   } catch (e) {}
 
-  // --- Appel Anthropic ---
-  const prompt = `Tu es un expert en veille commerciale B2B, spécialisé dans les tendances US qui arrivent en France avec 12 à 18 mois de décalage.
+  // --- Contexte entrée ---
+  const companyLine = company ? `- Entreprise ou secteur du prospect : ${company}` : `- Entreprise du prospect : non précisée, base-toi sur le secteur le plus probable pour ce profil`;
+  const meetingLine = meetingType ? `- Type de réunion : ${meetingType}` : `- Type de réunion : premier rendez-vous de découverte`;
 
-Un commercial français prépare un premier rendez-vous avec ce profil :
-- Prospect : ${prospect}
+  // --- Prompt ---
+  const prompt = `Tu es un analyste de veille commerciale B2B. Ta spécialité : repérer les signaux du marché américain qui arrivent en France avec 12 à 18 mois de décalage, et les transformer en munitions concrètes pour un commercial qui prépare une réunion.
+
+Tu parles AU commercial, en le tutoyant. Chaque phrase doit être une chose qu'il peut dire ou faire en réunion, pas une observation générale.
+
+Contexte de la réunion :
+- Profil du prospect : ${prospect}
+${companyLine}
 - Sujet de la réunion : ${subject}
+${meetingLine}
 
-Réponds UNIQUEMENT avec ce JSON, sans texte avant ou après :
+Méthode obligatoire :
+1. Utilise l'outil de recherche web pour trouver des faits réels, récents et datés sur ce sujet aux Etats-Unis : entreprises nommées, chiffres, taux d'adoption, études. Ne jamais inventer un chiffre ni une source.
+2. Chaque chiffre affiché doit venir d'une source réelle et vérifiable que tu cites avec sa date. Sources à privilégier : Bloomberg, Gartner, McKinsey, Harvard Business Review, WSJ, Financial Times, BLS, Forrester, IDC.
+3. Adapte les questions et les contre-arguments au type de réunion indiqué.
+
+Règles de style strictes :
+- Phrases courtes, 20 mots maximum.
+- Zéro tiret cadratin, zéro tiret demi-cadratin.
+- Zéro opposition rhétorique construite du type "ne cherche pas X mais Y".
+- Zéro emoji.
+- Concret et chiffré. Si tu n'as pas de chiffre sourcé, écris une phrase sans chiffre plutôt qu'un chiffre inventé.
+
+Réponds UNIQUEMENT avec ce JSON, rien avant, rien après :
 {
-  "signals": [
+  "score": 72,
+  "accroche": {
+    "text": "Une seule phrase percutante que le commercial peut lâcher en ouverture pour prouver qu'il connaît le monde du prospect. Adossée à un signal US réel.",
+    "source": "Gartner · 2026"
+  },
+  "questions": [
+    "Question de découverte fine numéro 1, qui révèle une douleur et prouve que tu piges leur secteur.",
+    "Question numéro 2.",
+    "Question numéro 3."
+  ],
+  "decalage": {
+    "text": "Ce qui se passe déjà aux US sur ce sujet et qui touchera la France dans 12 à 18 mois. Faits et entreprises réels. Max 2 phrases.",
+    "source": "McKinsey · 2026"
+  },
+  "objections": [
     {
-      "title": "Titre court et percutant du signal US (max 12 mots)",
-      "body": "Ce qui se passe aux US sur ce sujet avec des chiffres et entreprises spécifiques. Max 2 phrases.",
-      "implication": "Ce que ça signifie concrètement pour cette réunion. Max 2 phrases.",
-      "source": "Bloomberg · Juillet 2026"
+      "name": "L'objection la plus probable de ce profil, formulée comme il la dira.",
+      "counter": "Ta réponse chiffrée et sourcée pour la désamorcer. Max 2 phrases.",
+      "score": 73,
+      "source": "HBR · 2026"
     },
     {
-      "title": "L'objection principale que ce profil va sortir en réunion",
-      "body": "Pourquoi les décideurs américains équivalents sortent cette objection, sur quoi elle est basée.",
-      "implication": "Comment répondre avec des données US concrètes. Max 2 phrases.",
-      "source": "HBR · Juin 2026"
+      "name": "Deuxième objection probable.",
+      "counter": "Ta contre.",
+      "score": 58,
+      "source": "WSJ · 2026"
     },
     {
-      "title": "Le benchmark US que ce profil va utiliser pour comparer",
-      "body": "Les chiffres et standards du marché américain que ce prospect connaît déjà.",
-      "implication": "Comment se positionner par rapport à ce benchmark. Max 2 phrases.",
-      "source": "WSJ · Juillet 2026"
+      "name": "Troisième objection probable.",
+      "counter": "Ta contre.",
+      "score": 44,
+      "source": "Forrester · 2026"
     }
   ],
-  "retenir": "Une phrase de conclusion percutante sur l'enjeu principal de cette réunion.",
-  "score": 72,
-  "objections": [
-    {"name": "ROI difficile à quantifier", "score": 73},
-    {"name": "Budget non prévu", "score": 58},
-    {"name": "Résistance interne", "score": 44}
+  "chiffre": {
+    "value": "23%",
+    "text": "La statistique unique à lâcher en réunion pour faire lever un sourcil. Ce que le chiffre veut dire pour ce prospect.",
+    "source": "Bloomberg · 2026"
+  },
+  "jauges": [
+    {
+      "label": "Adoption chez les décideurs équivalents",
+      "us": 68,
+      "fr": 12,
+      "source": "IDC · 2026"
+    },
+    {
+      "label": "Maturité du sujet sur le marché",
+      "us": 74,
+      "fr": 20,
+      "source": "Gartner · 2026"
+    }
   ],
-  "maturite": 68
-}`;
+  "maturite": 64
+}
+
+Toutes les valeurs "us" et "fr" des jauges sont des pourcentages entre 0 et 100. "score" et "maturite" aussi. Les "score" des objections sont la probabilité que le prospect sorte cette objection, entre 0 et 100.`;
 
   try {
     const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1500, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 3000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 5 }],
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
 
     if (!anthropicRes.ok) {
@@ -138,7 +188,12 @@ Réponds UNIQUEMENT avec ce JSON, sans texte avant ou après :
     }
 
     const anthropicData = await anthropicRes.json();
-    const text = anthropicData.content[0].text.trim();
+
+    // Avec web search, la réponse contient plusieurs blocs. On récupère tout le texte.
+    const textParts = (anthropicData.content || [])
+      .filter(b => b.type === 'text')
+      .map(b => b.text);
+    const text = textParts.join('\n').trim();
 
     let parsed;
     try {
@@ -146,7 +201,7 @@ Réponds UNIQUEMENT avec ce JSON, sans texte avant ou après :
     } catch (e) {
       const match = text.match(/\{[\s\S]*\}/);
       if (match) parsed = JSON.parse(match[0]);
-      else return res.status(500).json({ error: 'parse_error' });
+      else return res.status(500).json({ error: 'parse_error', raw: text.slice(0, 500) });
     }
 
     return res.status(200).json(parsed);
