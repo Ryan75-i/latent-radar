@@ -133,44 +133,6 @@ nav {
 }
 
 
-/* KPI ROW */
-.kpi-row {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 36px;
-  padding: 20px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.kpi-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.kpi-sep {
-  width: 1px;
-  height: 48px;
-  background: var(--border);
-  flex-shrink: 0;
-  margin: 0 24px;
-}
-.kpi-val {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-.kpi-lbl {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 400;
-  line-height: 1.4;
-}
-
-
 /* SOCIAL PROOF */
 .social-proof {
   display: flex;
@@ -940,6 +902,7 @@ function resetForm() {
 
 function renderDash(data) {
   briefData = data;
+  try { sessionStorage.setItem('faro_brief', JSON.stringify(data)); } catch(e){}
   const topic = document.getElementById('topicInput').value;
   document.getElementById('dashProfile').textContent = selectedProfile;
   document.getElementById('dashTopic').textContent = topic.substring(0,30)+(topic.length>30?'...':'');
@@ -1036,13 +999,18 @@ function startTimer() {
 async function unlock() {
   const email=document.getElementById('emailInput').value.trim();
   if(!email||!email.includes('@')){document.getElementById('emailInput').focus();return;}
+  if(!briefData){ try{ briefData = JSON.parse(sessionStorage.getItem('faro_brief')); }catch(e){} }
   try {
-    await fetch('/api/subscribe',{
+    const r = await fetch('/api/subscribe',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email,prospect:selectedProfile,subject:document.getElementById('topicInput').value})
+      body:JSON.stringify({email,prospect:selectedProfile,subject:document.getElementById('topicInput').value,brief:briefData})
     });
-  } catch(e){}
+    const d = await r.json();
+    if(d.token){ userToken=d.token; localStorage.setItem('faro_token',d.token); }
+    if(typeof d.credits_remaining!=='undefined'){ creditsRemaining=d.credits_remaining; localStorage.setItem('faro_credits',d.credits_remaining); }
+    console.log('[UNLOCK]', d.email_debug || d);
+  } catch(e){ console.error('[UNLOCK] erreur', e); }
   document.getElementById('gateBox').style.display='none';
   document.getElementById('successBox').classList.add('show');
   ['s2','s3'].forEach(id=>{
