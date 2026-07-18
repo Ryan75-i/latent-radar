@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { prospect, subject, company, meetingType, token, dev } = req.body;
+  const { prospect, subject, company, meetingType, offer, token, dev } = req.body;
   if (!prospect || !subject) return res.status(400).json({ error: 'Missing fields' });
 
   const supabaseUrl = process.env.SUPABASE_URL;
@@ -88,14 +88,17 @@ export default async function handler(req, res) {
 
   // --- Contexte entrée ---
   const companyLine = company
-    ? `- Entreprise du prospect : ${company}. Utilise le web pour trouver son actualité réelle et récente (levée, recrutements, lancement, résultats, dirigeants). Sers-t'en pour personnaliser l'accroche et les questions.`
+    ? `- Entreprise du prospect : ${company}. Utilise le web pour trouver son actualité réelle et récente (levée, recrutements, lancement, résultats, dirigeants). IMPORTANT : vérifie que l'entreprise trouvée correspond bien au secteur du sujet de la réunion. Le nom peut être ambigu et désigner plusieurs sociétés. Si tu n'es pas sûr d'avoir la bonne entreprise, ou si tu ne trouves pas d'actualité fiable qui colle au secteur, n'invente rien : reste sur le secteur, ne cite aucun fait sur une société homonyme.`
     : `- Entreprise du prospect : non précisée. Base-toi sur le secteur le plus probable pour ce profil, sans inventer de faits sur une entreprise nommée.`;
   const meetingLine = meetingType
     ? `- Type de réunion : ${meetingType}. Adapte les questions et les contre-arguments à ce moment précis du cycle de vente.`
     : `- Type de réunion : premier rendez-vous de découverte.`;
+  const offerLine = offer
+    ? `- Ce que le commercial vend : ${offer}. C'est SON offre. Chaque bloc doit faire le pont vers cette offre : montrer comment elle répond au contexte du prospect.`
+    : `- Offre du commercial : non précisée. Reste sur le contexte marché sans inventer une offre.`;
 
   // --- Prompt ---
-  const prompt = `Tu es un analyste de veille commerciale B2B au service d'un commercial français qui prépare une réunion. Ton rôle : lui donner des munitions concrètes, chiffrées et vraies, qu'il peut dire ou faire en réunion.
+  const prompt = `Tu es un analyste de veille commerciale B2B au service d'un commercial français qui prépare une réunion. Ton rôle : lui donner des munitions concrètes, chiffrées et vraies, qu'il peut dire ou faire en réunion pour vendre SON offre.
 
 Tu parles AU commercial, en le tutoyant. Chaque phrase est une chose qu'il peut utiliser, pas une observation générale.
 
@@ -104,11 +107,13 @@ Contexte de la réunion :
 ${companyLine}
 - Sujet de la réunion : ${subject}
 ${meetingLine}
+${offerLine}
 
 Méthode obligatoire :
 1. Utilise l'outil de recherche web pour trouver des faits réels, récents et datés : entreprises nommées, chiffres, taux d'adoption, études. Si une entreprise est précisée, cherche AUSSI son actualité propre. Ne jamais inventer un chiffre ni une source.
 2. Chaque chiffre affiché vient d'une source réelle et vérifiable, citée avec sa date. Sources à privilégier : Bloomberg, Gartner, McKinsey, Harvard Business Review, WSJ, Financial Times, BLS, Forrester, IDC.
 3. Adapte les questions et les contre-arguments au type de réunion indiqué.
+4. Si l'offre du commercial est précisée, fais le pont vers elle. L'accroche amène vers son offre. Les questions creusent la douleur que son offre résout. Les contre-arguments s'appuient sur son offre concrète. Reste subtil, jamais lourd ni publicitaire.
 
 Équilibre géographique, important :
 - Le décalage US et les jauges sont ta signature, ils parlent assumément des États-Unis.
@@ -125,11 +130,11 @@ Réponds UNIQUEMENT avec ce JSON, rien avant, rien après :
 {
   "score": 72,
   "accroche": {
-    "text": "Une seule phrase que le commercial peut lâcher en ouverture pour prouver qu'il connaît le monde du prospect. Ancrée sur la réalité du prospect ou de son entreprise. Un signal US seulement s'il renforce vraiment.",
+    "text": "Une seule phrase que le commercial peut lâcher en ouverture pour prouver qu'il connaît le monde du prospect, et qui amène naturellement vers son offre. Ancrée sur la réalité du prospect ou de son entreprise.",
     "source": "Source réelle datée"
   },
   "questions": [
-    "Question de découverte fine, adaptée au type de réunion, qui révèle une douleur et prouve que tu piges leur secteur.",
+    "Question de découverte fine, adaptée au type de réunion, qui révèle la douleur que l'offre du commercial résout.",
     "Question numéro 2.",
     "Question numéro 3."
   ],
