@@ -344,8 +344,9 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
         <div class="wiz-seg" data-seg="2"></div>
         <div class="wiz-seg" data-seg="3"></div>
         <div class="wiz-seg" data-seg="4"></div>
+        <div class="wiz-seg" data-seg="5"></div>
       </div>
-      <div class="wiz-count">Étape <span id="wizStep">1</span> / 4</div>
+      <div class="wiz-count">Étape <span id="wizStep">1</span> / 5</div>
 
       <div class="wiz-step active" data-step="1">
         <div class="wiz-q">Qui est ton prospect ?</div>
@@ -412,6 +413,12 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
           <div class="mtg-chip" onclick="selectMeeting(this,'négociation')"><div class="mtg-name">Négociation</div><div class="mtg-desc">Tu défends ta valeur et ton prix</div></div>
           <div class="mtg-chip" onclick="selectMeeting(this,'closing')"><div class="mtg-name">Closing</div><div class="mtg-desc">Tu lèves les derniers freins</div></div>
         </div>
+      </div>
+
+      <div class="wiz-step" data-step="5">
+        <div class="wiz-q">Et toi, tu vends quoi ?</div>
+        <div class="wiz-help">Décris ton offre en une phrase. C'est ce qui permet à Faro de te dire quoi dire pour vendre TON truc, pas juste de décrire le contexte.</div>
+        <input type="text" class="wiz-input" id="offerInput" placeholder="Ex : une plateforme qui automatise les devis pour les PME du bâtiment" maxlength="160" autocomplete="off"/>
       </div>
 
       <div class="wiz-nav">
@@ -589,6 +596,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
 <script>
 let selectedProfile = '';
 let companyVal = '';
+let offerVal = '';
 let meetingType = 'découverte';
 let currentStep = 1;
 let timerInterval;
@@ -628,8 +636,8 @@ function wizShow(step) {
   document.querySelectorAll('.wiz-seg').forEach(s => s.classList.toggle('done', +s.dataset.seg <= step));
   document.getElementById('wizStep').textContent = step;
   document.getElementById('wizBack').classList.toggle('hidden', step === 1);
-  document.getElementById('wizNextLabel').textContent = step === 4 ? 'Générer mon brief' : 'Continuer';
-  const focusInput = step === 2 ? 'companyInput' : step === 3 ? 'topicInput' : null;
+  document.getElementById('wizNextLabel').textContent = step === 5 ? 'Générer mon brief' : 'Continuer';
+  const focusInput = step === 2 ? 'companyInput' : step === 3 ? 'topicInput' : step === 5 ? 'offerInput' : null;
   if (focusInput) setTimeout(() => document.getElementById(focusInput).focus(), 120);
 }
 
@@ -647,6 +655,8 @@ function wizNext() {
     if (!topic) { document.getElementById('topicInput').focus(); return; }
     wizShow(4);
   } else if (currentStep === 4) {
+    wizShow(5);
+  } else if (currentStep === 5) {
     generate();
   }
 }
@@ -731,6 +741,7 @@ async function generate() {
   if (!devKey && userToken && creditsRemaining <= 0) { showNoCredits(); return; }
 
   companyVal = document.getElementById('companyInput').value.trim();
+  offerVal = document.getElementById('offerInput').value.trim();
 
   hideBanners();
   document.getElementById('mainLayout').style.display = 'none';
@@ -741,6 +752,7 @@ async function generate() {
   try {
     const body = { prospect: selectedProfile, subject: topic, meetingType };
     if (companyVal) body.company = companyVal;
+    if (offerVal) body.offer = offerVal;
     if (userToken) body.token = userToken;
     if (devKey) body.dev = devKey;
 
@@ -937,6 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wizShow(1);
   document.getElementById('companyInput').addEventListener('keydown', e => { if (e.key === 'Enter') wizNext(); });
   document.getElementById('topicInput').addEventListener('keydown', e => { if (e.key === 'Enter') wizNext(); });
+  document.getElementById('offerInput').addEventListener('keydown', e => { if (e.key === 'Enter') wizNext(); });
   document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
 });
 </script>
