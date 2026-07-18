@@ -62,29 +62,31 @@ export default async function handler(req, res) {
         headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ count: 0 })
       });
+    }
 
-      // Envoyer email avec le brief
-      if (brief && process.env.RESEND_API_KEY) {
-        const signals = brief.signals || [];
-        const score = brief.score || 72;
-        const retenir = brief.retenir || '';
-        const scoreColor = score >= 75 ? '#059669' : score >= 55 ? '#D97706' : '#EF4444';
+    // 2. Envoyer email avec le brief — HORS du if/else, s'exécute pour tout le monde
+    let emailDebug = null;
+    if (brief && process.env.RESEND_API_KEY) {
+      const signals = brief.signals || [];
+      const score = brief.score || 72;
+      const retenir = brief.retenir || '';
+      const scoreColor = score >= 75 ? '#059669' : score >= 55 ? '#D97706' : '#EF4444';
 
-        const signalsHtml = signals.map((s, i) => `
-          <div style="margin-bottom:16px;padding:16px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-              <span style="font-size:10px;font-weight:600;color:#C96A2E;background:#FEF3EC;padding:2px 8px;border-radius:3px;">Signal 0${i+1}</span>
-              <span style="font-size:10px;color:#9CA3AF;font-family:monospace;">${s.source || ''}</span>
-            </div>
-            <p style="margin:0 0 6px;font-size:14px;font-weight:600;color:#111827;">${s.title || ''}</p>
-            <p style="margin:0 0 10px;font-size:12px;color:#6B7280;line-height:1.5;">${s.body || ''}</p>
-            <div style="padding:8px 10px;background:#FFFBEB;border-left:3px solid #FCD34D;border-radius:0 4px 4px 0;">
-              <span style="font-size:12px;color:#92400E;">→ ${s.implication || ''}</span>
-            </div>
+      const signalsHtml = signals.map((s, i) => `
+        <div style="margin-bottom:16px;padding:16px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:600;color:#C96A2E;background:#FEF3EC;padding:2px 8px;border-radius:3px;">Signal 0${i+1}</span>
+            <span style="font-size:10px;color:#9CA3AF;font-family:monospace;">${s.source || ''}</span>
           </div>
-        `).join('');
+          <p style="margin:0 0 6px;font-size:14px;font-weight:600;color:#111827;">${s.title || ''}</p>
+          <p style="margin:0 0 10px;font-size:12px;color:#6B7280;line-height:1.5;">${s.body || ''}</p>
+          <div style="padding:8px 10px;background:#FFFBEB;border-left:3px solid #FCD34D;border-radius:0 4px 4px 0;">
+            <span style="font-size:12px;color:#92400E;">→ ${s.implication || ''}</span>
+          </div>
+        </div>
+      `).join('');
 
-        const emailHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+      const emailHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;background:#F9FAFB;font-family:Inter,Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px;">
 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
@@ -130,20 +132,23 @@ export default async function handler(req, res) {
 </td></tr></table>
 </body></html>`;
 
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
-          body: JSON.stringify({
-            from: 'Faro <onboarding@resend.dev>',
-            to: [email],
-            subject: `Ton brief Faro · ${prospect} · ${subject}`,
-            html: emailHtml
-          })
-        });
-      }
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+        body: JSON.stringify({
+          from: 'Faro <onboarding@resend.dev>',
+          to: [email],
+          subject: `Ton brief Faro · ${prospect} · ${subject}`,
+          html: emailHtml
+        })
+      });
+      emailDebug = await resendRes.json();
+      console.log('[RESEND] status:', resendRes.status, 'body:', JSON.stringify(emailDebug));
+    } else {
+      console.log('[RESEND] envoi sauté — brief présent ?', !!brief, '| clé présente ?', !!process.env.RESEND_API_KEY);
     }
 
-    return res.status(200).json({ success: true, token, credits_remaining: cr, reset_at });
+    return res.status(200).json({ success: true, token, credits_remaining: cr, reset_at, email_debug: emailDebug });
 
   } catch (e) {
     return res.status(500).json({ error: 'server_error', message: e.message });
