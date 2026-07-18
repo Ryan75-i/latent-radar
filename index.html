@@ -775,6 +775,7 @@ let timerInterval;
 let count = 183;
 let briefCount = 2847;
 let userToken = localStorage.getItem('faro_token') || null;
+let briefData = null;
 let creditsRemaining = parseInt(localStorage.getItem('faro_credits') || '0');
 
 // Init credits display if token exists
@@ -933,7 +934,9 @@ function resetForm() {
   document.getElementById('dashboard').classList.remove('show');
 }
 
+briefData = null;
 function renderDash(data) {
+  briefData = data;
   const topic = document.getElementById('topicInput').value;
   document.getElementById('dashProfile').textContent = selectedProfile;
   document.getElementById('dashTopic').textContent = topic.substring(0,30)+(topic.length>30?'...':'');
