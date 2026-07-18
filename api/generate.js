@@ -5,15 +5,18 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { prospect, subject, company, meetingType, token } = req.body;
+  const { prospect, subject, company, meetingType, token, dev } = req.body;
   if (!prospect || !subject) return res.status(400).json({ error: 'Missing fields' });
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_ANON_KEY;
   const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown').split(',')[0].trim();
 
+  // --- Bypass de test : ignore toutes les limites si la clé dev correspond ---
+  const isDev = dev && process.env.DEV_KEY && dev === process.env.DEV_KEY;
+
   // --- SI TOKEN : vérifier les crédits ---
-  if (token) {
+  if (!isDev && token) {
     try {
       const tokenRes = await fetch(`${supabaseUrl}/rest/v1/tokens?token=eq.${token}&select=token,email,credits_remaining,reset_at`, {
         headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` }
@@ -50,7 +53,7 @@ export default async function handler(req, res) {
     } catch (e) {
       // Si erreur Supabase, on continue quand même
     }
-  } else {
+  } else if (!isDev) {
     // --- SANS TOKEN : rate limit par IP (1 par 48h) ---
     try {
       const rlRes = await fetch(`${supabaseUrl}/rest/v1/rate_limits?ip=eq.${encodeURIComponent(ip)}&select=count,last_reset`, {
@@ -84,13 +87,17 @@ export default async function handler(req, res) {
   } catch (e) {}
 
   // --- Contexte entrée ---
-  const companyLine = company ? `- Entreprise ou secteur du prospect : ${company}` : `- Entreprise du prospect : non précisée, base-toi sur le secteur le plus probable pour ce profil`;
-  const meetingLine = meetingType ? `- Type de réunion : ${meetingType}` : `- Type de réunion : premier rendez-vous de découverte`;
+  const companyLine = company
+    ? `- Entreprise du prospect : ${company}. Utilise le web pour trouver son actualité réelle et récente (levée, recrutements, lancement, résultats, dirigeants). Sers-t'en pour personnaliser l'accroche et les questions.`
+    : `- Entreprise du prospect : non précisée. Base-toi sur le secteur le plus probable pour ce profil, sans inventer de faits sur une entreprise nommée.`;
+  const meetingLine = meetingType
+    ? `- Type de réunion : ${meetingType}. Adapte les questions et les contre-arguments à ce moment précis du cycle de vente.`
+    : `- Type de réunion : premier rendez-vous de découverte.`;
 
   // --- Prompt ---
-  const prompt = `Tu es un analyste de veille commerciale B2B. Ta spécialité : repérer les signaux du marché américain qui arrivent en France avec 12 à 18 mois de décalage, et les transformer en munitions concrètes pour un commercial qui prépare une réunion.
+  const prompt = `Tu es un analyste de veille commerciale B2B au service d'un commercial français qui prépare une réunion. Ton rôle : lui donner des munitions concrètes, chiffrées et vraies, qu'il peut dire ou faire en réunion.
 
-Tu parles AU commercial, en le tutoyant. Chaque phrase doit être une chose qu'il peut dire ou faire en réunion, pas une observation générale.
+Tu parles AU commercial, en le tutoyant. Chaque phrase est une chose qu'il peut utiliser, pas une observation générale.
 
 Contexte de la réunion :
 - Profil du prospect : ${prospect}
@@ -99,9 +106,13 @@ ${companyLine}
 ${meetingLine}
 
 Méthode obligatoire :
-1. Utilise l'outil de recherche web pour trouver des faits réels, récents et datés sur ce sujet aux Etats-Unis : entreprises nommées, chiffres, taux d'adoption, études. Ne jamais inventer un chiffre ni une source.
-2. Chaque chiffre affiché doit venir d'une source réelle et vérifiable que tu cites avec sa date. Sources à privilégier : Bloomberg, Gartner, McKinsey, Harvard Business Review, WSJ, Financial Times, BLS, Forrester, IDC.
+1. Utilise l'outil de recherche web pour trouver des faits réels, récents et datés : entreprises nommées, chiffres, taux d'adoption, études. Si une entreprise est précisée, cherche AUSSI son actualité propre. Ne jamais inventer un chiffre ni une source.
+2. Chaque chiffre affiché vient d'une source réelle et vérifiable, citée avec sa date. Sources à privilégier : Bloomberg, Gartner, McKinsey, Harvard Business Review, WSJ, Financial Times, BLS, Forrester, IDC.
 3. Adapte les questions et les contre-arguments au type de réunion indiqué.
+
+Équilibre géographique, important :
+- Le décalage US et les jauges sont ta signature, ils parlent assumément des États-Unis.
+- L'accroche, les questions et les objections parlent D'ABORD du prospect et de sa réalité française. Le prospect et son entreprise passent avant la géographie. Tu n'invoques les États-Unis dans ces trois blocs que si ça ajoute vraiment quelque chose. Ne répète pas "aux US" dans chaque bloc, ce serait lourd.
 
 Règles de style strictes :
 - Phrases courtes, 20 mots maximum.
@@ -114,17 +125,17 @@ Réponds UNIQUEMENT avec ce JSON, rien avant, rien après :
 {
   "score": 72,
   "accroche": {
-    "text": "Une seule phrase percutante que le commercial peut lâcher en ouverture pour prouver qu'il connaît le monde du prospect. Adossée à un signal US réel.",
-    "source": "Gartner · 2026"
+    "text": "Une seule phrase que le commercial peut lâcher en ouverture pour prouver qu'il connaît le monde du prospect. Ancrée sur la réalité du prospect ou de son entreprise. Un signal US seulement s'il renforce vraiment.",
+    "source": "Source réelle datée"
   },
   "questions": [
-    "Question de découverte fine numéro 1, qui révèle une douleur et prouve que tu piges leur secteur.",
+    "Question de découverte fine, adaptée au type de réunion, qui révèle une douleur et prouve que tu piges leur secteur.",
     "Question numéro 2.",
     "Question numéro 3."
   ],
   "decalage": {
-    "text": "Ce qui se passe déjà aux US sur ce sujet et qui touchera la France dans 12 à 18 mois. Faits et entreprises réels. Max 2 phrases.",
-    "source": "McKinsey · 2026"
+    "text": "Ce qui se passe déjà aux États-Unis sur ce sujet et qui touchera la France dans 12 à 18 mois. Faits et entreprises réels. Mets l'accent sur ce qui arrive bientôt en France. Max 2 phrases.",
+    "source": "Source réelle datée"
   },
   "objections": [
     {
