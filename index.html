@@ -86,16 +86,47 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
 .trust-item { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--text-muted); font-weight: 500; }
 .trust-item svg { width: 11px; height: 11px; }
 
+.wiz-progress { display: flex; gap: 6px; margin-bottom: 10px; }
+.wiz-seg { flex: 1; height: 4px; border-radius: 2px; background: var(--border-light); transition: background 0.3s; }
+.wiz-seg.done { background: var(--accent); }
+.wiz-count { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; font-family: 'DM Mono', monospace; }
+.wiz-step { display: none; }
+.wiz-step.active { display: block; animation: wizIn 0.3s ease; }
+@keyframes wizIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.wiz-q { font-size: 19px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; letter-spacing: -0.01em; }
+.wiz-help { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 18px; line-height: 1.5; }
+.wiz-input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-primary); outline: none; transition: border-color 0.15s; }
+.wiz-input:focus { border-color: var(--accent); }
+.wiz-input::placeholder { color: var(--text-muted); }
+.mtg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.mtg-chip { display: flex; flex-direction: column; gap: 4px; padding: 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; background: var(--bg); }
+.mtg-chip:hover { border-color: var(--accent-border); background: var(--accent-light); }
+.mtg-chip.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 2px rgba(201,106,46,0.12); }
+.mtg-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); }
+.mtg-chip.selected .mtg-name { color: var(--accent); }
+.mtg-desc { font-size: 11px; color: var(--text-muted); line-height: 1.35; }
+.wiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 22px; }
+.wiz-back { background: none; border: none; color: var(--text-muted); font-size: 13px; font-weight: 500; cursor: pointer; padding: 8px 6px; font-family: 'Inter', sans-serif; }
+.wiz-back:hover { color: var(--text-primary); }
+.wiz-back.hidden { visibility: hidden; }
+.wiz-next { background: var(--accent); color: white; border: none; border-radius: 9px; padding: 12px 22px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.15s, transform 0.1s; margin-left: auto; }
+.wiz-next:hover { background: #B85E28; }
+.wiz-next:active { transform: scale(0.98); }
+.wiz-next svg { width: 13px; height: 13px; }
+.wiz-skip { font-size: 12px; color: var(--text-muted); cursor: pointer; text-decoration: underline; margin-top: 12px; display: inline-block; }
+.wiz-skip:hover { color: var(--accent); }
+
 .loading { display: none; }
 .loading.show { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 58px); }
 .loading-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px 32px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); max-width: 440px; width: 100%; margin: 24px; }
 .loading-spinner { width: 40px; height: 40px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.85s linear infinite; margin: 0 auto 18px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
-.loading-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
-.loading-sources { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
-.ls-tag { font-size: 11px; font-weight: 500; color: var(--text-muted); background: var(--border-light); border: 1px solid var(--border); padding: 3px 9px; border-radius: 4px; transition: all 0.3s; font-family: 'DM Mono', monospace; }
-.ls-tag.active { background: var(--accent-light); border-color: var(--accent-border); color: var(--accent); }
+.loading-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; min-height: 18px; transition: opacity 0.25s; }
+.load-progress { height: 5px; background: var(--border-light); border-radius: 3px; overflow: hidden; margin-bottom: 22px; }
+.load-progress-fill { height: 100%; width: 4%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; }
+.load-teaser { font-size: 12px; color: var(--text-secondary); line-height: 1.55; background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: 8px; padding: 12px 14px; transition: opacity 0.25s; }
+.load-teaser strong { color: var(--accent); font-weight: 600; }
 
 .dashboard { display: none; max-width: 1140px; margin: 0 auto; padding: 20px 24px 48px; }
 .dashboard.show { display: block; }
@@ -259,61 +290,90 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
 
   <div class="input-col">
     <div class="input-box">
-      <div class="step-label"><div class="step-num">1</div>Profil de ton prospect</div>
-      <div class="profile-grid">
-        <div class="profile-chip" onclick="selectProfile(this,'DSI / CTO')">
-          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-          <div class="chip-label">DSI / CTO</div>
-          <button class="info-btn" onclick="showTooltip(event,'Directeur des Systèmes d\'Information ou Chief Technology Officer. Responsable de la tech et de l\'infrastructure IT.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
-        </div>
-        <div class="profile-chip" onclick="selectProfile(this,'DG / CEO')">
-          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-          <div class="chip-label">DG / CEO</div>
-          <button class="info-btn" onclick="showTooltip(event,'Directeur Général ou Chief Executive Officer. Le patron de l\'entreprise, décideur final sur les grandes orientations stratégiques.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
-        </div>
-        <div class="profile-chip" onclick="selectProfile(this,'CFO / DAF')">
-          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 10l3-4 3 2 4-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="chip-label">CFO / DAF</div>
-          <button class="info-btn" onclick="showTooltip(event,'Chief Financial Officer ou Directeur Administratif et Financier. Responsable des finances et du budget de l\'entreprise.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
-        </div>
-        <div class="profile-chip" onclick="selectProfile(this,'DRH')">
-          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 12c0-2 1.8-3.5 4-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-          <div class="chip-label">DRH</div>
-          <button class="info-btn" onclick="showTooltip(event,'Directeur des Ressources Humaines. Responsable du recrutement, de la gestion des talents et des politiques RH.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
-        </div>
-        <div class="profile-chip" onclick="selectProfile(this,'Directeur Commercial')">
-          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12V6l5-4 5 4v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="8" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg></div>
-          <div class="chip-label">Dir. Commercial</div>
-          <button class="info-btn" onclick="showTooltip(event,'Directeur Commercial ou Sales Director. Responsable de la stratégie commerciale, des équipes de vente et du chiffre d\'affaires.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
-        </div>
-        <div class="profile-chip" onclick="selectProfile(this,'Autre')">
-          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 5v2.5L9 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-          <div class="chip-label">Autre</div>
+      <div class="wiz-progress">
+        <div class="wiz-seg done" data-seg="1"></div>
+        <div class="wiz-seg" data-seg="2"></div>
+        <div class="wiz-seg" data-seg="3"></div>
+        <div class="wiz-seg" data-seg="4"></div>
+      </div>
+      <div class="wiz-count">Étape <span id="wizStep">1</span> / 4</div>
+
+      <div class="wiz-step active" data-step="1">
+        <div class="wiz-q">Qui est ton prospect ?</div>
+        <div class="wiz-help">Son rôle décide de tout : ses priorités, ses objections, son langage.</div>
+        <div class="profile-grid">
+          <div class="profile-chip" onclick="selectProfile(this,'DSI / CTO')">
+            <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+            <div class="chip-label">DSI / CTO</div>
+            <button class="info-btn" onclick="showTooltip(event,'Directeur des Systèmes d\'Information ou Chief Technology Officer. Responsable de la tech et de l\'infrastructure IT.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="profile-chip" onclick="selectProfile(this,'DG / CEO')">
+            <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+            <div class="chip-label">DG / CEO</div>
+            <button class="info-btn" onclick="showTooltip(event,'Directeur Général ou Chief Executive Officer. Le patron de l\'entreprise, décideur final sur les grandes orientations stratégiques.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="profile-chip" onclick="selectProfile(this,'CFO / DAF')">
+            <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 10l3-4 3 2 4-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="chip-label">CFO / DAF</div>
+            <button class="info-btn" onclick="showTooltip(event,'Chief Financial Officer ou Directeur Administratif et Financier. Responsable des finances et du budget de l\'entreprise.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="profile-chip" onclick="selectProfile(this,'DRH')">
+            <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 12c0-2 1.8-3.5 4-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+            <div class="chip-label">DRH</div>
+            <button class="info-btn" onclick="showTooltip(event,'Directeur des Ressources Humaines. Responsable du recrutement, de la gestion des talents et des politiques RH.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="profile-chip" onclick="selectProfile(this,'Directeur Commercial')">
+            <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12V6l5-4 5 4v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="8" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg></div>
+            <div class="chip-label">Dir. Commercial</div>
+            <button class="info-btn" onclick="showTooltip(event,'Directeur Commercial ou Sales Director. Responsable de la stratégie commerciale, des équipes de vente et du chiffre d\'affaires.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="profile-chip" onclick="selectProfile(this,'Autre')">
+            <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 5v2.5L9 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+            <div class="chip-label">Autre</div>
+          </div>
         </div>
       </div>
 
-      <div class="input-divider"></div>
-
-      <div class="step-label"><div class="step-num">2</div>Sujet de la réunion</div>
-      <input type="text" class="input-field" id="topicInput" placeholder="Ex : automatisation des processus avec l'IA" maxlength="120"/>
-      <div class="topic-chips">
-        <div class="topic-chip" onclick="setTopic(this)">IA générative</div>
-        <div class="topic-chip" onclick="setTopic(this)">Automatisation</div>
-        <div class="topic-chip" onclick="setTopic(this)">Optimisation coûts</div>
-        <div class="topic-chip" onclick="setTopic(this)">Transformation digitale</div>
-        <div class="topic-chip" onclick="setTopic(this)">Cybersécurité</div>
+      <div class="wiz-step" data-step="2">
+        <div class="wiz-q">Dans quelle entreprise ?</div>
+        <div class="wiz-help">Le nom du prospect. Avec ça, Faro va chercher son actualité réelle. Laisse vide si tu ne l'as pas, le brief sera plus générique.</div>
+        <input type="text" class="wiz-input" id="companyInput" placeholder="Ex : Doctolib" maxlength="80" autocomplete="off"/>
+        <span class="wiz-skip" onclick="wizNext()">Je ne connais pas l'entreprise, passer</span>
       </div>
 
-      <div class="input-divider"></div>
-
-      <div class="input-bottom">
-        <div class="input-sources"><strong id="briefCount">2 847</strong> briefs générés<br>Bloomberg · WSJ · HBR · McKinsey · FT · Gartner</div>
-        <button class="input-btn" onclick="generate()">Générer mon brief<svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="wiz-step" data-step="3">
+        <div class="wiz-q">Le sujet du rendez-vous ?</div>
+        <div class="wiz-help">Ce que tu proposes, ou le thème de la réunion.</div>
+        <input type="text" class="wiz-input" id="topicInput" placeholder="Ex : automatisation des process avec l'IA" maxlength="120" autocomplete="off"/>
+        <div class="topic-chips" style="margin-top:12px;">
+          <div class="topic-chip" onclick="setTopic(this)">IA générative</div>
+          <div class="topic-chip" onclick="setTopic(this)">Automatisation</div>
+          <div class="topic-chip" onclick="setTopic(this)">Optimisation coûts</div>
+          <div class="topic-chip" onclick="setTopic(this)">Transformation digitale</div>
+          <div class="topic-chip" onclick="setTopic(this)">Cybersécurité</div>
+        </div>
       </div>
+
+      <div class="wiz-step" data-step="4">
+        <div class="wiz-q">Quel type de rendez-vous ?</div>
+        <div class="wiz-help">Ça adapte les questions à poser et les réponses aux objections.</div>
+        <div class="mtg-grid">
+          <div class="mtg-chip selected" onclick="selectMeeting(this,'découverte')"><div class="mtg-name">Découverte</div><div class="mtg-desc">Premier échange, tu creuses la douleur</div></div>
+          <div class="mtg-chip" onclick="selectMeeting(this,'démo')"><div class="mtg-name">Démo</div><div class="mtg-desc">Tu montres la solution</div></div>
+          <div class="mtg-chip" onclick="selectMeeting(this,'négociation')"><div class="mtg-name">Négociation</div><div class="mtg-desc">Tu défends ta valeur et ton prix</div></div>
+          <div class="mtg-chip" onclick="selectMeeting(this,'closing')"><div class="mtg-name">Closing</div><div class="mtg-desc">Tu lèves les derniers freins</div></div>
+        </div>
+      </div>
+
+      <div class="wiz-nav">
+        <button class="wiz-back hidden" id="wizBack" onclick="wizPrev()">Retour</button>
+        <button class="wiz-next" id="wizNext" onclick="wizNext()"><span id="wizNextLabel">Continuer</span><svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+
       <div class="trust-row">
         <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Gratuit</div>
         <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Sans carte</div>
-        <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ancré sur des sources réelles</div>
+        <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Sources réelles</div>
       </div>
     </div>
   </div>
@@ -325,14 +385,9 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
   <div class="loading-card">
     <div class="loading-spinner"></div>
     <div class="loading-title">Analyse en cours</div>
-    <div class="loading-sub">Recherche des signaux US réels pour ton profil</div>
-    <div class="loading-sources">
-      <div class="ls-tag" id="ls1">Bloomberg</div>
-      <div class="ls-tag" id="ls2">WSJ</div>
-      <div class="ls-tag" id="ls3">HBR</div>
-      <div class="ls-tag" id="ls4">McKinsey</div>
-      <div class="ls-tag" id="ls5">Gartner</div>
-    </div>
+    <div class="loading-sub" id="loadStep">Recherche des signaux US réels</div>
+    <div class="load-progress"><div class="load-progress-fill" id="loadBar"></div></div>
+    <div class="load-teaser" id="loadTeaser"></div>
   </div>
 </div>
 
@@ -500,9 +555,11 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
 
 <script>
 let selectedProfile = '';
+let companyVal = '';
+let meetingType = 'découverte';
+let currentStep = 1;
 let timerInterval;
 let count = 187;
-let briefCount = 2847;
 let userToken = localStorage.getItem('faro_token') || null;
 let briefData = null;
 let creditsRemaining = parseInt(localStorage.getItem('faro_credits') || '0');
@@ -518,16 +575,55 @@ function showCreditsBar() {
 setInterval(() => {
   if (Math.random() > 0.8) { count++; document.getElementById('navCount').textContent = count; document.getElementById('socialCount').textContent = count; }
 }, 10000);
-setInterval(() => {
-  if (Math.random() > 0.6) { briefCount += Math.floor(Math.random() * 3) + 1; document.getElementById('briefCount').textContent = briefCount.toLocaleString('fr-FR'); }
-}, 7000);
 
 function selectProfile(el, name) {
   document.querySelectorAll('.profile-chip').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   selectedProfile = name;
+  setTimeout(() => { if (currentStep === 1) wizNext(); }, 260);
 }
 function setTopic(el) { document.getElementById('topicInput').value = el.textContent; document.getElementById('topicInput').focus(); }
+function selectMeeting(el, val) {
+  document.querySelectorAll('.mtg-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  meetingType = val;
+}
+
+function wizShow(step) {
+  currentStep = step;
+  document.querySelectorAll('.wiz-step').forEach(s => s.classList.toggle('active', +s.dataset.step === step));
+  document.querySelectorAll('.wiz-seg').forEach(s => s.classList.toggle('done', +s.dataset.seg <= step));
+  document.getElementById('wizStep').textContent = step;
+  document.getElementById('wizBack').classList.toggle('hidden', step === 1);
+  document.getElementById('wizNextLabel').textContent = step === 4 ? 'Générer mon brief' : 'Continuer';
+  const focusInput = step === 2 ? 'companyInput' : step === 3 ? 'topicInput' : null;
+  if (focusInput) setTimeout(() => document.getElementById(focusInput).focus(), 120);
+}
+
+function wizPrev() { if (currentStep > 1) wizShow(currentStep - 1); }
+
+function wizNext() {
+  if (currentStep === 1) {
+    if (!selectedProfile) { shakeProfileGrid(); return; }
+    wizShow(2);
+  } else if (currentStep === 2) {
+    companyVal = document.getElementById('companyInput').value.trim();
+    wizShow(3);
+  } else if (currentStep === 3) {
+    const topic = document.getElementById('topicInput').value.trim();
+    if (!topic) { document.getElementById('topicInput').focus(); return; }
+    wizShow(4);
+  } else if (currentStep === 4) {
+    generate();
+  }
+}
+
+function shakeProfileGrid() {
+  const grid = document.querySelector('.profile-grid');
+  grid.style.outline = '2px solid #C96A2E';
+  grid.style.borderRadius = '8px';
+  setTimeout(() => { grid.style.outline = ''; }, 1200);
+}
 
 function showTooltip(e, text) {
   e.stopPropagation();
@@ -545,43 +641,77 @@ function showTooltip(e, text) {
 }
 document.addEventListener('click', () => document.getElementById('tooltipBox').classList.remove('show'));
 
-function animateSources() {
-  const ids = ['ls1','ls2','ls3','ls4','ls5'];
-  let i = 0;
-  return setInterval(() => {
-    ids.forEach(id => document.getElementById(id).classList.remove('active'));
-    document.getElementById(ids[i % ids.length]).classList.add('active');
-    i++;
-  }, 500);
+let loadTimers = [];
+function startLoadingSequence(profile, topic) {
+  const steps = [
+    'Recherche des signaux US réels',
+    'Analyse du profil ' + (profile || 'prospect'),
+    'Sujet : ' + (topic || ''),
+    'Croisement avec le marché français',
+    'Rédaction de ton brief'
+  ];
+  const teasers = [
+    'Le savais-tu ? Les tendances commerciales US arrivent souvent en France avec <strong>12 à 18 mois</strong> de décalage.',
+    'Un premier rendez-vous préparé convertit bien mieux qu\'un rendez-vous improvisé.',
+    'Beaucoup de décideurs comparent aux standards américains <strong>sans le dire</strong>.',
+    'Connaître l\'objection avant qu\'elle tombe, c\'est déjà la moitié du closing.',
+    'Le bon chiffre au bon moment vaut mieux qu\'un long argumentaire.'
+  ];
+  const stepEl = document.getElementById('loadStep');
+  const teaserEl = document.getElementById('loadTeaser');
+  const bar = document.getElementById('loadBar');
+
+  let si = 0, ti = 0, p = 4;
+  stepEl.textContent = steps[0];
+  teaserEl.innerHTML = teasers[0];
+  bar.style.width = '4%';
+
+  const stepInt = setInterval(() => {
+    si = (si + 1) % steps.length;
+    stepEl.style.opacity = 0;
+    setTimeout(() => { stepEl.textContent = steps[si]; stepEl.style.opacity = 1; }, 220);
+  }, 4500);
+
+  const teaserInt = setInterval(() => {
+    ti = (ti + 1) % teasers.length;
+    teaserEl.style.opacity = 0;
+    setTimeout(() => { teaserEl.innerHTML = teasers[ti]; teaserEl.style.opacity = 1; }, 220);
+  }, 6000);
+
+  const barInt = setInterval(() => {
+    if (p < 92) { p += Math.max(0.4, (92 - p) * 0.04); bar.style.width = p + '%'; }
+  }, 400);
+
+  loadTimers = [stepInt, teaserInt, barInt];
+  return {
+    complete() { loadTimers.forEach(clearInterval); if (bar) bar.style.width = '100%'; },
+    stop() { loadTimers.forEach(clearInterval); }
+  };
 }
 
 async function generate() {
   const topic = document.getElementById('topicInput').value.trim();
-  if (!topic) { document.getElementById('topicInput').focus(); return; }
-  if (!selectedProfile) {
-    const grid = document.querySelector('.profile-grid');
-    grid.scrollIntoView({behavior:'smooth', block:'center'});
-    grid.style.outline = '2px solid #C96A2E';
-    grid.style.borderRadius = '8px';
-    setTimeout(() => { grid.style.outline = ''; }, 1500);
-    return;
-  }
+  if (!selectedProfile) { wizShow(1); shakeProfileGrid(); return; }
+  if (!topic) { wizShow(3); return; }
   if (userToken && creditsRemaining <= 0) { showNoCredits(); return; }
+
+  companyVal = document.getElementById('companyInput').value.trim();
 
   document.getElementById('mainLayout').style.display = 'none';
   document.getElementById('loading').classList.add('show');
   document.getElementById('dashboard').classList.remove('show');
-  const srcInt = animateSources();
+  const loadSeq = startLoadingSequence(selectedProfile, topic);
 
   try {
-    const body = { prospect: selectedProfile, subject: topic };
+    const body = { prospect: selectedProfile, subject: topic, meetingType };
+    if (companyVal) body.company = companyVal;
     if (userToken) body.token = userToken;
 
     const res = await fetch('/api/generate', {
       method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
     });
 
-    clearInterval(srcInt);
+    loadSeq.complete();
     document.getElementById('loading').classList.remove('show');
 
     if (res.status === 429) {
@@ -603,7 +733,7 @@ async function generate() {
     }
     renderDash(data);
   } catch(e) {
-    clearInterval(srcInt);
+    loadSeq.stop();
     document.getElementById('loading').classList.remove('show');
     document.getElementById('mainLayout').style.display = '';
     console.error('Generate error:', e);
@@ -623,6 +753,7 @@ function showNoCredits() {
 function resetForm() {
   document.getElementById('mainLayout').style.display = '';
   document.getElementById('dashboard').classList.remove('show');
+  wizShow(1);
 }
 
 function renderDash(data) {
@@ -760,7 +891,9 @@ async function unlock() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initCredits();
-  document.getElementById('topicInput').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
+  wizShow(1);
+  document.getElementById('companyInput').addEventListener('keydown', e => { if (e.key === 'Enter') wizNext(); });
+  document.getElementById('topicInput').addEventListener('keydown', e => { if (e.key === 'Enter') wizNext(); });
   document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
 });
 </script>
