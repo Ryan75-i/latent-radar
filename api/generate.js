@@ -5,89 +5,46 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   }
 
-  const { prospect, subject } = await req.json();
-
-  if (!prospect || !subject) {
-    return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
-  }
-
-  const ip = req.headers.get('x-forwarded-for') || 'unknown';
-
-  // Rate limiting via Supabase
   try {
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_ANON_KEY;
+    const body = await req.json();
+    const prospect = body.prospect || '';
+    const subject = body.subject || '';
 
-    const checkRes = await fetch(`${supabaseUrl}/rest/v1/rate_limits?ip=eq.${encodeURIComponent(ip)}&select=count,last_reset`, {
-      headers: {
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`,
-      }
-    });
-
-    const checkData = await checkRes.json();
-
-    if (checkData && checkData.length > 0) {
-      const record = checkData[0];
-      const lastReset = new Date(record.last_reset);
-      const now = new Date();
-      const hoursDiff = (now - lastReset) / (1000 * 60 * 60);
-
-      if (hoursDiff < 24 && record.count >= 1) {
-        return new Response(JSON.stringify({ error: 'rate_limit', message: 'Tu as deja genere un brief aujourd\'hui. Reviens demain ou entre ton email pour en generer plus.' }), { status: 429 });
-      }
+    if (!prospect || !subject) {
+      return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
     }
 
-    // Upsert rate limit
-    await fetch(`${supabaseUrl}/rest/v1/rate_limits`, {
-      method: 'POST',
-      headers: {
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify({ ip, count: 1, last_reset: new Date().toISOString() })
-    });
-
-  } catch (e) {
-    // Continue even if rate limiting fails
-  }
-
-  const prompt = `Tu es un expert en veille commerciale B2B, specialise dans les tendances US qui arrivent en France avec 12 a 18 mois de decalage.
+    const prompt = `Tu es un expert en veille commerciale B2B, specialise dans les tendances US qui arrivent en France avec 12 a 18 mois de decalage.
 
 Un commercial francais prepare une reunion avec ce profil :
 - Prospect : ${prospect}
 - Sujet de la reunion : ${subject}
 
-Genere un brief de veille commerciale en JSON avec exactement ce format :
+Genere un brief de veille commerciale. Reponds UNIQUEMENT avec ce JSON exact, sans texte avant ou apres :
 {
   "signals": [
     {
-      "title": "Titre court et percutant du signal US (max 15 mots)",
-      "body": "Description du signal US : ce qui se passe aux Etats-Unis, avec des chiffres precis et des entreprises nommees. Max 3 phrases.",
-      "implication": "Ce que ca signifie concretement pour cette reunion. Max 2 phrases.",
-      "source": "Bloomberg · [mois] 2026"
+      "title": "Titre court du signal US (max 12 mots)",
+      "body": "Ce qui se passe aux US sur ce sujet, avec des chiffres et entreprises specifiques. Max 2 phrases.",
+      "implication": "Ce que ca signifie pour cette reunion precise. Max 2 phrases.",
+      "source": "Bloomberg · Juillet 2026"
     },
     {
-      "title": "Deuxieme signal, une objection classique que ce profil va sortir en reunion",
-      "body": "Contexte de cette objection : pourquoi les decideurs americains equivalents la sortent, sur quoi elle est basee.",
-      "implication": "Comment repondre a cette objection avec des donnees US. Max 2 phrases.",
-      "source": "HBR · [mois] 2026"
+      "title": "L objection principale que ce profil va sortir en reunion",
+      "body": "Pourquoi les decideurs americains equivalents sortent cette objection, sur quoi elle est basee.",
+      "implication": "Comment repondre avec des donnees US concretes. Max 2 phrases.",
+      "source": "HBR · Juin 2026"
     },
     {
-      "title": "Troisieme signal, un benchmark US que ce profil va utiliser pour comparer",
-      "body": "Le benchmark precis que ce type de prospect connait : chiffres, entreprises, standards du marche americain.",
+      "title": "Le benchmark US que ce profil va utiliser pour comparer",
+      "body": "Les chiffres et standards du marche americain que ce type de prospect connait deja.",
       "implication": "Comment se positionner par rapport a ce benchmark. Max 2 phrases.",
-      "source": "WSJ · [mois] 2026"
+      "source": "WSJ · Juillet 2026"
     }
   ],
-  "retenir": "Une phrase de conclusion percutante sur l'enjeu principal de cette reunion. Commence par un fait choc."
-}
+  "retenir": "Une phrase de conclusion percutante sur l enjeu principal de cette reunion."
+}`;
 
-Reponds UNIQUEMENT avec le JSON, sans texte avant ou apres, sans backticks.`;
-
-  try {
     const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -102,39 +59,35 @@ Reponds UNIQUEMENT avec le JSON, sans texte avant ou apres, sans backticks.`;
       })
     });
 
+    if (!anthropicRes.ok) {
+      const errText = await anthropicRes.text();
+      return new Response(JSON.stringify({ error: 'anthropic_error', detail: errText }), { status: 500 });
+    }
+
     const anthropicData = await anthropicRes.json();
-    const text = anthropicData.content[0].text;
+    const text = anthropicData.content[0].text.trim();
 
     let parsed;
     try {
       parsed = JSON.parse(text);
     } catch(e) {
       const match = text.match(/\{[\s\S]*\}/);
-      if (match) parsed = JSON.parse(match[0]);
-      else throw new Error('Invalid JSON');
+      if (match) {
+        parsed = JSON.parse(match[0]);
+      } else {
+        return new Response(JSON.stringify({ error: 'parse_error', raw: text }), { status: 500 });
+      }
     }
-
-    // Save search to Supabase
-    try {
-      const supabaseUrl = process.env.SUPABASE_URL;
-      const supabaseKey = process.env.SUPABASE_ANON_KEY;
-      await fetch(`${supabaseUrl}/rest/v1/searches`, {
-        method: 'POST',
-        headers: {
-          'apikey': supabaseKey,
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ ip, prospect, subject, created_at: new Date().toISOString() })
-      });
-    } catch(e) {}
 
     return new Response(JSON.stringify(parsed), {
       status: 200,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     });
 
   } catch(e) {
-    return new Response(JSON.stringify({ error: 'generation_failed' }), { status: 500 });
+    return new Response(JSON.stringify({ error: 'server_error', message: e.message }), { status: 500 });
   }
 }
