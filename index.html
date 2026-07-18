@@ -49,6 +49,27 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
 .social-text { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 .social-text strong { color: var(--text-primary); }
 
+.lag-viz { display: flex; align-items: center; margin: 4px 0 26px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+.lag-node { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
+.lag-node-title { font-size: 14px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 7px; }
+.lag-node small { font-size: 11px; color: var(--text-muted); }
+.lag-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.lag-dot.us { background: var(--accent); }
+.lag-dot.fr { background: var(--text-muted); }
+.lag-line { flex: 1; margin: 0 14px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 24px; }
+.lag-line::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px dashed var(--border); }
+.lag-badge { position: relative; z-index: 1; background: var(--accent-light); border: 1px solid var(--accent-border); color: var(--accent); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+
+.hero-feats { display: flex; flex-direction: column; gap: 11px; margin-bottom: 30px; }
+.hero-feat { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--text-primary); font-weight: 500; }
+.hero-feat svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.page-banner { display: none; align-items: center; gap: 12px; background: #FEF3EC; border: 1px solid #FDE8D5; border-radius: 10px; padding: 14px 18px; margin: 16px 32px 0; }
+.page-banner.show { display: flex; }
+.page-banner svg { flex-shrink: 0; }
+.page-banner-t { font-size: 13px; font-weight: 600; color: #C96A2E; margin-bottom: 2px; }
+.page-banner-d { font-size: 12px; color: #92400E; line-height: 1.4; }
+
 .input-col { padding: 32px 10% 32px 48px; display: flex; align-items: center; border-left: 1px solid var(--border); background: #FFFFFF; }
 .input-box { width: 100%; background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06); transition: border-color 0.2s, box-shadow 0.2s; }
 .input-box:focus-within { border-color: rgba(201,106,46,0.35); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 3px rgba(201,106,46,0.07), 0 8px 24px rgba(0,0,0,0.06); }
@@ -262,21 +283,49 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
   <div class="nav-live"><div class="live-dot"></div><span id="navCount">187</span> briefs ce mois</div>
 </nav>
 
+<div class="page-banner" id="rateLimitBox">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C96A2E" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="#C96A2E" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <div>
+    <div class="page-banner-t">Brief déjà généré récemment</div>
+    <div class="page-banner-d">Donne ton email pour débloquer 5 briefs par semaine. Prochain accès libre dans <strong id="rateLimitHours">48</strong>h.</div>
+  </div>
+</div>
+
+<div class="page-banner" id="noCreditsBox">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C96A2E" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="#C96A2E" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <div>
+    <div class="page-banner-t">Tu as utilisé tes 5 briefs cette semaine</div>
+    <div class="page-banner-d">Tes crédits se renouvellent chaque lundi matin. À bientôt.</div>
+  </div>
+</div>
+
 <div class="main-layout" id="mainLayout">
   <div class="hero-col">
     <div class="hero-badge">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" fill="currentColor"/></svg>
       Copilote du premier rendez-vous
     </div>
-    <h1 class="hero-title">Un prospect chaud.<br><span class="accent">20 secondes</span><br>pour tout savoir sur lui.</h1>
-    <p class="hero-sub">Ton prospect a déjà vu des solutions aux US.<br><strong>Faro te dit lesquelles, ses objections, et comment te positionner.</strong></p>
-    <div class="kpi-row">
-      <div class="kpi-item"><div class="kpi-val">+80%</div><div class="kpi-lbl">de taux de conversion<br>sur le premier RDV</div></div>
-      <div class="kpi-sep"></div>
-      <div class="kpi-item"><div class="kpi-val">18 mois</div><div class="kpi-lbl">d'avance sur tes<br>concurrents français</div></div>
-      <div class="kpi-sep"></div>
-      <div class="kpi-item"><div class="kpi-val">3x</div><div class="kpi-lbl">plus de deals closés<br>dès le premier échange</div></div>
+    <h1 class="hero-title">Entre en réunion avec<br><span class="accent">un coup d'avance</span>.</h1>
+    <p class="hero-sub">Ton prospect a déjà vu des solutions aux États-Unis. <strong>Faro te dit lesquelles, ses objections probables, et quoi dire pour te démarquer.</strong></p>
+
+    <div class="lag-viz">
+      <div class="lag-node">
+        <div class="lag-node-title"><span class="lag-dot us"></span>États-Unis</div>
+        <small>le signal apparaît</small>
+      </div>
+      <div class="lag-line"><span class="lag-badge">12 à 18 mois</span></div>
+      <div class="lag-node">
+        <div class="lag-node-title"><span class="lag-dot fr"></span>France</div>
+        <small>le marché suit</small>
+      </div>
     </div>
+
+    <div class="hero-feats">
+      <div class="hero-feat"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#059669" stroke-width="1.3"/><path d="M5 8l2 2 4-4.5" stroke="#059669" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Signaux US réels, chiffrés et datés</div>
+      <div class="hero-feat"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#059669" stroke-width="1.3"/><path d="M5 8l2 2 4-4.5" stroke="#059669" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Ses objections probables et ta contre</div>
+      <div class="hero-feat"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#059669" stroke-width="1.3"/><path d="M5 8l2 2 4-4.5" stroke="#059669" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Ton brief prêt à dire, en 5 temps</div>
+    </div>
+
     <div class="social-proof">
       <div class="social-avatars">
         <div class="social-avatar" style="background:#C96A2E;">R</div>
@@ -401,22 +450,6 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
     <span style="font-size:11px;color:#B45309;font-weight:500;">Reset lundi</span>
   </div>
 
-  <div id="rateLimitBox" style="display:none;align-items:center;gap:12px;background:#FEF3EC;border:1px solid #FDE8D5;border-radius:10px;padding:16px 20px;margin-bottom:16px;">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C96A2E" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="#C96A2E" stroke-width="1.5" stroke-linecap="round"/></svg>
-    <div>
-      <div style="font-size:13px;font-weight:600;color:#C96A2E;margin-bottom:2px;">Brief déjà généré récemment</div>
-      <div style="font-size:12px;color:#92400E;">Donne ton email pour débloquer 5 briefs par semaine. Prochain accès libre dans <strong id="rateLimitHours">48</strong>h.</div>
-    </div>
-  </div>
-
-  <div id="noCreditsBox" style="display:none;align-items:center;gap:12px;background:#FEF3EC;border:1px solid #FDE8D5;border-radius:10px;padding:16px 20px;margin-bottom:16px;">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C96A2E" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="#C96A2E" stroke-width="1.5" stroke-linecap="round"/></svg>
-    <div>
-      <div style="font-size:13px;font-weight:600;color:#C96A2E;margin-bottom:2px;">Tu as utilisé tes 5 briefs cette semaine</div>
-      <div style="font-size:12px;color:#92400E;">Tes crédits se renouvellent chaque lundi matin. À bientôt.</div>
-    </div>
-  </div>
-
   <div class="dash-top">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <div class="dash-back" onclick="resetForm()">
@@ -442,7 +475,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
       <div class="seq-block">
         <div class="seq-head">
           <span class="seq-num">1</span>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>
+          <svg class="ic" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="3.5" fill="currentColor"></circle><circle cx="50" cy="50" r="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></circle><circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"></circle><circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2" stroke-linecap="round"></circle></svg>
           <span class="seq-title">L'accroche</span>
           <span class="seq-tag">à dire en ouverture</span>
         </div>
@@ -453,7 +486,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
       <div class="seq-block">
         <div class="seq-head">
           <span class="seq-num">2</span>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>
+          <svg class="ic" viewBox="0 0 100 100" fill="none"><path d="M20 28 C20 22.5 24.5 18 30 18 L70 18 C75.5 18 80 22.5 80 28 L80 58 C80 63.5 75.5 68 70 68 L38 68 L24 80 L26 68 L30 68 C24.5 68 20 63.5 20 58 Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M44 38 C44 33.5 47.5 30 52 30 C56.5 30 60 33.5 60 37 C60 41 56 42.5 53.5 45 C52.5 46 52 47.5 52 49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="52" cy="56" r="1.4" fill="currentColor"></circle></svg>
           <span class="seq-title">3 questions à poser</span>
           <span class="seq-tag lock" id="qLock"><svg viewBox="0 0 12 12" fill="none"><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1.2"/></svg>verrouillé</span>
         </div>
@@ -468,7 +501,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
       <div class="seq-block">
         <div class="seq-head">
           <span class="seq-num">3</span>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+          <svg class="ic" viewBox="0 0 100 100" fill="none"><path d="M20 68 L40 46 L54 58 L80 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M62 24 L80 24 L80 42" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           <span class="seq-title">Le décalage US</span>
           <span class="seq-tag">12 à 18 mois d'avance</span>
         </div>
@@ -479,7 +512,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
       <div class="seq-block">
         <div class="seq-head">
           <span class="seq-num">4</span>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+          <svg class="ic" viewBox="0 0 100 100" fill="none"><path d="M50 16 L76 26 L76 50 C76 66 64 76 50 84 C36 76 24 66 24 50 L24 26 Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           <span class="seq-title">Objections et ta contre</span>
           <span class="seq-tag lock" id="objLock"><svg viewBox="0 0 12 12" fill="none"><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1.2"/></svg>contre verrouillée</span>
         </div>
@@ -489,7 +522,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
       <div class="seq-block">
         <div class="seq-head">
           <span class="seq-num">5</span>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.4 4 1.2 6L12 16.9 6.6 19.3l1.2-6-4.4-4 6-.7z"/></svg>
+          <svg class="ic" viewBox="0 0 100 100" fill="none"><path d="M50 16 C51 34 52 48 66 50 C52 52 51 66 50 84 C49 66 48 52 34 50 C48 48 49 34 50 16 Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           <span class="seq-title">Le chiffre à lâcher</span>
           <span class="seq-tag">pour marquer les esprits</span>
         </div>
@@ -515,7 +548,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
           </div>
         </div>
         <div class="card-lbl">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/></svg>
+          <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><path d="M20 20 L20 80 L80 80" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M26 66 C40 66 40 40 54 40 C64 40 64 26 76 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           Maturité marché US
         </div>
         <div class="mat-track"><div class="mat-fill" id="matFill"></div></div>
@@ -525,7 +558,7 @@ nav { background: var(--surface); border-bottom: 1px solid var(--border); paddin
 
       <div class="card" style="margin-bottom:16px;">
         <div class="card-lbl">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="18" y1="20" x2="18" y2="15"/></svg>
+          <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><path d="M28 58 L28 80" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M50 38 L50 80" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M72 22 L72 80" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M18 80 L82 80" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
           Marché · US contre France
         </div>
         <div id="gaugesList"></div>
@@ -693,10 +726,13 @@ async function generate() {
   const topic = document.getElementById('topicInput').value.trim();
   if (!selectedProfile) { wizShow(1); shakeProfileGrid(); return; }
   if (!topic) { wizShow(3); return; }
-  if (userToken && creditsRemaining <= 0) { showNoCredits(); return; }
+
+  const devKey = new URLSearchParams(location.search).get('dev');
+  if (!devKey && userToken && creditsRemaining <= 0) { showNoCredits(); return; }
 
   companyVal = document.getElementById('companyInput').value.trim();
 
+  hideBanners();
   document.getElementById('mainLayout').style.display = 'none';
   document.getElementById('loading').classList.add('show');
   document.getElementById('dashboard').classList.remove('show');
@@ -706,6 +742,7 @@ async function generate() {
     const body = { prospect: selectedProfile, subject: topic, meetingType };
     if (companyVal) body.company = companyVal;
     if (userToken) body.token = userToken;
+    if (devKey) body.dev = devKey;
 
     const res = await fetch('/api/generate', {
       method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
@@ -742,13 +779,19 @@ async function generate() {
 
 function showRateLimit(hours) {
   document.getElementById('mainLayout').style.display = '';
+  document.getElementById('noCreditsBox').classList.remove('show');
   const box = document.getElementById('rateLimitBox');
-  if (box) { document.getElementById('rateLimitHours').textContent = hours || 48; box.style.display = 'flex'; }
+  if (box) { document.getElementById('rateLimitHours').textContent = hours || 48; box.classList.add('show'); }
 }
 function showNoCredits() {
   document.getElementById('mainLayout').style.display = '';
+  document.getElementById('rateLimitBox').classList.remove('show');
   const box = document.getElementById('noCreditsBox');
-  if (box) box.style.display = 'flex';
+  if (box) box.classList.add('show');
+}
+function hideBanners() {
+  document.getElementById('rateLimitBox').classList.remove('show');
+  document.getElementById('noCreditsBox').classList.remove('show');
 }
 function resetForm() {
   document.getElementById('mainLayout').style.display = '';
