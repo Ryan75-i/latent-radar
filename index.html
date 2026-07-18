@@ -887,11 +887,15 @@ async function generate() {
 
     if (res.status === 429) {
       const errData = await res.json();
-      resetForm();
+      document.getElementById('mainLayout').style.display = '';
+      document.getElementById('loading').classList.remove('show');
+      document.getElementById('dashboard').classList.remove('show');
       if (errData.error === 'rate_limit') {
         showRateLimit(errData.hours_remaining);
       } else if (errData.error === 'no_credits') {
         showNoCredits();
+      } else {
+        showRateLimit(48);
       }
       return;
     }
@@ -909,8 +913,8 @@ async function generate() {
   } catch(e) {
     clearInterval(srcInt);
     document.getElementById('loading').classList.remove('show');
-    resetForm();
-    alert('Erreur. Vérifie ta connexion et réessaie.');
+    document.getElementById('mainLayout').style.display = '';
+    console.error('Generate error:', e);
   }
 }
 
