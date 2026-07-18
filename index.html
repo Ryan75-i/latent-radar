@@ -7,9 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 :root {
-  --bg: #FAFAFA;
+  --bg: #F9FAFB;
   --surface: #FFFFFF;
   --border: #E5E7EB;
   --border-light: #F3F4F6;
@@ -23,17 +22,15 @@
   --yellow-light: #FFFBEB;
   --green: #059669;
   --green-light: #ECFDF5;
-  --red: #DC2626;
 }
-
 body { background: var(--bg); font-family: 'Inter', sans-serif; color: var(--text-primary); min-height: 100vh; font-size: 14px; }
 
 /* NAV */
 nav {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 0 28px;
-  height: 56px;
+  padding: 0 32px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,19 +38,26 @@ nav {
   top: 0;
   z-index: 100;
 }
-
-.nav-logo { display: flex; align-items: center; }
-
-.nav-right { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.nav-live { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
 .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 0 2px #D1FAE5; animation: livepulse 2s infinite; }
 @keyframes livepulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-/* HERO */
-.hero {
-  max-width: 600px;
+/* MAIN LAYOUT */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 58px);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 72px 24px 48px;
-  text-align: center;
+  gap: 0;
+}
+
+/* LEFT - HERO */
+.hero-col {
+  padding: 64px 48px 64px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-badge {
@@ -68,139 +72,199 @@ nav {
   font-weight: 500;
   color: var(--accent);
   margin-bottom: 24px;
+  width: fit-content;
 }
 
 .hero-title {
-  font-size: 38px;
+  font-size: 42px;
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.1;
   letter-spacing: -0.03em;
   color: var(--text-primary);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
-
 .hero-title .accent { color: var(--accent); }
 
 .hero-sub {
   font-size: 16px;
   color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 8px;
+  line-height: 1.65;
+  margin-bottom: 32px;
 }
-
 .hero-sub strong { color: var(--text-primary); font-weight: 600; }
 
-.hero-sub2 {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 40px;
+/* PROOF POINTS */
+.proof-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+.proof-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.proof-icon {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--green-light);
+  border: 1px solid #A7F3D0;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.proof-icon svg { width: 10px; height: 10px; color: var(--green); }
+.proof-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+.proof-text strong { color: var(--text-primary); font-weight: 600; }
+
+/* SOCIAL PROOF */
+.social-proof {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  width: fit-content;
+}
+.social-avatars { display: flex; }
+.social-avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-left: -8px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+}
+.social-avatar:first-child { margin-left: 0; }
+.social-text { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+.social-text strong { color: var(--text-primary); }
+
+/* RIGHT - INPUT */
+.input-col {
+  padding: 32px 32px 32px 24px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
 }
 
-/* INPUT CARD */
-.input-card { max-width: 560px; margin: 0 auto; padding: 0 24px; }
-
 .input-box {
+  width: 100%;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 16px;
-  padding: 22px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 16px rgba(0,0,0,0.04);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-
 .input-box:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 3px rgba(201,106,46,0.08);
+  border-color: rgba(201,106,46,0.35);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 3px rgba(201,106,46,0.07), 0 8px 24px rgba(0,0,0,0.06);
 }
 
-/* STEP 1 */
 .step-label {
   font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.step-num {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
 
+/* PROFILE GRID */
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .profile-chip {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 12px 8px;
+  padding: 13px 8px 10px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.15s;
+  background: var(--bg);
+  text-align: center;
+}
+.profile-chip:hover { border-color: var(--accent-border); background: var(--accent-light); }
+.profile-chip.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 2px rgba(201,106,46,0.12); }
+
+.chip-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
   background: var(--surface);
-}
-
-.profile-chip:hover {
-  border-color: var(--accent-border);
-  background: var(--accent-light);
-}
-
-.profile-chip.selected {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
-
-.profile-chip-icon {
-  width: 28px; height: 28px;
-  border-radius: 7px;
-  background: var(--border-light);
+  border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
 }
+.profile-chip.selected .chip-icon { background: var(--accent-border); border-color: var(--accent-border); }
+.chip-icon svg { width: 14px; height: 14px; color: var(--text-muted); }
+.profile-chip.selected .chip-icon svg { color: var(--accent); }
 
-.profile-chip.selected .profile-chip-icon {
-  background: var(--accent-border);
-}
-
-.profile-chip-icon svg { width: 14px; height: 14px; color: var(--text-muted); }
-.profile-chip.selected .profile-chip-icon svg { color: var(--accent); }
-
-.profile-chip-desc {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1.2;
-  font-weight: 400;
-}
-
-.profile-chip.selected .profile-chip-desc { color: rgba(201,106,46,0.7); }
-
-.profile-chip-label {
+.chip-label {
   font-size: 11.5px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
-  text-align: center;
   line-height: 1.2;
 }
+.profile-chip.selected .chip-label { color: var(--accent); }
 
-.profile-chip.selected .profile-chip-desc {
-  font-size: 10px;
+/* INFO BTN */
+.info-btn {
+  position: absolute;
+  bottom: 5px; right: 5px;
+  width: 15px; height: 15px;
+  border: none; background: none;
+  cursor: pointer;
   color: var(--text-muted);
-  text-align: center;
-  line-height: 1.2;
-  font-weight: 400;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; border-radius: 50%;
+  transition: color 0.15s;
+  z-index: 2;
 }
+.info-btn:hover { color: var(--accent); }
+.info-btn svg { width: 11px; height: 11px; }
 
-.profile-chip.selected .profile-chip-desc { color: rgba(201,106,46,0.7); }
-
-.profile-chip-label { color: var(--accent); }
+/* TOOLTIP */
+.tooltip-box {
+  display: none;
+  position: fixed;
+  background: #1F2937;
+  color: white;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px 13px;
+  border-radius: 8px;
+  max-width: 220px;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+.tooltip-box.show { display: block; }
 
 /* DIVIDER */
 .input-divider { height: 1px; background: var(--border-light); margin: 18px 0; }
 
-/* STEP 2 */
+/* TOPIC INPUT */
 .input-field {
   width: 100%;
   border: none;
@@ -214,52 +278,30 @@ nav {
 }
 .input-field::placeholder { color: var(--text-muted); }
 
-.topic-chips {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
+.topic-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
 .topic-chip {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 12px; font-weight: 500;
   color: var(--text-secondary);
-  background: var(--border-light);
+  background: var(--bg);
   border: 1px solid var(--border);
   padding: 4px 10px;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.15s;
 }
-
-.topic-chip:hover {
-  background: var(--accent-light);
-  border-color: var(--accent-border);
-  color: var(--accent);
-}
+.topic-chip:hover { background: var(--accent-light); border-color: var(--accent-border); color: var(--accent); }
 
 /* BOTTOM */
-.input-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.input-meta {
-  font-size: 11.5px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+.input-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.input-sources { font-size: 11px; color: var(--text-muted); line-height: 1.4; flex: 1; }
+.input-sources strong { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
 
 .input-btn {
   background: var(--accent);
   color: white;
   border: none;
   border-radius: 9px;
-  padding: 11px 22px;
+  padding: 12px 20px;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -268,48 +310,33 @@ nav {
   align-items: center;
   gap: 6px;
   transition: background 0.15s, transform 0.1s;
-  letter-spacing: -0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
-
 .input-btn:hover { background: #B85E28; }
 .input-btn:active { transform: scale(0.98); }
+.input-btn svg { width: 13px; height: 13px; }
 
-.input-trust {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 14px;
-}
-
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  font-weight: 500;
-}
+/* TRUST */
+.trust-row { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+.trust-item { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--text-muted); font-weight: 500; }
+.trust-item svg { width: 11px; height: 11px; }
 
 /* LOADING */
-.loading { display: none; max-width: 560px; margin: 40px auto; padding: 0 24px; }
-.loading.show { display: block; }
+.loading { display: none; }
+.loading.show { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 58px); }
 .loading-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 36px 24px;
+  border-radius: 16px;
+  padding: 40px 32px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  max-width: 440px;
+  width: 100%;
+  margin: 24px;
 }
-.loading-spinner {
-  width: 40px; height: 40px;
-  border: 2.5px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.85s linear infinite;
-  margin: 0 auto 18px;
-}
+.loading-spinner { width: 40px; height: 40px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.85s linear infinite; margin: 0 auto 18px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
 .loading-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
@@ -318,45 +345,21 @@ nav {
 .ls-tag.active { background: var(--accent-light); border-color: var(--accent-border); color: var(--accent); }
 
 /* DASHBOARD */
-.dashboard { display: none; max-width: 1080px; margin: 0 auto; padding: 20px 24px 40px; }
+.dashboard { display: none; max-width: 1140px; margin: 0 auto; padding: 20px 24px 48px; }
 .dashboard.show { display: block; }
 
-/* TOPBAR */
-.dash-top {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
-}
-
-.dash-back {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 13px; color: var(--text-muted); cursor: pointer; font-weight: 500;
-  padding: 6px 10px; border-radius: 6px; transition: background 0.15s;
-}
+.dash-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+.dash-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); cursor: pointer; font-weight: 500; padding: 6px 10px; border-radius: 6px; transition: background 0.15s; }
 .dash-back:hover { background: var(--border-light); color: var(--text-primary); }
 .dash-back svg { width: 14px; height: 14px; }
-
-.dash-context { display: flex; align-items: center; gap: 8px; }
-.dash-profile-tag { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-border); padding: 3px 10px; border-radius: 5px; }
-.dash-topic-tag { font-size: 12px; font-weight: 500; color: var(--text-secondary); background: var(--border-light); border: 1px solid var(--border); padding: 3px 10px; border-radius: 5px; }
-
-.dash-right { display: flex; align-items: center; gap: 10px; }
+.dash-tags { display: flex; align-items: center; gap: 6px; }
+.dash-tag-profile { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-border); padding: 3px 10px; border-radius: 5px; }
+.dash-tag-topic { font-size: 12px; font-weight: 500; color: var(--text-secondary); background: var(--border-light); border: 1px solid var(--border); padding: 3px 10px; border-radius: 5px; }
 .timer-chip { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; color: var(--yellow); background: var(--yellow-light); border: 1px solid #FDE68A; padding: 4px 10px; border-radius: 6px; }
 .timer-chip svg { width: 12px; height: 12px; }
 
 /* SCORE ROW */
-.score-row {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 22px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-  flex-wrap: wrap;
-}
-
+.score-row { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; margin-bottom: 14px; display: flex; align-items: center; gap: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); flex-wrap: wrap; }
 .score-circle-wrap { position: relative; width: 68px; height: 68px; flex-shrink: 0; }
 .score-svg { transform: rotate(-90deg); }
 .score-bg { fill: none; stroke: var(--border-light); stroke-width: 5; }
@@ -364,7 +367,6 @@ nav {
 .score-inner { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
 .score-num { font-size: 19px; font-weight: 700; color: var(--text-primary); line-height: 1; }
 .score-denom { font-size: 9px; color: var(--text-muted); font-weight: 500; }
-
 .score-mid { flex: 1; min-width: 200px; }
 .score-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
 .dims { display: flex; gap: 18px; flex-wrap: wrap; }
@@ -377,8 +379,6 @@ nav {
 
 /* GRID */
 .grid { display: grid; grid-template-columns: 1fr 1fr 290px; gap: 12px; }
-
-/* CARD */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
 .card-lbl { font-size: 10.5px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 5px; }
 .card-lbl svg { width: 12px; height: 12px; }
@@ -387,10 +387,10 @@ nav {
 .sig { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border-light); }
 .sig:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
 .sig-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.sig-num { font-size: 10px; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 3px; letter-spacing: 0.03em; }
+.sig-num { font-size: 10px; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 3px; }
 .sig-num.locked { color: var(--text-muted); background: var(--border-light); }
 .sig-src { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
-.sig-title { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 5px; letter-spacing: -0.01em; }
+.sig-title { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 5px; }
 .sig-body { font-size: 12px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 8px; }
 .sig-impl { display: flex; align-items: flex-start; gap: 5px; background: #FFFBEB; border-left: 2px solid #FCD34D; padding: 6px 9px; border-radius: 0 5px 5px 0; }
 .sig-arr { font-size: 10px; color: var(--yellow); font-weight: 700; flex-shrink: 0; padding-top: 1px; }
@@ -399,7 +399,7 @@ nav {
 /* LOCKED */
 .locked-wrap { position: relative; overflow: hidden; border-radius: 8px; }
 .locked-content { filter: blur(4px); user-select: none; pointer-events: none; }
-.locked-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 15%, rgba(255,255,255,0.97) 55%); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 10px; }
+.locked-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 15%, rgba(255,255,255,0.97) 55%); display: flex; align-items: flex-end; justify-content: center; padding: 10px; }
 .locked-lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
 .locked-lbl svg { width: 11px; height: 11px; }
 
@@ -420,18 +420,17 @@ nav {
 .mat-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-top: 10px; }
 .mat-desc strong { color: var(--text-primary); font-weight: 600; }
 
-/* KEY SIGNAL */
+/* KEY + GATE */
 .key-box { background: #FFF8F5; border: 1px solid var(--accent-border); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
 .key-lbl { font-size: 10px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
 .key-lbl svg { width: 11px; height: 11px; }
 .key-text { font-size: 13px; color: var(--text-primary); line-height: 1.55; font-weight: 500; }
 .key-text strong { color: var(--accent); }
 
-/* GATE */
 .gate-box { background: var(--surface); border: 1.5px solid #FCD34D; border-radius: 10px; padding: 16px; }
 .gate-social { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--green); font-weight: 500; margin-bottom: 10px; }
 .gate-social svg { width: 11px; height: 11px; }
-.gate-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.01em; }
+.gate-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
 .gate-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.45; }
 .gate-sub strong { color: var(--text-primary); font-weight: 600; }
 .gate-ba { font-size: 11.5px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; background: var(--border-light); padding: 8px 10px; border-radius: 6px; }
@@ -443,7 +442,6 @@ nav {
 .gate-btn:hover { background: #1F2937; }
 .gate-note { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-/* SUCCESS */
 .success-box { display: none; background: var(--green-light); border: 1px solid #A7F3D0; border-radius: 10px; padding: 16px; text-align: center; }
 .success-box.show { display: block; }
 .success-icon { width: 36px; height: 36px; background: #D1FAE5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
@@ -451,78 +449,18 @@ nav {
 .success-title { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 4px; }
 .success-sub { font-size: 12px; color: #065F46; line-height: 1.45; }
 
-
-/* INFO BUTTON */
-.profile-chip { position: relative; }
-
-.info-btn {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  width: 16px;
-  height: 16px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border-radius: 50%;
-  transition: color 0.15s;
-  z-index: 2;
-}
-
-.info-btn:hover { color: var(--accent); }
-.info-btn svg { width: 10px; height: 10px; }
-
-/* TOOLTIP */
-.tooltip-box {
-  display: none;
-  position: fixed;
-  background: #1F2937;
-  color: white;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 10px 13px;
-  border-radius: 8px;
-  max-width: 240px;
-  z-index: 9999;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  pointer-events: none;
-}
-
-.tooltip-box::before {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 5px;
-  background: #1F2937;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-}
-
-.tooltip-box.show { display: block; }
-
-/* BRIEF COUNTER FOMO */
-#briefCount { font-weight: 600; color: var(--accent); }
-
-@media (max-width: 560px) {
-  .profile-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-title { font-size: 26px; }
-  .input-bottom { flex-direction: column; gap: 12px; }
-  .input-btn { width: 100%; justify-content: center; }
-  .input-meta { font-size: 10.5px; text-align: center; }
-}
-
-@media (max-width: 900px) {
-  .grid { grid-template-columns: 1fr; }
+/* MOBILE */
+@media (max-width: 768px) {
+  .main-layout { grid-template-columns: 1fr; }
+  .hero-col { padding: 36px 20px 24px; border-right: none; }
+  .input-col { padding: 0 20px 40px; border-left: none; align-items: flex-start; }
   .hero-title { font-size: 28px; }
-  .profile-grid { grid-template-columns: repeat(3, 1fr); }
+  .profile-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: 1fr; }
+  .input-bottom { flex-direction: column; align-items: stretch; }
+  .input-sources { text-align: center; }
+  .social-proof { width: 100%; }
+  .proof-list { display: none; }
 }
 </style>
 </head>
@@ -530,132 +468,143 @@ nav {
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" width="130" height="44" viewBox="0 0 360 120" fill="none">
-      <g transform="translate(10,10) scale(0.76)">
-        <circle cx="38" cy="50" r="5" fill="#C96A2E"/>
-        <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"/>
-        <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"/>
-      </g>
-      <text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text>
-    </svg>
-  </div>
-  <div class="nav-right">
+  <svg xmlns="http://www.w3.org/2000/svg" width="96" height="28" viewBox="0 0 480 140" fill="none">
+    <g transform="translate(4,4) scale(1.05)">
+      <circle cx="38" cy="50" r="5" fill="#C96A2E"/>
+      <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"/>
+      <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <text x="150" y="86" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="62" letter-spacing="-2.5" fill="#C96A2E">faro</text>
+  </svg>
+  <div class="nav-live">
     <div class="live-dot"></div>
     <span id="navCount">183</span> briefs ce mois
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="heroSection">
-  <div class="hero-badge">
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" fill="currentColor"/></svg>
-    Copilote du premier rendez-vous commercial
+<!-- MAIN SPLIT LAYOUT -->
+<div class="main-layout" id="mainLayout">
+
+  <!-- LEFT : HERO -->
+  <div class="hero-col">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" fill="currentColor"/></svg>
+      Copilote du premier rendez-vous
+    </div>
+    <h1 class="hero-title">
+      Un prospect chaud.<br>
+      <span class="accent">20 secondes</span><br>
+      pour tout savoir sur lui.
+    </h1>
+    <p class="hero-sub">
+      Ton prospect a déjà vu des solutions aux US.<br>
+      <strong>Faro te dit lesquelles, ses objections, et comment te positionner.</strong>
+    </p>
+    <div class="proof-list">
+      <div class="proof-item">
+        <div class="proof-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><strong>Signaux US en temps réel</strong> — Ce que les décideurs américains adoptent aujourd'hui, tu le vois maintenant.</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><strong>Objections anticipées</strong> — Les 3 objections que ton prospect va sortir, avec les réponses qui closent.</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><strong>Positionnement précis</strong> — Comment te différencier des solutions US qu'il a déjà évaluées.</div>
+      </div>
+    </div>
+    <div class="social-proof">
+      <div class="social-avatars">
+        <div class="social-avatar" style="background:#C96A2E;">R</div>
+        <div class="social-avatar" style="background:#2563EB;">M</div>
+        <div class="social-avatar" style="background:#059669;">S</div>
+        <div class="social-avatar" style="background:#7C3AED;">L</div>
+      </div>
+      <div class="social-text"><strong id="socialCount">183</strong> commerciaux utilisent Faro ce mois</div>
+    </div>
   </div>
-  <h1 class="hero-title">
-    Un prospect chaud.<br>
-    <span class="accent">20 secondes</span> pour tout savoir sur lui.
-  </h1>
-  <p class="hero-sub">
-    Ton prospect a déjà vu des solutions aux US.<br>
-    <strong>Faro te dit lesquelles, ses objections probables, et comment te positionner.</strong>
-  </p>
-  <p class="hero-sub2">Sans Faro : tu découvres en réunion. Avec Faro : tu anticipes ce soir.</p>
+
+  <!-- RIGHT : INPUT -->
+  <div class="input-col">
+    <div class="input-box">
+
+      <div class="step-label">
+        <div class="step-num">1</div>
+        Profil de ton prospect
+      </div>
+      <div class="profile-grid">
+        <div class="profile-chip" onclick="selectProfile(this,'DSI / CTO')">
+          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="chip-label">DSI / CTO</div>
+          <button class="info-btn" onclick="showTooltip(event,'Directeur des Systèmes d\'Information ou Chief Technology Officer. Responsable de la tech et de l\'infrastructure IT.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="profile-chip" onclick="selectProfile(this,'DG / CEO')">
+          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="chip-label">DG / CEO</div>
+          <button class="info-btn" onclick="showTooltip(event,'Directeur Général ou Chief Executive Officer. Le patron de l\'entreprise, décideur final sur les grandes orientations stratégiques.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="profile-chip" onclick="selectProfile(this,'CFO / DAF')">
+          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 10l3-4 3 2 4-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="chip-label">CFO / DAF</div>
+          <button class="info-btn" onclick="showTooltip(event,'Chief Financial Officer ou Directeur Administratif et Financier. Responsable des finances et du budget de l\'entreprise.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="profile-chip" onclick="selectProfile(this,'DRH')">
+          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 12c0-2 1.8-3.5 4-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="chip-label">DRH</div>
+          <button class="info-btn" onclick="showTooltip(event,'Directeur des Ressources Humaines. Responsable du recrutement, de la gestion des talents et des politiques RH.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="profile-chip" onclick="selectProfile(this,'Directeur Commercial')">
+          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12V6l5-4 5 4v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="8" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg></div>
+          <div class="chip-label">Dir. Commercial</div>
+          <button class="info-btn" onclick="showTooltip(event,'Directeur Commercial ou Sales Director. Responsable de la stratégie commerciale, des équipes de vente et du chiffre d\'affaires.')"><svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 4.5v2.5M5 3.2v.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="profile-chip" onclick="selectProfile(this,'Autre')">
+          <div class="chip-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 5v2.5L9 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="chip-label">Autre</div>
+        </div>
+      </div>
+
+      <div class="input-divider"></div>
+
+      <div class="step-label">
+        <div class="step-num">2</div>
+        Sujet de la réunion
+      </div>
+      <input type="text" class="input-field" id="topicInput" placeholder="Ex : automatisation des processus avec l'IA" maxlength="120"/>
+      <div class="topic-chips">
+        <div class="topic-chip" onclick="setTopic(this)">IA générative</div>
+        <div class="topic-chip" onclick="setTopic(this)">Automatisation</div>
+        <div class="topic-chip" onclick="setTopic(this)">Optimisation coûts</div>
+        <div class="topic-chip" onclick="setTopic(this)">Transformation digitale</div>
+        <div class="topic-chip" onclick="setTopic(this)">Cybersécurité</div>
+      </div>
+
+      <div class="input-divider"></div>
+
+      <div class="input-bottom">
+        <div class="input-sources">
+          <strong id="briefCount">2 847</strong> briefs générés<br>
+          Bloomberg · WSJ · HBR · McKinsey · FT · Gartner
+        </div>
+        <button class="input-btn" onclick="generate()">
+          Générer mon brief
+          <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Gratuit</div>
+        <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Sans carte</div>
+        <div class="trust-item"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>20 secondes</div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<!-- INPUT -->
-<div class="input-card" id="inputZone">
-  <div class="input-box">
-
-    <div class="step-label">Étape 1 · Profil de ton prospect</div>
-    <div class="profile-grid">
-      <div class="profile-chip" onclick="selectProfile(this, 'DSI / CTO')">
-        <div class="profile-chip-icon">
-          <svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        </div>
-        <div class="profile-chip-label">DSI / CTO</div>
-        <div class="profile-chip-desc">Responsable IT & tech</div>
-      </div>
-      <div class="profile-chip" onclick="selectProfile(this, 'DG / CEO')">
-        <div class="profile-chip-icon">
-          <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        </div>
-        <div class="profile-chip-label">DG / CEO</div>
-        <div class="profile-chip-desc">Dirigeant d'entreprise</div>
-      </div>
-      <div class="profile-chip" onclick="selectProfile(this, 'CFO / DAF')">
-        <div class="profile-chip-icon">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M2 10l3-4 3 2 4-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="profile-chip-label">CFO / DAF</div>
-        <div class="profile-chip-desc">Directeur financier</div>
-      </div>
-      <div class="profile-chip" onclick="selectProfile(this, 'DRH')">
-        <div class="profile-chip-icon">
-          <svg viewBox="0 0 14 14" fill="none"><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 12c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        </div>
-        <div class="profile-chip-label">DRH</div>
-        <div class="profile-chip-desc">Ressources humaines</div>
-      </div>
-      <div class="profile-chip" onclick="selectProfile(this, 'Directeur Commercial')">
-        <div class="profile-chip-icon">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M2 12V6l5-4 5 4v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="8" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg>
-        </div>
-        <div class="profile-chip-label">Dir. Commercial</div>
-        <div class="profile-chip-desc">Sales & business dev</div>
-      </div>
-      <div class="profile-chip" onclick="selectProfile(this, 'Autre')">
-        <div class="profile-chip-icon">
-          <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 5v2.5L9 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        </div>
-        <div class="profile-chip-label">Autre</div>
-        <div class="profile-chip-desc">Autre profil</div>
-      </div>
-    </div>
-
-    <div class="input-divider"></div>
-
-    <div class="step-label">Étape 2 · Sujet de la réunion</div>
-    <input type="text" class="input-field" id="topicInput"
-      placeholder="Ex : automatisation des processus RH avec l'IA"
-      maxlength="120" />
-
-    <div class="topic-chips">
-      <div class="topic-chip" onclick="setTopic(this)">IA générative</div>
-      <div class="topic-chip" onclick="setTopic(this)">Automatisation</div>
-      <div class="topic-chip" onclick="setTopic(this)">Optimisation coûts</div>
-      <div class="topic-chip" onclick="setTopic(this)">Transformation digitale</div>
-      <div class="topic-chip" onclick="setTopic(this)">Cybersécurité</div>
-    </div>
-
-    <div class="input-divider"></div>
-
-    <div class="input-bottom">
-      <div class="input-meta" id="sourceMeta">
-        <span id="briefCount">2 847</span> briefs · Bloomberg · WSJ · HBR · McKinsey · FT
-      </div>
-      <button class="input-btn" onclick="generate()">
-        Générer mon brief
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="input-trust">
-    <div class="trust-item">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Gratuit
-    </div>
-    <div class="trust-item">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Sans carte bancaire
-    </div>
-    <div class="trust-item">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      20 secondes
-    </div>
-  </div>
-</div>
+<!-- TOOLTIP -->
+<div class="tooltip-box" id="tooltipBox"></div>
 
 <!-- LOADING -->
 <div class="loading" id="loading">
@@ -675,214 +624,57 @@ nav {
 
 <!-- DASHBOARD -->
 <div class="dashboard" id="dashboard">
-
   <div class="dash-top">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <div class="dash-back" onclick="resetForm()">
         <svg viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Nouvelle analyse
       </div>
-      <div class="dash-context">
-        <div class="dash-profile-tag" id="dashProfile">DSI</div>
-        <div class="dash-topic-tag" id="dashTopic">IA générative</div>
+      <div class="dash-tags">
+        <div class="dash-tag-profile" id="dashProfile"></div>
+        <div class="dash-tag-topic" id="dashTopic"></div>
       </div>
     </div>
-    <div class="dash-right">
-      <div class="timer-chip">
-        <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Valable <strong style="margin-left:3px;font-family:'DM Mono',monospace;" id="timerVal">23:59:59</strong>
-      </div>
+    <div class="timer-chip">
+      <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Valable <strong style="margin-left:3px;font-family:'DM Mono',monospace;" id="timerVal">23:59:59</strong>
     </div>
   </div>
 
-  <!-- SCORE ROW -->
   <div class="score-row">
     <div class="score-circle-wrap">
       <svg class="score-svg" width="68" height="68" viewBox="0 0 68 68">
         <circle class="score-bg" cx="34" cy="34" r="29"/>
         <circle class="score-fill-el" id="scoreFill" cx="34" cy="34" r="29" stroke="#C96A2E" stroke-dasharray="182.2" stroke-dashoffset="182.2"/>
       </svg>
-      <div class="score-inner">
-        <div class="score-num" id="scoreNum">0</div>
-        <div class="score-denom">/100</div>
-      </div>
+      <div class="score-inner"><div class="score-num" id="scoreNum">0</div><div class="score-denom">/100</div></div>
     </div>
     <div class="score-mid">
       <div class="score-title" id="scoreTitle">Calcul...</div>
       <div class="dims">
-        <div class="dim">
-          <div class="dim-lbl">Maturité</div>
-          <div class="dim-row">
-            <div class="dim-bar"><div class="dim-fill" id="d1" style="width:0%;background:#3B82F6;"></div></div>
-            <div class="dim-val" id="d1v">0%</div>
-          </div>
-        </div>
-        <div class="dim">
-          <div class="dim-lbl">Budget</div>
-          <div class="dim-row">
-            <div class="dim-bar"><div class="dim-fill" id="d2" style="width:0%;background:#F59E0B;"></div></div>
-            <div class="dim-val" id="d2v">0%</div>
-          </div>
-        </div>
-        <div class="dim">
-          <div class="dim-lbl">Concurrence</div>
-          <div class="dim-row">
-            <div class="dim-bar"><div class="dim-fill" id="d3" style="width:0%;background:#EF4444;"></div></div>
-            <div class="dim-val" id="d3v">0%</div>
-          </div>
-        </div>
-        <div class="dim">
-          <div class="dim-lbl">Timing</div>
-          <div class="dim-row">
-            <div class="dim-bar"><div class="dim-fill" id="d4" style="width:0%;background:#10B981;"></div></div>
-            <div class="dim-val" id="d4v">0%</div>
-          </div>
-        </div>
+        <div class="dim"><div class="dim-lbl">Maturité</div><div class="dim-row"><div class="dim-bar"><div class="dim-fill" id="d1" style="width:0%;background:#3B82F6;"></div></div><div class="dim-val" id="d1v">0%</div></div></div>
+        <div class="dim"><div class="dim-lbl">Budget</div><div class="dim-row"><div class="dim-bar"><div class="dim-fill" id="d2" style="width:0%;background:#F59E0B;"></div></div><div class="dim-val" id="d2v">0%</div></div></div>
+        <div class="dim"><div class="dim-lbl">Concurrence</div><div class="dim-row"><div class="dim-bar"><div class="dim-fill" id="d3" style="width:0%;background:#EF4444;"></div></div><div class="dim-val" id="d3v">0%</div></div></div>
+        <div class="dim"><div class="dim-lbl">Timing</div><div class="dim-row"><div class="dim-bar"><div class="dim-fill" id="d4" style="width:0%;background:#10B981;"></div></div><div class="dim-val" id="d4v">0%</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- GRID -->
   <div class="grid">
-
-    <!-- COL 1 -->
     <div class="card">
-      <div class="card-lbl">
-        <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" fill="currentColor"/></svg>
-        Signaux US
-      </div>
-
-      <div class="sig">
-        <div class="sig-top">
-          <div class="sig-num">Signal 01</div>
-          <div class="sig-src" id="s1src"></div>
-        </div>
-        <div class="sig-title" id="s1title"></div>
-        <div class="sig-body" id="s1body"></div>
-        <div class="sig-impl">
-          <div class="sig-arr">→</div>
-          <div class="sig-impl-txt" id="s1impl"></div>
-        </div>
-      </div>
-
-      <div class="sig">
-        <div class="sig-top">
-          <div class="sig-num locked">Signal 02</div>
-          <div class="sig-src" id="s2src"></div>
-        </div>
-        <div class="locked-wrap" id="s2wrap">
-          <div class="locked-content">
-            <div class="sig-title" id="s2title"></div>
-            <div class="sig-body" id="s2body"></div>
-            <div class="sig-impl">
-              <div class="sig-arr">→</div>
-              <div class="sig-impl-txt" id="s2impl"></div>
-            </div>
-          </div>
-          <div class="locked-overlay" id="s2ov">
-            <div class="locked-lbl">
-              <svg viewBox="0 0 11 11" fill="none"><rect x="2" y="4.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-              Débloquer
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="card-lbl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" fill="currentColor"/></svg>Signaux US</div>
+      <div class="sig"><div class="sig-top"><div class="sig-num">Signal 01</div><div class="sig-src" id="s1src"></div></div><div class="sig-title" id="s1title"></div><div class="sig-body" id="s1body"></div><div class="sig-impl"><div class="sig-arr">→</div><div class="sig-impl-txt" id="s1impl"></div></div></div>
+      <div class="sig"><div class="sig-top"><div class="sig-num locked">Signal 02</div><div class="sig-src" id="s2src"></div></div><div class="locked-wrap" id="s2wrap"><div class="locked-content"><div class="sig-title" id="s2title"></div><div class="sig-body" id="s2body"></div><div class="sig-impl"><div class="sig-arr">→</div><div class="sig-impl-txt" id="s2impl"></div></div></div><div class="locked-overlay" id="s2ov"><div class="locked-lbl"><svg viewBox="0 0 11 11" fill="none"><rect x="2" y="4.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Débloquer</div></div></div></div>
     </div>
-
-    <!-- COL 2 -->
     <div style="display:flex;flex-direction:column;gap:12px;">
-
-      <div class="card">
-        <div class="card-lbl">
-          <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v5M6 8.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/></svg>
-          Objections probables
-        </div>
-        <div class="obj">
-          <div class="obj-top"><div class="obj-name" id="o1n">—</div><div class="obj-pct" id="o1p">—</div></div>
-          <div class="obj-bar"><div class="obj-fill" id="o1b" style="width:0%;background:#EF4444;"></div></div>
-        </div>
-        <div class="obj">
-          <div class="obj-top"><div class="obj-name" id="o2n">—</div><div class="obj-pct" id="o2p">—</div></div>
-          <div class="obj-bar"><div class="obj-fill" id="o2b" style="width:0%;background:#F59E0B;"></div></div>
-        </div>
-        <div class="obj">
-          <div class="obj-top"><div class="obj-name" id="o3n">—</div><div class="obj-pct" id="o3p">—</div></div>
-          <div class="obj-bar"><div class="obj-fill" id="o3b" style="width:0%;background:#F59E0B;"></div></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-lbl">
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 9L4 6l2 2 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Maturité marché US
-        </div>
-        <div class="mat-track"><div class="mat-fill" id="matFill" style="width:0%"></div></div>
-        <div class="mat-labels">
-          <div class="mat-label">Émergent</div>
-          <div class="mat-label">Croissance</div>
-          <div class="mat-label">Mature</div>
-        </div>
-        <div class="mat-desc" id="matDesc">—</div>
-      </div>
-
-      <div class="card">
-        <div class="card-lbl" style="color:#9CA3AF;">
-          <svg viewBox="0 0 11 11" fill="none"><rect x="2" y="4.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Signal 03 · Verrouillé
-        </div>
-        <div class="locked-wrap" id="s3wrap">
-          <div class="locked-content">
-            <div class="sig-title" id="s3title"></div>
-            <div class="sig-body" id="s3body"></div>
-          </div>
-          <div class="locked-overlay" id="s3ov">
-            <div class="locked-lbl">
-              <svg viewBox="0 0 11 11" fill="none"><rect x="2" y="4.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-              Débloquer
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <div class="card"><div class="card-lbl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v5M6 8.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/></svg>Objections probables</div><div class="obj"><div class="obj-top"><div class="obj-name" id="o1n">—</div><div class="obj-pct" id="o1p">—</div></div><div class="obj-bar"><div class="obj-fill" id="o1b" style="width:0%;background:#EF4444;"></div></div></div><div class="obj"><div class="obj-top"><div class="obj-name" id="o2n">—</div><div class="obj-pct" id="o2p">—</div></div><div class="obj-bar"><div class="obj-fill" id="o2b" style="width:0%;background:#F59E0B;"></div></div></div><div class="obj"><div class="obj-top"><div class="obj-name" id="o3n">—</div><div class="obj-pct" id="o3p">—</div></div><div class="obj-bar"><div class="obj-fill" id="o3b" style="width:0%;background:#F59E0B;"></div></div></div></div>
+      <div class="card"><div class="card-lbl"><svg viewBox="0 0 12 12" fill="none"><path d="M1 9L4 6l2 2 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Maturité marché US</div><div class="mat-track"><div class="mat-fill" id="matFill" style="width:0%"></div></div><div class="mat-labels"><div class="mat-label">Émergent</div><div class="mat-label">Croissance</div><div class="mat-label">Mature</div></div><div class="mat-desc" id="matDesc">—</div></div>
+      <div class="card"><div class="card-lbl" style="color:#9CA3AF;"><svg viewBox="0 0 11 11" fill="none"><rect x="2" y="4.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Signal 03 · Verrouillé</div><div class="locked-wrap" id="s3wrap"><div class="locked-content"><div class="sig-title" id="s3title"></div><div class="sig-body" id="s3body"></div></div><div class="locked-overlay" id="s3ov"><div class="locked-lbl"><svg viewBox="0 0 11 11" fill="none"><rect x="2" y="4.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Débloquer</div></div></div></div>
     </div>
-
-    <!-- COL 3 -->
     <div style="display:flex;flex-direction:column;gap:10px;">
-
-      <div class="key-box">
-        <div class="key-lbl">
-          <svg viewBox="0 0 11 11" fill="none"><path d="M5.5 1l1.2 3.2H10L7.5 5.9l1 3L5.5 7.5 3 8.9l1-3L1.5 4.2H4.3L5.5 1z" fill="currentColor"/></svg>
-          Signal clé
-        </div>
-        <div class="key-text" id="keyText">—</div>
-      </div>
-
-      <div class="gate-box" id="gateBox">
-        <div class="gate-social">
-          <svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 5.5l2 2 3.5-3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span id="gateSocial">12 briefs débloqués ce matin</span>
-        </div>
-        <div class="gate-title">Débloque les 2 signaux restants</div>
-        <div class="gate-sub">Gratuit. <strong>Ton concurrent ne les a pas encore vus.</strong></div>
-        <div class="gate-ba">Sans Faro : tu découvres en réunion.<br><strong>Avec Faro : tu anticipes ce soir.</strong></div>
-        <input type="email" class="gate-input" id="emailInput" placeholder="ton@email.fr" />
-        <button class="gate-btn" onclick="unlock()">
-          Débloquer les signaux
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="gate-note">
-          <span>Sans pub</span><span>·</span><span>Sans revente</span><span>·</span><span>1 clic pour partir</span>
-        </div>
-      </div>
-
-      <div class="success-box" id="successBox">
-        <div class="success-icon">
-          <svg viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="success-title">Brief complet débloqué</div>
-        <div class="success-sub">Vérifie ta boite mail. Prochain brief demain matin.</div>
-      </div>
-
+      <div class="key-box"><div class="key-lbl"><svg viewBox="0 0 11 11" fill="none"><path d="M5.5 1l1.2 3.2H10L7.5 5.9l1 3L5.5 7.5 3 8.9l1-3L1.5 4.2H4.3L5.5 1z" fill="currentColor"/></svg>Signal clé</div><div class="key-text" id="keyText">—</div></div>
+      <div class="gate-box" id="gateBox"><div class="gate-social"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 5.5l2 2 3.5-3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="gateSocial">12 briefs débloqués ce matin</span></div><div class="gate-title">Débloque les 2 signaux restants</div><div class="gate-sub">Gratuit. <strong>Ton concurrent ne les a pas vus.</strong></div><div class="gate-ba">Sans Faro : tu découvres en réunion.<br><strong>Avec Faro : tu anticipes ce soir.</strong></div><input type="email" class="gate-input" id="emailInput" placeholder="ton@email.fr"/><button class="gate-btn" onclick="unlock()">Débloquer les signaux <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gate-note"><span>Sans pub</span><span>·</span><span>Sans revente</span><span>·</span><span>1 clic pour partir</span></div></div>
+      <div class="success-box" id="successBox"><div class="success-icon"><svg viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="success-title">Brief complet débloqué</div><div class="success-sub">Vérifie ta boite mail. Prochain brief demain matin.</div></div>
     </div>
   </div>
 </div>
@@ -891,20 +683,22 @@ nav {
 let selectedProfile = '';
 let timerInterval;
 let count = 183;
+let briefCount = 2847;
 
 setInterval(() => {
-  if (Math.random() > 0.8) { count++; document.getElementById('navCount').textContent = count; }
+  if (Math.random() > 0.8) {
+    count++;
+    document.getElementById('navCount').textContent = count;
+    document.getElementById('socialCount').textContent = count;
+  }
 }, 10000);
 
-// Brief counter
-let briefCount = 2847;
 setInterval(() => {
   if (Math.random() > 0.6) {
     briefCount += Math.floor(Math.random() * 3) + 1;
-    const el = document.getElementById('briefCount');
-    if (el) el.textContent = briefCount.toLocaleString('fr-FR');
+    document.getElementById('briefCount').textContent = briefCount.toLocaleString('fr-FR');
   }
-}, 12000);
+}, 7000);
 
 function selectProfile(el, name) {
   document.querySelectorAll('.profile-chip').forEach(c => c.classList.remove('selected'));
@@ -916,6 +710,22 @@ function setTopic(el) {
   document.getElementById('topicInput').value = el.textContent;
   document.getElementById('topicInput').focus();
 }
+
+function showTooltip(e, text) {
+  e.stopPropagation();
+  const box = document.getElementById('tooltipBox');
+  box.textContent = text;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const w = 220;
+  let left = rect.left + rect.width/2 - w/2;
+  if (left < 8) left = 8;
+  if (left + w > window.innerWidth - 8) left = window.innerWidth - w - 8;
+  box.style.left = left + 'px';
+  box.style.top = (rect.top + window.scrollY - 8) + 'px';
+  box.style.transform = 'translateY(-100%)';
+  box.classList.add('show');
+}
+document.addEventListener('click', () => document.getElementById('tooltipBox').classList.remove('show'));
 
 function animateSources() {
   const ids = ['ls1','ls2','ls3','ls4','ls5'];
@@ -931,13 +741,14 @@ async function generate() {
   const topic = document.getElementById('topicInput').value.trim();
   if (!topic) { document.getElementById('topicInput').focus(); return; }
   if (!selectedProfile) {
+    document.querySelector('.profile-grid').scrollIntoView({behavior:'smooth', block:'center'});
     document.querySelector('.profile-grid').style.outline = '2px solid #C96A2E';
-    setTimeout(() => document.querySelector('.profile-grid').style.outline = '', 1500);
+    document.querySelector('.profile-grid').style.borderRadius = '8px';
+    setTimeout(() => { document.querySelector('.profile-grid').style.outline = ''; }, 1500);
     return;
   }
 
-  document.getElementById('heroSection').style.display = 'none';
-  document.getElementById('inputZone').style.display = 'none';
+  document.getElementById('mainLayout').style.display = 'none';
   document.getElementById('loading').classList.add('show');
   document.getElementById('dashboard').classList.remove('show');
 
@@ -946,8 +757,8 @@ async function generate() {
   try {
     const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prospect: selectedProfile, subject: topic })
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({prospect: selectedProfile, subject: topic})
     });
     clearInterval(srcInt);
     document.getElementById('loading').classList.remove('show');
@@ -963,32 +774,31 @@ async function generate() {
 }
 
 function resetForm() {
-  document.getElementById('heroSection').style.display = '';
-  document.getElementById('inputZone').style.display = '';
+  document.getElementById('mainLayout').style.display = '';
   document.getElementById('dashboard').classList.remove('show');
 }
 
 function renderDash(data) {
   const topic = document.getElementById('topicInput').value;
   document.getElementById('dashProfile').textContent = selectedProfile;
-  document.getElementById('dashTopic').textContent = topic.substring(0,30) + (topic.length>30?'...':'');
+  document.getElementById('dashTopic').textContent = topic.substring(0,30)+(topic.length>30?'...':'');
 
   const signals = data.signals || [];
-  signals.forEach((s, i) => {
+  signals.forEach((s,i) => {
     const n = i+1;
     const g = id => document.getElementById(id);
-    if (g(`s${n}title`)) g(`s${n}title`).textContent = s.title || '';
-    if (g(`s${n}body`)) g(`s${n}body`).innerHTML = s.body || '';
-    if (g(`s${n}impl`)) g(`s${n}impl`).innerHTML = s.implication || '';
-    if (g(`s${n}src`)) g(`s${n}src`).textContent = s.source || '';
+    if(g(`s${n}title`)) g(`s${n}title`).textContent = s.title||'';
+    if(g(`s${n}body`)) g(`s${n}body`).innerHTML = s.body||'';
+    if(g(`s${n}impl`)) g(`s${n}impl`).innerHTML = s.implication||'';
+    if(g(`s${n}src`)) g(`s${n}src`).textContent = s.source||'';
   });
 
-  document.getElementById('keyText').innerHTML = data.retenir || '';
+  document.getElementById('keyText').innerHTML = data.retenir||'';
 
-  const score = data.score || (Math.floor(Math.random()*20)+65);
+  const score = data.score||(Math.floor(Math.random()*20)+65);
   animateScore(score);
 
-  const dims = {d1:Math.floor(Math.random()*25)+55, d2:Math.floor(Math.random()*30)+45, d3:Math.floor(Math.random()*35)+40, d4:Math.floor(Math.random()*25)+60};
+  const dims = {d1:Math.floor(Math.random()*25)+55,d2:Math.floor(Math.random()*30)+45,d3:Math.floor(Math.random()*35)+40,d4:Math.floor(Math.random()*25)+60};
   setTimeout(() => {
     Object.entries(dims).forEach(([k,v]) => {
       document.getElementById(k).style.width = v+'%';
@@ -996,132 +806,93 @@ function renderDash(data) {
     });
   }, 300);
 
-  const objs = data.objections || [
+  const objs = data.objections||[
     {name:'ROI difficile à quantifier', score:Math.floor(Math.random()*20)+70},
     {name:'Budget non prévu', score:Math.floor(Math.random()*20)+52},
     {name:'Résistance interne', score:Math.floor(Math.random()*15)+42}
   ];
   objs.forEach((o,i) => {
-    const n = i+1;
-    document.getElementById(`o${n}n`).textContent = o.name;
-    document.getElementById(`o${n}p`).textContent = o.score+'%';
-    setTimeout(() => { document.getElementById(`o${n}b`).style.width = o.score+'%'; }, 400+i*100);
+    const n=i+1;
+    document.getElementById(`o${n}n`).textContent=o.name;
+    document.getElementById(`o${n}p`).textContent=o.score+'%';
+    setTimeout(()=>{document.getElementById(`o${n}b`).style.width=o.score+'%';},400+i*100);
   });
 
-  const mat = data.maturite || Math.floor(Math.random()*30)+55;
+  const mat = data.maturite||(Math.floor(Math.random()*30)+55);
   setTimeout(() => {
-    document.getElementById('matFill').style.width = mat+'%';
-    document.getElementById('matDesc').innerHTML = mat < 40
+    document.getElementById('matFill').style.width=mat+'%';
+    document.getElementById('matDesc').innerHTML = mat<40
       ? 'Marché émergent aux US. <strong>Fenêtre ouverte en France.</strong>'
-      : mat < 70
+      : mat<70
       ? 'Marché en forte croissance aux US. <strong>Early adopters français actifs.</strong>'
-      : 'Marché mature aux US. <strong>Références et ROI prouvés disponibles.</strong>';
+      : 'Marché mature aux US. <strong>ROI prouvé, références disponibles.</strong>';
   }, 500);
 
-  const titles = ['Préparation initiale','Position correcte','Bien préparé','Très bien préparé','Position excellente'];
-  document.getElementById('scoreTitle').textContent = titles[Math.min(Math.floor(score/20),4)];
+  const titles=['Préparation initiale','Position correcte','Bien préparé','Très bien préparé','Position excellente'];
+  document.getElementById('scoreTitle').textContent=titles[Math.min(Math.floor(score/20),4)];
 
-  const counts = [9,11,12,14,15];
-  document.getElementById('gateSocial').textContent = counts[Math.floor(Math.random()*counts.length)]+' briefs débloqués ce matin';
+  const counts=[9,11,12,14,15];
+  document.getElementById('gateSocial').textContent=counts[Math.floor(Math.random()*counts.length)]+' briefs débloqués ce matin';
 
-  document.getElementById('gateBox').style.display = '';
+  document.getElementById('gateBox').style.display='';
   document.getElementById('successBox').classList.remove('show');
-  document.getElementById('s2ov').style.display = '';
-  document.getElementById('s3ov').style.display = '';
-  document.getElementById('s2wrap').querySelector('.locked-content').style.filter = 'blur(4px)';
-  document.getElementById('s3wrap').querySelector('.locked-content').style.filter = 'blur(4px)';
+  document.getElementById('s2ov').style.display='';
+  document.getElementById('s3ov').style.display='';
+  document.getElementById('s2wrap').querySelector('.locked-content').style.filter='blur(4px)';
+  document.getElementById('s3wrap').querySelector('.locked-content').style.filter='blur(4px)';
 
   document.getElementById('dashboard').classList.add('show');
   startTimer();
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function animateScore(target) {
-  const fill = document.getElementById('scoreFill');
-  const num = document.getElementById('scoreNum');
-  const circ = 182.2;
-  let cur = 0;
-  const color = target>=75 ? '#059669' : target>=55 ? '#D97706' : '#EF4444';
-  fill.setAttribute('stroke', color);
-  const iv = setInterval(() => {
+  const fill=document.getElementById('scoreFill');
+  const num=document.getElementById('scoreNum');
+  const circ=182.2;
+  let cur=0;
+  const color=target>=75?'#059669':target>=55?'#D97706':'#EF4444';
+  fill.setAttribute('stroke',color);
+  const iv=setInterval(()=>{
     cur++;
-    num.textContent = cur;
-    fill.style.strokeDashoffset = circ - (circ*cur/100);
-    if (cur>=target) clearInterval(iv);
-  }, 12);
+    num.textContent=cur;
+    fill.style.strokeDashoffset=circ-(circ*cur/100);
+    if(cur>=target)clearInterval(iv);
+  },12);
 }
 
 function startTimer() {
-  if (timerInterval) clearInterval(timerInterval);
-  let s = 86400;
-  timerInterval = setInterval(() => {
+  if(timerInterval)clearInterval(timerInterval);
+  let s=86400;
+  timerInterval=setInterval(()=>{
     s--;
-    const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
-    document.getElementById('timerVal').textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-    if (s<=0) clearInterval(timerInterval);
-  }, 1000);
+    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+    document.getElementById('timerVal').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    if(s<=0)clearInterval(timerInterval);
+  },1000);
 }
 
 async function unlock() {
-  const email = document.getElementById('emailInput').value.trim();
-  if (!email || !email.includes('@')) { document.getElementById('emailInput').focus(); return; }
-
+  const email=document.getElementById('emailInput').value.trim();
+  if(!email||!email.includes('@')){document.getElementById('emailInput').focus();return;}
   try {
-    await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({email, prospect: selectedProfile, subject: document.getElementById('topicInput').value})
+    await fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,prospect:selectedProfile,subject:document.getElementById('topicInput').value})
     });
-  } catch(e) {}
-
-  document.getElementById('gateBox').style.display = 'none';
+  } catch(e){}
+  document.getElementById('gateBox').style.display='none';
   document.getElementById('successBox').classList.add('show');
-  ['s2','s3'].forEach(id => {
-    document.getElementById(id+'ov').style.display = 'none';
-    document.getElementById(id+'wrap').querySelector('.locked-content').style.filter = 'none';
+  ['s2','s3'].forEach(id=>{
+    document.getElementById(id+'ov').style.display='none';
+    document.getElementById(id+'wrap').querySelector('.locked-content').style.filter='none';
   });
 }
 
-
-function showTooltip(e, text) {
-  e.stopPropagation();
-  const box = document.getElementById('tooltipBox');
-  const tooltip_text = document.getElementById('tooltipText');
-  tooltip_text.textContent = text;
-  
-  const rect = e.currentTarget.getBoundingClientRect();
-  const boxWidth = 240;
-  
-  let left = rect.left + rect.width/2 - boxWidth/2;
-  if (left < 8) left = 8;
-  if (left + boxWidth > window.innerWidth - 8) left = window.innerWidth - boxWidth - 8;
-  
-  box.style.left = left + 'px';
-  box.style.top = (rect.top - 10 + window.scrollY) + 'px';
-  box.style.transform = 'translateY(-100%)';
-  box.classList.add('show');
-}
-
-document.addEventListener('click', () => {
-  document.getElementById('tooltipBox').classList.remove('show');
-});
-
-// Brief counter animation
-function animateBriefCount() {
-  const el = document.getElementById('briefCount');
-  let val = 2847;
-  setInterval(() => {
-    if (Math.random() > 0.6) {
-      val += Math.floor(Math.random() * 3) + 1;
-      el.textContent = val.toLocaleString('fr-FR');
-    }
-  }, 7000);
-}
-animateBriefCount();
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('topicInput').addEventListener('keydown', e => { if(e.key==='Enter') generate(); });
-  document.getElementById('emailInput').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('topicInput').addEventListener('keydown',e=>{if(e.key==='Enter')generate();});
+  document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
 });
 </script>
 </body>
