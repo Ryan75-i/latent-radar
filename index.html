@@ -95,64 +95,78 @@ nav {
 .hero-sub strong { color: var(--text-primary); font-weight: 600; }
 
 
-/* STAT BADGES */
-.stat-badges {
+/* KPI ROW */
+.kpi-row {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 0;
   margin-bottom: 36px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-.stat-badge {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px 16px;
+.kpi-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex: 1;
+  gap: 6px;
 }
-.stat-val {
-  font-size: 22px;
+.kpi-sep {
+  width: 1px;
+  height: 48px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 0 24px;
+}
+.kpi-val {
+  font-size: 32px;
   font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
   line-height: 1;
 }
-.stat-lbl {
-  font-size: 11px;
+.kpi-lbl {
+  font-size: 12px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.4;
 }
 
 
-/* STAT BADGES */
-.stat-badges {
+/* KPI ROW */
+.kpi-row {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 0;
   margin-bottom: 36px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-.stat-badge {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px 16px;
+.kpi-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex: 1;
+  gap: 6px;
 }
-.stat-val {
-  font-size: 22px;
+.kpi-sep {
+  width: 1px;
+  height: 48px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 0 24px;
+}
+.kpi-val {
+  font-size: 32px;
   font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
   line-height: 1;
 }
-.stat-lbl {
-  font-size: 11px;
+.kpi-lbl {
+  font-size: 12px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.4;
 }
 
@@ -504,7 +518,9 @@ nav {
   .input-bottom { flex-direction: column; align-items: stretch; }
   .input-sources { text-align: center; }
   .social-proof { width: 100%; }
-  .stat-badges { gap: 8px; }
+  .kpi-row { padding: 16px 0; }
+  .kpi-sep { margin: 0 16px; }
+  .kpi-val { font-size: 26px; }
 }
 </style>
 </head>
@@ -512,7 +528,7 @@ nav {
 
 <!-- NAV -->
 <nav>
-  <svg xmlns="http://www.w3.org/2000/svg" width="96" height="28" viewBox="0 0 480 96" fill="none">
+  <svg xmlns="http://www.w3.org/2000/svg" width="160" height="46" viewBox="0 0 480 96" fill="none">
     <g transform="translate(4,3) scale(1.05)">
       <circle cx="38" cy="50" r="5" fill="#C96A2E"/>
       <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"/>
@@ -544,18 +560,20 @@ nav {
       Ton prospect a déjà vu des solutions aux US.<br>
       <strong>Faro te dit lesquelles, ses objections, et comment te positionner.</strong>
     </p>
-    <div class="stat-badges">
-      <div class="stat-badge">
-        <div class="stat-val">3</div>
-        <div class="stat-lbl">signaux US<br>identifiés</div>
+    <div class="kpi-row">
+      <div class="kpi-item">
+        <div class="kpi-val">+80%</div>
+        <div class="kpi-lbl">de taux de conversion<br>sur le premier RDV</div>
       </div>
-      <div class="stat-badge">
-        <div class="stat-val">3</div>
-        <div class="stat-lbl">objections<br>anticipées</div>
+      <div class="kpi-sep"></div>
+      <div class="kpi-item">
+        <div class="kpi-val">18 mois</div>
+        <div class="kpi-lbl">d'avance sur tes<br>concurrents français</div>
       </div>
-      <div class="stat-badge">
-        <div class="stat-val">20s</div>
-        <div class="stat-lbl">pour tout<br>savoir</div>
+      <div class="kpi-sep"></div>
+      <div class="kpi-item">
+        <div class="kpi-val">3x</div>
+        <div class="kpi-lbl">plus de deals closés<br>dès le premier échange</div>
       </div>
     </div>
     <div class="social-proof">
@@ -938,9 +956,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('topicInput').addEventListener('keydown',e=>{if(e.key==='Enter')generate();});
   document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
 });
-</script>
-</body>
-</html>
 </script>
 </body>
 </html>
