@@ -136,7 +136,7 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
         body: JSON.stringify({
-          from: 'Faro <onboarding@resend.dev>',
+          from: 'Faro <hello@farobrief.com>',
           to: [email],
           subject: `Ton brief Faro · ${prospect} · ${subject}`,
           html: emailHtml
