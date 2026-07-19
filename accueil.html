@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faro · Entre en réunion avec un coup d'avance</title>
+<meta name="description" content="Faro capte les signaux du marché américain 12 à 18 mois avant qu'ils n'arrivent en France, et les transforme en brief prêt à dire pour tes rendez-vous commerciaux.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --cream:#F6F1E7;        /* fond chaud */
+    --cream-2:#FBF8F1;      /* panneaux clairs */
+    --card:#FFFFFF;
+    --line:#E7DECD;         /* filets chauds */
+    --line-2:#DED2BC;
+    --ink:#2A2622;          /* encre chaude */
+    --ink-soft:#4A443C;
+    --dim:#7A7266;
+    --faint:#A69C8B;
+    --copper:#C96A2E;       /* la marque */
+    --copper-d:#B0561F;
+    --copper-l:#E8804A;
+    --copper-wash:#F3E4D6;
+    --clay:#8A4B2A;
+    --focus:#C96A2E;
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --mono:'DM Mono',ui-monospace,monospace;
+  }
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--copper-wash);}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);}
+
+  /* ---------- NAV ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(246,241,231,.82);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s;}
+  nav.scrolled{border-color:var(--line);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px;}
+  .brand svg{display:block;height:34px;width:auto;}
+  .nav-links{display:flex;align-items:center;gap:30px;}
+  .nav-links a.link{font-size:14px;font-weight:500;color:var(--ink-soft);transition:color .15s;}
+  .nav-links a.link:hover{color:var(--copper);}
+  .btn{font-family:var(--sans);font-size:14px;font-weight:600;border-radius:11px;padding:10px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s,background .15s,border-color .15s;display:inline-flex;align-items:center;gap:8px;}
+  .btn:active{transform:translateY(1px);}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-2);}
+  .btn-ghost:hover{background:var(--cream-2);border-color:var(--copper);}
+  .btn-copper{background:var(--copper);color:#fff;}
+  .btn-copper:hover{background:var(--copper-d);}
+  .tok-pill{font-family:var(--mono);font-size:12px;color:var(--copper-d);background:var(--copper-wash);border:1px solid var(--line-2);border-radius:20px;padding:5px 11px;}
+  .nav-account{display:none;align-items:center;gap:14px;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:72px 0 40px;position:relative;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  .hero .eyebrow{margin-bottom:22px;display:inline-flex;align-items:center;gap:9px;}
+  .hero .eyebrow .live{width:7px;height:7px;border-radius:50%;background:var(--copper);position:relative;}
+  .hero .eyebrow .live::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--copper);opacity:.5;animation:ping 2.4s ease-out infinite;}
+  @keyframes ping{0%{transform:scale(.6);opacity:.6;}100%{transform:scale(1.9);opacity:0;}}
+  h1.title{font-family:var(--serif);font-weight:500;font-size:clamp(40px,5.6vw,68px);line-height:1.02;letter-spacing:-.02em;color:var(--ink);}
+  h1.title em{font-style:italic;color:var(--copper);font-weight:500;}
+  .hero p.lede{font-size:18px;color:var(--ink-soft);margin:26px 0 32px;max-width:480px;line-height:1.6;}
+  .hero-cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .hero-cta .btn-copper{padding:13px 24px;font-size:15px;}
+  .micro{font-size:13px;color:var(--dim);}
+  .micro b{color:var(--ink);font-weight:600;}
+
+  /* signal panel (signature) */
+  .signal{position:relative;aspect-ratio:1/.92;border:1px solid var(--line);border-radius:24px;background:
+      radial-gradient(120% 100% at 78% 42%, #FBF3E9 0%, var(--cream-2) 60%);
+      overflow:hidden;box-shadow:0 24px 60px -30px rgba(120,80,40,.35);}
+  .signal .frame-lbl{position:absolute;top:16px;left:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .signal svg{position:absolute;inset:0;width:100%;height:100%;transform:translate3d(0,0,0);content-visibility:visible;}
+  .wave{fill:none;stroke:var(--copper);stroke-linecap:round;transform-origin:74% 44%;}
+  .w1{stroke-width:2.4;animation:emit 3.6s ease-out infinite;}
+  .w2{stroke-width:2;animation:emit 3.6s ease-out infinite .9s;}
+  .w3{stroke-width:1.6;animation:emit 3.6s ease-out infinite 1.8s;}
+  .w4{stroke-width:1.2;animation:emit 3.6s ease-out infinite 2.7s;}
+  @keyframes emit{0%{opacity:0;transform:scale(.25);}12%{opacity:.85;}100%{opacity:0;transform:scale(1);}}
+  .core-dot{fill:var(--copper);}
+  .core-glow{fill:var(--copper);opacity:.14;animation:breathe 3.6s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{opacity:.1;}50%{opacity:.24;}}
+  .meridian{stroke:var(--line-2);stroke-width:1.5;stroke-dasharray:2 7;}
+  .node-label{font-family:var(--mono);font-size:11px;fill:var(--ink-soft);}
+  .node-sub{font-family:var(--sans);font-size:9.5px;fill:var(--faint);}
+  .lag-chip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--line-2);border-radius:22px;padding:7px 15px;box-shadow:0 6px 18px -8px rgba(120,80,40,.4);}
+  .lag-chip .n{font-family:var(--serif);font-style:italic;font-weight:600;font-size:17px;color:var(--copper);line-height:1;}
+  .lag-chip .l{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+
+  /* ---------- STRIP ---------- */
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:44px;}
+  .strip-in{display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;padding:20px 0;}
+  .strip span{font-size:13.5px;color:var(--dim);display:flex;align-items:center;gap:9px;}
+  .strip svg{width:16px;height:16px;color:var(--copper);flex-shrink:0;}
+
+  /* ---------- SECTION base ---------- */
+  section{padding:92px 0;}
+  .sec-head{max-width:640px;margin-bottom:52px;}
+  .sec-head .eyebrow{display:block;margin-bottom:16px;}
+  .sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,42px);line-height:1.08;letter-spacing:-.015em;color:var(--ink);}
+  .sec-head p{font-size:16.5px;color:var(--dim);margin-top:16px;}
+
+  /* tools */
+  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px;position:relative;transition:transform .25s ease,box-shadow .25s ease,border-color .25s;}
+  .tool:hover{transform:translateY(-4px);box-shadow:0 26px 50px -30px rgba(120,80,40,.4);border-color:var(--line-2);}
+  .tool .tnum{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.1em;}
+  .tool .ticon{width:44px;height:44px;border-radius:12px;background:var(--copper-wash);display:flex;align-items:center;justify-content:center;margin:14px 0 18px;color:var(--copper-d);}
+  .tool .ticon svg{width:22px;height:22px;}
+  .tool h3{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--ink);margin-bottom:3px;}
+  .tool .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:12px;}
+  .tool p{font-size:14px;color:var(--dim);line-height:1.6;}
+  .tool .moment{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--faint);}
+
+  /* why : editorial rows */
+  .why{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .why-rows{display:grid;gap:0;}
+  .why-row{display:grid;grid-template-columns:56px 1fr 1.1fr;gap:28px;align-items:baseline;padding:30px 0;border-top:1px solid var(--line);}
+  .why-row:first-child{border-top:none;}
+  .why-row .idx{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--copper);}
+  .why-row h4{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);}
+  .why-row p{font-size:15px;color:var(--dim);line-height:1.65;}
+  .why-row p b{color:var(--ink-soft);font-weight:600;}
+
+  /* how : 3 temps */
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step;}
+  .how-step{position:relative;padding-top:26px;}
+  .how-step::before{content:"0" counter(step);counter-increment:step;font-family:var(--mono);font-size:12px;color:var(--copper-d);letter-spacing:.1em;position:absolute;top:0;left:0;}
+  .how-step .bar{height:2px;background:var(--line-2);margin-bottom:18px;position:relative;overflow:hidden;}
+  .how-step .bar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:34px;background:var(--copper);}
+  .how-step h4{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:7px;}
+  .how-step p{font-size:14px;color:var(--dim);}
+
+  /* CTA band */
+  .cta-band{text-align:center;padding:110px 0;position:relative;}
+  .cta-band h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.4vw,52px);line-height:1.05;letter-spacing:-.02em;max-width:720px;margin:0 auto 14px;}
+  .cta-band h2 em{font-style:italic;color:var(--copper);}
+  .cta-band p{font-size:17px;color:var(--dim);margin-bottom:30px;}
+  .cta-band .btn-copper{padding:15px 30px;font-size:16px;}
+  .cta-note{margin-top:16px;font-size:13px;color:var(--faint);}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:44px 0;}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
+  .foot-in svg{height:26px;}
+  .foot-links{display:flex;gap:24px;flex-wrap:wrap;}
+  .foot-links a{font-size:13px;color:var(--dim);}
+  .foot-links a:hover{color:var(--copper);}
+  .foot-copy{font-family:var(--mono);font-size:11px;color:var(--faint);}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  :focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px;}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:38px;}
+    .signal{max-width:440px;}
+    .tools,.how{grid-template-columns:1fr;}
+    .why-row{grid-template-columns:1fr;gap:8px;}
+    .why-row .idx{font-size:22px;}
+    .nav-links .link{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="/" aria-label="Faro accueil">
+        <svg viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(10,10) scale(0.76)">
+            <circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
+            <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
+            <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path>
+          </g>
+          <text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a class="link" href="#outils">Les outils</a>
+        <a class="link" href="#pourquoi">Pourquoi Faro</a>
+        <a class="link" href="#methode">La méthode</a>
+        <!-- déconnecté -->
+        <span id="navGuest" style="display:flex;gap:12px;align-items:center;">
+          <a class="btn btn-ghost" href="/connexion">Se connecter</a>
+          <a class="btn btn-copper" href="/connexion">Commencer</a>
+        </span>
+        <!-- connecté -->
+        <span class="nav-account" id="navAccount">
+          <span class="tok-pill" id="navTokens">— jetons</span>
+          <a class="btn btn-copper" href="/">Mon espace</a>
+          <a class="btn btn-ghost" id="logoutBtn" href="#">Déconnexion</a>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow"><span class="live"></span>Copilote du premier rendez-vous</span>
+        <h1 class="title">Entre en réunion avec <em>un coup d'avance</em>.</h1>
+        <p class="lede">Ton prospect a déjà vu des solutions aux États-Unis. Faro te dit lesquelles, ses objections probables, et quoi dire pour te démarquer. En vingt secondes.</p>
+        <div class="hero-cta">
+          <a class="btn btn-copper" href="/connexion">Commencer gratuitement</a>
+          <a class="btn btn-ghost" href="#outils">Voir les outils</a>
+        </div>
+        <p class="micro" style="margin-top:20px;">Gratuit pour démarrer · <b>5 briefs par mois</b> · sans carte</p>
+      </div>
+
+      <!-- SIGNATURE : le signal qui traverse l'Atlantique -->
+      <div class="signal reveal" aria-label="Un signal apparaît aux États-Unis, la France suit 12 à 18 mois plus tard">
+        <span class="frame-lbl">Le décalage</span>
+        <svg viewBox="0 0 400 370" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <!-- meridian -->
+          <line class="meridian" x1="200" y1="40" x2="200" y2="330"/>
+          <!-- US node : émetteur -->
+          <circle class="core-glow" cx="296" cy="163" r="46"/>
+          <g fill="none">
+            <circle class="wave w1" cx="296" cy="163" r="22"/>
+            <circle class="wave w2" cx="296" cy="163" r="40"/>
+            <circle class="wave w3" cx="296" cy="163" r="60"/>
+            <circle class="wave w4" cx="296" cy="163" r="82"/>
+          </g>
+          <circle class="core-dot" cx="296" cy="163" r="6"/>
+          <text class="node-label" x="250" y="292">ÉTATS-UNIS</text>
+          <text class="node-sub" x="250" y="308">le signal apparaît</text>
+          <!-- FR node : récepteur -->
+          <circle cx="104" cy="200" r="4.5" fill="#A69C8B"/>
+          <text class="node-label" x="60" y="150">FRANCE</text>
+          <text class="node-sub" x="60" y="166">le marché suit</text>
+        </svg>
+        <div class="lag-chip"><div class="n">12–18 mois</div><div class="l">d'avance</div></div>
+      </div>
+    </div>
+
+    <!-- STRIP -->
+    <div class="strip">
+      <div class="wrap strip-in">
+        <span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Données réelles, chiffrées et datées</span>
+        <span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Sources premium : Gartner, McKinsey, Bloomberg</span>
+        <span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Un brief prêt à dire, dans l'ordre du rendez-vous</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- OUTILS -->
+  <section id="outils">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Trois outils, un métier</span>
+        <h2>Avant, pendant, après. Faro couvre toute la ligne de vie d'une vente.</h2>
+        <p>Trois outils distincts, chacun nourri par la même source : ton avance sur le marché américain.</p>
+      </div>
+      <div class="tools">
+        <div class="tool reveal">
+          <div class="tnum">01 · le stratège</div>
+          <div class="ticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></div>
+          <h3>Faro Brief</h3>
+          <div class="role">Avant le rendez-vous</div>
+          <p>Le film complet de ta réunion, prêt à dire. Ton ouverture, tes questions de découverte, ton apport de valeur, ton next step à proposer.</p>
+          <div class="moment">La veille, ou dix minutes avant.</div>
+        </div>
+        <div class="tool reveal">
+          <div class="tnum">02 · le combattant</div>
+          <div class="ticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
+          <h3>Faro Duel</h3>
+          <div class="role">Pendant, quand ça résiste</div>
+          <p>On t'objecte quelque chose, tu sèches. Tape l'objection exacte, Faro te renvoie trois angles de riposte, chiffrés et sourcés. À toi de choisir.</p>
+          <div class="moment">À chaud, dans l'échange.</div>
+        </div>
+        <div class="tool reveal">
+          <div class="tnum">03 · l'éclaireur</div>
+          <div class="ticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></div>
+          <h3>Faro Chasse</h3>
+          <div class="role">En amont, avant la cible</div>
+          <p>Quels signaux US explosent et vont créer un besoin en France bientôt. Faro te dit qui démarcher, et quand, avant tes concurrents.</p>
+          <div class="moment">Le matin, quand tu choisis tes cibles.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI -->
+  <section id="pourquoi" class="why">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Pourquoi pas Google, pourquoi pas ChatGPT</span>
+        <h2>La différence tient en une phrase : Faro te donne quoi dire, pas juste du contexte.</h2>
+      </div>
+      <div class="why-rows">
+        <div class="why-row reveal">
+          <span class="idx">i</span>
+          <h4>De la donnée réelle, jamais inventée</h4>
+          <p>Chaque chiffre vient d'une source vérifiable et datée. <b>Là où un modèle généraliste improvise</b>, Faro cite Gartner, McKinsey ou Bloomberg, avec l'année.</p>
+        </div>
+        <div class="why-row reveal">
+          <span class="idx">ii</span>
+          <h4>Une avance que ton prospect n'a pas</h4>
+          <p>Le décalage américain de 12 à 18 mois est ta matière première. <b>Personne d'autre ne te la sert</b> pré-mâchée pour ton rendez-vous précis.</p>
+        </div>
+        <div class="why-row reveal">
+          <span class="idx">iii</span>
+          <h4>Un plan de bataille, pas un pavé</h4>
+          <p>Faro ne recrache pas un mur de texte. Il te donne <b>ce que tu dois dire, dans l'ordre où tu vas le dire</b>, du bonjour au prochain rendez-vous calé.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODE -->
+  <section id="methode">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">La méthode</span>
+        <h2>Trois gestes, vingt secondes.</h2>
+      </div>
+      <div class="how">
+        <div class="how-step reveal"><div class="bar"></div><h4>Tu décris ton prospect</h4><p>Son profil, son entreprise, le sujet du rendez-vous, ce que tu vends.</p></div>
+        <div class="how-step reveal"><div class="bar"></div><h4>Faro scanne les signaux US</h4><p>Des faits réels, chiffrés et datés, issus de sources premium.</p></div>
+        <div class="how-step reveal"><div class="bar"></div><h4>Tu reçois ton brief</h4><p>Prêt à dire, dans l'ordre du rendez-vous. Tu entres avec une longueur d'avance.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="wrap reveal">
+      <h2>Ton prochain rendez-vous mérite <em>un coup d'avance</em>.</h2>
+      <p>Crée ton compte, prépare ton premier brief en vingt secondes.</p>
+      <a class="btn btn-copper" href="/connexion">Commencer gratuitement</a>
+      <div class="cta-note">Gratuit pour démarrer · 5 briefs par mois · sans carte</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap foot-in">
+      <svg viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:26px;">
+        <g transform="translate(10,10) scale(0.76)">
+          <circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
+          <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
+          <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path>
+        </g>
+        <text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text>
+      </svg>
+      <div class="foot-links">
+        <a href="#outils">Les outils</a>
+        <a href="#pourquoi">Pourquoi Faro</a>
+        <a href="/connexion">Se connecter</a>
+        <a href="mailto:hello@farobrief.com">Contact</a>
+      </div>
+      <div class="foot-copy">© 2026 Faro · Un coup d'avance sur le marché</div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const supabase = createClient(
+      'https://icofqeisjfoywusolbqs.supabase.co',
+      'sb_publishable_sF-J9J5rLGpAJt80SqazCw_XSkmiqns'
+    );
+
+    // Nav : ombre au scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
+
+    // Reveal au scroll
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold:.14 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+
+    // État connecté / déconnecté
+    (async () => {
+      const { data:{ session } } = await supabase.auth.getSession();
+      if (!session) return; // reste en mode invité
+      document.getElementById('navGuest').style.display = 'none';
+      document.getElementById('navAccount').style.display = 'flex';
+      // lire les jetons du profil (RLS : on ne voit que le sien)
+      try {
+        const { data } = await supabase
+          .from('profiles')
+          .select('tokens_left, plan')
+          .eq('user_id', session.user.id)
+          .single();
+        if (data) {
+          const t = data.plan === 'max' ? '∞' : data.tokens_left;
+          document.getElementById('navTokens').textContent = t + ' jetons';
+        }
+      } catch(e){ /* silencieux */ }
+    })();
+
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      await supabase.auth.signOut();
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
