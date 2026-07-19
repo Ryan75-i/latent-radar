@@ -171,6 +171,45 @@
     *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
     .reveal{opacity:1;transform:none;}
   }
+
+  /* ---- DUEL demo (hero right) ---- */
+  .duel-demo{position:relative;aspect-ratio:1/.92;border:1px solid var(--line);border-radius:24px;background:var(--cream-2);overflow:hidden;box-shadow:0 24px 60px -30px rgba(120,80,40,.35);display:flex;flex-direction:column;}
+  .dd-top{display:flex;align-items:center;gap:6px;padding:15px 18px;border-bottom:1px solid var(--line);}
+  .dd-top .dd-dot{width:9px;height:9px;border-radius:50%;background:#E2D7C4;}
+  .dd-label{margin-left:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);}
+  .dd-body{flex:1;padding:26px 24px;display:flex;flex-direction:column;justify-content:center;gap:22px;}
+  .dd-who{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;display:block;}
+  .dd-who.faro{color:var(--copper-d);}
+  .dd-bubble{border-radius:18px;padding:14px 17px;font-size:15.5px;line-height:1.5;max-width:90%;}
+  .dd-obj{align-self:flex-start;max-width:100%;}
+  .dd-bubble.obj{background:#ECE4D4;color:var(--ink-soft);border-bottom-left-radius:5px;font-style:italic;}
+  .dd-ans{align-self:flex-end;max-width:100%;}
+  .dd-ans .dd-who{text-align:right;}
+  .dd-bubble.ans{background:var(--copper);color:#fff;border-bottom-right-radius:5px;margin-left:auto;box-shadow:0 14px 30px -14px rgba(201,106,46,.65);}
+  .dd-src{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.8);margin-top:9px;letter-spacing:.04em;}
+  .dd-cursor{display:inline-block;color:#fff;font-weight:400;animation:ddblink 1s step-end infinite;}
+  @keyframes ddblink{50%{opacity:0;}}
+  .dd-obj,.dd-ans{opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease;}
+  .dd-obj.show,.dd-ans.show{opacity:1;transform:none;}
+
+  /* ---- STATS section ---- */
+  .stats{border-top:1px solid var(--line);padding:80px 0 20px;}
+  .stats-head{max-width:640px;margin-bottom:44px;}
+  .stats-head .eyebrow{display:block;margin-bottom:14px;}
+  .stats-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3vw,34px);line-height:1.12;letter-spacing:-.015em;}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .stat{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:26px 24px;transition:transform .25s ease,box-shadow .25s ease;}
+  .stat:hover{transform:translateY(-4px);box-shadow:0 26px 50px -32px rgba(120,80,40,.4);}
+  .stat-num{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1;color:var(--copper);letter-spacing:-.02em;margin-bottom:14px;}
+  .stat-num span{font-size:30px;}
+  .stat-fear{font-size:16px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:10px;}
+  .stat-sub{font-size:13px;color:var(--dim);line-height:1.55;margin-bottom:16px;}
+  .stat-sub .src{display:block;margin-top:6px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.03em;}
+  .stat-faro{font-size:13.5px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;line-height:1.5;}
+  .stat-faro b{color:var(--copper-d);font-weight:700;}
+  .stat-faro .arw{color:var(--copper);font-weight:700;margin-right:5px;}
+  @media(max-width:900px){.stats-grid{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -213,7 +252,7 @@
       <div class="reveal">
         <span class="eyebrow"><span class="live"></span>Copilote du premier rendez-vous</span>
         <h1 class="title">Entre en réunion avec <em>un coup d'avance</em>.</h1>
-        <p class="lede">Tu entres en réunion en sachant déjà où va le marché de ton prospect. Faro décode les signaux venus des États-Unis, 12 à 18 mois avant qu'ils touchent la France, et te les transforme en arguments prêts à dire.</p>
+        <p class="lede">Le brief qui te fait entrer en réunion avec un coup d'avance. Ce que tu dois dire, prêt en vingt secondes.</p>
         <div class="hero-cta">
           <a class="btn btn-copper" href="/connexion">Commencer gratuitement</a>
           <a class="btn btn-ghost" href="#outils">Voir les outils</a>
@@ -221,40 +260,57 @@
         <p class="micro" style="margin-top:20px;">Gratuit pour démarrer · <b>5 briefs par mois</b> · sans carte</p>
       </div>
 
-      <!-- SIGNATURE : le signal qui traverse l'Atlantique -->
-      <div class="signal reveal" aria-label="Un signal apparaît aux États-Unis, la France suit 12 à 18 mois plus tard">
-        <span class="frame-lbl">Le décalage</span>
-        <svg viewBox="0 0 400 370" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-          <!-- meridian -->
-          <line class="meridian" x1="200" y1="40" x2="200" y2="330"/>
-          <!-- US node : émetteur -->
-          <circle class="core-glow" cx="296" cy="163" r="46"/>
-          <g fill="none">
-            <circle class="wave w1" cx="296" cy="163" r="22"/>
-            <circle class="wave w2" cx="296" cy="163" r="40"/>
-            <circle class="wave w3" cx="296" cy="163" r="60"/>
-            <circle class="wave w4" cx="296" cy="163" r="82"/>
-          </g>
-          <circle class="core-dot" cx="296" cy="163" r="6"/>
-          <text class="node-label" x="250" y="292">ÉTATS-UNIS</text>
-          <text class="node-sub" x="250" y="308">le signal apparaît</text>
-          <!-- FR node : récepteur -->
-          <circle cx="104" cy="200" r="4.5" fill="#A69C8B"/>
-          <text class="node-label" x="60" y="150">FRANCE</text>
-          <text class="node-sub" x="60" y="166">le marché suit</text>
-        </svg>
-        <div class="lag-chip"><div class="n">12–18 mois</div><div class="l">d'avance</div></div>
+      <!-- SIGNATURE : la démo Duel, une objection → la réponse -->
+      <div class="duel-demo reveal" aria-label="Démonstration : une objection du prospect, la réponse de Faro">
+        <div class="dd-top">
+          <span class="dd-dot"></span><span class="dd-dot"></span><span class="dd-dot"></span>
+          <span class="dd-label">En rendez-vous · Faro te souffle la réponse</span>
+        </div>
+        <div class="dd-body">
+          <div class="dd-obj" id="ddObj">
+            <span class="dd-who">Le prospect</span>
+            <div class="dd-bubble obj" id="ddObjText"></div>
+          </div>
+          <div class="dd-ans" id="ddAns">
+            <span class="dd-who faro">Faro</span>
+            <div class="dd-bubble ans">
+              <span id="ddAnsText"></span><span class="dd-cursor">▍</span>
+              <div class="dd-src" id="ddSrc"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- STRIP -->
-    <div class="strip">
-      <div class="wrap strip-in">
-        <span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Des chiffres réels, datés, jamais inventés</span>
-        <span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 12 à 18 mois d'avance sur le marché français</span>
-        <span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Quoi dire, pas un dossier à trier</span>
+    <!-- STATS : les peurs chiffrées que Faro dissipe -->
+    <section class="stats">
+      <div class="wrap">
+        <div class="stats-head reveal">
+          <span class="eyebrow">Ce que Faro fait disparaître</span>
+          <h2>Les peurs du commercial, en chiffres. Et ce qu'il en reste avec Faro.</h2>
+        </div>
+        <div class="stats-grid">
+          <div class="stat reveal">
+            <div class="stat-num" data-to="70">0<span>%</span></div>
+            <div class="stat-fear">de ton temps ne sert pas à vendre</div>
+            <div class="stat-sub">Recherche, prépa, saisie : la majorité de la semaine part ailleurs qu'en rendez-vous. <span class="src">Salesforce &amp; Forrester, 2026</span></div>
+            <div class="stat-faro"><span class="arw">&rarr;</span> Ta prépa passe de plusieurs heures à <b>vingt secondes</b>.</div>
+          </div>
+          <div class="stat reveal">
+            <div class="stat-num" data-to="73">0<span>%</span></div>
+            <div class="stat-fear">des acheteurs fuient un discours générique</div>
+            <div class="stat-sub">Sans argument précis et personnalisé, tu n'es qu'un commercial de plus. <span class="src">Salesforce, 2026</span></div>
+            <div class="stat-faro"><span class="arw">&rarr;</span> Un brief chiffré qui prouve que <b>tu connais leur monde</b>.</div>
+          </div>
+          <div class="stat reveal">
+            <div class="stat-num" data-to="44">0<span>%</span></div>
+            <div class="stat-fear">des commerciaux lâchent après une seule relance</div>
+            <div class="stat-sub">Le deal ne meurt pas d'un non, il meurt du silence. 80% des ventes demandent 5 relances ou plus. <span class="src">GrowthList</span></div>
+            <div class="stat-faro"><span class="arw">&rarr;</span> Faro garde le fil du deal et te souffle <b>la prochaine étape</b>.</div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </header>
 
   <!-- OUTILS -->
@@ -414,6 +470,55 @@
       await supabase.auth.signOut();
       window.location.reload();
     });
+  </script>
+
+  <script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* --- Cinématique Duel --- */
+    var pairs = [
+      {o:"\u00ab C'est trop cher pour nous. \u00bb", a:"Le vrai co\u00fbt, c'est de rester \u00e0 l'\u00e9cart pendant que vos concurrents avancent. Le retour se mesure en mois, pas en ann\u00e9es.", s:"Forrester \u00b7 2024"},
+      {o:"\u00ab On a d\u00e9j\u00e0 un fournisseur. \u00bb", a:"Parfait, vous savez donc ce que \u00e7a vous co\u00fbte aujourd'hui. La vraie question, c'est ce que \u00e7a vous co\u00fbte de ne pas comparer.", s:""},
+      {o:"\u00ab Ce n'est pas le bon moment. \u00bb", a:"Ceux qui s'y sont mis t\u00f4t ont pris deux ans d'avance. Le bon moment, c'est avant que \u00e7a devienne la norme.", s:"McKinsey \u00b7 2026"},
+      {o:"\u00ab Il faut que j'en parle en interne. \u00bb", a:"Bien s\u00fbr. Donnons-leur de quoi dire oui : voici le chiffre qui d\u00e9bloque un budget en une phrase.", s:""}
+    ];
+    var objEl=document.getElementById('ddObj'), ansEl=document.getElementById('ddAns'),
+        objT=document.getElementById('ddObjText'), ansT=document.getElementById('ddAnsText'),
+        srcEl=document.getElementById('ddSrc'), cursor=document.querySelector('.dd-cursor');
+    var idx=0;
+    function type(el,text,done){var n=0;el.textContent='';var iv=setInterval(function(){el.textContent=text.slice(0,++n);if(n>=text.length){clearInterval(iv);if(done)done();}},24);}
+    function cycle(){
+      var p=pairs[idx];
+      objT.textContent=p.o; ansT.textContent=''; srcEl.textContent='';
+      objEl.classList.add('show');
+      setTimeout(function(){ ansEl.classList.add('show'); type(ansT,p.a,function(){srcEl.textContent=p.s;}); },900);
+      var readEnd = 900 + p.a.length*24 + 2800;
+      setTimeout(function(){ objEl.classList.remove('show'); ansEl.classList.remove('show'); }, readEnd);
+      setTimeout(function(){ idx=(idx+1)%pairs.length; cycle(); }, readEnd+650);
+    }
+    if(objEl){
+      if(reduce){
+        objT.textContent=pairs[0].o; ansT.textContent=pairs[0].a; srcEl.textContent=pairs[0].s;
+        objEl.classList.add('show'); ansEl.classList.add('show');
+        if(cursor) cursor.style.display='none';
+      } else { cycle(); }
+    }
+
+    /* --- Compteur stats --- */
+    function runCount(el){
+      var to=parseInt(el.getAttribute('data-to'),10), suf=el.querySelector('span');
+      if(reduce){ el.firstChild.nodeValue=to; return; }
+      var n=0, step=Math.max(1,Math.round(to/38));
+      var iv=setInterval(function(){ n+=step; if(n>=to){n=to;clearInterval(iv);} el.firstChild.nodeValue=n; },26);
+    }
+    var counted=false;
+    var nums=document.querySelectorAll('.stat-num');
+    if('IntersectionObserver' in window && !reduce){
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){runCount(e.target);io.unobserve(e.target);}});},{threshold:.5});
+      nums.forEach(function(n){io.observe(n);});
+    } else { nums.forEach(runCount); }
+  })();
   </script>
 </body>
 </html>
