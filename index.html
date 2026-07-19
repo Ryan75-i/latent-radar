@@ -23,7 +23,7 @@
   nav{position:sticky;top:0;z-index:50;background:rgba(246,241,231,.82);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s;}
   nav.scrolled{border-color:var(--line);}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:92px;}
-  .brand svg{display:block;height:64px;width:auto;}
+  .brand svg{display:block;height:56px;width:auto;}
   .nav-links{display:flex;align-items:center;gap:30px;}
   .nav-links a.link{font-size:14px;font-weight:500;color:var(--ink-soft);transition:color .15s;}
   .nav-links a.link:hover{color:var(--copper);}
@@ -344,6 +344,47 @@
     .out-col{justify-self:center;}
   }
 
+
+  /* ===== TRIANGULATION ===== */
+  .tri .tri-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;}
+  .tri-map{position:relative;border:1px solid var(--line);border-radius:22px;background:var(--card);padding:30px 26px;box-shadow:0 30px 70px -40px rgba(120,80,40,.5);}
+  .tnode{border:1px solid var(--line);border-radius:14px;padding:13px 16px;background:var(--cream-2);max-width:250px;}
+  .tnode .tk{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--copper-d);margin-bottom:3px;}
+  .tnode .tv{font-size:13.5px;font-weight:600;color:var(--ink);}
+  .tnode+.tnode{margin-top:34px;}
+  .tnode.mid{margin-left:60px;border-color:var(--copper-l);background:var(--copper-wash);}
+  .tnode.end{margin-left:120px;}
+  .tri-ins{margin-top:26px;border-top:1px solid var(--line);padding-top:16px;font-size:13.5px;color:var(--ink-soft);}
+  .tri-ins b{color:var(--copper-d);}
+  /* ===== FENÊTRE DE CLOSING ===== */
+  .win{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .win .win-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;}
+  .win-card{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:26px;box-shadow:0 30px 70px -40px rgba(120,80,40,.5);}
+  .win-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .win-badge{font-size:12px;font-weight:700;color:#2f6b3f;background:#E7F3E9;border:1px solid #CBE5D0;border-radius:20px;padding:5px 13px;display:flex;align-items:center;gap:8px;}
+  .win-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#4F9D69;animation:recblink 1.4s infinite;}
+  .win-co{font-size:13px;font-weight:700;}
+  .win-track{height:10px;border-radius:6px;background:#EFE7D7;position:relative;margin:8px 0 6px;overflow:hidden;}
+  .win-track i{position:absolute;left:34%;width:36%;top:0;bottom:0;border-radius:6px;background:linear-gradient(90deg,var(--copper-l),var(--copper));}
+  .win-scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;}
+  .sig{display:flex;gap:10px;align-items:baseline;font-size:13px;color:var(--ink-soft);padding:7px 0;border-bottom:1px dashed var(--line);}
+  .sig:last-child{border-bottom:none;}
+  .sig::before{content:"▲";color:var(--copper);font-size:10px;}
+  .sig b{color:var(--ink);}
+  /* ===== DEALS ===== */
+  .deals-card{border:1px solid var(--line);border-radius:22px;background:var(--card);overflow:hidden;box-shadow:0 30px 70px -40px rgba(120,80,40,.5);}
+  .drow{display:grid;grid-template-columns:1.3fr 1fr auto;gap:14px;align-items:center;padding:15px 22px;border-bottom:1px solid var(--line);}
+  .drow:last-child{border-bottom:none;}
+  .drow .dn{font-size:14px;font-weight:700;}
+  .drow .dd{font-size:11.5px;color:var(--faint);}
+  .drow .dnx{font-size:12.5px;color:var(--ink-soft);}
+  .pill{font-size:11px;font-weight:700;border-radius:20px;padding:4px 12px;justify-self:end;}
+  .pill.w{color:#2f6b3f;background:#E7F3E9;border:1px solid #CBE5D0;}
+  .pill.l{color:#9a3d2a;background:#F7E4DC;border:1px solid #F0CDBF;}
+  .pill.r{color:var(--copper-d);background:var(--copper-wash);border:1px solid var(--copper-l);}
+  .sec-cta{margin-top:30px;}
+  @media(max-width:900px){.tri .tri-grid,.win .win-grid{grid-template-columns:1fr;}.tnode.mid{margin-left:24px;}.tnode.end{margin-left:48px;}}
+
 </style></head><body>
 
 <nav id="nav"><div class="wrap nav-in">
@@ -527,6 +568,60 @@
       <p>Qui a un besoin qui arrive, et quand. Faro te dit qui démarcher avant tes concurrents.</p>
       <a class="more" href="/connexion">Découvrir <span>&rarr;</span></a></div>
   </div>
+</div></section>
+
+
+<!-- TRIANGULATION -->
+<section class="block tri" id="triangulation"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">La triangulation</span>
+    <h2>Faro comprend toute la chaîne. Jusqu'aux clients de ton prospect.</h2>
+    <p>Tu ne vends plus ton produit. Tu montres comment il aide ton prospect à servir SES clients.</p></div>
+  <div class="tri-grid">
+    <div class="tri-map reveal">
+      <div class="tnode"><div class="tk">Toi</div><div class="tv">Ton offre</div></div>
+      <div class="tnode mid"><div class="tk">Ton prospect</div><div class="tv">Sa croissance, ses contraintes</div></div>
+      <div class="tnode end"><div class="tk">Ses clients</div><div class="tv">Ce qu'ils attendent de lui</div></div>
+      <div class="tri-ins"><b>L'angle Faro :</b> « votre offre l'aide à tenir sa promesse envers ses propres clients ». Personne ne vend comme ça.</div>
+    </div>
+    <div class="reveal">
+      <p style="font-size:15.5px;color:var(--dim);margin-bottom:18px;">Un argument qui parle du business de ton prospect vaut dix arguments qui parlent de toi. Faro construit ce pont automatiquement dans chaque brief.</p>
+      <a class="btn btn-copper sec-cta" href="/brief">Voir Faro Brief &rarr;</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- FENÊTRE DE CLOSING -->
+<section class="block win" id="fenetre"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">Le bon moment</span>
+    <h2>La fenêtre s'ouvre. <em style="font-style:italic;color:var(--copper);">Faro te le dit.</em></h2>
+    <p>Un deal se joue autant sur le quand que sur le quoi. Faro lit la maturité du prospect et te dit quand pousser.</p></div>
+  <div class="win-grid">
+    <div class="win-card reveal">
+      <div class="win-top"><span class="win-co">Nexalis · ETI logicielle</span><span class="win-badge">Fenêtre ouverte</span></div>
+      <div class="win-track"><i></i></div>
+      <div class="win-scale"><span>Trop tôt</span><span>Maintenant</span><span>Trop tard</span></div>
+      <div class="sig"><span><b>Levée de 8 M€</b> bouclée le mois dernier</span></div>
+      <div class="sig"><span>Recrute un <b>Head of Ops</b> depuis 3 semaines</span></div>
+      <div class="sig"><span>Son marché US s'équipe : <b>+41% d'adoption</b> en un an</span></div>
+    </div>
+    <div class="reveal">
+      <p style="font-size:15.5px;color:var(--dim);margin-bottom:18px;">Budget frais, équipe qui grandit, marché qui bascule : trois signaux, une fenêtre. Tu appelles au moment exact où ton offre devient une évidence.</p>
+      <a class="btn btn-copper sec-cta" href="/chasse">Voir Faro Chasse &rarr;</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- MÉMOIRE DES DEALS -->
+<section class="block" id="deals"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">La mémoire</span>
+    <h2>Aucun deal ne meurt dans le silence.</h2>
+    <p>Chaque brief devient une fiche. Gagné, perdu, à relancer : Faro garde le fil et te souffle la suite.</p></div>
+  <div class="deals-card reveal">
+    <div class="drow"><div><div class="dn">Nexalis</div><div class="dd">DSI · rencontré le 12 juin</div></div><div class="dnx">Next : démo technique jeudi</div><span class="pill r">À relancer</span></div>
+    <div class="drow"><div><div class="dn">Groupe Havelis</div><div class="dd">DG · rencontré le 3 juin</div></div><div class="dnx">Signature obtenue en 2 rendez-vous</div><span class="pill w">Gagné</span></div>
+    <div class="drow"><div><div class="dn">Orivia Santé</div><div class="dd">DAF · rencontré le 28 mai</div></div><div class="dnx">Objection budget non levée — analysée par Duel</div><span class="pill l">Perdu</span></div>
+  </div>
+  <div class="reveal" style="text-align:center;"><a class="btn btn-copper sec-cta" href="/duel">Voir Faro Duel &rarr;</a></div>
 </div></section>
 
 <!-- IA ALIMENTÉE : cinématique de convergence -->
