@@ -22,8 +22,8 @@
 
   nav{position:sticky;top:0;z-index:50;background:rgba(246,241,231,.82);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s;}
   nav.scrolled{border-color:var(--line);}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:84px;}
-  .brand svg{display:block;height:56px;width:auto;}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:92px;}
+  .brand svg{display:block;height:64px;width:auto;}
   .nav-links{display:flex;align-items:center;gap:30px;}
   .nav-links a.link{font-size:14px;font-weight:500;color:var(--ink-soft);transition:color .15s;}
   .nav-links a.link:hover{color:var(--copper);}
@@ -175,7 +175,7 @@
 
   footer{border-top:1px solid var(--line);padding:44px 0;}
   .foot-in{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
-  .foot-in svg{height:30px;}
+  .foot-in svg{height:26px;}
   .foot-links{display:flex;gap:24px;flex-wrap:wrap;}
   .foot-links a{font-size:13px;color:var(--dim);}
   .foot-links a:hover{color:var(--copper);}
@@ -189,13 +189,165 @@
     .hero-grid,.peek-grid{grid-template-columns:1fr;gap:40px;}
     .fear-grid,.tools,.cred-grid,.how{grid-template-columns:1fr;}
     .nav-links .link{display:none;}
-    .brand svg{height:46px;}
+    .brand svg{height:42px;}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}.reveal{opacity:1;transform:none;}}
+
+  /* ===== Pièce maîtresse : le brief ===== */
+  .brief-show{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .bs-head{max-width:680px;margin:0 auto 44px;text-align:center;}
+  .bs-head .eyebrow{display:block;margin-bottom:16px;}
+  .bs-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.015em;}
+  .bs-head h2 em{font-style:italic;color:var(--copper);}
+  .bs-head p{font-size:16px;color:var(--dim);margin-top:14px;}
+
+  .bs-frame{max-width:960px;margin:0 auto;border:1px solid var(--line);border-radius:22px;background:var(--card);overflow:hidden;
+    box-shadow:0 44px 100px -46px rgba(120,80,40,.55);}
+  .bs-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FFFDF8,var(--cream-2));}
+  .bs-tabs{display:flex;gap:6px;}
+  .bs-tabs span{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint);padding:5px 12px;border-radius:8px;}
+  .bs-tabs span.on{background:var(--copper-wash);color:var(--copper-d);font-weight:600;}
+  .bs-live{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:7px;}
+  .bs-live .d{width:7px;height:7px;border-radius:50%;background:#4F9D69;}
+  .bs-body{display:grid;grid-template-columns:280px 1fr;}
+  .bs-side{padding:26px 24px;border-right:1px solid var(--line);background:linear-gradient(180deg,#FCFAF4,#fff);}
+  .bs-company{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .bs-logo{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#C96A2E,#E8804A);color:#fff;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .bs-cname{font-size:16px;font-weight:700;color:var(--ink);line-height:1.1;}
+  .bs-ctag{font-size:11.5px;color:var(--dim);margin-top:2px;}
+  .bs-meta{display:flex;flex-direction:column;gap:0;margin-bottom:24px;}
+  .bs-mrow{display:flex;flex-direction:column;padding:9px 0;border-bottom:1px solid var(--line);}
+  .bs-mrow:last-child{border-bottom:none;}
+  .bs-mrow span{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:2px;}
+  .bs-mrow b{font-size:13px;color:var(--ink);font-weight:600;}
+  .bs-score{text-align:center;padding-top:20px;border-top:1px dashed var(--line-2);}
+  .bs-gauge{position:relative;width:120px;height:120px;margin:0 auto 10px;}
+  .bs-gauge svg{transform:rotate(-90deg);width:120px;height:120px;}
+  .bs-gauge circle{fill:none;stroke-width:9;stroke-linecap:round;}
+  .bs-gauge .bg{stroke:var(--line);}
+  .bs-gauge .fg{stroke:var(--copper);stroke-dasharray:327;stroke-dashoffset:calc(327 - 327 * var(--v) / 100);transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1);}
+  .bs-gval{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:30px;color:var(--copper);}
+  .bs-gval span{font-size:13px;color:var(--faint);margin-left:2px;}
+  .bs-slabel{font-size:13px;font-weight:700;color:var(--ink);}
+  .bs-ssub{font-size:11.5px;color:var(--copper-d);margin-top:3px;}
+
+  .bs-main{padding:24px 28px;}
+  .bs-step{display:grid;grid-template-columns:32px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
+  .bs-num{width:28px;height:28px;border-radius:50%;background:var(--copper-wash);color:var(--copper-d);font-family:var(--mono);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+  .bs-k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:7px;}
+  .bs-v{font-size:14.5px;color:var(--ink);line-height:1.55;}
+  .bs-q{font-size:13.5px;color:var(--ink-soft);line-height:1.5;padding:6px 0 6px 16px;position:relative;}
+  .bs-q::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--copper-l);}
+  .bs-obj{display:inline-block;font-size:12.5px;font-style:italic;color:#9a3d2a;background:#F7E4DC;border:1px solid #F0CDBF;border-radius:10px;padding:6px 12px;margin-bottom:9px;}
+  .bs-fig{font-size:14.5px;color:var(--ink);line-height:1.5;}
+  .bs-fig b{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--copper);margin-right:6px;}
+  .bs-src{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:8px;letter-spacing:.03em;}
+  .bs-next{margin-top:16px;background:linear-gradient(135deg,#FBEFE4,#F6E3D2);border:1px solid var(--copper-bd,#FBE0CD);border-radius:14px;padding:16px 18px;}
+  .bs-nk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:6px;}
+  .bs-nv{font-size:14.5px;color:var(--ink);font-weight:500;line-height:1.5;}
+
+  .bs-cta{text-align:center;margin-top:36px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
+  .bs-cta .btn-copper{padding:13px 26px;font-size:15px;}
+  .bs-ctanote{font-size:13px;color:var(--dim);}
+
+  @media(max-width:820px){.bs-body{grid-template-columns:1fr;}.bs-side{border-right:none;border-bottom:1px solid var(--line);}}
+
+
+  /* ===== BRIEF SHOWCASE (pièce maîtresse) ===== */
+  .bs-head{max-width:640px;margin-bottom:44px;}
+  .bs-head .eyebrow{display:block;margin-bottom:14px;}
+  .bs-frame{border:1px solid var(--line);border-radius:24px;background:var(--card);box-shadow:0 40px 90px -44px rgba(120,80,40,.55);overflow:hidden;}
+  .bs-bar{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;border-bottom:1px solid var(--line);background:var(--cream-2);}
+  .bs-brand{display:flex;align-items:center;gap:10px;}
+  .bs-live{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:8px;}
+  .bs-live::before{content:"";width:7px;height:7px;border-radius:50%;background:#5F9E6E;}
+  .bs-body{display:grid;grid-template-columns:300px 1fr;}
+  .bs-side{border-right:1px solid var(--line);padding:24px 22px;background:linear-gradient(180deg,#FDFBF6,#FBF8F1);}
+  .bs-logo{width:46px;height:46px;border-radius:12px;background:var(--copper-wash);color:var(--copper-d);font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .bs-cname{font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.1;}
+  .bs-company{font-size:12.5px;color:var(--dim);margin:4px 0 16px;}
+  .bs-meta{display:flex;flex-direction:column;gap:9px;margin-bottom:22px;}
+  .bs-mrow{display:flex;justify-content:space-between;font-size:12px;border-bottom:1px dashed var(--line);padding-bottom:8px;}
+  .bs-k{color:var(--faint);}
+  .bs-v{color:var(--ink-soft);font-weight:600;text-align:right;}
+  .bs-score{text-align:center;padding:18px 0 6px;}
+  .bs-gauge{position:relative;width:120px;height:120px;margin:0 auto 10px;}
+  .bs-gauge svg{width:100%;height:100%;transform:rotate(-90deg);}
+  .bs-gauge .bg{fill:none;stroke:#EFE7D7;stroke-width:10;}
+  .bs-gauge .fg{fill:none;stroke:var(--copper);stroke-width:10;stroke-linecap:round;stroke-dasharray:327;stroke-dashoffset:327;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1);}
+  .bs-gval{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .bs-gval b{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--copper);line-height:1;}
+  .bs-gval small{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:3px;}
+  .bs-slabel{font-size:12.5px;font-weight:600;color:var(--ink);}
+  .bs-ssub{font-size:11px;color:var(--faint);}
+  .bs-main{padding:22px 26px;}
+  .bs-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .bs-tabs span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);border:1px solid var(--line);border-radius:20px;padding:4px 11px;}
+  .bs-tabs span.on{color:var(--copper-d);background:var(--copper-wash);border-color:var(--copper-l);}
+  .bs-step{padding:14px 0;border-bottom:1px solid var(--line);}
+  .bs-step:last-child{border-bottom:none;}
+  .bs-num{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--copper-d);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .bs-content{font-size:13.5px;color:var(--ink);line-height:1.55;}
+  .bs-q{font-size:13px;color:var(--ink-soft);padding-left:14px;position:relative;margin-top:5px;}
+  .bs-q::before{content:"→";position:absolute;left:0;color:var(--copper);}
+  .bs-obj{display:inline-block;font-size:11px;font-weight:600;color:#9a3d2a;background:#F7E4DC;border:1px solid #F0CDBF;border-radius:20px;padding:2px 9px;margin-bottom:6px;}
+  .bs-fig{font-family:var(--serif);font-weight:700;font-size:19px;color:var(--copper);}
+  .bs-src{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:5px;}
+  .bs-next{margin-top:4px;background:var(--copper-wash);border:1px solid var(--copper-l);border-radius:12px;padding:12px 14px;}
+  .bs-nk{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--copper-d);margin-bottom:4px;}
+  .bs-nv{font-size:13px;color:var(--ink);font-weight:600;}
+  .bs-cta{text-align:center;margin-top:34px;}
+  .bs-ctag{display:inline-flex;}
+  .bs-ctanote{font-size:12.5px;color:var(--faint);margin-top:12px;}
+
+  /* ===== FEED (cinématique de convergence) — moment sombre ===== */
+  .feed{position:relative;overflow:hidden;padding:100px 0;color:#F1EADE;
+    background:radial-gradient(120% 90% at 18% 10%,#241811 0%,#150f09 50%,#0d0a07 100%);}
+  .feed::before{content:"";position:absolute;top:-20%;left:-8%;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,106,46,.22),transparent 62%);filter:blur(26px);}
+  .feed .wrap{position:relative;z-index:1;}
+  .feed .eyebrow{color:var(--copper-l);}
+  .feed .sec-head h2{color:#fff;}
+  .feed .sec-head h2 em{font-style:italic;color:var(--copper-l);}
+  .feed .sec-head p{color:rgba(241,234,222,.55);}
+  .flow{position:relative;display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:center;min-height:340px;}
+  .feed-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .wire{fill:none;stroke:rgba(232,128,74,.35);stroke-width:1.6;stroke-dasharray:7 8;animation:wireflow 1.6s linear infinite;}
+  .wire-out{stroke:rgba(232,128,74,.8);stroke-width:2.2;}
+  @keyframes wireflow{to{stroke-dashoffset:-15;}}
+  .src-col{display:flex;flex-direction:column;gap:22px;position:relative;z-index:1;}
+  .src{border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:15px 17px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));max-width:250px;}
+  .src .st{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:3px;}
+  .src .sv{font-family:var(--mono);font-size:10.5px;color:rgba(241,234,222,.5);letter-spacing:.03em;}
+  .core-col{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .core{position:relative;width:104px;height:104px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle,#E8804A 0%,#C96A2E 62%);box-shadow:0 0 60px rgba(201,106,46,.55);}
+  .core svg{height:40px;width:auto;}
+  .cp{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(232,128,74,.5);}
+  .cp1{animation:corep 3s ease-out infinite;}
+  .cp2{animation:corep 3s ease-out infinite 1s;}
+  .cp3{animation:corep 3s ease-out infinite 2s;}
+  @keyframes corep{0%{transform:scale(1);opacity:.7;}100%{transform:scale(1.9);opacity:0;}}
+  .core-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(241,234,222,.6);}
+  .out-col{position:relative;z-index:1;justify-self:end;}
+  .out{border:1px solid rgba(232,128,74,.45);border-radius:16px;padding:18px 20px;max-width:270px;
+    background:linear-gradient(180deg,rgba(201,106,46,.16),rgba(201,106,46,.05));box-shadow:0 26px 54px -30px rgba(201,106,46,.55);}
+  .out-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--copper-l);margin-bottom:8px;}
+  .out-h{font-family:var(--serif);font-weight:600;font-size:18px;color:#fff;margin-bottom:12px;}
+  .out-line{height:7px;border-radius:4px;background:rgba(241,234,222,.16);margin-bottom:7px;}
+  .out-line.s{width:64%;}
+  @media(max-width:900px){
+    .bs-body{grid-template-columns:1fr;}
+    .bs-side{border-right:none;border-bottom:1px solid var(--line);}
+    .flow{grid-template-columns:1fr;justify-items:center;}
+    .feed-svg{display:none;}
+    .out-col{justify-self:center;}
+  }
+
 </style></head><body>
 
 <nav id="nav"><div class="wrap nav-in">
-  <a class="brand" href="/" aria-label="Faro"><svg viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <a class="brand" href="/" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
         <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
         <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g>
@@ -261,26 +413,97 @@
   </div>
 </section>
 
-<!-- APERÇU DU BRIEF -->
-<section class="block peek">
-  <div class="wrap peek-grid">
-    <div class="peek-txt reveal">
-      <h2>Voilà ce que tu reçois. <em>Prêt à dire.</em></h2>
-      <p>Pas un dossier à trier. Un plan de bataille dans l'ordre du rendez-vous.</p>
-      <div class="chk"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Une accroche ancrée sur leur actualité</div>
-      <div class="chk"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Les objections probables et ta riposte</div>
-      <div class="chk"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10l2.2 2.2L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Le chiffre qui marque, sourcé et daté</div>
+<!-- PIÈCE MAÎTRESSE : le brief -->
+<section class="block brief-show" id="brief">
+  <div class="wrap">
+    <div class="bs-head reveal">
+      <span class="eyebrow">Faro Brief · le stratège</span>
+      <h2>Ton rendez-vous, déjà écrit. <em>Il te reste à le dire.</em></h2>
+      <p>Pas un dossier à digérer. Un plan de bataille dans l'ordre exact de la conversation, chaque phrase prête à sortir.</p>
     </div>
-    <div class="mock reveal">
-      <div class="mock-head">
-        <div class="mock-chip"><div class="mock-av">L</div><div><div class="nm">L'Étincelle</div><div class="rl">DSI · secteur formation</div></div></div>
-        <div class="mock-score"><div class="s">92<span style="font-size:13px;color:var(--faint);">/100</span></div><div class="l">Préparation</div></div>
+
+    <div class="bs-frame reveal">
+      <!-- barre appli -->
+      <div class="bs-bar">
+        <div class="bs-brand"><svg viewBox="8 8 250 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;"><g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle><path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path><path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g><text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></div>
+        <div class="bs-tabs"><span class="on">Brief</span><span>Duel</span><span>Chasse</span></div>
+        <div class="bs-live"><span class="d"></span>Généré en 18s</div>
       </div>
-      <div class="mock-body">
-        <div class="mrow"><div class="k">&#9679; L'accroche</div><div class="v">« Vous venez d'absorber Interdeluxe. C'est le moment exact où l'automatisation fait la différence entre subir la croissance et la piloter. »</div><div class="src">Pappers · fusion publiée sept. 2025</div></div>
-        <div class="mrow"><div class="k">&#9679; Objection &amp; riposte</div><div class="obj-pill">On est trop petits pour ça</div><div class="v">Les PME qui automatisent tôt prennent deux ans d'avance sur leur marché.</div><div class="src">Forrester · 2024</div></div>
-        <div class="mrow"><div class="k">&#9679; Le chiffre à lâcher</div><div class="v"><b style="color:var(--copper);font-size:16px;">248%</b> — le ROI sur 3 ans d'une automatisation des workflows.</div><div class="src">Forrester TEI · 2024</div></div>
+
+      <div class="bs-body">
+        <!-- Colonne gauche : identité prospect + score -->
+        <aside class="bs-side">
+          <div class="bs-company">
+            <div class="bs-logo">N</div>
+            <div>
+              <div class="bs-cname">Novaflux</div>
+              <div class="bs-ctag">Éditeur SaaS logistique · Lyon</div>
+            </div>
+          </div>
+          <div class="bs-meta">
+            <div class="bs-mrow"><span>Interlocuteur</span><b>DAF · Camille Roy</b></div>
+            <div class="bs-mrow"><span>Effectif</span><b>140 personnes</b></div>
+            <div class="bs-mrow"><span>Signal récent</span><b>Levée 8 M€ · mars 2026</b></div>
+            <div class="bs-mrow"><span>Ton offre</span><b>Automatisation des flux financiers</b></div>
+          </div>
+
+          <div class="bs-score">
+            <div class="bs-gauge" style="--v:88">
+              <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52"/></svg>
+              <div class="bs-gval">88<span>/100</span></div>
+            </div>
+            <div class="bs-slabel">Maturité du marché</div>
+            <div class="bs-ssub">Fenêtre ouverte. Le bon moment pour closer.</div>
+          </div>
+        </aside>
+
+        <!-- Colonne droite : le film du rendez-vous -->
+        <div class="bs-main">
+          <div class="bs-step">
+            <div class="bs-num">1</div>
+            <div class="bs-content">
+              <div class="bs-k">L'ouverture · à dire en premier</div>
+              <div class="bs-v">« Vous venez de lever 8 millions. C'est exactement le moment où les flux financiers explosent en volume, et où l'automatisation fait la différence entre encaisser la croissance et la subir. »</div>
+              <div class="bs-src">Bloomberg · levée confirmée mars 2026</div>
+            </div>
+          </div>
+          <div class="bs-step">
+            <div class="bs-num">2</div>
+            <div class="bs-content">
+              <div class="bs-k">La découverte · 3 questions</div>
+              <div class="bs-q">Combien d'heures votre équipe passe-t-elle en rapprochements manuels chaque mois ?</div>
+              <div class="bs-q">Qu'est-ce qui vous coûterait le plus si rien ne change d'ici votre prochain closing ?</div>
+              <div class="bs-q">Qui, autour de la table, aura le dernier mot sur ce budget ?</div>
+            </div>
+          </div>
+          <div class="bs-step">
+            <div class="bs-num">3</div>
+            <div class="bs-content">
+              <div class="bs-k">L'objection probable &amp; ta riposte</div>
+              <div class="bs-obj">« On regardera ça après la levée. »</div>
+              <div class="bs-v">Justement. C'est maintenant que les process se figent. Les boîtes qui automatisent juste après une levée gardent leur marge ; les autres la voient fondre.</div>
+              <div class="bs-src">McKinsey · 2026</div>
+            </div>
+          </div>
+          <div class="bs-step">
+            <div class="bs-num">4</div>
+            <div class="bs-content">
+              <div class="bs-k">Le chiffre à lâcher</div>
+              <div class="bs-fig"><b>248%</b> de ROI sur 3 ans pour une entreprise qui automatise ses flux financiers.</div>
+              <div class="bs-src">Forrester TEI · 2024</div>
+            </div>
+          </div>
+          <div class="bs-next">
+            <div class="bs-nk">Next step à proposer</div>
+            <div class="bs-nv">« Je vous propose un audit flash de 20 minutes jeudi, je vous montre où part la marge. »</div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="bs-cta reveal">
+      <a class="btn btn-copper" href="/brief">Découvrir Faro Brief <span>&rarr;</span></a>
+      <span class="bs-ctanote">Ton premier brief est gratuit.</span>
     </div>
   </div>
 </section>
@@ -306,19 +529,47 @@
   </div>
 </div></section>
 
-<!-- CRÉDIBILITÉ -->
-<section class="block cred" id="credibilite"><div class="wrap">
-  <div class="sec-head reveal"><span class="eyebrow">Pourquoi lui faire confiance</span>
-    <h2>Faro ne devine pas. Il applique ce qui marche.</h2></div>
-  <div class="cred-grid">
-    <div class="pillar reveal"><div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v14.5"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19"/><path d="M8 8h7M8 11.5h7"/></svg></div>
-      <h4>Les méthodes qui gagnent</h4><p>Faro s'appuie sur les cadres de vente éprouvés : <b>SPIN Selling, MEDDIC, les principes de négociation de Chris Voss.</b> Pas des intuitions, des méthodes que les meilleures équipes utilisent.</p></div>
-    <div class="pillar reveal"><div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M7 16l4-5 3 3 5-7"/></svg></div>
-      <h4>De la donnée incontestable</h4><p>Chaque chiffre vient d'une source réelle et datée : <b>Gartner, McKinsey, Bloomberg.</b> En face, difficile de répondre « c'est votre avis ».</p></div>
-    <div class="pillar reveal"><div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
-      <h4>Une longueur d'avance</h4><p>Faro lit les signaux du marché américain, <b>12 à 18 mois avant la France.</b> Tu arrives en sachant où va le marché de ton prospect.</p></div>
+<!-- IA ALIMENTÉE : cinématique de convergence -->
+<section class="feed" id="credibilite">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Ce qui nourrit Faro</span>
+      <h2>Faro ne devine pas. Il <em>condense</em> le meilleur de la vente.</h2>
+      <p>Trois sources convergent dans chaque brief. C'est ce qui le rend impossible à contester.</p>
+    </div>
+    <div class="flow reveal">
+      <svg class="feed-svg" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+        <path class="wire" d="M250 78 C 400 78, 380 210, 505 210"/>
+        <path class="wire" d="M250 210 L 505 210"/>
+        <path class="wire" d="M250 342 C 400 342, 380 210, 505 210"/>
+        <path class="wire wire-out" d="M505 210 L 762 210"/>
+      </svg>
+      <div class="src-col">
+        <div class="src"><div class="st">Les méthodes qui gagnent</div><div class="sv">SPIN Selling · MEDDIC · Chris Voss</div></div>
+        <div class="src"><div class="st">La donnée incontestable</div><div class="sv">Gartner · McKinsey · Bloomberg</div></div>
+        <div class="src"><div class="st">Les signaux US</div><div class="sv">12 à 18 mois d'avance sur la France</div></div>
+      </div>
+      <div class="core-col">
+        <div class="core">
+          <svg viewBox="0 0 160 160" aria-hidden="true">
+            <circle class="cp cp1" cx="80" cy="80" r="22"/>
+            <circle class="cp cp2" cx="80" cy="80" r="40"/>
+            <circle class="cp cp3" cx="80" cy="80" r="58"/>
+            <circle cx="80" cy="80" r="8" fill="#E8804A"/>
+          </svg>
+          <div class="core-lbl">Faro</div>
+        </div>
+      </div>
+      <div class="out-col">
+        <div class="out">
+          <div class="out-h">Ton brief</div>
+          <div class="out-line"></div><div class="out-line s"></div><div class="out-line"></div><div class="out-line s"></div>
+          <div class="out-tag">prêt à dire <span>&rarr;</span></div>
+        </div>
+      </div>
+    </div>
   </div>
-</div></section>
+</section>
 
 <!-- MÉTHODE -->
 <section class="block" id="methode"><div class="wrap">
@@ -337,7 +588,7 @@
   <div class="cta-note">Gratuit pour démarrer · 5 briefs par mois · sans carte</div>
 </div></section>
 
-<footer><div class="wrap foot-in"><svg viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<footer><div class="wrap foot-in"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
         <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
         <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g>
@@ -384,6 +635,14 @@
   var nums=document.querySelectorAll('[data-to]');
   if('IntersectionObserver' in window && !reduce){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){count(e.target);io.unobserve(e.target);}});},{threshold:.5});nums.forEach(function(n){io.observe(n);});}
   else nums.forEach(count);
+
+  var g=document.querySelector('.bs-gauge');
+  if(g){ if(reduce){/* déjà à la bonne valeur via CSS var */}
+    else { g.querySelector('.fg').style.strokeDashoffset='327';
+      if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var v=+getComputedStyle(g).getPropertyValue('--v')||88;e.target.querySelector('.fg').style.strokeDashoffset=(327-327*v/100);gio.unobserve(e.target);}});},{threshold:.4});gio.observe(g);}
+      else {var v=+getComputedStyle(g).getPropertyValue('--v')||88;g.querySelector('.fg').style.strokeDashoffset=(327-327*v/100);}
+    }
+  }
 })();
 </script>
 </body></html>
