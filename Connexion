@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion · Faro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#F9FAFB;--surface:#FFFFFF;--border:#E5E7EB;--border2:#EEF0F2;
+    --ink:#111827;--dim:#6B7280;--faint:#9CA3AF;
+    --copper:#C96A2E;--copper-l:#E8804A;--copper-bg:#FEF3EC;--copper-bd:#FBE0CD;
+    --green:#059669;--red:#EF4444;
+  }
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .card{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 40px rgba(17,24,39,.06);padding:36px 32px;}
+  .logo{display:flex;justify-content:center;margin-bottom:10px;}
+  h1{font-size:19px;font-weight:700;text-align:center;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{font-size:13px;color:var(--dim);text-align:center;margin-bottom:26px;}
+
+  .gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:1.5px solid var(--border);background:#fff;border-radius:11px;padding:12px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s;}
+  .gbtn:hover{background:#F9FAFB;border-color:#D8DCE1;}
+  .gbtn svg{width:18px;height:18px;}
+
+  .sep{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--faint);font-size:12px;}
+  .sep::before,.sep::after{content:"";flex:1;height:1px;background:var(--border);}
+
+  label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+  .field{width:100%;border:1.5px solid var(--border);border-radius:11px;padding:12px 14px;font-size:14px;font-family:inherit;color:var(--ink);margin-bottom:14px;outline:none;transition:border-color .15s;}
+  .field:focus{border-color:var(--copper);}
+  .field::placeholder{color:var(--faint);}
+
+  .submit{width:100%;background:var(--copper);color:#fff;border:none;border-radius:11px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s;}
+  .submit:hover{background:#B75D26;}
+  .submit:disabled{opacity:.6;cursor:default;}
+
+  .switch{text-align:center;font-size:13px;color:var(--dim);margin-top:20px;}
+  .switch a{color:var(--copper);font-weight:600;text-decoration:none;cursor:pointer;}
+  .switch a:hover{text-decoration:underline;}
+
+  .msg{display:none;font-size:12.5px;border-radius:9px;padding:11px 13px;margin-bottom:16px;line-height:1.4;}
+  .msg.show{display:block;}
+  .msg.err{background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;}
+  .msg.ok{background:#ECFDF5;border:1px solid #A7F3D0;color:#047857;}
+
+  .back{display:block;text-align:center;font-size:12px;color:var(--faint);margin-top:22px;text-decoration:none;}
+  .back:hover{color:var(--dim);}
+  .legal{font-size:11px;color:var(--faint);text-align:center;margin-top:18px;line-height:1.5;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <svg width="150" height="50" viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Faro">
+        <g transform="translate(10,10) scale(0.76)">
+          <circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
+          <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
+          <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path>
+        </g>
+        <text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text>
+      </svg>
+    </div>
+    <h1 id="title">Connexion</h1>
+    <div class="sub" id="subtitle">Retrouve tes briefs et tes deals.</div>
+
+    <div class="msg" id="msg"></div>
+
+    <button class="gbtn" id="googleBtn">
+      <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
+      Continuer avec Google
+    </button>
+
+    <div class="sep">ou</div>
+
+    <div id="emailForm">
+      <label for="email">Email</label>
+      <input class="field" type="email" id="email" placeholder="toi@entreprise.com" autocomplete="email"/>
+      <label for="password">Mot de passe</label>
+      <input class="field" type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+      <button class="submit" id="submitBtn">Se connecter</button>
+    </div>
+
+    <div class="switch" id="switch">
+      Pas encore de compte ? <a id="toggle">Créer un compte</a>
+    </div>
+
+    <a class="back" href="/">← Retour à l'accueil</a>
+    <div class="legal" id="legal" style="display:none;">En créant un compte, tu acceptes nos conditions d'utilisation.</div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const SUPABASE_URL = 'https://icofqeisjfoywusolbqs.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_sF-J9J5rLGpAJt80SqazCw_XSkmiqns';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Où on envoie l'utilisateur une fois connecté. Pour l'instant l'app = la home.
+    const APP_URL = '/';
+
+    let mode = 'login'; // 'login' ou 'signup'
+    const $ = id => document.getElementById(id);
+    const msg = (text, type) => {
+      const m = $('msg');
+      m.textContent = text;
+      m.className = 'msg show ' + (type || 'err');
+    };
+    const clearMsg = () => { $('msg').className = 'msg'; };
+
+    // Si déjà connecté, on file directement à l'app
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) window.location.href = APP_URL;
+    })();
+
+    // Bascule connexion / création de compte
+    $('toggle').addEventListener('click', () => {
+      clearMsg();
+      if (mode === 'login') {
+        mode = 'signup';
+        $('title').textContent = 'Créer un compte';
+        $('subtitle').textContent = 'Commence gratuitement, 5 briefs par mois.';
+        $('submitBtn').textContent = "Créer mon compte";
+        $('password').setAttribute('autocomplete', 'new-password');
+        $('switch').innerHTML = 'Déjà un compte ? <a id="toggle">Se connecter</a>';
+        $('legal').style.display = 'block';
+      } else {
+        mode = 'login';
+        $('title').textContent = 'Connexion';
+        $('subtitle').textContent = 'Retrouve tes briefs et tes deals.';
+        $('submitBtn').textContent = 'Se connecter';
+        $('password').setAttribute('autocomplete', 'current-password');
+        $('switch').innerHTML = 'Pas encore de compte ? <a id="toggle">Créer un compte</a>';
+        $('legal').style.display = 'none';
+      }
+      // réattacher l'écouteur au nouveau lien
+      $('toggle').addEventListener('click', arguments.callee);
+    });
+
+    // Google
+    $('googleBtn').addEventListener('click', async () => {
+      clearMsg();
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + APP_URL }
+      });
+      if (error) msg("Impossible de lancer la connexion Google. Réessaie.", 'err');
+    });
+
+    // Email / mot de passe
+    $('submitBtn').addEventListener('click', async () => {
+      clearMsg();
+      const email = $('email').value.trim();
+      const password = $('password').value;
+      if (!email || !email.includes('@')) { msg("Entre un email valide.", 'err'); return; }
+      if (password.length < 6) { msg("Le mot de passe doit faire au moins 6 caractères.", 'err'); return; }
+
+      $('submitBtn').disabled = true;
+      $('submitBtn').textContent = 'Un instant...';
+
+      if (mode === 'signup') {
+        const { data, error } = await supabase.auth.signUp({
+          email, password,
+          options: { emailRedirectTo: window.location.origin + APP_URL }
+        });
+        if (error) {
+          msg(error.message.includes('already') ? "Un compte existe déjà avec cet email." : "Création impossible. Réessaie.", 'err');
+        } else if (data.user && !data.session) {
+          msg("Compte créé. Vérifie ta boîte mail pour confirmer ton adresse.", 'ok');
+        } else {
+          window.location.href = APP_URL;
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          msg("Email ou mot de passe incorrect.", 'err');
+        } else {
+          window.location.href = APP_URL;
+        }
+      }
+      $('submitBtn').disabled = false;
+      $('submitBtn').textContent = mode === 'signup' ? 'Créer mon compte' : 'Se connecter';
+    });
+
+    // Entrée = valider
+    $('password').addEventListener('keydown', e => { if (e.key === 'Enter') $('submitBtn').click(); });
+    $('email').addEventListener('keydown', e => { if (e.key === 'Enter') $('password').focus(); });
+  </script>
+</body>
+</html>
