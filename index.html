@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Faro · Entre en réunion avec un coup d'avance</title>
-<meta name="description" content="Faro te donne le brief prêt à dire pour tes rendez-vous : quoi répondre, quelles objections, comment closer. En vingt secondes.">
+<meta property="og:title" content="Faro - Entre en reunion avec un coup d avance"><meta property="og:description" content="Le brief pret a dire pour tes rendez-vous commerciaux. En vingt secondes."><meta name="description" content="Faro te donne le brief prêt à dire pour tes rendez-vous : quoi répondre, quelles objections, comment closer. En vingt secondes.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -385,6 +385,60 @@
   .sec-cta{margin-top:30px;}
   @media(max-width:900px){.tri .tri-grid,.win .win-grid{grid-template-columns:1fr;}.tnode.mid{margin-left:24px;}.tnode.end{margin-left:48px;}}
 
+
+  /* ===== MOBILE ===== */
+  @media (max-width:640px){
+    .wrap{padding:0 18px;}
+    /* navbar compacte */
+    .nav-in{height:66px;}
+    .brand svg{height:38px;}
+    .nav-links{gap:10px;}
+    #navGuest .btn-ghost{display:none;}          /* on garde juste Commencer */
+    .btn{padding:9px 14px;font-size:13px;}
+    .tok-pill{display:none;}
+    /* rythme vertical resserré */
+    section.block{padding:56px 0;}
+    .fears,.feed{padding:64px 0;}
+    .hero{padding:40px 0 36px;}
+    h1.title{font-size:clamp(34px,9vw,44px);}
+    .hero p.lede{font-size:16px;}
+    .hero-cta{flex-direction:column;align-items:stretch;}
+    .hero-cta .btn{justify-content:center;}
+    /* démo chat */
+    .term-body{min-height:280px;padding:20px 14px;}
+    .bub{max-width:96%;font-size:14px;}
+    /* pièce maîtresse */
+    .bs-main{padding:18px 16px;}
+    .bs-side{padding:18px 16px;}
+    .bs-tabs{gap:6px;}
+    /* fears : gros chiffres raisonnables */
+    .fnum{font-size:52px;}
+    /* deals : la ligne passe en colonne */
+    .drow{grid-template-columns:1fr;gap:8px;padding:14px 16px;}
+    .pill{justify-self:start;}
+    /* triangulation : cascade réduite */
+    .tnode{max-width:100%;}
+    .tnode.mid{margin-left:14px;}
+    .tnode.end{margin-left:28px;}
+    .tnode+.tnode{margin-top:22px;}
+    /* feed : colonnes empilées, sources en pleine largeur */
+    .flow{min-height:0;gap:22px;}
+    .src{max-width:100%;}
+    .out{max-width:100%;}
+    .core{width:84px;height:84px;}
+    /* CTA band */
+    .cta-band{padding:70px 0;}
+    .cta-band .btn-copper{width:100%;justify-content:center;}
+    /* footer empilé */
+    .foot-in{flex-direction:column;align-items:flex-start;gap:16px;}
+  }
+  /* filet anti-débordement global */
+  img,svg{max-width:100%;}
+
+
+  .pill-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+  .kpill{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--copper-d);background:#fff;border:1px solid var(--line-2);border-radius:20px;padding:4px 11px;}
+
 </style></head><body>
 
 <nav id="nav"><div class="wrap nav-in">
@@ -629,7 +683,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Ce qui nourrit Faro</span>
-      <h2>Faro ne devine pas. Il <em>condense</em> le meilleur de la vente.</h2>
+      <h2>Chaque phrase que Faro te souffle a d&eacute;j&agrave; fait ses preuves <em>ailleurs</em>.</h2>
       <p>Trois sources convergent dans chaque brief. C'est ce qui le rend impossible à contester.</p>
     </div>
     <div class="flow reveal">
