@@ -214,7 +214,7 @@
   const SUPABASE_KEY = 'sb_publishable_sF-J9J5rLGpAJt80SqazCw_XSkmiqns';
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const APP_URL = '/';
+  const APP_URL = '/app';
   let mode = 'login';
   const $ = id => document.getElementById(id);
   const msg = (t, type) => { const m=$('msg'); m.textContent=t; m.className='msg show '+(type||'err'); };
