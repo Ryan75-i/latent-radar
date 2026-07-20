@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salle de prépa · Faro</title>
+<title>Faro · Ton espace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -13,29 +13,95 @@
     --line:#E7DECD;--line-2:#DED2BC;
     --ink:#2A2622;--ink-soft:#4A443C;--dim:#7A7266;--faint:#A69C8B;
     --copper:#C96A2E;--copper-d:#B0561F;--copper-l:#E8804A;--copper-wash:#F3E4D6;
-    --green:#4F9D69;--red:#9a3d2a;
+    --green:#4F9D69;--green-bg:#E7F3E9;--red:#9a3d2a;--red-bg:#F7E4DC;--violet:#8B6BB1;
     --serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
   }
-  body{background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
+  body{background:var(--cream-2);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
   a{text-decoration:none;color:inherit;}
   ::selection{background:var(--copper-wash);}
+  .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh;}
 
-  /* topbar */
-  .top{position:sticky;top:0;z-index:20;background:rgba(246,241,231,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-  .top-in{max-width:980px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-  .brand svg{height:38px;width:auto;display:block;}
-  .top-r{display:flex;align-items:center;gap:14px;}
-  .tok{font-family:var(--mono);font-size:12px;color:var(--copper-d);background:var(--copper-wash);border:1px solid var(--line-2);border-radius:20px;padding:6px 12px;}
-  .lg{font-size:13px;color:var(--dim);cursor:pointer;}
-  .lg:hover{color:var(--copper);}
+  /* SIDEBAR */
+  .side{background:var(--cream);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;}
+  .side .brand{padding:4px 8px 20px;}
+  .side .brand svg{height:36px;width:auto;display:block;}
+  .nav{display:flex;flex-direction:column;gap:3px;}
+  .nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .15s,color .15s;}
+  .nav button:hover{background:var(--cream-2);color:var(--ink);}
+  .nav button.on{background:var(--copper-wash);color:var(--copper-d);font-weight:600;}
+  .nav button svg{width:19px;height:19px;flex-shrink:0;}
+  .nav .soon{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:20px;padding:2px 7px;}
+  .side-sp{flex:1;}
+  .ucard{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .15s;}
+  .ucard:hover{border-color:var(--line-2);}
+  .av{width:36px;height:36px;border-radius:10px;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--copper);}
+  .av img{width:100%;height:100%;object-fit:cover;}
+  .uinfo{min-width:0;flex:1;}
+  .uname{font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .utok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);}
+  .ulog{border:none;background:transparent;color:var(--faint);cursor:pointer;padding:4px;border-radius:8px;display:flex;}
+  .ulog:hover{color:var(--copper);background:var(--cream-2);}
+  .ulog svg{width:17px;height:17px;}
 
-  .wrap{max-width:980px;margin:0 auto;padding:40px 24px 80px;}
+  /* MAIN */
+  .main{padding:38px 44px 80px;max-width:980px;}
+  .view{display:none;} .view.active{display:block;animation:fade .3s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);}
-  h1{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.06;letter-spacing:-.02em;margin:12px 0 6px;}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.05;letter-spacing:-.02em;margin:10px 0 6px;}
   .lead{font-size:15px;color:var(--dim);margin-bottom:30px;}
+  .sect{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:34px 0 16px;}
 
-  /* form */
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 24px 60px -40px rgba(120,80,40,.5);}
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;}
+  .kpi .kl{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+  .kpi .kv{font-family:var(--serif);font-weight:700;font-size:28px;color:var(--copper);line-height:1.1;margin-top:6px;}
+  .kpi .kv.ink{color:var(--ink);} .kpi .kv small{font-size:14px;color:var(--faint);font-weight:400;}
+  .kpi .kn{font-size:11px;color:var(--dim);margin-top:3px;}
+
+  /* dashboard grid */
+  .dgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;}
+  .panel h3{font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:2px;}
+  .panel .ph{font-size:12.5px;color:var(--dim);margin-bottom:16px;}
+  .chart{width:100%;height:auto;display:block;}
+  .empty{text-align:center;color:var(--faint);font-size:13px;padding:28px 10px;}
+  /* pipeline */
+  .pipe{height:14px;border-radius:8px;overflow:hidden;display:flex;background:var(--cream-2);border:1px solid var(--line);}
+  .pipe i{height:100%;} .pipe .pr{background:var(--copper);} .pipe .pw{background:var(--green);} .pipe .pl{background:var(--red);}
+  .pleg{display:flex;flex-direction:column;gap:9px;margin-top:16px;}
+  .pleg .row{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-soft);}
+  .pleg .dot{width:9px;height:9px;border-radius:3px;} .pleg .row b{margin-left:auto;color:var(--ink);font-weight:600;}
+  /* recent + deals list */
+  .brow{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer;}
+  .brow:last-child{border-bottom:none;} .brow:hover .bname{color:var(--copper);}
+  .mono{width:38px;height:38px;border-radius:11px;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .binfo{min-width:0;flex:1;}
+  .bname{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s;}
+  .bmeta{font-size:11.5px;color:var(--faint);}
+  .chip{font-size:10.5px;font-weight:700;border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  .chip.r{color:var(--copper-d);background:var(--copper-wash);border:1px solid var(--copper-l);}
+  .chip.w{color:#2f6b3f;background:var(--green-bg);border:1px solid #CBE5D0;}
+  .chip.l{color:var(--red);background:var(--red-bg);border:1px solid #F0CDBF;}
+  .bscore{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--copper);width:34px;text-align:right;}
+
+  /* TOOL CARDS (dashboard bottom) */
+  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .tcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s;}
+  .tcard.live{cursor:pointer;} .tcard.live:hover{transform:translateY(-4px);box-shadow:0 26px 50px -34px rgba(120,80,40,.45);border-color:var(--line-2);}
+  .tico{width:42px;height:42px;border-radius:12px;background:var(--tw,var(--copper-wash));color:var(--tc,var(--copper-d));display:flex;align-items:center;justify-content:center;margin-bottom:13px;}
+  .tico svg{width:21px;height:21px;}
+  .tcard.duel{--tc:var(--red);--tw:var(--red-bg);} .tcard.chasse{--tc:#2f6b3f;--tw:var(--green-bg);}
+  .tcard h4{font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:3px;}
+  .tbadge{align-self:flex-start;font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;border-radius:20px;padding:3px 9px;margin-bottom:11px;}
+  .tbadge.ok{color:#2f6b3f;background:var(--green-bg);border:1px solid #CBE5D0;} .tbadge.soon{color:var(--faint);background:#fff;border:1px solid var(--line);}
+  .tcard p{font-size:13px;color:var(--dim);line-height:1.5;flex:1;margin-bottom:14px;}
+  .tgo{font-size:13px;font-weight:600;color:var(--copper);display:inline-flex;gap:6px;} .tgo.dim{color:var(--faint);}
+
+  /* BRIEF TOOL */
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim);cursor:pointer;margin-bottom:16px;}
+  .back:hover{color:var(--copper);}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .fg{margin-bottom:16px;}
   label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
@@ -45,24 +111,16 @@
   .field::placeholder{color:var(--faint);}
   textarea.field{resize:vertical;min-height:74px;line-height:1.5;}
   .actions{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap;}
-  .gen{background:var(--copper);color:#fff;border:none;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,transform .1s;display:inline-flex;align-items:center;gap:10px;}
-  .gen:hover{background:var(--copper-d);}
-  .gen:active{transform:translateY(1px);}
-  .gen:disabled{opacity:.65;cursor:default;}
-  .cost{font-size:13px;color:var(--dim);}
-  .cost b{color:var(--ink);font-weight:600;}
+  .btn{background:var(--copper);color:#fff;border:none;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,transform .1s;display:inline-flex;align-items:center;gap:10px;}
+  .btn:hover{background:var(--copper-d);} .btn:active{transform:translateY(1px);} .btn:disabled{opacity:.65;cursor:default;}
+  .cost{font-size:13px;color:var(--dim);} .cost b{color:var(--ink);font-weight:600;}
   .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:none;}
-  .gen.loading .spin{display:inline-block;}
+  .btn.loading .spin{display:inline-block;}
   @keyframes sp{to{transform:rotate(360deg);}}
-
   .note{margin-top:16px;font-size:12.5px;border-radius:11px;padding:11px 14px;display:none;line-height:1.5;}
-  .note.show{display:block;}
-  .note.err{background:#FBEDE8;border:1px solid #F0CDBF;color:var(--red);}
-  .note.warn{background:var(--copper-wash);border:1px solid var(--copper-l);color:var(--copper-d);}
+  .note.show{display:block;} .note.err{background:var(--red-bg);border:1px solid #F0CDBF;color:var(--red);} .note.warn{background:var(--copper-wash);border:1px solid var(--copper-l);color:var(--copper-d);} .note.ok{background:var(--green-bg);border:1px solid #CBE5D0;color:#2f6b3f;}
 
-  /* résultat : brief */
-  .result{margin-top:30px;display:none;}
-  .result.show{display:block;}
+  .result{margin-top:26px;display:none;} .result.show{display:block;}
   .bs-frame{border:1px solid var(--line);border-radius:22px;background:var(--card);overflow:hidden;box-shadow:0 34px 80px -44px rgba(120,80,40,.5);}
   .bs-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--cream-2);}
   .bs-tabs span{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--copper-d);background:var(--copper-wash);border:1px solid var(--copper-l);border-radius:20px;padding:4px 10px;}
@@ -70,7 +128,7 @@
   .bs-live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);}
   .bs-body{display:grid;grid-template-columns:260px 1fr;}
   .bs-side{padding:24px 22px;border-right:1px solid var(--line);background:linear-gradient(180deg,#FCFAF4,#fff);}
-  .bs-logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#C96A2E,#E8804A);color:#fff;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .bs-logo{width:44px;height:44px;border-radius:12px;color:#fff;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
   .bs-cname{font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.1;}
   .bs-score{text-align:center;margin-top:22px;padding-top:20px;border-top:1px dashed var(--line-2);}
   .bs-gauge{position:relative;width:118px;height:118px;margin:0 auto 10px;}
@@ -89,208 +147,434 @@
   .bs-v{font-size:14px;color:var(--ink);line-height:1.55;}
   .bs-q{font-size:13.5px;color:var(--ink-soft);line-height:1.5;padding:5px 0 5px 16px;position:relative;}
   .bs-q::before{content:"";position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--copper-l);}
-  .bs-obj{display:inline-block;font-size:12.5px;font-style:italic;color:var(--red);background:#F7E4DC;border:1px solid #F0CDBF;border-radius:10px;padding:6px 12px;margin-bottom:9px;}
-  .bs-fig{font-size:14px;color:var(--ink);line-height:1.5;}
-  .bs-fig b{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--copper);margin-right:6px;}
+  .bs-obj{display:inline-block;font-size:12.5px;font-style:italic;color:var(--red);background:var(--red-bg);border:1px solid #F0CDBF;border-radius:10px;padding:6px 12px;margin-bottom:9px;}
+  .bs-fig{font-size:14px;color:var(--ink);line-height:1.5;} .bs-fig b{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--copper);margin-right:6px;}
   .bs-src{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:7px;letter-spacing:.03em;}
   .bs-next{margin-top:16px;background:linear-gradient(135deg,#FBEFE4,#F6E3D2);border:1px solid #FBE0CD;border-radius:14px;padding:15px 18px;}
   .bs-nk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:6px;}
   .bs-nv{font-size:14px;color:var(--ink);font-weight:500;line-height:1.5;}
-  .again{margin-top:22px;display:flex;justify-content:center;}
-  .again button{background:transparent;border:1px solid var(--line-2);color:var(--ink);border-radius:12px;padding:11px 20px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s;}
-  .again button:hover{background:var(--cream-2);border-color:var(--copper);}
+  .rowbtns{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+  .ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);border-radius:12px;padding:11px 18px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s;}
+  .ghost:hover{background:var(--cream-2);border-color:var(--copper);}
 
-  @media(max-width:760px){.grid2{grid-template-columns:1fr;}.bs-body{grid-template-columns:1fr;}.bs-side{border-right:none;border-bottom:1px solid var(--line);}}
+  /* DEALS list controls */
+  .statusbtns{display:flex;gap:6px;}
+  .sb{font-size:11px;font-weight:600;border:1px solid var(--line-2);background:#fff;color:var(--dim);border-radius:8px;padding:5px 9px;cursor:pointer;font-family:inherit;transition:.12s;}
+  .sb:hover{border-color:var(--copper);color:var(--copper);}
+  .sb.on.r{background:var(--copper-wash);border-color:var(--copper-l);color:var(--copper-d);}
+  .sb.on.w{background:var(--green-bg);border-color:#CBE5D0;color:#2f6b3f;}
+  .sb.on.l{background:var(--red-bg);border-color:#F0CDBF;color:var(--red);}
+  .deal{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+  .deal:last-child{border-bottom:none;}
+  .deal .binfo{cursor:pointer;}
+
+  /* SETTINGS */
+  .setcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;max-width:620px;}
+  .setcard+.setcard{margin-top:16px;}
+  .setrow{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+  .setrow .av{width:56px;height:56px;border-radius:14px;font-size:22px;}
+  .ro{font-size:13px;color:var(--dim);}
+  .ro b{color:var(--ink);}
+
+  /* SOON */
+  .soonwrap{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:48px 40px;text-align:center;}
+  .soonwrap .ico{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;background:var(--copper-wash);color:var(--copper-d);}
+  .soonwrap .ico svg{width:28px;height:28px;}
+  .soonwrap h2{font-family:var(--serif);font-weight:600;font-size:26px;margin-bottom:8px;}
+  .soonwrap p{font-size:15px;color:var(--dim);max-width:420px;margin:0 auto;}
+  .soonwrap .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);background:var(--copper-wash);border:1px solid var(--copper-l);border-radius:20px;padding:5px 12px;margin-bottom:20px;}
+
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:13px;padding:11px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.3s;z-index:50;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:820px){
+    .app{grid-template-columns:1fr;}
+    .side{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;gap:10px;padding:12px 16px;overflow-x:auto;z-index:20;}
+    .side .brand{padding:0;} .side .brand svg{height:30px;}
+    .nav{flex-direction:row;gap:4px;flex:1;} .nav button{padding:8px 10px;white-space:nowrap;} .nav button span.lbl{display:none;} .nav .soon{display:none;}
+    .side-sp{display:none;} .ucard{padding:4px;border:none;background:transparent;} .uinfo{display:none;} .ucard .ulog{display:none;}
+    .main{padding:24px 18px 60px;}
+    .kpis{grid-template-columns:1fr 1fr;} .dgrid,.tools,.grid2{grid-template-columns:1fr;} .bs-body{grid-template-columns:1fr;} .bs-side{border-right:none;border-bottom:1px solid var(--line);}
+    .deal{grid-template-columns:auto 1fr;} .deal .bscore,.deal .statusbtns{grid-column:2;justify-self:start;}
+  }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
 <body>
-  <div class="top"><div class="top-in">
+<div class="app">
+
+  <aside class="side">
     <a class="brand" href="/" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
       <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
       <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g>
       <text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
-    <div class="top-r"><span class="tok" id="tok">— jetons</span><a class="lg" id="logout">Déconnexion</a></div>
-  </div></div>
-
-  <div class="wrap">
-    <div class="eyebrow">Salle de prépa</div>
-    <h1>Ton prochain rendez-vous, déjà écrit.</h1>
-    <p class="lead">Décris ton prospect. Faro te sort le brief prêt à dire, dans l'ordre de la conversation.</p>
-
-    <div class="panel" id="formPanel">
-      <div class="grid2">
-        <div class="fg"><label for="entreprise">Entreprise</label><input class="field" id="entreprise" placeholder="Novaflux" autocomplete="off"/></div>
-        <div class="fg"><label for="poste">Interlocuteur</label><input class="field" id="poste" placeholder="DAF, DSI, DG..." autocomplete="off"/></div>
-      </div>
-      <div class="fg"><label for="offre">Ce que tu vends</label><input class="field" id="offre" placeholder="Automatisation des flux financiers" autocomplete="off"/></div>
-      <div class="fg"><label for="contexte">Contexte et signaux <span class="opt">· facultatif</span></label>
-        <textarea class="field" id="contexte" placeholder="Vient de lever 8 M€, 140 personnes, marché logistique, basé à Lyon."></textarea></div>
-      <div class="actions">
-        <button class="gen" id="gen"><span class="spin"></span><span id="genLabel">Générer le brief</span></button>
-        <span class="cost" id="cost">1 brief · <b id="costLeft">—</b> restants</span>
-      </div>
-      <div class="note" id="note"></div>
+    <nav class="nav">
+      <button class="on" data-view="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span class="lbl">Tableau de bord</span></button>
+      <button data-view="brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg><span class="lbl">Brief</span></button>
+      <button data-view="duel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="lbl">Duel</span><span class="soon">Bientôt</span></button>
+      <button data-view="chasse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span class="lbl">Chasse</span><span class="soon">Bientôt</span></button>
+      <button data-view="deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="lbl">Mes deals</span></button>
+      <button data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="lbl">Paramètres</span></button>
+    </nav>
+    <div class="side-sp"></div>
+    <div class="ucard" data-view="settings">
+      <div class="av" id="uav">F</div>
+      <div class="uinfo"><div class="uname" id="uname">...</div><div class="utok" id="utok">— jetons</div></div>
+      <button class="ulog" id="logout" aria-label="Déconnexion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></button>
     </div>
+  </aside>
 
-    <div class="result" id="result">
-      <div class="bs-frame">
-        <div class="bs-bar">
-          <div class="bs-tabs"><span>Brief</span></div>
-          <div class="bs-live">Généré à l'instant</div>
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <section class="view active" id="view-dash">
+      <div class="eyebrow">Ton espace</div>
+      <h1 id="greet">Bonjour.</h1>
+      <p class="lead">Voici où en sont tes rendez-vous.</p>
+
+      <div class="kpis">
+        <div class="kpi"><div class="kl">Jetons cette semaine</div><div class="kv" id="kTok">—<small id="kTokMax"></small></div><div class="kn">Recharge chaque lundi</div></div>
+        <div class="kpi"><div class="kl">Briefs préparés</div><div class="kv ink" id="kBriefs">0</div><div class="kn">Au total</div></div>
+        <div class="kpi"><div class="kl">À relancer</div><div class="kv ink" id="kRelance">0</div><div class="kn">Deals ouverts</div></div>
+        <div class="kpi"><div class="kl">Maturité moyenne</div><div class="kv" id="kMat">—</div><div class="kn">Sur tes cibles</div></div>
+      </div>
+
+      <div class="dgrid" style="margin-top:16px;">
+        <div class="panel">
+          <h3>Ton activité</h3><div class="ph">Briefs préparés sur les 7 derniers jours.</div>
+          <div id="chartWrap"></div>
         </div>
-        <div class="bs-body">
-          <aside class="bs-side">
-            <div class="bs-logo" id="rLogo">N</div>
-            <div class="bs-cname" id="rName">Entreprise</div>
-            <div class="bs-score">
-              <div class="bs-gauge" id="rGauge" style="--v:0">
-                <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52"/></svg>
-                <div class="bs-gval"><span id="rScore">0</span><s>/100</s></div>
+        <div class="panel">
+          <h3>Ton pipeline</h3><div class="ph">Répartition de tes deals.</div>
+          <div id="pipeWrap"></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <h3>Derniers briefs</h3><div class="ph">Clique pour rouvrir la fiche.</div>
+        <div id="recentWrap"></div>
+      </div>
+
+      <p class="sect">Tes outils</p>
+      <div class="tools">
+        <div class="tcard live" data-open="brief">
+          <div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></div>
+          <span class="tbadge ok">Disponible</span><h4>Brief</h4>
+          <p>Le film complet de ton rendez-vous, prêt à dire.</p><span class="tgo">Ouvrir &rarr;</span>
+        </div>
+        <div class="tcard duel" data-open="duel">
+          <div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <span class="tbadge soon">Bientôt</span><h4>Duel</h4>
+          <p>On t'objecte, Faro renvoie la riposte qui débloque.</p><span class="tgo dim">Bientôt</span>
+        </div>
+        <div class="tcard chasse" data-open="chasse">
+          <div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+          <span class="tbadge soon">Bientôt</span><h4>Chasse</h4>
+          <p>Qui démarcher avant tes concurrents, et quand.</p><span class="tgo dim">Bientôt</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRIEF -->
+    <section class="view" id="view-brief">
+      <div class="back" data-view="dash">&larr; Tableau de bord</div>
+      <div class="eyebrow">Faro Brief</div>
+      <h1>Ton prochain rendez-vous, déjà écrit.</h1>
+      <p class="lead">Décris ton prospect. Faro te sort le brief prêt à dire.</p>
+      <div class="panel" style="padding:26px;">
+        <div class="grid2">
+          <div class="fg"><label for="entreprise">Entreprise</label><input class="field" id="entreprise" placeholder="Novaflux" autocomplete="off"/></div>
+          <div class="fg"><label for="poste">Interlocuteur</label><input class="field" id="poste" placeholder="DAF, DSI, DG..." autocomplete="off"/></div>
+        </div>
+        <div class="fg"><label for="offre">Ce que tu vends</label><input class="field" id="offre" placeholder="Automatisation des flux financiers" autocomplete="off"/></div>
+        <div class="fg"><label for="contexte">Contexte et signaux <span class="opt">· facultatif</span></label>
+          <textarea class="field" id="contexte" placeholder="Vient de lever 8 M€, 140 personnes, marché logistique, basé à Lyon."></textarea></div>
+        <div class="actions">
+          <button class="btn" id="gen"><span class="spin"></span><span id="genLabel">Générer le brief</span></button>
+          <span class="cost">1 brief · <b id="costLeft">—</b> restants</span>
+        </div>
+        <div class="note" id="note"></div>
+      </div>
+      <div class="result" id="result">
+        <div class="bs-frame">
+          <div class="bs-bar"><div class="bs-tabs"><span>Brief</span></div><div class="bs-live" id="rWhen">Généré à l'instant</div></div>
+          <div class="bs-body">
+            <aside class="bs-side">
+              <div class="bs-logo" id="rLogo">N</div>
+              <div class="bs-cname" id="rName">Entreprise</div>
+              <div class="bs-score">
+                <div class="bs-gauge" id="rGauge"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52"/></svg><div class="bs-gval"><span id="rScore">0</span><s>/100</s></div></div>
+                <div class="bs-slabel">Maturité du marché</div><div class="bs-ssub" id="rLabel"></div>
               </div>
-              <div class="bs-slabel">Maturité du marché</div>
-              <div class="bs-ssub" id="rLabel"></div>
-            </div>
-          </aside>
-          <div class="bs-main">
-            <div class="bs-step"><div class="bs-num">1</div><div>
-              <div class="bs-k">L'ouverture · à dire en premier</div>
-              <div class="bs-v" id="rOuverture"></div></div></div>
-            <div class="bs-step"><div class="bs-num">2</div><div>
-              <div class="bs-k">La découverte · 3 questions</div>
-              <div id="rQuestions"></div></div></div>
-            <div class="bs-step"><div class="bs-num">3</div><div>
-              <div class="bs-k">L'objection probable &amp; ta riposte</div>
-              <div class="bs-obj" id="rObj"></div>
-              <div class="bs-v" id="rRiposte"></div>
-              <div class="bs-src" id="rObjSrc"></div></div></div>
-            <div class="bs-step"><div class="bs-num">4</div><div>
-              <div class="bs-k">Le chiffre à lâcher</div>
-              <div class="bs-fig"><b id="rFig"></b><span id="rFigPhrase"></span></div>
-              <div class="bs-src" id="rFigSrc"></div></div></div>
-            <div class="bs-next">
-              <div class="bs-nk">Next step à proposer</div>
-              <div class="bs-nv" id="rNext"></div>
+            </aside>
+            <div class="bs-main">
+              <div class="bs-step"><div class="bs-num">1</div><div><div class="bs-k">L'ouverture · à dire en premier</div><div class="bs-v" id="rOuverture"></div></div></div>
+              <div class="bs-step"><div class="bs-num">2</div><div><div class="bs-k">La découverte · 3 questions</div><div id="rQuestions"></div></div></div>
+              <div class="bs-step"><div class="bs-num">3</div><div><div class="bs-k">L'objection probable &amp; ta riposte</div><div class="bs-obj" id="rObj"></div><div class="bs-v" id="rRiposte"></div><div class="bs-src" id="rObjSrc"></div></div></div>
+              <div class="bs-step"><div class="bs-num">4</div><div><div class="bs-k">Le chiffre à lâcher</div><div class="bs-fig"><b id="rFig"></b><span id="rFigPhrase"></span></div><div class="bs-src" id="rFigSrc"></div></div></div>
+              <div class="bs-next"><div class="bs-nk">Next step à proposer</div><div class="bs-nv" id="rNext"></div></div>
             </div>
           </div>
         </div>
+        <div class="rowbtns"><button class="ghost" id="again">Préparer un autre rendez-vous</button></div>
       </div>
-      <div class="again"><button id="again">Préparer un autre rendez-vous</button></div>
-    </div>
-  </div>
+    </section>
+
+    <!-- DEALS -->
+    <section class="view" id="view-deals">
+      <div class="eyebrow">Mes deals</div>
+      <h1>Le fil de tes rendez-vous.</h1>
+      <p class="lead">Chaque brief est une fiche. Marque où il en est, Faro garde la trace.</p>
+      <div class="panel"><div id="dealsWrap"></div></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings">
+      <div class="eyebrow">Paramètres</div>
+      <h1>Ton profil.</h1>
+      <p class="lead">Ces infos personnalisent tes briefs et t'évitent de tout retaper.</p>
+
+      <div class="setcard">
+        <div class="setrow"><div class="av" id="setAv">F</div><div><div class="uname" id="setEmail" style="font-size:15px;"></div><div class="ro">Plan <b id="setPlan">Gratuit</b></div></div></div>
+        <div class="grid2">
+          <div class="fg"><label for="sFullname">Prénom et nom</label><input class="field" id="sFullname" placeholder="Ton nom" autocomplete="off"/></div>
+          <div class="fg"><label for="sCompany">Ton entreprise</label><input class="field" id="sCompany" placeholder="Nom de ta boîte" autocomplete="off"/></div>
+        </div>
+        <div class="grid2">
+          <div class="fg"><label for="sSecteur">Secteur</label><input class="field" id="sSecteur" placeholder="SaaS, conseil, industrie..." autocomplete="off"/></div>
+          <div class="fg"><label for="sOffre">Ce que tu vends</label><input class="field" id="sOffre" placeholder="Automatisation des flux financiers" autocomplete="off"/></div>
+        </div>
+        <div class="fg"><label for="sContexte">Ta proposition de valeur <span class="opt">· utilisée dans chaque brief</span></label>
+          <textarea class="field" id="sContexte" placeholder="Ce qui te différencie, ton client type, tes preuves. Faro s'en sert pour affiner l'angle."></textarea></div>
+        <div class="actions"><button class="btn" id="saveSet"><span class="spin"></span><span>Enregistrer</span></button></div>
+      </div>
+    </section>
+
+    <!-- SOON -->
+    <section class="view" id="view-duel"><div class="back" data-view="dash">&larr; Tableau de bord</div>
+      <div class="soonwrap"><span class="tag">En construction</span>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h2>Faro Duel arrive bientôt</h2><p>En plein rendez-vous, tu tapes l'objection et Faro renvoie la riposte qui débloque, en un instant.</p></div></section>
+    <section class="view" id="view-chasse"><div class="back" data-view="dash">&larr; Tableau de bord</div>
+      <div class="soonwrap"><span class="tag">En construction</span>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+        <h2>Faro Chasse arrive bientôt</h2><p>Faro repère les entreprises dont le besoin arrive avant tes concurrents. Levée, recrutement clé, changement de dirigeant.</p></div></section>
+
+  </main>
+</div>
+<div class="toast" id="toast"></div>
 
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   const supabase = createClient('https://icofqeisjfoywusolbqs.supabase.co','sb_publishable_sF-J9J5rLGpAJt80SqazCw_XSkmiqns');
   const $ = id => document.getElementById(id);
+  let session=null, uid=null, tokMax=null, briefs=[], settings={};
 
-  let session = null;
+  /* ---------- utilitaires visuels ---------- */
+  function hue(str){ let h=0; str=(str||'F'); for(let i=0;i<str.length;i++) h=(h*31+str.charCodeAt(i))%360; return h; }
+  function gradient(str){ const h=hue(str); return `linear-gradient(135deg,hsl(${h} 55% 52%),hsl(${(h+34)%360} 60% 44%))`; }
+  function initials(str){ if(!str) return 'F'; const p=str.trim().split(/\s+/); return (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase(); }
+  function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
 
-  // Garde d'accès
-  (async () => {
+  /* ---------- navigation ---------- */
+  function go(view){
+    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.view===view));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.view)));
+  document.querySelectorAll('.tcard.live[data-open]').forEach(c=>c.addEventListener('click',()=>go(c.dataset.open)));
+
+  /* ---------- init ---------- */
+  (async()=>{
     const { data } = await supabase.auth.getSession();
-    if (!data.session) { window.location.href = '/connexion'; return; }
-    session = data.session;
-    loadTokens();
+    if(!data.session){ window.location.href='/connexion'; return; }
+    session=data.session; uid=session.user.id;
+    const u=session.user;
+
+    // paramètres
+    try{ const {data:s}=await supabase.from('user_settings').select('*').eq('user_id',uid).single(); if(s) settings=s; }catch(e){}
+
+    const metaName=(u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||'';
+    const name=(settings.full_name||metaName||(u.email?u.email.split('@')[0]:'')).trim();
+    const prenom=name?name.split(' ')[0].replace(/^./,c=>c.toUpperCase()):'';
+    const photo=(u.user_metadata&&(u.user_metadata.avatar_url||u.user_metadata.picture))||settings.avatar_url||'';
+    const hour=new Date().getHours();
+    $('greet').textContent=(prenom?`${hour<18?'Bonjour':'Bonsoir'} ${prenom}.`:`${hour<18?'Bonjour':'Bonsoir'}.`);
+    $('uname').textContent=name||u.email||'Mon compte';
+    paintAvatar($('uav'),name,photo);
+    paintAvatar($('setAv'),name,photo);
+    $('setEmail').textContent=u.email||'';
+
+    // paramètres -> formulaire + préremplissage brief
+    $('sFullname').value=settings.full_name||metaName||''; $('sCompany').value=settings.company||'';
+    $('sSecteur').value=settings.secteur||''; $('sOffre').value=settings.offre||''; $('sContexte').value=settings.contexte||'';
+    if(settings.offre) $('offre').value=settings.offre;
+
+    // profil (jetons)
+    try{ const {data:p}=await supabase.from('profiles').select('tokens_left, tokens_month, plan').eq('user_id',uid).single();
+      if(p){ tokMax=p.tokens_month; setTokens(p.tokens_left); $('setPlan').textContent=p.plan==='free'?'Gratuit':(p.plan||'Gratuit'); } }catch(e){}
+
+    // briefs
+    await loadBriefs();
   })();
 
-  async function loadTokens() {
-    try {
-      const { data } = await supabase.from('profiles').select('tokens_left').eq('user_id', session.user.id).single();
-      if (data) setTokens(data.tokens_left);
-    } catch (e) {}
+  function paintAvatar(el,name,photo){
+    if(photo){ el.style.background='none'; el.innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`; }
+    else { el.style.background=gradient(name); el.textContent=initials(name); }
   }
-  function setTokens(n) {
-    $('tok').textContent = n + (n > 1 ? ' jetons' : ' jeton');
-    $('costLeft').textContent = n;
-    $('cost').style.display = '';
+  function setTokens(left){
+    if(typeof left!=='number') return;
+    $('utok').textContent=left+(left>1?' jetons':' jeton'); $('costLeft').textContent=left;
+    $('kTok').childNodes[0].nodeValue=left; if(tokMax!=null) $('kTokMax').textContent=' / '+tokMax;
   }
 
-  $('logout').addEventListener('click', async e => { e.preventDefault(); await supabase.auth.signOut(); window.location.href = '/connexion'; });
+  async function loadBriefs(){
+    try{ const {data}=await supabase.from('briefs').select('*').eq('user_id',uid).order('created_at',{ascending:false}); briefs=data||[]; }
+    catch(e){ briefs=[]; }
+    renderDashboard(); renderDeals();
+  }
 
-  function showNote(t, type) { const n = $('note'); n.textContent = t; n.className = 'note show ' + type; }
-  function clearNote() { $('note').className = 'note'; }
+  /* ---------- dashboard ---------- */
+  function statutChip(s){ return s==='gagne'?'<span class="chip w">Gagné</span>':s==='perdu'?'<span class="chip l">Perdu</span>':'<span class="chip r">À relancer</span>'; }
+  function fmtDate(d){ try{ return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});}catch(e){return '';} }
 
-  $('gen').addEventListener('click', async () => {
+  function renderDashboard(){
+    $('kBriefs').textContent=briefs.length;
+    $('kRelance').textContent=briefs.filter(b=>b.statut==='a_relancer').length;
+    const mats=briefs.map(b=>b.maturite).filter(n=>typeof n==='number');
+    $('kMat').textContent=mats.length?Math.round(mats.reduce((a,c)=>a+c,0)/mats.length):'—';
+
+    // courbe 7 jours
+    const days=[]; const today=new Date(); today.setHours(0,0,0,0);
+    for(let i=6;i>=0;i--){ const d=new Date(today); d.setDate(d.getDate()-i); days.push({d,c:0}); }
+    briefs.forEach(b=>{ const t=new Date(b.created_at); t.setHours(0,0,0,0); const day=days.find(x=>x.d.getTime()===t.getTime()); if(day) day.c++; });
+    $('chartWrap').innerHTML=briefs.length?areaChart(days):'<div class="empty">Ton premier brief lancera la courbe.</div>';
+
+    // pipeline
+    const r=briefs.filter(b=>b.statut==='a_relancer').length, w=briefs.filter(b=>b.statut==='gagne').length, l=briefs.filter(b=>b.statut==='perdu').length;
+    const tot=r+w+l;
+    $('pipeWrap').innerHTML=tot? `
+      <div class="pipe"><i class="pr" style="width:${r/tot*100}%"></i><i class="pw" style="width:${w/tot*100}%"></i><i class="pl" style="width:${l/tot*100}%"></i></div>
+      <div class="pleg">
+        <div class="row"><span class="dot" style="background:var(--copper)"></span>À relancer <b>${r}</b></div>
+        <div class="row"><span class="dot" style="background:var(--green)"></span>Gagné <b>${w}</b></div>
+        <div class="row"><span class="dot" style="background:var(--red)"></span>Perdu <b>${l}</b></div>
+      </div>`:'<div class="empty">Ton pipeline se remplit à chaque brief.</div>';
+
+    // derniers
+    const rec=briefs.slice(0,5);
+    $('recentWrap').innerHTML=rec.length?rec.map((b,i)=>briefRow(b,briefs.indexOf(b))).join(''):'<div class="empty">Aucun brief pour l instant. Ouvre l outil Brief pour commencer.</div>';
+    bindRows($('recentWrap'));
+  }
+
+  function areaChart(days){
+    const W=320,H=110,pad=12,max=Math.max(1,...days.map(d=>d.c));
+    const x=i=>pad+i*((W-2*pad)/(days.length-1)), y=v=>H-18-(v/max)*(H-34);
+    const pts=days.map((d,i)=>[x(i),y(d.c)]);
+    const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+    const area=`${line} L ${x(days.length-1).toFixed(1)} ${H-18} L ${pad} ${H-18} Z`;
+    const dots=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="#C96A2E"/>`).join('');
+    const labels=days.map((d,i)=>`<text x="${x(i).toFixed(1)}" y="${H-4}" font-size="8" fill="#A69C8B" text-anchor="middle" font-family="DM Mono,monospace">${['D','L','M','M','J','V','S'][d.d.getDay()]}</text>`).join('');
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C96A2E" stop-opacity="0.22"/><stop offset="1" stop-color="#C96A2E" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#cg)"/><path d="${line}" fill="none" stroke="#C96A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>${dots}${labels}</svg>`;
+  }
+
+  function briefRow(b,idx){
+    return `<div class="brow" data-idx="${idx}">
+      <div class="mono" style="background:${gradient(b.entreprise)}">${initials(b.entreprise)}</div>
+      <div class="binfo"><div class="bname">${esc(b.entreprise||'Prospect')}</div><div class="bmeta">${esc(b.poste||'')}${b.poste?' · ':''}${fmtDate(b.created_at)}</div></div>
+      ${statutChip(b.statut)}
+      <div class="bscore">${typeof b.maturite==='number'?b.maturite:'—'}</div>
+    </div>`;
+  }
+  function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function bindRows(root){ root.querySelectorAll('.brow, .deal .binfo').forEach(el=>{ el.addEventListener('click',()=>{ const idx=+(el.dataset.idx||el.closest('[data-idx]').dataset.idx); openBrief(briefs[idx]); }); }); }
+
+  /* ---------- deals ---------- */
+  function renderDeals(){
+    if(!briefs.length){ $('dealsWrap').innerHTML='<div class="empty">Tes deals apparaîtront ici après ton premier brief.</div>'; return; }
+    $('dealsWrap').innerHTML=briefs.map((b,i)=>`
+      <div class="deal" data-idx="${i}">
+        <div class="mono" style="background:${gradient(b.entreprise)}">${initials(b.entreprise)}</div>
+        <div class="binfo" data-idx="${i}"><div class="bname">${esc(b.entreprise||'Prospect')}</div><div class="bmeta">${esc(b.poste||'')}${b.poste?' · ':''}${fmtDate(b.created_at)}</div></div>
+        <div class="bscore">${typeof b.maturite==='number'?b.maturite:'—'}</div>
+        <div class="statusbtns">
+          <button class="sb r ${b.statut==='a_relancer'?'on':''}" data-i="${i}" data-s="a_relancer">À relancer</button>
+          <button class="sb w ${b.statut==='gagne'?'on':''}" data-i="${i}" data-s="gagne">Gagné</button>
+          <button class="sb l ${b.statut==='perdu'?'on':''}" data-i="${i}" data-s="perdu">Perdu</button>
+        </div>
+      </div>`).join('');
+    $('dealsWrap').querySelectorAll('.binfo').forEach(el=>el.addEventListener('click',()=>openBrief(briefs[+el.dataset.idx])));
+    $('dealsWrap').querySelectorAll('.sb').forEach(el=>el.addEventListener('click',()=>setStatut(+el.dataset.i,el.dataset.s)));
+  }
+  async function setStatut(i,s){
+    const b=briefs[i]; if(!b||b.statut===s) return; const prev=b.statut; b.statut=s;
+    renderDeals(); renderDashboard();
+    if(b.id){ try{ await supabase.from('briefs').update({statut:s}).eq('id',b.id); toast('Statut mis à jour'); }
+      catch(e){ b.statut=prev; renderDeals(); renderDashboard(); toast('Échec de la mise à jour'); } }
+  }
+
+  /* ---------- rendu d'un brief ---------- */
+  function openBrief(b){ go('brief'); render(b); }
+  function render(b){
+    const name=b.entreprise||$('entreprise').value.trim()||'Prospect';
+    $('rName').textContent=name; $('rLogo').textContent=initials(name); $('rLogo').style.background=gradient(name);
+    const score=Math.max(0,Math.min(100,(b.maturite ?? b.maturite_score)||0));
+    $('rScore').textContent=score; $('rLabel').textContent=b.label||b.maturite_label||''; $('rOuverture').textContent=b.ouverture||'';
+    $('rWhen').textContent=b.created_at?('Préparé le '+fmtDate(b.created_at)):"Généré à l'instant";
+    const q=$('rQuestions'); q.innerHTML=''; (b.questions||[]).forEach(t=>{ const d=document.createElement('div'); d.className='bs-q'; d.textContent=t; q.appendChild(d); });
+    const obj=b.objection||{}; $('rObj').textContent=obj.texte||''; $('rRiposte').textContent=obj.riposte||''; $('rObjSrc').textContent=obj.source||''; $('rObjSrc').style.display=obj.source?'':'none';
+    const fig=b.chiffre||{}; $('rFig').textContent=fig.valeur||''; $('rFigPhrase').textContent=fig.phrase?' '+fig.phrase:''; $('rFigSrc').textContent=fig.source||'';
+    $('rNext').textContent=b.next_step||'';
+    $('result').classList.add('show');
+    const g=$('rGauge'); g.querySelector('.fg').style.strokeDashoffset=327;
+    setTimeout(()=>{ g.querySelector('.fg').style.strokeDashoffset=(327-327*score/100); },120);
+    $('result').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  /* ---------- génération ---------- */
+  function showNote(t,type){ const n=$('note'); n.textContent=t; n.className='note show '+type; }
+  function clearNote(){ $('note').className='note'; }
+  $('gen').addEventListener('click',async()=>{
     clearNote();
-    const payload = {
-      entreprise: $('entreprise').value.trim(),
-      poste: $('poste').value.trim(),
-      offre: $('offre').value.trim(),
-      contexte: $('contexte').value.trim()
-    };
-    if (!payload.entreprise && !payload.offre) { showNote('Renseigne au moins l entreprise et ce que tu vends.', 'err'); return; }
-
-    const btn = $('gen');
-    btn.classList.add('loading'); btn.disabled = true; $('genLabel').textContent = 'Faro compose ton brief...';
-
-    try {
-      const { data: s } = await supabase.auth.getSession();
-      const token = s.session ? s.session.access_token : null;
-      const r = await fetch('/api/brief', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify(payload)
-      });
-      const out = await r.json();
-
-      if (!r.ok) {
-        if (r.status === 402) {
-          if (typeof out.tokens_left === 'number') setTokens(out.tokens_left);
-          const d = out.reset_at ? new Date(out.reset_at).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : 'lundi prochain';
-          showNote(`Tu as utilisé tes briefs de la semaine. Recharge le ${d}.`, 'warn');
-        } else {
-          showNote(out.error || 'Une erreur est survenue. Réessaie.', 'err');
-        }
+    const profil=[settings.full_name?('Vendeur : '+settings.full_name):'',settings.company?('Boîte : '+settings.company):'',settings.secteur?('Secteur : '+settings.secteur):'',settings.contexte?('Proposition : '+settings.contexte):''].filter(Boolean).join(' · ');
+    const payload={ entreprise:$('entreprise').value.trim(), poste:$('poste').value.trim(), offre:$('offre').value.trim(), contexte:$('contexte').value.trim(), profil };
+    if(!payload.entreprise&&!payload.offre){ showNote('Renseigne au moins l entreprise et ce que tu vends.','err'); return; }
+    const btn=$('gen'); btn.classList.add('loading'); btn.disabled=true; $('genLabel').textContent='Faro compose ton brief...';
+    try{
+      const {data:s}=await supabase.auth.getSession(); const token=s.session?s.session.access_token:null;
+      const r=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},body:JSON.stringify(payload)});
+      const out=await r.json();
+      if(!r.ok){
+        if(r.status===402){ if(typeof out.tokens_left==='number') setTokens(out.tokens_left);
+          const d=out.reset_at?new Date(out.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'lundi prochain';
+          showNote(`Tu as utilisé tes briefs de la semaine. Recharge le ${d}.`,'warn'); }
+        else showNote(out.error||'Une erreur est survenue. Réessaie.','err');
         return;
       }
+      if(typeof out.tokens_left==='number') setTokens(out.tokens_left);
+      if(out.brief){ briefs.unshift(out.brief); renderDashboard(); renderDeals(); render(out.brief); }
+    }catch(e){ showNote('Connexion impossible au serveur. Réessaie.','err'); }
+    finally{ btn.classList.remove('loading'); btn.disabled=false; $('genLabel').textContent='Générer le brief'; }
+  });
+  $('again').addEventListener('click',()=>{ $('result').classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'}); $('entreprise').focus(); });
 
-      if (typeof out.tokens_left === 'number') setTokens(out.tokens_left);
-      render(out.brief);
-    } catch (e) {
-      showNote('Connexion impossible au serveur. Réessaie.', 'err');
-    } finally {
-      btn.classList.remove('loading'); btn.disabled = false; $('genLabel').textContent = 'Générer le brief';
-    }
+  /* ---------- paramètres ---------- */
+  $('saveSet').addEventListener('click',async()=>{
+    const btn=$('saveSet'); btn.classList.add('loading'); btn.disabled=true;
+    const row={ user_id:uid, full_name:$('sFullname').value.trim()||null, company:$('sCompany').value.trim()||null, secteur:$('sSecteur').value.trim()||null, offre:$('sOffre').value.trim()||null, contexte:$('sContexte').value.trim()||null, updated_at:new Date().toISOString() };
+    try{
+      await supabase.from('user_settings').upsert(row,{onConflict:'user_id'});
+      settings={...settings,...row};
+      if(settings.offre) $('offre').value=settings.offre;
+      const name=settings.full_name||''; if(name){ $('uname').textContent=name; paintAvatar($('uav'),name,''); paintAvatar($('setAv'),name,''); const pr=name.split(' ')[0]; const h=new Date().getHours(); $('greet').textContent=`${h<18?'Bonjour':'Bonsoir'} ${pr.replace(/^./,c=>c.toUpperCase())}.`; }
+      toast('Profil enregistré');
+    }catch(e){ toast('Échec de l enregistrement'); }
+    finally{ btn.classList.remove('loading'); btn.disabled=false; }
   });
 
-  function render(b) {
-    $('rName').textContent = b.entreprise || $('entreprise').value.trim() || 'Prospect';
-    $('rLogo').textContent = ($('rName').textContent[0] || 'F').toUpperCase();
-    const score = Math.max(0, Math.min(100, b.maturite_score || 0));
-    $('rScore').textContent = score;
-    $('rLabel').textContent = b.maturite_label || '';
-    $('rOuverture').textContent = b.ouverture || '';
-
-    const q = $('rQuestions'); q.innerHTML = '';
-    (b.questions || []).forEach(t => { const d = document.createElement('div'); d.className = 'bs-q'; d.textContent = t; q.appendChild(d); });
-
-    const obj = b.objection || {};
-    $('rObj').textContent = obj.texte || '';
-    $('rRiposte').textContent = obj.riposte || '';
-    $('rObjSrc').textContent = obj.source || '';
-    $('rObjSrc').style.display = obj.source ? '' : 'none';
-
-    const fig = b.chiffre || {};
-    $('rFig').textContent = fig.valeur || '';
-    $('rFigPhrase').textContent = fig.phrase ? ' ' + fig.phrase : '';
-    $('rFigSrc').textContent = fig.source || '';
-
-    $('rNext').textContent = b.next_step || '';
-
-    $('result').classList.add('show');
-    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    const g = $('rGauge');
-    setTimeout(() => { g.querySelector('.fg').style.strokeDashoffset = (327 - 327 * score / 100); }, 120);
-  }
-
-  $('again').addEventListener('click', () => {
-    $('result').classList.remove('show');
-    $('rGauge').querySelector('.fg').style.strokeDashoffset = 327;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    $('entreprise').focus();
-  });
+  $('logout').addEventListener('click',async e=>{ e.preventDefault(); e.stopPropagation(); await supabase.auth.signOut(); window.location.href='/connexion'; });
 </script>
 </body>
 </html>
