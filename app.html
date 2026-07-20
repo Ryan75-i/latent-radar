@@ -15,65 +15,64 @@
     --copper:#C96A2E;--copper-d:#B0561F;--copper-l:#E8804A;--copper-wash:#F3E4D6;
     --green:#4F9D69;--green-bg:#E7F3E9;--red:#9a3d2a;--red-bg:#F7E4DC;--violet:#8B6BB1;
     --serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+    --sh:0 24px 60px -44px rgba(120,80,40,.5);
   }
   body{background:var(--cream-2);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
   a{text-decoration:none;color:inherit;}
   ::selection{background:var(--copper-wash);}
-  .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh;}
+  .app{display:grid;grid-template-columns:252px 1fr;min-height:100vh;}
 
   /* SIDEBAR */
-  .side{background:var(--cream);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;}
-  .side .brand{padding:4px 8px 20px;}
-  .side .brand svg{height:36px;width:auto;display:block;}
-  .nav{display:flex;flex-direction:column;gap:3px;}
-  .nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .15s,color .15s;}
+  .side{background:var(--cream);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;}
+  .brand{padding:6px 8px 18px;cursor:pointer;display:block;}
+  .brand svg{height:34px;width:auto;display:block;}
+  .navgroup{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding:14px 12px 6px;}
+  .nav{display:flex;flex-direction:column;gap:2px;}
+  .nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:9px 12px;border-radius:10px;cursor:pointer;transition:background .15s,color .15s;}
   .nav button:hover{background:var(--cream-2);color:var(--ink);}
   .nav button.on{background:var(--copper-wash);color:var(--copper-d);font-weight:600;}
-  .nav button svg{width:19px;height:19px;flex-shrink:0;}
-  .nav .soon{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:20px;padding:2px 7px;}
+  .nav button svg{width:18px;height:18px;flex-shrink:0;}
+  .nav .soon{margin-left:auto;font-family:var(--mono);font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:20px;padding:2px 6px;}
   .side-sp{flex:1;}
-  .ucard{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .15s;}
-  .ucard:hover{border-color:var(--line-2);}
-  .av{width:36px;height:36px;border-radius:10px;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--copper);}
+  .ucard{border:1px solid var(--line);border-radius:14px;background:#fff;padding:9px;display:flex;align-items:center;gap:10px;}
+  .ucard .uinfo{cursor:pointer;}
+  .av{width:34px;height:34px;border-radius:10px;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--copper);}
   .av img{width:100%;height:100%;object-fit:cover;}
   .uinfo{min-width:0;flex:1;}
   .uname{font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .utok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);}
-  .ulog{border:none;background:transparent;color:var(--faint);cursor:pointer;padding:4px;border-radius:8px;display:flex;}
-  .ulog:hover{color:var(--copper);background:var(--cream-2);}
-  .ulog svg{width:17px;height:17px;}
+  .utok{font-family:var(--mono);font-size:10px;color:var(--copper-d);}
+  .ulog{border:none;background:transparent;color:var(--faint);cursor:pointer;padding:5px;border-radius:8px;display:flex;}
+  .ulog:hover{color:var(--red);background:var(--red-bg);}
+  .ulog svg{width:16px;height:16px;}
 
   /* MAIN */
-  .main{padding:38px 44px 80px;max-width:980px;}
+  .main{padding:36px 46px 80px;max-width:1000px;}
   .view{display:none;} .view.active{display:block;animation:fade .3s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);}
   h1{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.05;letter-spacing:-.02em;margin:10px 0 6px;}
   .lead{font-size:15px;color:var(--dim);margin-bottom:30px;}
   .sect{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:34px 0 16px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--sh);}
+  .panel h3{font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:2px;}
+  .panel .ph{font-size:12.5px;color:var(--dim);margin-bottom:16px;}
+  .empty{text-align:center;color:var(--faint);font-size:13px;padding:28px 10px;}
 
   /* KPIs */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;transition:border-color .2s,transform .2s;}
+  .kpi:hover{border-color:var(--line-2);transform:translateY(-2px);}
   .kpi .kl{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
   .kpi .kv{font-family:var(--serif);font-weight:700;font-size:28px;color:var(--copper);line-height:1.1;margin-top:6px;}
   .kpi .kv.ink{color:var(--ink);} .kpi .kv small{font-size:14px;color:var(--faint);font-weight:400;}
   .kpi .kn{font-size:11px;color:var(--dim);margin-top:3px;}
-
-  /* dashboard grid */
   .dgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;}
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;}
-  .panel h3{font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:2px;}
-  .panel .ph{font-size:12.5px;color:var(--dim);margin-bottom:16px;}
   .chart{width:100%;height:auto;display:block;}
-  .empty{text-align:center;color:var(--faint);font-size:13px;padding:28px 10px;}
-  /* pipeline */
   .pipe{height:14px;border-radius:8px;overflow:hidden;display:flex;background:var(--cream-2);border:1px solid var(--line);}
   .pipe i{height:100%;} .pipe .pr{background:var(--copper);} .pipe .pw{background:var(--green);} .pipe .pl{background:var(--red);}
   .pleg{display:flex;flex-direction:column;gap:9px;margin-top:16px;}
   .pleg .row{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-soft);}
   .pleg .dot{width:9px;height:9px;border-radius:3px;} .pleg .row b{margin-left:auto;color:var(--ink);font-weight:600;}
-  /* recent + deals list */
   .brow{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer;}
   .brow:last-child{border-bottom:none;} .brow:hover .bname{color:var(--copper);}
   .mono{width:38px;height:38px;border-radius:11px;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -85,8 +84,6 @@
   .chip.w{color:#2f6b3f;background:var(--green-bg);border:1px solid #CBE5D0;}
   .chip.l{color:var(--red);background:var(--red-bg);border:1px solid #F0CDBF;}
   .bscore{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--copper);width:34px;text-align:right;}
-
-  /* TOOL CARDS (dashboard bottom) */
   .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   .tcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s;}
   .tcard.live{cursor:pointer;} .tcard.live:hover{transform:translateY(-4px);box-shadow:0 26px 50px -34px rgba(120,80,40,.45);border-color:var(--line-2);}
@@ -99,7 +96,7 @@
   .tcard p{font-size:13px;color:var(--dim);line-height:1.5;flex:1;margin-bottom:14px;}
   .tgo{font-size:13px;font-weight:600;color:var(--copper);display:inline-flex;gap:6px;} .tgo.dim{color:var(--faint);}
 
-  /* BRIEF TOOL */
+  /* forms */
   .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim);cursor:pointer;margin-bottom:16px;}
   .back:hover{color:var(--copper);}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
@@ -111,15 +108,19 @@
   .field::placeholder{color:var(--faint);}
   textarea.field{resize:vertical;min-height:74px;line-height:1.5;}
   .actions{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap;}
-  .btn{background:var(--copper);color:#fff;border:none;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,transform .1s;display:inline-flex;align-items:center;gap:10px;}
+  .btn{background:var(--copper);color:#fff;border:none;border-radius:12px;padding:12px 22px;font-size:14.5px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,transform .1s;display:inline-flex;align-items:center;gap:10px;}
   .btn:hover{background:var(--copper-d);} .btn:active{transform:translateY(1px);} .btn:disabled{opacity:.65;cursor:default;}
+  .btn.sm{padding:9px 16px;font-size:13.5px;}
+  .btn.danger{background:#fff;color:var(--red);border:1px solid #F0CDBF;} .btn.danger:hover{background:var(--red-bg);}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2);} .btn.ghost:hover{background:var(--cream-2);border-color:var(--copper);}
   .cost{font-size:13px;color:var(--dim);} .cost b{color:var(--ink);font-weight:600;}
   .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:none;}
   .btn.loading .spin{display:inline-block;}
   @keyframes sp{to{transform:rotate(360deg);}}
   .note{margin-top:16px;font-size:12.5px;border-radius:11px;padding:11px 14px;display:none;line-height:1.5;}
-  .note.show{display:block;} .note.err{background:var(--red-bg);border:1px solid #F0CDBF;color:var(--red);} .note.warn{background:var(--copper-wash);border:1px solid var(--copper-l);color:var(--copper-d);} .note.ok{background:var(--green-bg);border:1px solid #CBE5D0;color:#2f6b3f;}
+  .note.show{display:block;} .note.err{background:var(--red-bg);border:1px solid #F0CDBF;color:var(--red);} .note.warn{background:var(--copper-wash);border:1px solid var(--copper-l);color:var(--copper-d);}
 
+  /* brief result */
   .result{margin-top:26px;display:none;} .result.show{display:block;}
   .bs-frame{border:1px solid var(--line);border-radius:22px;background:var(--card);overflow:hidden;box-shadow:0 34px 80px -44px rgba(120,80,40,.5);}
   .bs-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--cream-2);}
@@ -134,12 +135,10 @@
   .bs-gauge{position:relative;width:118px;height:118px;margin:0 auto 10px;}
   .bs-gauge svg{width:118px;height:118px;transform:rotate(-90deg);}
   .bs-gauge circle{fill:none;stroke-width:9;stroke-linecap:round;}
-  .bs-gauge .bg{stroke:var(--line);}
-  .bs-gauge .fg{stroke:var(--copper);stroke-dasharray:327;stroke-dashoffset:327;transition:stroke-dashoffset 1.3s cubic-bezier(.2,.7,.2,1);}
+  .bs-gauge .bg{stroke:var(--line);} .bs-gauge .fg{stroke:var(--copper);stroke-dasharray:327;stroke-dashoffset:327;transition:stroke-dashoffset 1.3s cubic-bezier(.2,.7,.2,1);}
   .bs-gval{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:29px;color:var(--copper);}
   .bs-gval s{font-size:13px;color:var(--faint);margin-left:2px;text-decoration:none;}
-  .bs-slabel{font-size:12.5px;font-weight:700;color:var(--ink);}
-  .bs-ssub{font-size:11.5px;color:var(--copper-d);margin-top:4px;line-height:1.4;}
+  .bs-slabel{font-size:12.5px;font-weight:700;color:var(--ink);} .bs-ssub{font-size:11.5px;color:var(--copper-d);margin-top:4px;line-height:1.4;}
   .bs-main{padding:20px 26px;}
   .bs-step{display:grid;grid-template-columns:30px 1fr;gap:15px;padding:15px 0;border-bottom:1px solid var(--line);}
   .bs-num{width:28px;height:28px;border-radius:50%;background:var(--copper-wash);color:var(--copper-d);font-family:var(--mono);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;}
@@ -154,10 +153,8 @@
   .bs-nk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:6px;}
   .bs-nv{font-size:14px;color:var(--ink);font-weight:500;line-height:1.5;}
   .rowbtns{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
-  .ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);border-radius:12px;padding:11px 18px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s;}
-  .ghost:hover{background:var(--cream-2);border-color:var(--copper);}
 
-  /* DEALS list controls */
+  /* deals */
   .statusbtns{display:flex;gap:6px;}
   .sb{font-size:11px;font-weight:600;border:1px solid var(--line-2);background:#fff;color:var(--dim);border-radius:8px;padding:5px 9px;cursor:pointer;font-family:inherit;transition:.12s;}
   .sb:hover{border-color:var(--copper);color:var(--copper);}
@@ -165,19 +162,45 @@
   .sb.on.w{background:var(--green-bg);border-color:#CBE5D0;color:#2f6b3f;}
   .sb.on.l{background:var(--red-bg);border-color:#F0CDBF;color:var(--red);}
   .deal{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
-  .deal:last-child{border-bottom:none;}
-  .deal .binfo{cursor:pointer;}
+  .deal:last-child{border-bottom:none;} .deal .binfo{cursor:pointer;}
 
-  /* SETTINGS */
-  .setcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;max-width:620px;}
-  .setcard+.setcard{margin-top:16px;}
-  .setrow{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
-  .setrow .av{width:56px;height:56px;border-radius:14px;font-size:22px;}
-  .ro{font-size:13px;color:var(--dim);}
-  .ro b{color:var(--ink);}
+  /* ---------- SETTINGS (architecture Claude/Supabase) ---------- */
+  .setwrap{display:grid;grid-template-columns:230px 1fr;border:1px solid var(--line);border-radius:18px;background:var(--card);overflow:hidden;box-shadow:var(--sh);}
+  .setnav{border-right:1px solid var(--line);background:linear-gradient(180deg,#FCFAF4,#FBF8F1);padding:16px 12px;}
+  .setgroup{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding:16px 10px 6px;}
+  .setgroup:first-child{padding-top:4px;}
+  .setnav button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:none;background:transparent;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:8px 10px;border-radius:9px;cursor:pointer;transition:.15s;}
+  .setnav button:hover{background:var(--cream-2);color:var(--ink);}
+  .setnav button.on{background:var(--copper-wash);color:var(--copper-d);font-weight:600;}
+  .setnav .sn-soon{margin-left:auto;font-family:var(--mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);}
+  .setpane{padding:28px 32px;min-height:440px;}
+  .setsec{display:none;} .setsec.on{display:block;animation:fade .25s ease;}
+  .setsec .sh{font-family:var(--serif);font-weight:600;font-size:22px;margin-bottom:4px;}
+  .setsec .sd{font-size:13.5px;color:var(--dim);margin-bottom:24px;}
+  .setblock{border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;}
+  .setblock .bt{font-size:14px;font-weight:600;margin-bottom:3px;}
+  .setblock .bd{font-size:12.5px;color:var(--dim);margin-bottom:16px;}
+  .avrow{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .avrow .av{width:58px;height:58px;border-radius:15px;font-size:22px;}
+  .kv2{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px dashed var(--line);font-size:13.5px;}
+  .kv2:last-child{border-bottom:none;} .kv2 .k{color:var(--dim);} .kv2 .v{font-weight:600;color:var(--ink);}
+  .planhero{display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,#FBEFE4,#F6E3D2);border:1px solid #FBE0CD;border-radius:14px;padding:18px 20px;margin-bottom:16px;flex-wrap:wrap;}
+  .planhero .pname{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--copper-d);}
+  .planhero .pdesc{font-size:12.5px;color:var(--copper-d);opacity:.85;}
+  .toggle{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line);}
+  .toggle:last-child{border-bottom:none;}
+  .toggle .tl{font-size:13.5px;color:var(--ink);} .toggle .td{font-size:12px;color:var(--faint);margin-top:2px;}
+  .sw{width:40px;height:23px;border-radius:20px;background:var(--line-2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none;}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .sw.on{background:var(--copper);} .sw.on::after{transform:translateX(17px);}
+  .introw{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--line);}
+  .introw:last-child{border-bottom:none;}
+  .intico{width:36px;height:36px;border-radius:10px;background:var(--cream-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--dim);flex-shrink:0;}
+  .introw .it{font-size:13.5px;font-weight:600;} .introw .idd{font-size:12px;color:var(--faint);} .introw .flex{flex:1;min-width:0;}
+  .pillsoon{font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);background:var(--cream-2);border:1px solid var(--line);border-radius:20px;padding:4px 10px;}
 
   /* SOON */
-  .soonwrap{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:48px 40px;text-align:center;}
+  .soonwrap{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:48px 40px;text-align:center;box-shadow:var(--sh);}
   .soonwrap .ico{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;background:var(--copper-wash);color:var(--copper-d);}
   .soonwrap .ico svg{width:28px;height:28px;}
   .soonwrap h2{font-family:var(--serif);font-weight:600;font-size:26px;margin-bottom:8px;}
@@ -187,15 +210,20 @@
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:13px;padding:11px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.3s;z-index:50;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-  @media(max-width:820px){
+  @media(max-width:860px){
     .app{grid-template-columns:1fr;}
-    .side{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;gap:10px;padding:12px 16px;overflow-x:auto;z-index:20;}
-    .side .brand{padding:0;} .side .brand svg{height:30px;}
-    .nav{flex-direction:row;gap:4px;flex:1;} .nav button{padding:8px 10px;white-space:nowrap;} .nav button span.lbl{display:none;} .nav .soon{display:none;}
-    .side-sp{display:none;} .ucard{padding:4px;border:none;background:transparent;} .uinfo{display:none;} .ucard .ulog{display:none;}
+    .side{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;gap:8px;padding:10px 14px;overflow-x:auto;z-index:20;}
+    .brand{padding:0;} .brand svg{height:28px;}
+    .navgroup{display:none;}
+    .nav{flex-direction:row;gap:3px;} .nav button{padding:7px 9px;white-space:nowrap;} .nav button span.lbl{display:none;} .nav .soon{display:none;}
+    .side-sp{display:none;} .ucard{padding:4px;border:none;background:transparent;} .uinfo{display:none;}
     .main{padding:24px 18px 60px;}
-    .kpis{grid-template-columns:1fr 1fr;} .dgrid,.tools,.grid2{grid-template-columns:1fr;} .bs-body{grid-template-columns:1fr;} .bs-side{border-right:none;border-bottom:1px solid var(--line);}
+    .kpis{grid-template-columns:1fr 1fr;} .dgrid,.tools,.grid2{grid-template-columns:1fr;}
+    .bs-body{grid-template-columns:1fr;} .bs-side{border-right:none;border-bottom:1px solid var(--line);}
     .deal{grid-template-columns:auto 1fr;} .deal .bscore,.deal .statusbtns{grid-column:2;justify-self:start;}
+    .setwrap{grid-template-columns:1fr;} .setnav{border-right:none;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;padding:10px;gap:4px;}
+    .setnav .setgroup{display:none;} .setnav button{white-space:nowrap;} .setnav .sn-soon{display:none;}
+    .setpane{padding:22px 18px;min-height:0;}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
@@ -204,24 +232,33 @@
 <div class="app">
 
   <aside class="side">
-    <a class="brand" href="/" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <a class="brand" data-view="dash" aria-label="Faro · tableau de bord"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle>
       <path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path>
       <path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g>
       <text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
+
+    <div class="navgroup">Espace</div>
     <nav class="nav">
       <button class="on" data-view="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span class="lbl">Tableau de bord</span></button>
+      <button data-view="deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="lbl">Mes deals</span></button>
+    </nav>
+
+    <div class="navgroup">Outils</div>
+    <nav class="nav">
       <button data-view="brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg><span class="lbl">Brief</span></button>
       <button data-view="duel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="lbl">Duel</span><span class="soon">Bientôt</span></button>
       <button data-view="chasse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span class="lbl">Chasse</span><span class="soon">Bientôt</span></button>
-      <button data-view="deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="lbl">Mes deals</span></button>
+    </nav>
+
+    <div class="side-sp"></div>
+    <nav class="nav" style="margin-bottom:8px;">
       <button data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="lbl">Paramètres</span></button>
     </nav>
-    <div class="side-sp"></div>
-    <div class="ucard" data-view="settings">
+    <div class="ucard">
       <div class="av" id="uav">F</div>
-      <div class="uinfo"><div class="uname" id="uname">...</div><div class="utok" id="utok">— jetons</div></div>
-      <button class="ulog" id="logout" aria-label="Déconnexion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></button>
+      <div class="uinfo" data-view="settings"><div class="uname" id="uname">...</div><div class="utok" id="utok">— jetons</div></div>
+      <button class="ulog" id="logout" aria-label="Se déconnecter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></button>
     </div>
   </aside>
 
@@ -232,47 +269,22 @@
       <div class="eyebrow">Ton espace</div>
       <h1 id="greet">Bonjour.</h1>
       <p class="lead">Voici où en sont tes rendez-vous.</p>
-
       <div class="kpis">
         <div class="kpi"><div class="kl">Jetons cette semaine</div><div class="kv" id="kTok">—<small id="kTokMax"></small></div><div class="kn">Recharge chaque lundi</div></div>
         <div class="kpi"><div class="kl">Briefs préparés</div><div class="kv ink" id="kBriefs">0</div><div class="kn">Au total</div></div>
         <div class="kpi"><div class="kl">À relancer</div><div class="kv ink" id="kRelance">0</div><div class="kn">Deals ouverts</div></div>
         <div class="kpi"><div class="kl">Maturité moyenne</div><div class="kv" id="kMat">—</div><div class="kn">Sur tes cibles</div></div>
       </div>
-
       <div class="dgrid" style="margin-top:16px;">
-        <div class="panel">
-          <h3>Ton activité</h3><div class="ph">Briefs préparés sur les 7 derniers jours.</div>
-          <div id="chartWrap"></div>
-        </div>
-        <div class="panel">
-          <h3>Ton pipeline</h3><div class="ph">Répartition de tes deals.</div>
-          <div id="pipeWrap"></div>
-        </div>
+        <div class="panel"><h3>Ton activité</h3><div class="ph">Briefs préparés sur les 7 derniers jours.</div><div id="chartWrap"></div></div>
+        <div class="panel"><h3>Ton pipeline</h3><div class="ph">Répartition de tes deals.</div><div id="pipeWrap"></div></div>
       </div>
-
-      <div class="panel" style="margin-top:16px;">
-        <h3>Derniers briefs</h3><div class="ph">Clique pour rouvrir la fiche.</div>
-        <div id="recentWrap"></div>
-      </div>
-
+      <div class="panel" style="margin-top:16px;"><h3>Derniers briefs</h3><div class="ph">Clique pour rouvrir la fiche.</div><div id="recentWrap"></div></div>
       <p class="sect">Tes outils</p>
       <div class="tools">
-        <div class="tcard live" data-open="brief">
-          <div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></div>
-          <span class="tbadge ok">Disponible</span><h4>Brief</h4>
-          <p>Le film complet de ton rendez-vous, prêt à dire.</p><span class="tgo">Ouvrir &rarr;</span>
-        </div>
-        <div class="tcard duel" data-open="duel">
-          <div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-          <span class="tbadge soon">Bientôt</span><h4>Duel</h4>
-          <p>On t'objecte, Faro renvoie la riposte qui débloque.</p><span class="tgo dim">Bientôt</span>
-        </div>
-        <div class="tcard chasse" data-open="chasse">
-          <div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
-          <span class="tbadge soon">Bientôt</span><h4>Chasse</h4>
-          <p>Qui démarcher avant tes concurrents, et quand.</p><span class="tgo dim">Bientôt</span>
-        </div>
+        <div class="tcard live" data-open="brief"><div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></div><span class="tbadge ok">Disponible</span><h4>Brief</h4><p>Le film complet de ton rendez-vous, prêt à dire.</p><span class="tgo">Ouvrir &rarr;</span></div>
+        <div class="tcard duel" data-open="duel"><div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="tbadge soon">Bientôt</span><h4>Duel</h4><p>On t'objecte, Faro renvoie la riposte qui débloque.</p><span class="tgo dim">Bientôt</span></div>
+        <div class="tcard chasse" data-open="chasse"><div class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><span class="tbadge soon">Bientôt</span><h4>Chasse</h4><p>Qui démarcher avant tes concurrents, et quand.</p><span class="tgo dim">Bientôt</span></div>
       </div>
     </section>
 
@@ -288,12 +300,8 @@
           <div class="fg"><label for="poste">Interlocuteur</label><input class="field" id="poste" placeholder="DAF, DSI, DG..." autocomplete="off"/></div>
         </div>
         <div class="fg"><label for="offre">Ce que tu vends</label><input class="field" id="offre" placeholder="Automatisation des flux financiers" autocomplete="off"/></div>
-        <div class="fg"><label for="contexte">Contexte et signaux <span class="opt">· facultatif</span></label>
-          <textarea class="field" id="contexte" placeholder="Vient de lever 8 M€, 140 personnes, marché logistique, basé à Lyon."></textarea></div>
-        <div class="actions">
-          <button class="btn" id="gen"><span class="spin"></span><span id="genLabel">Générer le brief</span></button>
-          <span class="cost">1 brief · <b id="costLeft">—</b> restants</span>
-        </div>
+        <div class="fg"><label for="contexte">Contexte et signaux <span class="opt">· facultatif</span></label><textarea class="field" id="contexte" placeholder="Vient de lever 8 M€, 140 personnes, marché logistique, basé à Lyon."></textarea></div>
+        <div class="actions"><button class="btn" id="gen"><span class="spin"></span><span id="genLabel">Générer le brief</span></button><span class="cost">1 brief · <b id="costLeft">—</b> restants</span></div>
         <div class="note" id="note"></div>
       </div>
       <div class="result" id="result">
@@ -301,12 +309,8 @@
           <div class="bs-bar"><div class="bs-tabs"><span>Brief</span></div><div class="bs-live" id="rWhen">Généré à l'instant</div></div>
           <div class="bs-body">
             <aside class="bs-side">
-              <div class="bs-logo" id="rLogo">N</div>
-              <div class="bs-cname" id="rName">Entreprise</div>
-              <div class="bs-score">
-                <div class="bs-gauge" id="rGauge"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52"/></svg><div class="bs-gval"><span id="rScore">0</span><s>/100</s></div></div>
-                <div class="bs-slabel">Maturité du marché</div><div class="bs-ssub" id="rLabel"></div>
-              </div>
+              <div class="bs-logo" id="rLogo">N</div><div class="bs-cname" id="rName">Entreprise</div>
+              <div class="bs-score"><div class="bs-gauge" id="rGauge"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52"/></svg><div class="bs-gval"><span id="rScore">0</span><s>/100</s></div></div><div class="bs-slabel">Maturité du marché</div><div class="bs-ssub" id="rLabel"></div></div>
             </aside>
             <div class="bs-main">
               <div class="bs-step"><div class="bs-num">1</div><div><div class="bs-k">L'ouverture · à dire en premier</div><div class="bs-v" id="rOuverture"></div></div></div>
@@ -317,7 +321,7 @@
             </div>
           </div>
         </div>
-        <div class="rowbtns"><button class="ghost" id="again">Préparer un autre rendez-vous</button></div>
+        <div class="rowbtns"><button class="btn ghost" id="again">Préparer un autre rendez-vous</button></div>
       </div>
     </section>
 
@@ -332,34 +336,133 @@
     <!-- SETTINGS -->
     <section class="view" id="view-settings">
       <div class="eyebrow">Paramètres</div>
-      <h1>Ton profil.</h1>
-      <p class="lead">Ces infos personnalisent tes briefs et t'évitent de tout retaper.</p>
+      <h1>Réglages.</h1>
+      <p class="lead">Ton compte, ton abonnement, tes préférences.</p>
 
-      <div class="setcard">
-        <div class="setrow"><div class="av" id="setAv">F</div><div><div class="uname" id="setEmail" style="font-size:15px;"></div><div class="ro">Plan <b id="setPlan">Gratuit</b></div></div></div>
-        <div class="grid2">
-          <div class="fg"><label for="sFullname">Prénom et nom</label><input class="field" id="sFullname" placeholder="Ton nom" autocomplete="off"/></div>
-          <div class="fg"><label for="sCompany">Ton entreprise</label><input class="field" id="sCompany" placeholder="Nom de ta boîte" autocomplete="off"/></div>
+      <div class="setwrap">
+        <nav class="setnav" id="setnav">
+          <div class="setgroup">Compte</div>
+          <button class="on" data-set="profil">Profil</button>
+          <button data-set="entreprise">Ton entreprise</button>
+          <button data-set="securite">Sécurité</button>
+          <button data-set="notifs">Notifications</button>
+          <div class="setgroup">Abonnement</div>
+          <button data-set="plan">Plan</button>
+          <button data-set="usage">Jetons &amp; usage</button>
+          <button data-set="factu">Facturation<span class="sn-soon">Bientôt</span></button>
+          <div class="setgroup">Préférences</div>
+          <button data-set="apparence">Apparence</button>
+          <button data-set="langue">Langue<span class="sn-soon">Bientôt</span></button>
+          <div class="setgroup">Faro</div>
+          <button data-set="integrations">Intégrations<span class="sn-soon">Bientôt</span></button>
+          <button data-set="donnees">Données</button>
+          <button data-set="aide">Aide</button>
+        </nav>
+
+        <div class="setpane">
+
+          <div class="setsec on" data-set="profil">
+            <div class="sh">Profil</div><div class="sd">Comment Faro t'appelle et t'affiche.</div>
+            <div class="avrow"><div class="av" id="setAv">F</div><div><div class="bt" id="setEmail"></div><div class="bd">Ta photo vient de Google si tu t'es connecté avec, sinon un monogramme.</div></div></div>
+            <div class="grid2">
+              <div class="fg"><label for="sFullname">Prénom et nom</label><input class="field" id="sFullname" placeholder="Ton nom" autocomplete="off"/></div>
+              <div class="fg"><label>Email</label><input class="field" id="sEmail2" disabled/></div>
+            </div>
+            <div class="actions"><button class="btn" id="saveProfil"><span class="spin"></span><span>Enregistrer</span></button></div>
+          </div>
+
+          <div class="setsec" data-set="entreprise">
+            <div class="sh">Ton entreprise</div><div class="sd">Ces infos personnalisent chaque brief et te préremplissent l'outil.</div>
+            <div class="grid2">
+              <div class="fg"><label for="sCompany">Nom de ta boîte</label><input class="field" id="sCompany" placeholder="Ex : Latent" autocomplete="off"/></div>
+              <div class="fg"><label for="sSecteur">Secteur</label><input class="field" id="sSecteur" placeholder="SaaS, conseil, industrie..." autocomplete="off"/></div>
+            </div>
+            <div class="fg"><label for="sOffre">Ce que tu vends</label><input class="field" id="sOffre" placeholder="Automatisation des flux financiers" autocomplete="off"/></div>
+            <div class="fg"><label for="sContexte">Ta proposition de valeur <span class="opt">· utilisée dans chaque brief</span></label><textarea class="field" id="sContexte" placeholder="Ce qui te différencie, ton client type, tes preuves."></textarea></div>
+            <div class="actions"><button class="btn" id="saveEntreprise"><span class="spin"></span><span>Enregistrer</span></button></div>
+          </div>
+
+          <div class="setsec" data-set="securite">
+            <div class="sh">Sécurité</div><div class="sd">Ton mot de passe et ta session.</div>
+            <div class="setblock">
+              <div class="bt">Changer de mot de passe</div><div class="bd">Au moins 6 caractères.</div>
+              <div class="fg"><input class="field" id="sPass" type="password" placeholder="Nouveau mot de passe"/></div>
+              <button class="btn sm" id="savePass"><span class="spin"></span><span>Mettre à jour</span></button>
+            </div>
+            <div class="setblock">
+              <div class="bt">Session</div><div class="bd">Déconnecte-toi de cet appareil.</div>
+              <button class="btn ghost sm" id="logout2">Se déconnecter</button>
+            </div>
+            <div class="setblock">
+              <div class="bt">Supprimer le compte</div><div class="bd">Action définitive. On efface tes briefs et ton profil.</div>
+              <a class="btn danger sm" href="mailto:hello@farobrief.com?subject=Suppression%20de%20compte">Demander la suppression</a>
+            </div>
+          </div>
+
+          <div class="setsec" data-set="notifs">
+            <div class="sh">Notifications</div><div class="sd">Choisis ce que Faro t'envoie.</div>
+            <div class="toggle"><div><div class="tl">Relances de deals</div><div class="td">Un rappel quand un deal à relancer traîne.</div></div><button class="sw" data-toggle></button></div>
+            <div class="toggle"><div><div class="tl">Nouveautés produit</div><div class="td">Quand Duel ou Chasse arrivent.</div></div><button class="sw on" data-toggle></button></div>
+            <div class="toggle"><div><div class="tl">Résumé hebdo</div><div class="td">Ton activité de la semaine, chaque lundi.</div></div><button class="sw" data-toggle></button></div>
+            <p class="bd" style="margin-top:16px;">Le branchement des envois arrive avec l'intégration email.</p>
+          </div>
+
+          <div class="setsec" data-set="plan">
+            <div class="sh">Ton plan</div><div class="sd">Ce que couvre ton abonnement.</div>
+            <div class="planhero"><div><div class="pname" id="planName">Gratuit</div><div class="pdesc">5 briefs par semaine, sans carte.</div></div><button class="btn" disabled>Passer Pro (bientôt)</button></div>
+            <div class="setblock"><div class="kv2"><span class="k">Briefs par semaine</span><span class="v" id="planQuota">5</span></div><div class="kv2"><span class="k">Outils inclus</span><span class="v">Brief</span></div><div class="kv2"><span class="k">Sauvegarde des deals</span><span class="v">Incluse</span></div></div>
+          </div>
+
+          <div class="setsec" data-set="usage">
+            <div class="sh">Jetons &amp; usage</div><div class="sd">Ta consommation de la semaine.</div>
+            <div class="setblock"><div class="kv2"><span class="k">Jetons restants</span><span class="v" id="uLeft">—</span></div><div class="kv2"><span class="k">Quota hebdo</span><span class="v" id="uMax">—</span></div><div class="kv2"><span class="k">Prochaine recharge</span><span class="v" id="uReset">lundi prochain</span></div><div class="kv2"><span class="k">Briefs préparés au total</span><span class="v" id="uTotal">0</span></div></div>
+          </div>
+
+          <div class="setsec" data-set="factu">
+            <div class="sh">Facturation</div><div class="sd">Tes moyens de paiement et tes reçus.</div>
+            <div class="setblock"><div class="bt">Rien à facturer pour l'instant</div><div class="bd">Tu es sur le plan gratuit. La facturation s'activera avec le plan Pro.</div></div>
+          </div>
+
+          <div class="setsec" data-set="apparence">
+            <div class="sh">Apparence</div><div class="sd">Le thème de ton espace.</div>
+            <div class="toggle"><div><div class="tl">Thème clair</div><div class="td">Le thème Faro par défaut.</div></div><button class="sw on" disabled></button></div>
+            <div class="toggle"><div><div class="tl">Thème sombre</div><div class="td">Arrive bientôt.</div></div><button class="sw" disabled></button></div>
+          </div>
+
+          <div class="setsec" data-set="langue">
+            <div class="sh">Langue</div><div class="sd">La langue de l'interface et des briefs.</div>
+            <div class="setblock"><div class="kv2"><span class="k">Langue</span><span class="v">Français</span></div></div>
+            <p class="bd">D'autres langues arriveront.</p>
+          </div>
+
+          <div class="setsec" data-set="integrations">
+            <div class="sh">Intégrations</div><div class="sd">Connecte Faro à tes outils. Bientôt.</div>
+            <div class="introw"><div class="intico">H</div><div class="flex"><div class="it">HubSpot</div><div class="idd">Synchronise tes deals et tes contacts.</div></div><span class="pillsoon">Bientôt</span></div>
+            <div class="introw"><div class="intico">S</div><div class="flex"><div class="it">Salesforce</div><div class="idd">Pousse tes briefs dans tes opportunités.</div></div><span class="pillsoon">Bientôt</span></div>
+            <div class="introw"><div class="intico">P</div><div class="flex"><div class="it">Pipedrive</div><div class="idd">Relie tes fiches à ton pipeline.</div></div><span class="pillsoon">Bientôt</span></div>
+            <div class="introw"><div class="intico">C</div><div class="flex"><div class="it">Agenda</div><div class="idd">Un rappel avant chaque rendez-vous.</div></div><span class="pillsoon">Bientôt</span></div>
+          </div>
+
+          <div class="setsec" data-set="donnees">
+            <div class="sh">Données &amp; confidentialité</div><div class="sd">Tes données t'appartiennent.</div>
+            <div class="setblock"><div class="bt">Exporter mes briefs</div><div class="bd">Récupère toutes tes fiches en un fichier.</div><button class="btn ghost sm" id="exportBtn">Exporter en JSON</button></div>
+            <div class="setblock"><div class="bt">Confidentialité</div><div class="bd">On ne revend jamais tes données. Tes briefs ne servent qu'à toi.</div></div>
+          </div>
+
+          <div class="setsec" data-set="aide">
+            <div class="sh">Aide &amp; contact</div><div class="sd">Une question, un bug, une idée.</div>
+            <div class="setblock"><div class="bt">Écris-nous</div><div class="bd">On répond vite.</div><a class="btn ghost sm" href="mailto:hello@farobrief.com">hello@farobrief.com</a></div>
+          </div>
+
         </div>
-        <div class="grid2">
-          <div class="fg"><label for="sSecteur">Secteur</label><input class="field" id="sSecteur" placeholder="SaaS, conseil, industrie..." autocomplete="off"/></div>
-          <div class="fg"><label for="sOffre">Ce que tu vends</label><input class="field" id="sOffre" placeholder="Automatisation des flux financiers" autocomplete="off"/></div>
-        </div>
-        <div class="fg"><label for="sContexte">Ta proposition de valeur <span class="opt">· utilisée dans chaque brief</span></label>
-          <textarea class="field" id="sContexte" placeholder="Ce qui te différencie, ton client type, tes preuves. Faro s'en sert pour affiner l'angle."></textarea></div>
-        <div class="actions"><button class="btn" id="saveSet"><span class="spin"></span><span>Enregistrer</span></button></div>
       </div>
     </section>
 
     <!-- SOON -->
     <section class="view" id="view-duel"><div class="back" data-view="dash">&larr; Tableau de bord</div>
-      <div class="soonwrap"><span class="tag">En construction</span>
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h2>Faro Duel arrive bientôt</h2><p>En plein rendez-vous, tu tapes l'objection et Faro renvoie la riposte qui débloque, en un instant.</p></div></section>
+      <div class="soonwrap"><span class="tag">En construction</span><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h2>Faro Duel arrive bientôt</h2><p>En plein rendez-vous, tu tapes l'objection et Faro renvoie la riposte qui débloque.</p></div></section>
     <section class="view" id="view-chasse"><div class="back" data-view="dash">&larr; Tableau de bord</div>
-      <div class="soonwrap"><span class="tag">En construction</span>
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
-        <h2>Faro Chasse arrive bientôt</h2><p>Faro repère les entreprises dont le besoin arrive avant tes concurrents. Levée, recrutement clé, changement de dirigeant.</p></div></section>
+      <div class="soonwrap"><span class="tag">En construction</span><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><h2>Faro Chasse arrive bientôt</h2><p>Faro repère les entreprises dont le besoin arrive avant tes concurrents.</p></div></section>
 
   </main>
 </div>
@@ -369,106 +472,80 @@
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   const supabase = createClient('https://icofqeisjfoywusolbqs.supabase.co','sb_publishable_sF-J9J5rLGpAJt80SqazCw_XSkmiqns');
   const $ = id => document.getElementById(id);
-  let session=null, uid=null, tokMax=null, briefs=[], settings={};
+  let session=null, uid=null, tokMax=null, tokLeft=null, resetAt=null, briefs=[], settings={};
 
-  /* ---------- utilitaires visuels ---------- */
   function hue(str){ let h=0; str=(str||'F'); for(let i=0;i<str.length;i++) h=(h*31+str.charCodeAt(i))%360; return h; }
   function gradient(str){ const h=hue(str); return `linear-gradient(135deg,hsl(${h} 55% 52%),hsl(${(h+34)%360} 60% 44%))`; }
   function initials(str){ if(!str) return 'F'; const p=str.trim().split(/\s+/); return (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase(); }
+  function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
 
-  /* ---------- navigation ---------- */
-  function go(view){
-    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));
-    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.view===view));
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
+  function go(view){ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view)); document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.view===view)); window.scrollTo({top:0,behavior:'smooth'}); }
   document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.view)));
   document.querySelectorAll('.tcard.live[data-open]').forEach(c=>c.addEventListener('click',()=>go(c.dataset.open)));
 
-  /* ---------- init ---------- */
+  // sous-navigation des paramètres
+  $('setnav').querySelectorAll('button[data-set]').forEach(b=>b.addEventListener('click',()=>{
+    $('setnav').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    document.querySelectorAll('.setsec').forEach(s=>s.classList.toggle('on',s.dataset.set===b.dataset.set));
+  }));
+  // toggles décoratifs
+  document.querySelectorAll('.sw[data-toggle]').forEach(sw=>sw.addEventListener('click',()=>sw.classList.toggle('on')));
+
   (async()=>{
     const { data } = await supabase.auth.getSession();
     if(!data.session){ window.location.href='/connexion'; return; }
-    session=data.session; uid=session.user.id;
-    const u=session.user;
+    session=data.session; uid=session.user.id; const u=session.user;
 
-    // paramètres
     try{ const {data:s}=await supabase.from('user_settings').select('*').eq('user_id',uid).single(); if(s) settings=s; }catch(e){}
 
     const metaName=(u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||'';
     const name=(settings.full_name||metaName||(u.email?u.email.split('@')[0]:'')).trim();
     const prenom=name?name.split(' ')[0].replace(/^./,c=>c.toUpperCase()):'';
     const photo=(u.user_metadata&&(u.user_metadata.avatar_url||u.user_metadata.picture))||settings.avatar_url||'';
-    const hour=new Date().getHours();
-    $('greet').textContent=(prenom?`${hour<18?'Bonjour':'Bonsoir'} ${prenom}.`:`${hour<18?'Bonjour':'Bonsoir'}.`);
+    const h=new Date().getHours();
+    $('greet').textContent=(prenom?`${h<18?'Bonjour':'Bonsoir'} ${prenom}.`:`${h<18?'Bonjour':'Bonsoir'}.`);
     $('uname').textContent=name||u.email||'Mon compte';
-    paintAvatar($('uav'),name,photo);
-    paintAvatar($('setAv'),name,photo);
-    $('setEmail').textContent=u.email||'';
+    paintAvatar($('uav'),name,photo); paintAvatar($('setAv'),name,photo);
+    $('setEmail').textContent=u.email||''; $('sEmail2').value=u.email||'';
 
-    // paramètres -> formulaire + préremplissage brief
     $('sFullname').value=settings.full_name||metaName||''; $('sCompany').value=settings.company||'';
     $('sSecteur').value=settings.secteur||''; $('sOffre').value=settings.offre||''; $('sContexte').value=settings.contexte||'';
     if(settings.offre) $('offre').value=settings.offre;
 
-    // profil (jetons)
-    try{ const {data:p}=await supabase.from('profiles').select('tokens_left, tokens_month, plan').eq('user_id',uid).single();
-      if(p){ tokMax=p.tokens_month; setTokens(p.tokens_left); $('setPlan').textContent=p.plan==='free'?'Gratuit':(p.plan||'Gratuit'); } }catch(e){}
+    try{ const {data:p}=await supabase.from('profiles').select('tokens_left, tokens_month, plan, reset_at').eq('user_id',uid).single();
+      if(p){ tokMax=p.tokens_month; tokLeft=p.tokens_left; resetAt=p.reset_at; setTokens(p.tokens_left);
+        $('planName').textContent=p.plan==='free'?'Gratuit':(p.plan||'Gratuit'); $('planQuota').textContent=p.tokens_month||5;
+        $('uLeft').textContent=p.tokens_left; $('uMax').textContent=p.tokens_month||5;
+        if(p.reset_at) $('uReset').textContent=new Date(p.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+      } }catch(e){}
 
-    // briefs
     await loadBriefs();
   })();
 
-  function paintAvatar(el,name,photo){
-    if(photo){ el.style.background='none'; el.innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`; }
-    else { el.style.background=gradient(name); el.textContent=initials(name); }
-  }
-  function setTokens(left){
-    if(typeof left!=='number') return;
-    $('utok').textContent=left+(left>1?' jetons':' jeton'); $('costLeft').textContent=left;
-    $('kTok').childNodes[0].nodeValue=left; if(tokMax!=null) $('kTokMax').textContent=' / '+tokMax;
-  }
+  function paintAvatar(el,name,photo){ if(photo){ el.style.background='none'; el.innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`; } else { el.style.background=gradient(name); el.textContent=initials(name); } }
+  function setTokens(left){ if(typeof left!=='number') return; tokLeft=left; $('utok').textContent=left+(left>1?' jetons':' jeton'); $('costLeft').textContent=left; $('kTok').childNodes[0].nodeValue=left; if(tokMax!=null) $('kTokMax').textContent=' / '+tokMax; $('uLeft').textContent=left; }
 
-  async function loadBriefs(){
-    try{ const {data}=await supabase.from('briefs').select('*').eq('user_id',uid).order('created_at',{ascending:false}); briefs=data||[]; }
-    catch(e){ briefs=[]; }
-    renderDashboard(); renderDeals();
-  }
+  async function loadBriefs(){ try{ const {data}=await supabase.from('briefs').select('*').eq('user_id',uid).order('created_at',{ascending:false}); briefs=data||[]; }catch(e){ briefs=[]; } renderDashboard(); renderDeals(); }
 
-  /* ---------- dashboard ---------- */
   function statutChip(s){ return s==='gagne'?'<span class="chip w">Gagné</span>':s==='perdu'?'<span class="chip l">Perdu</span>':'<span class="chip r">À relancer</span>'; }
   function fmtDate(d){ try{ return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});}catch(e){return '';} }
 
   function renderDashboard(){
-    $('kBriefs').textContent=briefs.length;
+    $('kBriefs').textContent=briefs.length; $('uTotal').textContent=briefs.length;
     $('kRelance').textContent=briefs.filter(b=>b.statut==='a_relancer').length;
     const mats=briefs.map(b=>b.maturite).filter(n=>typeof n==='number');
     $('kMat').textContent=mats.length?Math.round(mats.reduce((a,c)=>a+c,0)/mats.length):'—';
-
-    // courbe 7 jours
     const days=[]; const today=new Date(); today.setHours(0,0,0,0);
     for(let i=6;i>=0;i--){ const d=new Date(today); d.setDate(d.getDate()-i); days.push({d,c:0}); }
     briefs.forEach(b=>{ const t=new Date(b.created_at); t.setHours(0,0,0,0); const day=days.find(x=>x.d.getTime()===t.getTime()); if(day) day.c++; });
     $('chartWrap').innerHTML=briefs.length?areaChart(days):'<div class="empty">Ton premier brief lancera la courbe.</div>';
-
-    // pipeline
-    const r=briefs.filter(b=>b.statut==='a_relancer').length, w=briefs.filter(b=>b.statut==='gagne').length, l=briefs.filter(b=>b.statut==='perdu').length;
-    const tot=r+w+l;
-    $('pipeWrap').innerHTML=tot? `
-      <div class="pipe"><i class="pr" style="width:${r/tot*100}%"></i><i class="pw" style="width:${w/tot*100}%"></i><i class="pl" style="width:${l/tot*100}%"></i></div>
-      <div class="pleg">
-        <div class="row"><span class="dot" style="background:var(--copper)"></span>À relancer <b>${r}</b></div>
-        <div class="row"><span class="dot" style="background:var(--green)"></span>Gagné <b>${w}</b></div>
-        <div class="row"><span class="dot" style="background:var(--red)"></span>Perdu <b>${l}</b></div>
-      </div>`:'<div class="empty">Ton pipeline se remplit à chaque brief.</div>';
-
-    // derniers
+    const r=briefs.filter(b=>b.statut==='a_relancer').length,w=briefs.filter(b=>b.statut==='gagne').length,l=briefs.filter(b=>b.statut==='perdu').length,tot=r+w+l;
+    $('pipeWrap').innerHTML=tot?`<div class="pipe"><i class="pr" style="width:${r/tot*100}%"></i><i class="pw" style="width:${w/tot*100}%"></i><i class="pl" style="width:${l/tot*100}%"></i></div><div class="pleg"><div class="row"><span class="dot" style="background:var(--copper)"></span>À relancer <b>${r}</b></div><div class="row"><span class="dot" style="background:var(--green)"></span>Gagné <b>${w}</b></div><div class="row"><span class="dot" style="background:var(--red)"></span>Perdu <b>${l}</b></div></div>`:'<div class="empty">Ton pipeline se remplit à chaque brief.</div>';
     const rec=briefs.slice(0,5);
-    $('recentWrap').innerHTML=rec.length?rec.map((b,i)=>briefRow(b,briefs.indexOf(b))).join(''):'<div class="empty">Aucun brief pour l instant. Ouvre l outil Brief pour commencer.</div>';
-    bindRows($('recentWrap'));
+    $('recentWrap').innerHTML=rec.length?rec.map(b=>briefRow(b,briefs.indexOf(b))).join(''):'<div class="empty">Aucun brief pour l instant. Ouvre l outil Brief pour commencer.</div>';
+    $('recentWrap').querySelectorAll('.brow').forEach(el=>el.addEventListener('click',()=>openBrief(briefs[+el.dataset.idx])));
   }
-
   function areaChart(days){
     const W=320,H=110,pad=12,max=Math.max(1,...days.map(d=>d.c));
     const x=i=>pad+i*((W-2*pad)/(days.length-1)), y=v=>H-18-(v/max)*(H-34);
@@ -479,43 +556,16 @@
     const labels=days.map((d,i)=>`<text x="${x(i).toFixed(1)}" y="${H-4}" font-size="8" fill="#A69C8B" text-anchor="middle" font-family="DM Mono,monospace">${['D','L','M','M','J','V','S'][d.d.getDay()]}</text>`).join('');
     return `<svg class="chart" viewBox="0 0 ${W} ${H}"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C96A2E" stop-opacity="0.22"/><stop offset="1" stop-color="#C96A2E" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#cg)"/><path d="${line}" fill="none" stroke="#C96A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>${dots}${labels}</svg>`;
   }
+  function briefRow(b,idx){ return `<div class="brow" data-idx="${idx}"><div class="mono" style="background:${gradient(b.entreprise)}">${initials(b.entreprise)}</div><div class="binfo"><div class="bname">${esc(b.entreprise||'Prospect')}</div><div class="bmeta">${esc(b.poste||'')}${b.poste?' · ':''}${fmtDate(b.created_at)}</div></div>${statutChip(b.statut)}<div class="bscore">${typeof b.maturite==='number'?b.maturite:'—'}</div></div>`; }
 
-  function briefRow(b,idx){
-    return `<div class="brow" data-idx="${idx}">
-      <div class="mono" style="background:${gradient(b.entreprise)}">${initials(b.entreprise)}</div>
-      <div class="binfo"><div class="bname">${esc(b.entreprise||'Prospect')}</div><div class="bmeta">${esc(b.poste||'')}${b.poste?' · ':''}${fmtDate(b.created_at)}</div></div>
-      ${statutChip(b.statut)}
-      <div class="bscore">${typeof b.maturite==='number'?b.maturite:'—'}</div>
-    </div>`;
-  }
-  function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-  function bindRows(root){ root.querySelectorAll('.brow, .deal .binfo').forEach(el=>{ el.addEventListener('click',()=>{ const idx=+(el.dataset.idx||el.closest('[data-idx]').dataset.idx); openBrief(briefs[idx]); }); }); }
-
-  /* ---------- deals ---------- */
   function renderDeals(){
     if(!briefs.length){ $('dealsWrap').innerHTML='<div class="empty">Tes deals apparaîtront ici après ton premier brief.</div>'; return; }
-    $('dealsWrap').innerHTML=briefs.map((b,i)=>`
-      <div class="deal" data-idx="${i}">
-        <div class="mono" style="background:${gradient(b.entreprise)}">${initials(b.entreprise)}</div>
-        <div class="binfo" data-idx="${i}"><div class="bname">${esc(b.entreprise||'Prospect')}</div><div class="bmeta">${esc(b.poste||'')}${b.poste?' · ':''}${fmtDate(b.created_at)}</div></div>
-        <div class="bscore">${typeof b.maturite==='number'?b.maturite:'—'}</div>
-        <div class="statusbtns">
-          <button class="sb r ${b.statut==='a_relancer'?'on':''}" data-i="${i}" data-s="a_relancer">À relancer</button>
-          <button class="sb w ${b.statut==='gagne'?'on':''}" data-i="${i}" data-s="gagne">Gagné</button>
-          <button class="sb l ${b.statut==='perdu'?'on':''}" data-i="${i}" data-s="perdu">Perdu</button>
-        </div>
-      </div>`).join('');
+    $('dealsWrap').innerHTML=briefs.map((b,i)=>`<div class="deal"><div class="mono" style="background:${gradient(b.entreprise)}">${initials(b.entreprise)}</div><div class="binfo" data-idx="${i}"><div class="bname">${esc(b.entreprise||'Prospect')}</div><div class="bmeta">${esc(b.poste||'')}${b.poste?' · ':''}${fmtDate(b.created_at)}</div></div><div class="bscore">${typeof b.maturite==='number'?b.maturite:'—'}</div><div class="statusbtns"><button class="sb r ${b.statut==='a_relancer'?'on':''}" data-i="${i}" data-s="a_relancer">À relancer</button><button class="sb w ${b.statut==='gagne'?'on':''}" data-i="${i}" data-s="gagne">Gagné</button><button class="sb l ${b.statut==='perdu'?'on':''}" data-i="${i}" data-s="perdu">Perdu</button></div></div>`).join('');
     $('dealsWrap').querySelectorAll('.binfo').forEach(el=>el.addEventListener('click',()=>openBrief(briefs[+el.dataset.idx])));
     $('dealsWrap').querySelectorAll('.sb').forEach(el=>el.addEventListener('click',()=>setStatut(+el.dataset.i,el.dataset.s)));
   }
-  async function setStatut(i,s){
-    const b=briefs[i]; if(!b||b.statut===s) return; const prev=b.statut; b.statut=s;
-    renderDeals(); renderDashboard();
-    if(b.id){ try{ await supabase.from('briefs').update({statut:s}).eq('id',b.id); toast('Statut mis à jour'); }
-      catch(e){ b.statut=prev; renderDeals(); renderDashboard(); toast('Échec de la mise à jour'); } }
-  }
+  async function setStatut(i,s){ const b=briefs[i]; if(!b||b.statut===s) return; const prev=b.statut; b.statut=s; renderDeals(); renderDashboard(); if(b.id){ try{ await supabase.from('briefs').update({statut:s}).eq('id',b.id); toast('Statut mis à jour'); }catch(e){ b.statut=prev; renderDeals(); renderDashboard(); toast('Échec de la mise à jour'); } } }
 
-  /* ---------- rendu d'un brief ---------- */
   function openBrief(b){ go('brief'); render(b); }
   function render(b){
     const name=b.entreprise||$('entreprise').value.trim()||'Prospect';
@@ -527,13 +577,11 @@
     const obj=b.objection||{}; $('rObj').textContent=obj.texte||''; $('rRiposte').textContent=obj.riposte||''; $('rObjSrc').textContent=obj.source||''; $('rObjSrc').style.display=obj.source?'':'none';
     const fig=b.chiffre||{}; $('rFig').textContent=fig.valeur||''; $('rFigPhrase').textContent=fig.phrase?' '+fig.phrase:''; $('rFigSrc').textContent=fig.source||'';
     $('rNext').textContent=b.next_step||'';
-    $('result').classList.add('show');
-    const g=$('rGauge'); g.querySelector('.fg').style.strokeDashoffset=327;
+    $('result').classList.add('show'); const g=$('rGauge'); g.querySelector('.fg').style.strokeDashoffset=327;
     setTimeout(()=>{ g.querySelector('.fg').style.strokeDashoffset=(327-327*score/100); },120);
     $('result').scrollIntoView({behavior:'smooth',block:'start'});
   }
 
-  /* ---------- génération ---------- */
   function showNote(t,type){ const n=$('note'); n.textContent=t; n.className='note show '+type; }
   function clearNote(){ $('note').className='note'; }
   $('gen').addEventListener('click',async()=>{
@@ -546,13 +594,7 @@
       const {data:s}=await supabase.auth.getSession(); const token=s.session?s.session.access_token:null;
       const r=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},body:JSON.stringify(payload)});
       const out=await r.json();
-      if(!r.ok){
-        if(r.status===402){ if(typeof out.tokens_left==='number') setTokens(out.tokens_left);
-          const d=out.reset_at?new Date(out.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'lundi prochain';
-          showNote(`Tu as utilisé tes briefs de la semaine. Recharge le ${d}.`,'warn'); }
-        else showNote(out.error||'Une erreur est survenue. Réessaie.','err');
-        return;
-      }
+      if(!r.ok){ if(r.status===402){ if(typeof out.tokens_left==='number') setTokens(out.tokens_left); const d=out.reset_at?new Date(out.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'lundi prochain'; showNote(`Tu as utilisé tes briefs de la semaine. Recharge le ${d}.`,'warn'); } else showNote(out.error||'Une erreur est survenue. Réessaie.','err'); return; }
       if(typeof out.tokens_left==='number') setTokens(out.tokens_left);
       if(out.brief){ briefs.unshift(out.brief); renderDashboard(); renderDeals(); render(out.brief); }
     }catch(e){ showNote('Connexion impossible au serveur. Réessaie.','err'); }
@@ -560,21 +602,33 @@
   });
   $('again').addEventListener('click',()=>{ $('result').classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'}); $('entreprise').focus(); });
 
-  /* ---------- paramètres ---------- */
-  $('saveSet').addEventListener('click',async()=>{
-    const btn=$('saveSet'); btn.classList.add('loading'); btn.disabled=true;
-    const row={ user_id:uid, full_name:$('sFullname').value.trim()||null, company:$('sCompany').value.trim()||null, secteur:$('sSecteur').value.trim()||null, offre:$('sOffre').value.trim()||null, contexte:$('sContexte').value.trim()||null, updated_at:new Date().toISOString() };
-    try{
-      await supabase.from('user_settings').upsert(row,{onConflict:'user_id'});
-      settings={...settings,...row};
-      if(settings.offre) $('offre').value=settings.offre;
-      const name=settings.full_name||''; if(name){ $('uname').textContent=name; paintAvatar($('uav'),name,''); paintAvatar($('setAv'),name,''); const pr=name.split(' ')[0]; const h=new Date().getHours(); $('greet').textContent=`${h<18?'Bonjour':'Bonsoir'} ${pr.replace(/^./,c=>c.toUpperCase())}.`; }
-      toast('Profil enregistré');
-    }catch(e){ toast('Échec de l enregistrement'); }
-    finally{ btn.classList.remove('loading'); btn.disabled=false; }
+  /* paramètres : sauvegardes */
+  async function saveSettings(patch,btn){ btn.classList.add('loading'); btn.disabled=true; const row={user_id:uid,...settings,...patch,updated_at:new Date().toISOString()}; delete row.updated_at; row.updated_at=new Date().toISOString();
+    try{ await supabase.from('user_settings').upsert(row,{onConflict:'user_id'}); settings={...settings,...patch}; toast('Enregistré'); }
+    catch(e){ toast('Échec de l enregistrement'); } finally{ btn.classList.remove('loading'); btn.disabled=false; } }
+
+  $('saveProfil').addEventListener('click',async()=>{
+    const full=$('sFullname').value.trim()||null; await saveSettings({full_name:full},$('saveProfil'));
+    if(full){ $('uname').textContent=full; paintAvatar($('uav'),full,''); paintAvatar($('setAv'),full,''); const pr=full.split(' ')[0].replace(/^./,c=>c.toUpperCase()); const h=new Date().getHours(); $('greet').textContent=`${h<18?'Bonjour':'Bonsoir'} ${pr}.`; }
+  });
+  $('saveEntreprise').addEventListener('click',async()=>{
+    const patch={ company:$('sCompany').value.trim()||null, secteur:$('sSecteur').value.trim()||null, offre:$('sOffre').value.trim()||null, contexte:$('sContexte').value.trim()||null };
+    await saveSettings(patch,$('saveEntreprise')); if(patch.offre) $('offre').value=patch.offre;
+  });
+  $('savePass').addEventListener('click',async()=>{
+    const p=$('sPass').value; if(p.length<6){ toast('6 caractères minimum'); return; }
+    const btn=$('savePass'); btn.classList.add('loading'); btn.disabled=true;
+    try{ const {error}=await supabase.auth.updateUser({password:p}); toast(error?'Échec de la mise à jour':'Mot de passe mis à jour'); if(!error) $('sPass').value=''; }
+    catch(e){ toast('Échec de la mise à jour'); } finally{ btn.classList.remove('loading'); btn.disabled=false; }
+  });
+  $('exportBtn').addEventListener('click',()=>{
+    const blob=new Blob([JSON.stringify(briefs,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='faro-briefs.json'; a.click(); URL.revokeObjectURL(a.href);
   });
 
-  $('logout').addEventListener('click',async e=>{ e.preventDefault(); e.stopPropagation(); await supabase.auth.signOut(); window.location.href='/connexion'; });
+  async function doLogout(e){ if(e){e.preventDefault();e.stopPropagation();} await supabase.auth.signOut(); window.location.href='/connexion'; }
+  $('logout').addEventListener('click',doLogout);
+  $('logout2').addEventListener('click',doLogout);
 </script>
 </body>
 </html>
