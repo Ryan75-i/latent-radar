@@ -22,10 +22,23 @@ async function createProfile(uid,resetAt){
   const j=await r.json(); return Array.isArray(j)&&j.length?j[0]:null;
 }
 async function saveBrief(uid,input,b){
-  const row={ user_id:uid, entreprise:b.entreprise||input.entreprise||null, poste:input.poste||null, offre:input.offre||null,
-    contexte:input.contexte||null, maturite:b.maturite_score??null, label:b.maturite_label||null,
+  const row={
+    user_id:uid,
+    entreprise:b.entreprise||input.entreprise||null,
+    entreprise_data:input.entreprise_data||null,
+    site:input.site||null,
+    poste:input.poste||null,
+    offre:input.offre||null,
+    contexte:input.contexte||null,
+    maturite:b.maturite_score??null,
+    label:b.maturite_label||null,
     ouverture:[b.ouverture&&b.ouverture.accroche,b.ouverture&&b.ouverture.qui_nous_sommes,b.ouverture&&b.ouverture.pourquoi_vous].filter(Boolean).join(' '),
-    questions:b.questions||[], objection:b.objection||{}, chiffre:b.chiffre||{}, next_step:(b.next_step&&b.next_step.phrase)||b.next_step||null, statut:'a_relancer' };
+    questions:b.questions||[],
+    objection:b.objection||{},
+    chiffre:b.chiffre||{},
+    next_step:(b.next_step&&b.next_step.phrase)||b.next_step||null,
+    statut:'a_relancer'
+  };
   const r=await fetch(`${SUPABASE_URL}/rest/v1/briefs`,{method:'POST',headers:{...H,Prefer:'return=representation'},body:JSON.stringify(row)});
   const j=await r.json(); return Array.isArray(j)&&j.length?j[0]:null;
 }
@@ -40,7 +53,7 @@ INTERDITS ABSOLUS : aucun tiret cadratin, aucun emoji, aucune puce dans les text
 TOUT SE PRONONCE. Jamais "aborder la question du budget", toujours la phrase exacte à dire.
 
 L'OUVERTURE se joue en trois temps, les trente premières secondes du rendez-vous :
-1. accroche : remerciement bref qui cadre le temps.
+1. accroche : remerciement bref qui cadre le temps. Si l'interlocuteur est nommé (dirigeant), utilise son prénom.
 2. qui_nous_sommes : une phrase qui présente l'entreprise du vendeur À TRAVERS le problème que vit ce prospect précis. Jamais une plaquette. Elle change selon l'interlocuteur.
 3. pourquoi_vous : le pont vers leur monde, ancré sur un fait réel de leur entreprise.
 
@@ -50,24 +63,30 @@ L'OBJECTION est la plus probable pour CE poste dans CE secteur, avec une riposte
 
 LE CHIFFRE est une donnée sectorielle défendable, attribuée à une source crédible (Gartner, McKinsey, Forrester, HBR, Bloomberg, INSEE).
 
-LES PIÈGES : deux erreurs à ne pas commettre avec ce profil précis. C'est ce qui sauve un rendez-vous.
+LES PIÈGES : deux erreurs à ne pas commettre avec ce profil précis.
 
-HONNÊTETÉ : dans faits_verifies tu ne mets QUE ce qui figure dans les données fournies. Dans hypotheses tu mets ce que tu déduis, formulé comme une supposition à vérifier en réunion. Ne présente jamais une déduction comme un fait.`;
+LA MATURITÉ : score de 0 à 100 sur l'ouverture du marché pour l'offre ET l'ouverture du prospect. Un label court (ex : "Fenêtre ouverte", "À chauffer", "Trop tôt"). Trois raisons courtes qui expliquent CE score pour CE prospect (secteur en croissance, taille idéale, signal récent, etc). Un verdict d'une phrase.
+
+HONNÊTETÉ : dans faits_verifies tu ne mets QUE ce qui figure dans les données fournies. Dans hypotheses tu mets ce que tu déduis, formulé comme une supposition à vérifier en réunion.`;
 
 const TOOL = {
   name:'rediger_brief', description:'Rédige le brief de rendez-vous.',
   input_schema:{ type:'object', properties:{
     entreprise:{type:'string'},
-    faits_verifies:{type:'array',items:{type:'object',properties:{fait:{type:'string'},source:{type:'string'}},required:['fait','source']},description:'3 à 4 faits issus uniquement des données fournies'},
-    hypotheses:{type:'array',items:{type:'string'},description:'2 déductions à vérifier en réunion'},
-    maturite_score:{type:'integer'}, maturite_label:{type:'string'},
+    faits_verifies:{type:'array',items:{type:'object',properties:{fait:{type:'string'},source:{type:'string'}},required:['fait','source']}},
+    hypotheses:{type:'array',items:{type:'string'}},
+    maturite_score:{type:'integer'},
+    maturite_label:{type:'string'},
+    maturite_raisons:{type:'array',items:{type:'string'},description:'3 raisons courtes (5 mots) qui expliquent ce score pour ce prospect'},
+    maturite_verdict:{type:'string',description:'Une phrase : que faire de ce score'},
     ouverture:{type:'object',properties:{accroche:{type:'string'},qui_nous_sommes:{type:'string'},pourquoi_vous:{type:'string'}},required:['accroche','qui_nous_sommes','pourquoi_vous']},
+    ouverture_source:{type:'string',description:'Source du signal cité dans pourquoi_vous, si applicable'},
     questions:{type:'array',items:{type:'object',properties:{question:{type:'string'},intention:{type:'string'}},required:['question','intention']}},
     objection:{type:'object',properties:{texte:{type:'string'},riposte:{type:'string'},source:{type:'string'}},required:['texte','riposte']},
     chiffre:{type:'object',properties:{valeur:{type:'string'},phrase:{type:'string'},source:{type:'string'}},required:['valeur','phrase','source']},
     pieges:{type:'array',items:{type:'string'}},
     next_step:{type:'object',properties:{phrase:{type:'string'},delai_jours:{type:'integer'}},required:['phrase','delai_jours']}
-  }, required:['entreprise','faits_verifies','hypotheses','maturite_score','maturite_label','ouverture','questions','objection','chiffre','pieges','next_step'] }
+  }, required:['entreprise','faits_verifies','hypotheses','maturite_score','maturite_label','maturite_raisons','maturite_verdict','ouverture','questions','objection','chiffre','pieges','next_step'] }
 };
 
 function bloc(e){
@@ -91,17 +110,18 @@ async function generate(input){
   const msg=`DONNÉES OFFICIELLES DE L'ENTREPRISE EN FACE
 ${bloc(input.entreprise_data)}
 
-INTERLOCUTEUR : ${input.poste||'non précisé'}
+INTERLOCUTEUR : ${input.poste||'non précisé'}${input.interlocuteur_nom?` (nommé : ${input.interlocuteur_nom})`:''}
 TYPE DE RENDEZ-VOUS : ${rdv}
 
 CE QUE VEND LE COMMERCIAL : ${input.offre||'non précisé'}
 ${input.valeur?`SA PROPOSITION DE VALEUR : ${input.valeur}`:''}
 ${input.company?`SON ENTREPRISE : ${input.company}`:''}
+${input.preuves?`SES PREUVES (clients, résultats) : ${input.preuves}`:''}
 ${input.contexte?`CE QU'IL SAIT EN PLUS : ${input.contexte}`:''}`;
 
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
     headers:{'x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01','content-type':'application/json'},
-    body:JSON.stringify({model:MODEL,max_tokens:2200,system:SYSTEM,tools:[TOOL],tool_choice:{type:'tool',name:'rediger_brief'},messages:[{role:'user',content:msg}]})});
+    body:JSON.stringify({model:MODEL,max_tokens:2400,system:SYSTEM,tools:[TOOL],tool_choice:{type:'tool',name:'rediger_brief'},messages:[{role:'user',content:msg}]})});
   if(!r.ok){ const t=await r.text(); throw new Error(`Anthropic ${r.status}: ${t.slice(0,200)}`); }
   const d=await r.json();
   const b=(d.content||[]).find(x=>x.type==='tool_use');
@@ -137,7 +157,7 @@ export default async function handler(req,res){
     catch(e){ await patchTokens(uid,tl,tl+1,null); return res.status(502).json({error:'La génération a échoué. Ton jeton n a pas été consommé.'}); }
 
     let saved=null; try{ saved=await saveBrief(uid,body,brief); }catch(e){}
-    const out={...brief,id:saved?saved.id:null,statut:'a_relancer',created_at:saved?saved.created_at:new Date().toISOString(),poste:body.poste||null,entreprise_data:body.entreprise_data||null};
+    const out={...brief,id:saved?saved.id:null,statut:'a_relancer',created_at:saved?saved.created_at:new Date().toISOString(),poste:body.poste||null,entreprise_data:body.entreprise_data||null,site:body.site||null};
     return res.status(200).json({brief:out,tokens_left:tl,reset_at:resetAt});
   }catch(e){ return res.status(500).json({error:'Erreur serveur.'}); }
 }
