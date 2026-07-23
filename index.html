@@ -751,3 +751,59 @@
 })();
 </script>
 </body></html>
+/* ═══════════════════════════════════════════════════════════
+   PATCH index.html · Header qui s'adapte à ton état
+   ═══════════════════════════════════════════════════════════
+
+   Le pill "3 jetons" ne doit pas apparaître sur la landing publique.
+   Un visiteur voit "Se connecter" + "Commencer gratuitement".
+   Un connecté voit juste "Mon espace" en cuivre.
+
+   TROIS ÉTAPES : coller ces trois blocs aux bons endroits de index.html.
+
+   ─────────────────────────────────────────────────────────── */
+
+
+/* ─── 1. AJOUTER CE CSS dans ta balise <style> de index.html ─── */
+
+.hdr .authed{display:none;}
+.hdr .guest{display:flex;align-items:center;gap:12px;}
+body.is-authed .hdr .authed{display:flex;align-items:center;gap:12px;}
+body.is-authed .hdr .guest{display:none;}
+
+
+/* ─── 2. REMPLACER ton bloc header droite (jetons + Mon espace + Déconnexion)
+        par ce HTML : ─── */
+
+<!--
+<div class="guest">
+  <a href="/connexion" class="btn g">Se connecter</a>
+  <a href="/connexion" class="btn">Commencer gratuitement</a>
+</div>
+<div class="authed">
+  <a href="/app" class="btn">Mon espace</a>
+</div>
+-->
+
+
+/* ─── 3. COLLER ce script juste avant la balise </body> de index.html : ─── */
+
+<!--
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const sb = createClient(
+  'https://icofqeisjfoywusolbqs.supabase.co',
+  'sb_publishable_sF-J9J5rLGpAJt80SqazCw_XSkmiqns'
+);
+const { data } = await sb.auth.getSession();
+if (data.session) document.body.classList.add('is-authed');
+</script>
+-->
+
+
+/* ═══════════════════════════════════════════════════════════
+   Résultat :
+   - Visiteur non connecté : "Se connecter" + "Commencer gratuitement"
+   - Toi connecté : juste "Mon espace" en cuivre
+   - Zéro compteur de jetons sur la landing, zéro Déconnexion
+   ═══════════════════════════════════════════════════════════ */
