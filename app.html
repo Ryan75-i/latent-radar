@@ -38,8 +38,9 @@
   .nav button.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:linear-gradient(180deg,var(--copper-l),var(--copper));}
   .nav button svg{width:17px;height:17px;flex-shrink:0;stroke-width:1.9;}
   .nav .tag{margin-left:auto;font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);border:1px solid var(--line-2);border-radius:20px;padding:2px 6px;}
+  .nav .newtag{margin-left:auto;font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--green-d);border:1px solid var(--green-bd);background:var(--green-bg);border-radius:20px;padding:2px 6px;}
   .nav .cnt{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:500;color:#fff;background:var(--copper);border-radius:20px;padding:1px 7px;}
-  .nav .dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--copper);}
+  .nav .ndot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--copper);}
   .sp{flex:1;}
   .ucard{border:1px solid var(--line);border-radius:var(--r);background:#fff;padding:9px;display:flex;align-items:center;gap:9px;box-shadow:var(--sh-s);}
   .ucard .zone{display:flex;align-items:center;gap:9px;flex:1;min-width:0;cursor:pointer;}
@@ -221,8 +222,6 @@
   .gstep.ok{color:var(--dim);}
   .gstep.ok .ic{background:var(--green);border-color:var(--green);}
   .gstep.ok .ic::after{content:"✓";color:#fff;font-size:10px;font-weight:700;position:static;border:none;animation:none;}
-
-  /* ═══ BRIEF — style fiche de renseignement ═══ */
   .brief{margin-top:24px;display:none;}
   .brief.on{display:block;animation:up .4s cubic-bezier(.2,.7,.2,1);}
   .bfr{border:1px solid var(--line);border-radius:22px;background:var(--card);overflow:hidden;box-shadow:var(--sh-l);}
@@ -232,8 +231,8 @@
   .btab .tabs{display:flex;gap:22px;font-family:var(--serif);font-size:15px;}
   .btab .tabs span{cursor:pointer;color:var(--faint);transition:.15s;padding:5px 12px;border-radius:8px;}
   .btab .tabs span.on{color:var(--copper-d);background:var(--wash-c);font-style:italic;}
-  .btab .live{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:7px;}
-  .btab .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);}
+  .btab .genlabel{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:7px;}
+  .btab .genlabel::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);}
   .bbody{display:grid;grid-template-columns:288px 1fr;}
   .bside{padding:26px 24px;border-right:1px solid var(--line);}
   .bcomp{display:flex;align-items:center;gap:13px;margin-bottom:26px;}
@@ -277,7 +276,6 @@
   .say.q{font-size:16px;font-family:var(--sans);font-weight:400;padding-left:18px;position:relative;}
   .say.q::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;background:var(--copper-l);}
   .say+.say{margin-top:9px;}
-  .say .quo{color:var(--copper);font-weight:600;}
   .why{font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-top:3px;padding-left:18px;}
   .obj{display:inline-block;font-size:14px;font-style:italic;color:var(--red);background:var(--red-bg);border:1px solid var(--red-bd);border-radius:12px;padding:9px 14px;margin-bottom:12px;}
   .fig{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
@@ -290,8 +288,9 @@
   .next .v{font-family:var(--serif);font-size:16px;font-weight:500;line-height:1.5;}
   .next .w{font-family:var(--mono);font-size:10px;color:var(--copper-d);margin-top:8px;}
   .bact{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
-  .live{position:fixed;inset:0;background:#12100D;color:#F6F0E6;z-index:100;display:none;flex-direction:column;}
-  .live.on{display:flex;}
+  /* ═══ Mode LIVE (id-only pour éviter la collision avec la classe .live) ═══ */
+  #liveOv{position:fixed;inset:0;background:#12100D;color:#F6F0E6;z-index:100;display:none;flex-direction:column;}
+  #liveOv.on{display:flex;}
   .lvbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.09);flex-shrink:0;}
   .lvbar .t{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper-l);}
   .lvx{border:1px solid rgba(255,255,255,.16);background:transparent;color:#F6F0E6;border-radius:9px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;}
@@ -305,6 +304,7 @@
   .lvq{font-size:19px;line-height:1.5;color:rgba(246,240,230,.86);padding-left:16px;border-left:2px solid var(--copper);margin-bottom:11px;}
   .lvo{font-size:18px;font-style:italic;color:#E9A88F;margin-bottom:9px;}
   .lvf b{font-family:var(--serif);font-size:38px;color:var(--copper-l);}
+  /* ═══ Command palette ═══ */
   .pal{position:fixed;inset:0;background:rgba(26,22,17,.4);backdrop-filter:blur(4px);z-index:110;display:none;align-items:flex-start;justify-content:center;padding:12vh 20px 20px;}
   .pal.on{display:flex;}
   .palbox{width:100%;max-width:520px;background:#fff;border:1px solid var(--line-2);border-radius:16px;box-shadow:0 40px 90px -30px rgba(0,0,0,.4);overflow:hidden;animation:pop .22s cubic-bezier(.2,.7,.2,1);}
@@ -361,8 +361,6 @@
   .intr .it{font-size:13px;font-weight:600;}
   .intr .id{font-size:11.5px;color:var(--faint);}
   .soonp{font-family:var(--mono);font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);background:var(--cream-2);border:1px solid var(--line);border-radius:20px;padding:4px 9px;}
-
-  /* ═══ Mon offre : page dédiée ═══ */
   .offhero{display:grid;grid-template-columns:1fr 240px;gap:24px;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:26px;box-shadow:var(--sh-m);margin-bottom:20px;}
   .offhero .lft h3{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:6px;}
   .offhero .lft p{font-size:13px;color:var(--dim);}
@@ -389,6 +387,61 @@
   .wipl{max-width:400px;margin:0 auto;text-align:left;border-top:1px solid var(--line-3);padding-top:16px;}
   .wipl .r{display:flex;gap:10px;font-size:13px;color:var(--ink-soft);padding:7px 0;}
   .wipl .r::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--copper-l);margin-top:7px;flex-shrink:0;}
+  /* ═══ ARÈNE ═══ */
+  .advcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;}
+  .advcard{background:var(--card);border:1.5px solid var(--line);border-radius:var(--rl);padding:22px 20px;cursor:pointer;transition:.18s;position:relative;overflow:hidden;}
+  .advcard:hover{border-color:var(--copper-l);transform:translateY(-3px);box-shadow:var(--sh-m);}
+  .advcard.on{border-color:var(--copper);box-shadow:var(--sh-l);}
+  .advcard .ico{width:44px;height:44px;border-radius:12px;background:var(--wash-c);color:var(--copper-d);display:flex;align-items:center;justify-content:center;margin-bottom:13px;}
+  .advcard .ico svg{width:22px;height:22px;stroke-width:2;}
+  .advcard h4{font-family:var(--serif);font-weight:600;font-size:16px;margin-bottom:3px;}
+  .advcard .role{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--copper-d);margin-bottom:11px;}
+  .advcard .desc{font-size:12.5px;color:var(--dim);line-height:1.5;}
+  .arenacont{display:none;border:1px solid var(--line);border-radius:var(--rl);background:var(--card);overflow:hidden;box-shadow:var(--sh-l);margin-top:24px;}
+  .arenacont.on{display:block;animation:up .4s ease;}
+  .abar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FFFDF9,var(--cream-2));}
+  .abar .lft{display:flex;align-items:center;gap:11px;}
+  .abar .lft .mono{width:34px;height:34px;border-radius:10px;background:var(--copper);color:#fff;font-weight:700;}
+  .abar .nm{font-family:var(--serif);font-weight:600;font-size:15px;}
+  .abar .sub{font-size:11px;color:var(--faint);}
+  .abar .rgt{display:flex;align-items:center;gap:11px;}
+  .abar .tours{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line-2);border-radius:20px;padding:4px 11px;}
+  .msgs{padding:22px 24px;max-height:60vh;min-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;background:var(--cream-2);}
+  .msg{display:flex;gap:11px;max-width:78%;animation:up .3s ease;}
+  .msg .av{width:32px;height:32px;border-radius:10px;font-size:12px;flex-shrink:0;}
+  .msg .bub{padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.5;}
+  .msg.pro{align-self:flex-start;}
+  .msg.pro .bub{background:#fff;border:1px solid var(--line);border-radius:14px 14px 14px 4px;color:var(--ink);}
+  .msg.you{align-self:flex-end;flex-direction:row-reverse;}
+  .msg.you .av{background:var(--copper);}
+  .msg.you .bub{background:var(--copper);color:#fff;border-radius:14px 14px 4px 14px;}
+  .msg.typ .bub{background:#fff;border:1px solid var(--line);color:var(--dim);font-style:italic;}
+  .msg.typ .bub::after{content:"";display:inline-block;width:5px;height:5px;background:var(--copper);border-radius:50%;margin-left:6px;animation:blink 1s infinite;vertical-align:middle;}
+  @keyframes blink{50%{opacity:.25;}}
+  .ainp{padding:16px 22px;border-top:1px solid var(--line);background:#fff;display:flex;gap:10px;align-items:flex-end;}
+  .ainp textarea{flex:1;border:1.5px solid var(--line-2);border-radius:12px;padding:11px 14px;font-size:14px;font-family:inherit;resize:none;outline:none;transition:.15s;min-height:44px;max-height:120px;line-height:1.4;}
+  .ainp textarea:focus{border-color:var(--copper);}
+  .ainp .send{background:var(--copper);color:#fff;border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;flex-shrink:0;}
+  .ainp .send:hover:not(:disabled){background:var(--copper-d);}
+  .ainp .send:disabled{opacity:.5;cursor:not-allowed;}
+  .ainp .send svg{width:18px;height:18px;stroke-width:2;}
+  .aend{padding:12px 22px;border-top:1px solid var(--line-3);background:var(--wash);display:flex;justify-content:center;}
+  .aend .btn.sm{font-size:12.5px;}
+  /* Verdict de l'Arène */
+  .verd{padding:26px 28px;background:var(--card);animation:up .4s ease;}
+  .verd .top{text-align:center;margin-bottom:22px;}
+  .verd .top .lb{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);margin-bottom:10px;}
+  .verd .top h4{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.3;font-style:italic;color:var(--copper-d);max-width:600px;margin:0 auto;}
+  .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+  .vcard{border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;background:var(--wash);text-align:center;}
+  .vcard .k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:7px;}
+  .vcard .n{font-family:var(--serif);font-weight:700;font-size:34px;color:var(--copper);line-height:1;}
+  .vcard .n s{font-size:14px;color:var(--faint);text-decoration:none;}
+  .vcard .p{font-size:11.5px;color:var(--ink-soft);margin-top:9px;line-height:1.45;}
+  .vtips{border-top:1px solid var(--line-3);padding-top:16px;}
+  .vtips .tt{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .vtips .tip{display:flex;gap:10px;padding:8px 0;font-size:13.5px;color:var(--ink-soft);line-height:1.5;}
+  .vtips .tip::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--copper);margin-top:9px;flex-shrink:0;}
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(18px);background:var(--ink);color:#fff;font-size:13px;padding:10px 12px 10px 18px;border-radius:11px;opacity:0;pointer-events:none;transition:.28s;z-index:120;box-shadow:0 12px 30px -12px rgba(0,0,0,.4);display:flex;align-items:center;gap:12px;}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
   .toast button{border:1px solid rgba(255,255,255,.3);background:none;color:#fff;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;}
@@ -398,7 +451,7 @@
     .side{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;gap:6px;padding:9px 12px;overflow-x:auto;z-index:20;}
     .logo{padding:0;} .logo svg{height:26px;} .ngroup{display:none;} .sp{display:none;}
     .nav{flex-direction:row;gap:2px;} .nav button{padding:7px 9px;white-space:nowrap;}
-    .nav button span.lb{display:none;} .nav .tag,.nav .cnt,.nav .dot{display:none;}
+    .nav button span.lb{display:none;} .nav .tag,.nav .newtag,.nav .cnt,.nav .ndot{display:none;}
     .nav button.on::before{display:none;}
     .ucard{padding:3px;border:none;background:none;box-shadow:none;} .ucard .zone .uinfo{display:none;}
     .topbar{padding:0 16px;} .search{min-width:0;flex:1;} .search span.txt{display:none;} .crumb{display:none;}
@@ -412,6 +465,9 @@
     .setw{grid-template-columns:1fr;} .setn{border-right:none;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;padding:9px;gap:3px;}
     .setg{display:none;} .setn button{white-space:nowrap;} .setn .t{display:none;} .setp{padding:20px 16px;min-height:0;}
     .offhero{grid-template-columns:1fr;} .offhero .rgt{padding-left:0;padding-top:18px;border-left:none;border-top:1px dashed var(--line);}
+    .advcards{grid-template-columns:1fr;}
+    .vgrid{grid-template-columns:1fr;}
+    .msg{max-width:88%;}
     .lvv{font-size:18px;} .lvq{font-size:16px;}
     .cpy{opacity:1;}
   }
@@ -434,9 +490,9 @@
     </nav>
     <div class="ngroup">Outils</div>
     <nav class="nav">
-      <button data-go="offre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/></svg><span class="lb">Mon offre</span><span class="dot" id="offDot" style="display:none"></span></button>
+      <button data-go="offre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/></svg><span class="lb">Mon offre</span><span class="ndot" id="offDot" style="display:none"></span></button>
       <button data-go="brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span class="lb">Brief</span></button>
-      <button data-go="arene"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="lb">Arène</span><span class="tag">En cours</span></button>
+      <button data-go="arene"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="lb">Arène</span><span class="newtag">Nouveau</span></button>
       <button data-go="chasse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span class="lb">Chasse</span><span class="tag">En cours</span></button>
     </nav>
     <div class="sp"></div>
@@ -456,15 +512,10 @@
       <span class="pill" id="pillTok">— jetons</span>
     </div>
     <div class="page">
-
 <section class="view on" id="v-home">
   <div class="beam">
     <div class="arcs"><svg viewBox="0 0 100 120" fill="none"><circle cx="18" cy="60" r="4" fill="#C96A2E"/><path d="M34 43 A 22 22 0 0 1 34 77" stroke="#C96A2E" stroke-width="4.5" stroke-linecap="round"/><path d="M48 28 A 38 38 0 0 1 48 92" stroke="#C96A2E" stroke-opacity=".42" stroke-width="3" stroke-linecap="round"/><path d="M62 14 A 54 54 0 0 1 62 106" stroke="#C96A2E" stroke-opacity=".18" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-    <div class="in">
-      <div class="eyebrow"><span class="dt"></span><span id="dateLbl">Aujourd'hui</span></div>
-      <h1 id="greet">Bonjour.</h1>
-      <p id="sumline">Prépare ton prochain rendez-vous en vingt secondes.</p>
-    </div>
+    <div class="in"><div class="eyebrow"><span class="dt"></span><span id="dateLbl">Aujourd'hui</span></div><h1 id="greet">Bonjour.</h1><p id="sumline">Prépare ton prochain rendez-vous en vingt secondes.</p></div>
   </div>
   <div class="onb" id="onb" style="display:none;">
     <div class="top"><h3>Bien démarrer</h3><span class="pct" id="onbPct">0 / 3</span></div>
@@ -486,15 +537,13 @@
     <div class="card"><div class="hd"><div><h3>Ton activité</h3><div class="sub">Briefs préparés sur 7 jours.</div></div></div><div class="bd" id="chartW"><div class="sk-line" style="height:80px;border-radius:12px"></div></div></div>
     <div class="card"><div class="hd"><div><h3>Répartition</h3><div class="sub">Où en sont tes deals.</div></div></div><div class="bd" id="pipeW"><div class="sk-line" style="height:12px"></div><div class="sk-line" style="width:60%;margin-top:14px"></div><div class="sk-line" style="width:50%;margin-top:9px"></div></div></div>
   </div>
-  <div class="card" style="margin-top:14px;"><div class="hd"><div><h3>Derniers briefs</h3><div class="sub">Clique pour rouvrir la fiche.</div></div></div><div class="bd" id="recentW"><div class="sk-row"><div class="sk-av"></div><div style="flex:1"><div class="sk-line" style="width:35%"></div><div class="sk-line" style="width:55%;margin-top:7px"></div></div></div><div class="sk-row"><div class="sk-av"></div><div style="flex:1"><div class="sk-line" style="width:42%"></div><div class="sk-line" style="width:60%;margin-top:7px"></div></div></div></div></div>
+  <div class="card" style="margin-top:14px;"><div class="hd"><div><h3>Derniers briefs</h3><div class="sub">Clique pour rouvrir la fiche.</div></div></div><div class="bd" id="recentW"><div class="sk-row"><div class="sk-av"></div><div style="flex:1"><div class="sk-line" style="width:35%"></div><div class="sk-line" style="width:55%;margin-top:7px"></div></div></div></div></div>
 </section>
 
 <section class="view" id="v-offre">
-  <div class="beam"><div class="in"><div class="eyebrow"><span class="dt"></span>Mon offre</div><h1>Ce que <em>tu vends</em>.</h1><p>Ces infos nourrissent chaque brief. Plus elles sont précises, plus l'angle est tranchant.</p></div></div>
+  <div class="beam"><div class="in"><div class="eyebrow"><span class="dt"></span>Mon offre</div><h1>Ce que <em>tu vends</em>.</h1><p>Ces infos nourrissent chaque brief et chaque entraînement. Plus elles sont précises, plus l'angle est tranchant.</p></div></div>
   <div class="offhero">
-    <div class="lft"><h3>Le cadre de tes briefs</h3><p>Saisi une fois, Faro s'en sert dans chaque génération sans te la redemander. Un brief construit sur une offre floue reste flou.</p>
-      <div class="offbar" id="offbar"></div>
-    </div>
+    <div class="lft"><h3>Le cadre de tes briefs</h3><p>Saisi une fois, Faro s'en sert dans chaque génération sans te la redemander. Un brief construit sur une offre floue reste flou.</p><div class="offbar" id="offbar"></div></div>
     <div class="rgt"><div class="ring2"><svg viewBox="0 0 108 108"><circle class="bg" cx="54" cy="54" r="49"/><circle class="fg" cx="54" cy="54" r="49" id="offRing"/></svg><div class="v"><span id="offPct">0</span><s>%</s></div></div><div class="rlbl">Complétude</div></div>
   </div>
   <div class="card"><div class="bd" style="padding:24px;">
@@ -535,13 +584,12 @@
     <div class="genp" id="genp"><div class="gstep" id="gs1"><span class="ic"></span>Lecture des données officielles</div><div class="gstep" id="gs2"><span class="ic"></span>Construction de l'angle <span id="gs2p"></span></div><div class="gstep" id="gs3"><span class="ic"></span>Rédaction du brief, mot pour mot</div></div>
     <div class="note" id="note"></div>
   </div></div>
-
   <div class="brief" id="brief">
     <div class="bfr">
       <div class="btab">
         <div class="lg"><svg viewBox="0 0 24 24" fill="none"><circle cx="7" cy="12" r="2" fill="#C96A2E"/><path d="M11.5 8.5 A 4.5 4.5 0 0 1 11.5 15.5" stroke="#C96A2E" stroke-width="2" stroke-linecap="round"/></svg>faro</div>
         <div class="tabs"><span class="on">Brief</span><span style="opacity:.5">Duel</span><span style="opacity:.5">Chasse</span></div>
-        <div class="live" id="bWhen">Généré à l'instant</div>
+        <div class="genlabel" id="bWhen">Généré à l'instant</div>
       </div>
       <div class="bbody">
         <aside class="bside">
@@ -581,62 +629,54 @@
   </div></div><div class="bd"><div class="dsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="dq" placeholder="Chercher une entreprise, un poste…"/></div><div id="dealsW"></div></div></div>
 </section>
 
-<section class="view" id="v-arene"><div class="card"><div class="bd"><div class="wip"><span class="tag">En cours</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>L'Arène</h3><p>Tu affrontes un prospect joué par Faro. Il résiste, il objecte, il te teste. À la fin, le verdict.</p><div class="wipl"><div class="r">Choisis ton adversaire : DAF pressé, DSI méfiant, acheteur qui ne voit que le prix</div><div class="r">Note sur la découverte, la tenue face à l'objection, la tentative de closing</div><div class="r">Les objections qui t'ont bloqué en vrai deviennent tes entraînements</div></div></div></div></div></section>
+<section class="view" id="v-arene">
+  <div class="beam"><div class="in"><div class="eyebrow"><span class="dt"></span>L'Arène</div><h1>Le rendez-vous qui <em>te teste</em>.</h1><p>Faro joue le prospect. Il résiste, il objecte, il ne se laisse pas convaincre. À la fin, le verdict sur trois axes.</p></div></div>
+  <div class="card" id="arenePick"><div class="bd" style="padding:24px;">
+    <div style="font-size:13px;color:var(--dim);margin-bottom:6px;">Choisis ton adversaire. Chaque session coûte 1 jeton et dure autant de tours que tu veux.</div>
+    <div class="advcards">
+      <div class="advcard" data-adv="daf_presse"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div><h4>Camille Roy</h4><div class="role">DAF pressée · PME industrielle</div><div class="desc">Analytique, sèche, vingt minutes maximum. Elle enchaîne, elle interrompt. Il faut cadrer vite.</div></div>
+      <div class="advcard" data-adv="dsi_mefiant"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M2 20h20"/></svg></div><h4>Julien Marchal</h4><div class="role">DSI méfiant · Scale-up tech</div><div class="desc">Brûlé par trois éditeurs. Sceptique par défaut. Il veut de la stack, de la sécu, du concret. Une réponse floue le braque.</div></div>
+      <div class="advcard" data-adv="acheteur_prix"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h4>Nadia Fournier</h4><div class="role">Acheteuse · Groupe industriel</div><div class="desc">Trois devis sur la table. Elle ramène tout au prix, joue les concurrents. Pas de concession avant que tu ne bouges sur le tarif.</div></div>
+    </div>
+    <div style="margin-top:22px;display:flex;align-items:center;gap:15px;flex-wrap:wrap;"><button class="btn" id="startAr" disabled><span class="spin"></span><span>Choisis un adversaire</span></button><span style="font-size:12.5px;color:var(--dim);">1 jeton · <b id="left2" style="color:var(--ink);">—</b> restants</span></div>
+    <div class="note" id="noteAr"></div>
+  </div></div>
+
+  <div class="arenacont" id="arenaCont">
+    <div class="abar">
+      <div class="lft"><div class="mono" id="advInit">C</div><div><div class="nm" id="advNm">Adversaire</div><div class="sub" id="advSub">—</div></div></div>
+      <div class="rgt"><span class="tours" id="advTours">0 tours</span><button class="btn g sm" id="advEnd">Terminer</button></div>
+    </div>
+    <div class="msgs" id="msgs"></div>
+    <div class="ainp" id="ainp">
+      <textarea id="mInp" placeholder="Écris ta réponse comme si tu étais en rendez-vous…" rows="1"></textarea>
+      <button class="send" id="mSend" aria-label="Envoyer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+    </div>
+    <div class="aend"><button class="btn g sm" id="advNew" style="display:none">Recommencer une session</button></div>
+  </div>
+</section>
+
 <section class="view" id="v-chasse"><div class="card"><div class="bd"><div class="wip"><span class="tag">En cours</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><h3>La Chasse</h3><p>Faro repère les entreprises dont le besoin arrive, avant tes concurrents.</p><div class="wipl"><div class="r">Levée de fonds, recrutement clé, changement de dirigeant</div><div class="r">Une alerte quand un compte suivi bouge</div><div class="r">Le score de timing : trop tôt, maintenant, trop tard</div></div></div></div></div></section>
 
 <section class="view" id="v-reglages">
   <div class="beam"><div class="in"><div class="eyebrow"><span class="dt"></span>Réglages</div><h1>Ton compte.</h1><p>Ton profil, ton abonnement, tes préférences.</p></div></div>
   <div class="setw">
     <nav class="setn" id="setn">
-      <div class="setg">Compte</div>
-      <button class="on" data-s="profil">Profil</button>
-      <button data-s="secu">Sécurité</button>
-      <button data-s="notif">Notifications</button>
-      <div class="setg">Abonnement</div>
-      <button data-s="plan">Plan</button>
-      <button data-s="usage">Jetons et usage</button>
-      <button data-s="factu">Facturation<span class="t">En cours</span></button>
-      <div class="setg">Préférences</div>
-      <button data-s="appar">Apparence</button>
-      <button data-s="langue">Langue<span class="t">En cours</span></button>
-      <div class="setg">Faro</div>
-      <button data-s="integ">Intégrations<span class="t">En cours</span></button>
-      <button data-s="donnees">Données</button>
-      <button data-s="aide">Aide</button>
+      <div class="setg">Compte</div><button class="on" data-s="profil">Profil</button><button data-s="secu">Sécurité</button><button data-s="notif">Notifications</button>
+      <div class="setg">Abonnement</div><button data-s="plan">Plan</button><button data-s="usage">Jetons et usage</button><button data-s="factu">Facturation<span class="t">En cours</span></button>
+      <div class="setg">Préférences</div><button data-s="appar">Apparence</button><button data-s="langue">Langue<span class="t">En cours</span></button>
+      <div class="setg">Faro</div><button data-s="integ">Intégrations<span class="t">En cours</span></button><button data-s="donnees">Données</button><button data-s="aide">Aide</button>
     </nav>
     <div class="setp">
-      <div class="ss on" data-s="profil">
-        <h3>Profil</h3><div class="sd">Comment Faro t'appelle.</div>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;"><div class="av" id="sAv" style="width:56px;height:56px;border-radius:14px;font-size:21px;">F</div><div><div style="font-size:14px;font-weight:600;" id="sMail"></div><div style="font-size:12px;color:var(--dim);">Ta photo vient de Google si tu t'es connecté avec.</div></div></div>
-        <div class="g2"><div class="fg"><label for="sName">Prénom et nom</label><input class="fld" id="sName" autocomplete="off"/></div><div class="fg"><label>Email</label><input class="fld" id="sMail2" disabled/></div></div>
-        <button class="btn" id="saveP"><span class="spin"></span><span>Enregistrer</span></button>
-      </div>
-      <div class="ss" data-s="secu"><h3>Sécurité</h3><div class="sd">Ton mot de passe et ta session.</div>
-        <div class="blk"><div class="t">Changer de mot de passe</div><div class="d">Au moins six caractères.</div><div class="fg"><input class="fld" id="sPass" type="password" placeholder="Nouveau mot de passe"/></div><button class="btn sm" id="savePw"><span class="spin"></span><span>Mettre à jour</span></button></div>
-        <div class="blk"><div class="t">Session</div><div class="d">Te déconnecter de cet appareil.</div><button class="btn g sm" id="out2">Se déconnecter</button></div>
-        <div class="blk"><div class="t">Supprimer le compte</div><div class="d">Définitif. Tes briefs et ton profil sont effacés.</div><a class="btn dg sm" href="mailto:hello@farobrief.com?subject=Suppression%20de%20compte">Demander la suppression</a></div>
-      </div>
-      <div class="ss" data-s="notif"><h3>Notifications</h3><div class="sd">Ce que Faro t'envoie.</div>
-        <div class="tg"><div><div class="l">Rappel de fin de journée</div><div class="d">Tes débriefs et relances du jour, une fois par soir.</div></div><button class="sw on" data-tg></button></div>
-        <div class="tg"><div><div class="l">Deals qui dorment</div><div class="d">Quand un deal dépasse sa date de relance.</div></div><button class="sw on" data-tg></button></div>
-        <div class="tg"><div><div class="l">Nouveautés produit</div><div class="d">Quand l'Arène ou la Chasse ouvrent.</div></div><button class="sw" data-tg></button></div>
-      </div>
-      <div class="ss" data-s="plan"><h3>Ton plan</h3><div class="sd">Ce que couvre ton abonnement.</div>
-        <div class="plan"><div><div class="n" id="planN">Gratuit</div><div class="d">5 briefs par semaine, sans carte.</div></div><button class="btn" disabled>Passer Pro · en cours</button></div>
-        <div class="blk"><div class="kv"><span class="k">Briefs par semaine</span><span class="v" id="planQ">5</span></div><div class="kv"><span class="k">Outils ouverts</span><span class="v">Brief, Suivi, Deals</span></div><div class="kv"><span class="k">Données officielles INSEE</span><span class="v">Incluses</span></div></div>
-      </div>
-      <div class="ss" data-s="usage"><h3>Jetons et usage</h3><div class="sd">Ta consommation.</div>
-        <div class="blk"><div class="kv"><span class="k">Jetons restants</span><span class="v" id="uL">—</span></div><div class="kv"><span class="k">Quota hebdomadaire</span><span class="v" id="uM">—</span></div><div class="kv"><span class="k">Prochaine recharge</span><span class="v" id="uR">lundi</span></div><div class="kv"><span class="k">Briefs préparés au total</span><span class="v" id="uT">0</span></div></div>
-      </div>
+      <div class="ss on" data-s="profil"><h3>Profil</h3><div class="sd">Comment Faro t'appelle.</div><div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;"><div class="av" id="sAv" style="width:56px;height:56px;border-radius:14px;font-size:21px;">F</div><div><div style="font-size:14px;font-weight:600;" id="sMail"></div><div style="font-size:12px;color:var(--dim);">Ta photo vient de Google si tu t'es connecté avec.</div></div></div><div class="g2"><div class="fg"><label for="sName">Prénom et nom</label><input class="fld" id="sName" autocomplete="off"/></div><div class="fg"><label>Email</label><input class="fld" id="sMail2" disabled/></div></div><button class="btn" id="saveP"><span class="spin"></span><span>Enregistrer</span></button></div>
+      <div class="ss" data-s="secu"><h3>Sécurité</h3><div class="sd">Ton mot de passe et ta session.</div><div class="blk"><div class="t">Changer de mot de passe</div><div class="d">Au moins six caractères.</div><div class="fg"><input class="fld" id="sPass" type="password" placeholder="Nouveau mot de passe"/></div><button class="btn sm" id="savePw"><span class="spin"></span><span>Mettre à jour</span></button></div><div class="blk"><div class="t">Session</div><div class="d">Te déconnecter de cet appareil.</div><button class="btn g sm" id="out2">Se déconnecter</button></div><div class="blk"><div class="t">Supprimer le compte</div><div class="d">Définitif. Tes briefs et ton profil sont effacés.</div><a class="btn dg sm" href="mailto:hello@farobrief.com?subject=Suppression%20de%20compte">Demander la suppression</a></div></div>
+      <div class="ss" data-s="notif"><h3>Notifications</h3><div class="sd">Ce que Faro t'envoie.</div><div class="tg"><div><div class="l">Rappel de fin de journée</div><div class="d">Tes débriefs et relances du jour, une fois par soir.</div></div><button class="sw on" data-tg></button></div><div class="tg"><div><div class="l">Deals qui dorment</div><div class="d">Quand un deal dépasse sa date de relance.</div></div><button class="sw on" data-tg></button></div><div class="tg"><div><div class="l">Nouveautés produit</div><div class="d">Quand l'Arène ou la Chasse ouvrent.</div></div><button class="sw" data-tg></button></div></div>
+      <div class="ss" data-s="plan"><h3>Ton plan</h3><div class="sd">Ce que couvre ton abonnement.</div><div class="plan"><div><div class="n" id="planN">Gratuit</div><div class="d">5 briefs par semaine, sans carte.</div></div><button class="btn" disabled>Passer Pro · en cours</button></div><div class="blk"><div class="kv"><span class="k">Briefs par semaine</span><span class="v" id="planQ">5</span></div><div class="kv"><span class="k">Outils ouverts</span><span class="v">Brief, Arène, Suivi, Deals</span></div><div class="kv"><span class="k">Données officielles INSEE</span><span class="v">Incluses</span></div></div></div>
+      <div class="ss" data-s="usage"><h3>Jetons et usage</h3><div class="sd">Ta consommation.</div><div class="blk"><div class="kv"><span class="k">Jetons restants</span><span class="v" id="uL">—</span></div><div class="kv"><span class="k">Quota hebdomadaire</span><span class="v" id="uM">—</span></div><div class="kv"><span class="k">Prochaine recharge</span><span class="v" id="uR">lundi</span></div><div class="kv"><span class="k">Briefs préparés au total</span><span class="v" id="uT">0</span></div></div></div>
       <div class="ss" data-s="factu"><h3>Facturation</h3><div class="sd">Moyens de paiement et reçus.</div><div class="blk"><div class="t">Rien à facturer</div><div class="d">Tu es sur le plan gratuit. La facturation s'ouvrira avec le plan Pro.</div></div></div>
       <div class="ss" data-s="appar"><h3>Apparence</h3><div class="sd">Le thème de ton espace.</div><div class="tg"><div><div class="l">Clair</div><div class="d">Le thème Faro.</div></div><button class="sw on" disabled></button></div><div class="tg"><div><div class="l">Sombre</div><div class="d">En cours.</div></div><button class="sw" disabled></button></div></div>
       <div class="ss" data-s="langue"><h3>Langue</h3><div class="sd">Interface et briefs.</div><div class="blk"><div class="kv"><span class="k">Langue</span><span class="v">Français</span></div></div></div>
-      <div class="ss" data-s="integ"><h3>Intégrations</h3><div class="sd">Connecte Faro à tes outils.</div>
-        <div class="intr"><div class="ini">H</div><div class="fx"><div class="it">HubSpot</div><div class="id">Synchronise tes deals et contacts.</div></div><span class="soonp">En cours</span></div>
-        <div class="intr"><div class="ini">S</div><div class="fx"><div class="it">Salesforce</div><div class="id">Pousse tes briefs dans tes opportunités.</div></div><span class="soonp">En cours</span></div>
-        <div class="intr"><div class="ini">P</div><div class="fx"><div class="it">Pipedrive</div><div class="id">Relie tes fiches à ton pipeline.</div></div><span class="soonp">En cours</span></div>
-        <div class="intr"><div class="ini">A</div><div class="fx"><div class="it">Agenda</div><div class="id">Un rappel avant chaque rendez-vous.</div></div><span class="soonp">En cours</span></div>
-      </div>
+      <div class="ss" data-s="integ"><h3>Intégrations</h3><div class="sd">Connecte Faro à tes outils.</div><div class="intr"><div class="ini">H</div><div class="fx"><div class="it">HubSpot</div><div class="id">Synchronise tes deals et contacts.</div></div><span class="soonp">En cours</span></div><div class="intr"><div class="ini">S</div><div class="fx"><div class="it">Salesforce</div><div class="id">Pousse tes briefs dans tes opportunités.</div></div><span class="soonp">En cours</span></div><div class="intr"><div class="ini">P</div><div class="fx"><div class="it">Pipedrive</div><div class="id">Relie tes fiches à ton pipeline.</div></div><span class="soonp">En cours</span></div><div class="intr"><div class="ini">A</div><div class="fx"><div class="it">Agenda</div><div class="id">Un rappel avant chaque rendez-vous.</div></div><span class="soonp">En cours</span></div></div>
       <div class="ss" data-s="donnees"><h3>Données</h3><div class="sd">Elles t'appartiennent.</div><div class="blk"><div class="t">Exporter mes briefs</div><div class="d">Toutes tes fiches dans un fichier.</div><button class="btn g sm" id="exp">Exporter en JSON</button></div><div class="blk"><div class="t">Confidentialité</div><div class="d">Aucune revente. Tes briefs ne servent qu'à toi. Les données entreprise viennent de l'INSEE via data.gouv.fr.</div></div></div>
       <div class="ss" data-s="aide"><h3>Aide</h3><div class="sd">Une question, un bug, une idée.</div><div class="blk"><div class="t">Écris-nous</div><div class="d">On répond vite.</div><a class="btn g sm" href="mailto:hello@farobrief.com">hello@farobrief.com</a></div></div>
     </div>
@@ -646,7 +686,7 @@
     </div>
   </main>
 </div>
-<div class="live" id="live"><div class="lvbar"><span class="t" id="lvT">En rendez-vous</span><button class="lvx" id="lvX">Fermer</button></div><div class="lvbody" id="lvBody"></div></div>
+<div id="liveOv"><div class="lvbar"><span class="t" id="lvT">En rendez-vous</span><button class="lvx" id="lvX">Fermer</button></div><div class="lvbody" id="lvBody"></div></div>
 <div class="pal" id="pal" role="dialog" aria-modal="true" aria-label="Recherche"><div class="palbox"><div class="palin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="palQ" placeholder="Chercher un deal, aller quelque part…" autocomplete="off"/></div><div class="pallist" id="palL"></div><div class="palf"><span><b>↑↓</b> naviguer</span><span><b>↵</b> ouvrir</span><span><b>esc</b> fermer</span></div></div></div>
 <div class="toast" id="toast"><span id="toastT"></span><button id="toastU" style="display:none">Annuler</button></div>
 <script type="module">
@@ -656,6 +696,7 @@ const $ = id => document.getElementById(id);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let session=null, uid=null, tokMax=null, briefs=[], set={}, ent=null, typeRdv='premier', current=null;
 let dealFilter='tous', dealQuery='', statutTouched=false;
+let advSel=null, arene=null, arenaBusy=false;
 
 const hue=s=>{let h=0;s=s||'F';for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;};
 const grad=s=>`linear-gradient(135deg,hsl(${hue(s)} 52% 53%),hsl(${(hue(s)+34)%360} 58% 43%))`;
@@ -665,7 +706,6 @@ const days=d=>Math.floor((Date.now()-new Date(d).getTime())/864e5);
 const rel=d=>{const n=days(d);return n<=0?"à l'instant":n===1?'hier':n<7?`il y a ${n} j`:new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});};
 const favicon=site=>site?`https://www.google.com/s2/favicons?domain=${encodeURIComponent(site.replace(/^https?:\/\//,'').split('/')[0])}&sz=64`:null;
 
-// mapping NAF section -> secteur affichable
 function secteurOf(ent){
   if(!ent) return null;
   const n=(ent.code_naf||'').toUpperCase(), a=(ent.activite||'').toLowerCase();
@@ -740,7 +780,7 @@ $('segRdv').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=
 })();
 function av(el,n,p){ if(p){el.style.background='none';el.innerHTML=`<img src="${p}" alt="" referrerpolicy="no-referrer">`;} else {el.style.background=grad(n);el.textContent=ini(n);} }
 function tok(n){ if(typeof n!=='number')return; const s=n+(n>1?' jetons':' jeton');
-  $('utok').textContent=s; $('pillTok').textContent=s; $('left').textContent=n; $('uL').textContent=n;
+  $('utok').textContent=s; $('pillTok').textContent=s; $('left').textContent=n; $('left2').textContent=n; $('uL').textContent=n;
   $('kTok').childNodes[0].nodeValue=n; if(tokMax!=null)$('kTokMax').textContent=' / '+tokMax; }
 
 async function load(){
@@ -749,7 +789,6 @@ async function load(){
   home(); deals(); suivi();
 }
 
-/* ═══ ONBOARDING ═══ */
 function onboarding(){
   const s1=!!set.offre, s2=briefs.length>0, s3=statutTouched;
   const done=[s1,s2,s3].filter(Boolean).length;
@@ -760,31 +799,18 @@ function onboarding(){
   $('onb1').classList.toggle('ok',s1); $('onb2').classList.toggle('ok',s2); $('onb3').classList.toggle('ok',s3);
 }
 
-/* ═══ MON OFFRE : jauge + checklist ═══ */
 function refreshOffre(){
-  const fields=[
-    {k:'company',lb:'Nom de ton entreprise'},
-    {k:'site',lb:'Site web'},
-    {k:'secteur',lb:'Secteur'},
-    {k:'cible',lb:'Cible type'},
-    {k:'offre',lb:'Ce que tu vends'},
-    {k:'contexte',lb:'Proposition de valeur'},
-    {k:'preuves',lb:'Preuves'}
-  ];
+  const fields=[{k:'company',lb:'Nom de ton entreprise'},{k:'site',lb:'Site web'},{k:'secteur',lb:'Secteur'},{k:'cible',lb:'Cible type'},{k:'offre',lb:'Ce que tu vends'},{k:'contexte',lb:'Proposition de valeur'},{k:'preuves',lb:'Preuves'}];
   const filled=fields.filter(f=>(set[f.k]||'').trim());
   const pct=Math.round(filled.length/fields.length*100);
   $('offPct').textContent=pct;
   $('offRing').style.strokeDashoffset=308-308*pct/100;
-  $('offbar').innerHTML=fields.map(f=>{
-    const ok=(set[f.k]||'').trim();
-    return `<div class="r ${ok?'ok':''}"><span class="c"></span>${f.lb}</div>`;
-  }).join('');
+  $('offbar').innerHTML=fields.map(f=>{const ok=(set[f.k]||'').trim();return `<div class="r ${ok?'ok':''}"><span class="c"></span>${f.lb}</div>`;}).join('');
   $('offDot').style.display=pct<100?'':'none';
   $('offTxt').textContent=set.offre||'à renseigner';
   $('offbanner').classList.toggle('warn',!set.offre);
 }
 
-/* ═══ AUJOURD'HUI ═══ */
 function home(){
   onboarding();
   count($('kBr'),briefs.length); $('uT').textContent=briefs.length;
@@ -797,6 +823,7 @@ function home(){
   const acts=[];
   if(dorment.length) acts.push({c:'rl',i:'<path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/>',t:`${dorment.length} deal${dorment.length>1?'s':''} à réveiller`,d:"Sans mouvement depuis plus d'une semaine.",b:'Voir',go:'suivi'});
   acts.push({c:'nw',i:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',t:'Préparer un rendez-vous',d:"Deux clics, un nom d'entreprise, et tu sais quoi dire.",b:'Ouvrir',go:'brief'});
+  if(briefs.length>0) acts.push({c:'db',i:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',t:"T'entraîner dans l'Arène",d:'Affronte un DAF, un DSI ou un acheteur. Verdict à la fin.',b:'Ouvrir',go:'arene'});
   if(!set.offre) acts.unshift({c:'db',i:'<path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/>',t:'Renseigne ton offre',d:"Sans elle, l'angle du brief reste flou.",b:'Ouvrir',go:'offre'});
   $('deck').innerHTML=acts.map((a,i)=>`<div class="act ${a.c}" style="animation-delay:${i*70}ms"><div class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${a.i}</svg></div><div class="txt"><div class="t">${a.t}</div><div class="d">${a.d}</div></div><button class="btn sm g" data-go="${a.go}">${a.b}</button></div>`).join('');
   $('deck').querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
@@ -810,8 +837,7 @@ function home(){
 
   const r=rl.length,w=briefs.filter(b=>b.statut==='gagne').length,l=briefs.filter(b=>b.statut==='perdu').length,tt=r+w+l;
   if(tt){
-    $('pipeW').innerHTML=`<div class="pipe"><i id="p1" style="background:var(--copper)"></i><i id="p2" style="background:var(--green)"></i><i id="p3" style="background:var(--red)"></i></div>
-    <div class="leg"><div class="r"><span class="d" style="background:var(--copper)"></span>À relancer<b>${r}</b></div><div class="r"><span class="d" style="background:var(--green)"></span>Gagné<b>${w}</b></div><div class="r"><span class="d" style="background:var(--red)"></span>Perdu<b>${l}</b></div></div>`;
+    $('pipeW').innerHTML=`<div class="pipe"><i id="p1" style="background:var(--copper)"></i><i id="p2" style="background:var(--green)"></i><i id="p3" style="background:var(--red)"></i></div><div class="leg"><div class="r"><span class="d" style="background:var(--copper)"></span>À relancer<b>${r}</b></div><div class="r"><span class="d" style="background:var(--green)"></span>Gagné<b>${w}</b></div><div class="r"><span class="d" style="background:var(--red)"></span>Perdu<b>${l}</b></div></div>`;
     requestAnimationFrame(()=>{requestAnimationFrame(()=>{$('p1').style.width=(r/tt*100)+'%';$('p2').style.width=(w/tt*100)+'%';$('p3').style.width=(l/tt*100)+'%';});});
   } else $('pipeW').innerHTML=emptyBox('Le pipeline se remplit à chaque brief.','M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z');
 
@@ -850,7 +876,6 @@ function rowHtml(b,i,k){
 }
 function bind(root){root.querySelectorAll('.row').forEach(el=>el.addEventListener('click',()=>openBrief(briefs[+el.dataset.i])));root.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));}
 
-/* ═══ SUIVI ═══ */
 function suivi(){
   const d=briefs.filter(b=>b.statut==='a_relancer'&&days(b.created_at)>=7);
   $('suiviW').innerHTML=d.length?d.map((b,k)=>{
@@ -860,7 +885,6 @@ function suivi(){
   bind($('suiviW'));
 }
 
-/* ═══ DEALS ═══ */
 $('ftabs').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   $('ftabs').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
   dealFilter=b.dataset.f; deals();
@@ -879,13 +903,7 @@ function deals(){
   $('dealsW').innerHTML=list.map(({b,i},k)=>{
     const ed=b.entreprise_data||{}; const s=secteurOf(ed);
     const bits=[s?`<span class="stag ${s.c}">${s.l}</span>`:'',ed.taille?esc(ed.taille):(b.poste?esc(b.poste):''),rel(b.created_at)].filter(Boolean);
-    return `<div class="row" style="cursor:default;animation-delay:${k*40}ms">${logoHtml(b)}
-      <div class="info" data-i="${i}" style="cursor:pointer"><div class="nm">${esc(b.entreprise||'Prospect')}</div><div class="mt">${bits.join(' · ')}</div></div>
-      <div class="seg" style="gap:5px">
-        <button class="${b.statut==='a_relancer'?'on':''}" data-i="${i}" data-s="a_relancer" style="padding:5px 9px;font-size:11px">À relancer</button>
-        <button class="${b.statut==='gagne'?'on':''}" data-i="${i}" data-s="gagne" style="padding:5px 9px;font-size:11px">Gagné</button>
-        <button class="${b.statut==='perdu'?'on':''}" data-i="${i}" data-s="perdu" style="padding:5px 9px;font-size:11px">Perdu</button>
-      </div></div>`;
+    return `<div class="row" style="cursor:default;animation-delay:${k*40}ms">${logoHtml(b)}<div class="info" data-i="${i}" style="cursor:pointer"><div class="nm">${esc(b.entreprise||'Prospect')}</div><div class="mt">${bits.join(' · ')}</div></div><div class="seg" style="gap:5px"><button class="${b.statut==='a_relancer'?'on':''}" data-i="${i}" data-s="a_relancer" style="padding:5px 9px;font-size:11px">À relancer</button><button class="${b.statut==='gagne'?'on':''}" data-i="${i}" data-s="gagne" style="padding:5px 9px;font-size:11px">Gagné</button><button class="${b.statut==='perdu'?'on':''}" data-i="${i}" data-s="perdu" style="padding:5px 9px;font-size:11px">Perdu</button></div></div>`;
   }).join('');
   $('dealsW').querySelectorAll('.info').forEach(el=>el.addEventListener('click',()=>openBrief(briefs[+el.dataset.i])));
   $('dealsW').querySelectorAll('[data-s]').forEach(el=>el.addEventListener('click',()=>stat(+el.dataset.i,el.dataset.s)));
@@ -901,7 +919,6 @@ async function stat(i,s){
   }
 }
 
-/* ═══ AUTOCOMPLÉTION ═══ */
 let acT=null, acIdx=-1, acData=[];
 $('qEnt').addEventListener('input',()=>{
   const q=$('qEnt').value.trim(); clearTimeout(acT);
@@ -945,7 +962,6 @@ async function pick(e){
 }
 function resetEnt(){ ent=null; $('entLock').style.display='none'; $('entLock').innerHTML=''; $('qEnt').style.display=''; $('qEnt').value=''; $('qEnt').focus(); }
 
-/* ═══ GÉNÉRATION ═══ */
 const note=(t,c)=>{const n=$('note');n.textContent=t;n.className='note on '+c;};
 const clr=()=>{$('note').className='note';};
 let genTimers=[];
@@ -966,11 +982,10 @@ $('gen').addEventListener('click',async()=>{
   clr();
   if(!ent){note("Choisis d'abord l'entreprise en face.",'e');$('qEnt').focus();return;}
   if(!$('fPoste').value){note("Indique ton interlocuteur. C'est ce qui change tout l'angle.",'e');return;}
-  if(!set.offre){note("Renseigne ton offre, Faro en a besoin pour construire l'angle.",'e');
-    setTimeout(()=>go('offre'),1400);return;}
-  const dirNom = (ent.dirigeants&&ent.dirigeants[0]&&$('fPoste').value.includes('Fondateur')||$('fPoste').value.includes('générale'))?(ent.dirigeants&&ent.dirigeants[0]&&ent.dirigeants[0].nom):null;
-  const payload={ entreprise:ent.nom, entreprise_data:ent, site:ent.site||null, poste:$('fPoste').value, interlocuteur_nom:dirNom||null, type_rdv:typeRdv,
-    offre:set.offre, valeur:set.contexte||'', company:set.company||'', preuves:set.preuves||'', cible:set.cible||'', contexte:$('fCtx').value.trim() };
+  if(!set.offre){note("Renseigne ton offre, Faro en a besoin pour construire l'angle.",'e');setTimeout(()=>go('offre'),1400);return;}
+  const posteL=$('fPoste').value.toLowerCase();
+  const dirNom = (ent.dirigeants&&ent.dirigeants[0] && (posteL.includes('fondateur')||posteL.includes('générale')||posteL.includes('dirigeant'))) ? ent.dirigeants[0].nom : null;
+  const payload={ entreprise:ent.nom, entreprise_data:ent, site:ent.site||null, poste:$('fPoste').value, interlocuteur_nom:dirNom||null, type_rdv:typeRdv, offre:set.offre, valeur:set.contexte||'', company:set.company||'', preuves:set.preuves||'', cible:set.cible||'', contexte:$('fCtx').value.trim() };
   const b=$('gen'); b.classList.add('load'); b.disabled=true; $('genL').textContent='Faro compose…'; genUI(true);
   try{
     const {data:s}=await sb.auth.getSession();
@@ -992,7 +1007,6 @@ $('gen').addEventListener('click',async()=>{
 });
 $('again').addEventListener('click',()=>{ $('brief').classList.remove('on'); resetEnt(); window.scrollTo({top:0,behavior:'smooth'}); });
 
-/* ═══ RENDU DU BRIEF — NOUVEAU FORMAT FICHE ═══ */
 const cpySvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
 function openBrief(b){
   current=b; go('brief'); $('brief').classList.add('on');
@@ -1002,13 +1016,11 @@ function openBrief(b){
   const s=secteurOf(ed);
   const sec=[s?s.l:null,ed.ville].filter(Boolean).join(' · ');
   $('bSecline').textContent=sec||(b.poste||'');
-  // logo
   const fav=favicon(ed.site||b.site);
   if(fav){ $('bLogo').innerHTML=`<img src="${fav}" alt="" onerror="this.parentElement.innerHTML='${ini(n)}';this.parentElement.style.background='${grad(n)}';">`; $('bLogo').style.background='#fff'; }
   else { $('bLogo').textContent=ini(n); $('bLogo').style.background=grad(n); }
   $('bWhen').textContent='Généré '+rel(b.created_at||new Date().toISOString());
 
-  // fiche latérale
   const dir = ed.dirigeants&&ed.dirigeants[0];
   const isDirPoste = (b.poste||'').toLowerCase().includes('fondateur')||(b.poste||'').toLowerCase().includes('générale')||(b.poste||'').toLowerCase().includes('dirigeant');
   const inter = (isDirPoste && dir)?`${esc(dir.nom)}<span class="sub">${esc(b.poste||'')}</span>`:esc(b.poste||'—');
@@ -1018,7 +1030,6 @@ function openBrief(b){
   if(dir&&!isDirPoste){ $('bDirField').style.display=''; $('bDir').innerHTML=`${esc(dir.nom)}${dir.qualite?`<span class="sub">${esc(dir.qualite)}</span>`:''}`; } else $('bDirField').style.display='none';
   $('bOff').textContent=set.offre||'—';
 
-  // maturité
   const score=Math.max(0,Math.min(100,(b.maturite_score??b.maturite)||0));
   $('bMat').textContent=score;
   $('bLabel').textContent=b.maturite_label||'Maturité du marché';
@@ -1028,7 +1039,6 @@ function openBrief(b){
   const raisons=b.maturite_raisons||[];
   $('bReasons').innerHTML=raisons.length?raisons.map(r=>`<div class="rs">${esc(r)}</div>`).join(''):'<div class="rs" style="color:var(--faint)">Raisons non renseignées.</div>';
 
-  // corps
   const ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ch=b.chiffre||{}, pg=b.pieges||[], ns=b.next_step||{};
   const ouHtml=[ou.accroche,ou.qui_nous_sommes,ou.pourquoi_vous].filter(Boolean).map(t=>`<div class="say">${esc(t)}</div>`).join('')||((typeof b.ouverture==='string')?`<div class="say">${esc(b.ouverture)}</div>`:'');
   const qHtml=qs.map(q=>typeof q==='string'?`<div class="say q">${esc(q)}</div>`:`<div class="say q">${esc(q.question)}</div>${q.intention?`<div class="why">${esc(q.intention)}</div>`:''}`).join('');
@@ -1042,25 +1052,22 @@ function openBrief(b){
   if(pg.length) stepHtml+=`<div class="step" style="animation-delay:${steps.length*90}ms"><div class="snum">✕</div><div><div class="sk">Pièges<span class="sep">à ne pas commettre</span></div>${pg.map(p=>`<div class="trap">${esc(p)}</div>`).join('')}</div></div>`;
   stepHtml+=`<div class="next" style="animation-delay:${(steps.length+1)*90}ms"><div class="k">Ce que tu proposes en partant</div><div class="v">${esc(ns.phrase||ns||'')}</div>${ns.delai_jours?`<div class="w">Relance prévue dans ${ns.delai_jours} jours</div>`:''}</div>`;
   $('bmainW').innerHTML=stepHtml;
-  $('bmainW').querySelectorAll('.cpy').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();
-    navigator.clipboard.writeText(el.dataset.c).then(()=>toast('Bloc copié')).catch(()=>toast('Copie impossible'));}));
+  $('bmainW').querySelectorAll('.cpy').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();navigator.clipboard.writeText(el.dataset.c).then(()=>toast('Bloc copié')).catch(()=>toast('Copie impossible'));}));
   $('brief').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
 }
 
-/* ═══ MODE LIVE ═══ */
 $('liveBtn').addEventListener('click',()=>{
   if(!current)return; const b=current, ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ch=b.chiffre||{};
   $('lvT').textContent=b.entreprise||'En rendez-vous';
   $('lvBody').innerHTML=`
-    <div class="lvs"><div class="lvk">Ouverture</div>
-      ${[ou.accroche,ou.qui_nous_sommes,ou.pourquoi_vous].filter(Boolean).map(t=>`<div class="lvv">${esc(t)}</div>`).join('')||`<div class="lvv">${esc(typeof b.ouverture==='string'?b.ouverture:'')}</div>`}</div>
+    <div class="lvs"><div class="lvk">Ouverture</div>${[ou.accroche,ou.qui_nous_sommes,ou.pourquoi_vous].filter(Boolean).map(t=>`<div class="lvv">${esc(t)}</div>`).join('')||`<div class="lvv">${esc(typeof b.ouverture==='string'?b.ouverture:'')}</div>`}</div>
     <div class="lvs"><div class="lvk">Questions</div>${qs.map(q=>`<div class="lvq">${esc(typeof q==='string'?q:q.question)}</div>`).join('')}</div>
     <div class="lvs"><div class="lvk">Si on t'objecte</div><div class="lvo">${esc(ob.texte||'')}</div><div class="lvv">${esc(ob.riposte||'')}</div></div>
     <div class="lvs lvf"><div class="lvk">Le chiffre</div><div class="lvv"><b>${esc(ch.valeur||'')}</b> ${esc(ch.phrase||'')}</div></div>
     <div class="lvs"><div class="lvk">En partant</div><div class="lvv">${esc((b.next_step&&b.next_step.phrase)||b.next_step||'')}</div></div>`;
-  $('live').classList.add('on'); document.body.style.overflow='hidden';
+  $('liveOv').classList.add('on'); document.body.style.overflow='hidden';
 });
-function liveClose(){$('live').classList.remove('on');document.body.style.overflow='';}
+function liveClose(){$('liveOv').classList.remove('on');document.body.style.overflow='';}
 $('lvX').addEventListener('click',liveClose);
 
 $('copyAll').addEventListener('click',()=>{
@@ -1073,6 +1080,136 @@ $('copyAll').addEventListener('click',()=>{
   navigator.clipboard.writeText(t).then(()=>toast('Brief copié')).catch(()=>toast('Copie impossible'));
 });
 
+/* ═══ ARÈNE ═══ */
+const advMeta={
+  daf_presse:{nom:'Camille Roy',role:'DAF pressée',ini:'C'},
+  dsi_mefiant:{nom:'Julien Marchal',role:'DSI méfiant',ini:'J'},
+  acheteur_prix:{nom:'Nadia Fournier',role:'Acheteuse',ini:'N'}
+};
+document.querySelectorAll('.advcard').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.advcard').forEach(x=>x.classList.toggle('on',x===c));
+  advSel=c.dataset.adv;
+  const nm=advMeta[advSel]?advMeta[advSel].nom:'cet adversaire';
+  $('startAr').querySelector('span:last-child').textContent=`Affronter ${nm}`;
+  $('startAr').disabled=false;
+}));
+
+const noteAr=(t,c)=>{const n=$('noteAr');n.textContent=t;n.className='note on '+c;};
+const clrAr=()=>{$('noteAr').className='note';};
+
+$('startAr').addEventListener('click',async()=>{
+  clrAr();
+  if(!advSel){noteAr('Choisis un adversaire.','e');return;}
+  if(!set.offre){noteAr("Renseigne ton offre d'abord. Sans elle, l'entraînement n'a pas de contexte.",'e');setTimeout(()=>go('offre'),1400);return;}
+  const b=$('startAr'); b.classList.add('load'); b.disabled=true;
+  try{
+    const {data:s}=await sb.auth.getSession();
+    const r=await fetch('/api/arene',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${s.session.access_token}`},body:JSON.stringify({action:'start',adversaire:advSel,offre:set.offre})});
+    const o=await r.json();
+    if(!r.ok){
+      if(r.status===402){ if(typeof o.tokens_left==='number')tok(o.tokens_left);
+        const d=o.reset_at?new Date(o.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'lundi';
+        noteAr(`Tu as utilisé tes jetons de la semaine. Recharge le ${d}.`,'w'); }
+      else noteAr(o.error||'Impossible de lancer la session.','e');
+      return;
+    }
+    if(typeof o.tokens_left==='number')tok(o.tokens_left);
+    arene=o.arene;
+    $('arenePick').style.display='none';
+    $('arenaCont').classList.add('on');
+    renderArene();
+  }catch(e){ noteAr('Connexion impossible. Réessaie.','e'); }
+  finally{ b.classList.remove('load'); b.disabled=false; }
+});
+
+function renderArene(){
+  if(!arene) return;
+  const m=advMeta[arene.adversaire]||{nom:'Adversaire',role:'—',ini:'?'};
+  $('advNm').textContent=m.nom;
+  $('advSub').textContent=m.role;
+  $('advInit').textContent=m.ini;
+  $('advTours').textContent=`${arene.tours||0} tours`;
+  const msgs=(arene.messages||[]).map(m2=>{
+    if(m2.role==='assistant') return `<div class="msg pro"><div class="av mono" style="background:${grad(m.nom)}">${m.ini}</div><div class="bub">${esc(m2.content)}</div></div>`;
+    return `<div class="msg you"><div class="av">${ini($('uname').textContent||'')}</div><div class="bub">${esc(m2.content)}</div></div>`;
+  }).join('');
+  $('msgs').innerHTML=msgs;
+  $('msgs').scrollTop=$('msgs').scrollHeight;
+  if(arene.status==='termine' && arene.verdict) renderVerdict(arene.verdict);
+}
+
+$('mInp').addEventListener('input',()=>{
+  const t=$('mInp'); t.style.height='auto'; t.style.height=Math.min(120,t.scrollHeight)+'px';
+});
+$('mInp').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); $('mSend').click(); }
+});
+$('mSend').addEventListener('click',async()=>{
+  if(arenaBusy||!arene||arene.status!=='en_cours') return;
+  const msg=$('mInp').value.trim(); if(!msg) return;
+  arenaBusy=true;
+  arene.messages=(arene.messages||[]).concat([{role:'user',content:msg}]);
+  $('mInp').value=''; $('mInp').style.height='auto';
+  renderArene();
+  $('msgs').insertAdjacentHTML('beforeend',`<div class="msg pro typ"><div class="av mono" style="background:${grad(advMeta[arene.adversaire].nom)}">${advMeta[arene.adversaire].ini}</div><div class="bub">Écrit…</div></div>`);
+  $('msgs').scrollTop=$('msgs').scrollHeight;
+  try{
+    const {data:s}=await sb.auth.getSession();
+    const r=await fetch('/api/arene',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${s.session.access_token}`},body:JSON.stringify({action:'turn',id:arene.id,message:msg})});
+    const o=await r.json();
+    if(!r.ok){ toast(o.error||'Le prospect ne répond plus. Réessaie.'); return; }
+    arene=o.arene;
+    renderArene();
+  }catch(e){ toast('Connexion perdue. Réessaie.'); }
+  finally{ arenaBusy=false; }
+});
+
+$('advEnd').addEventListener('click',async()=>{
+  if(!arene||arene.status!=='en_cours')return;
+  if((arene.tours||0)<3){ if(!confirm("La session est courte. Terminer maintenant et obtenir un verdict ?")) return; }
+  $('advEnd').disabled=true;
+  $('msgs').insertAdjacentHTML('beforeend',`<div class="msg pro typ"><div class="av mono" style="background:var(--faint)">···</div><div class="bub">Le coach observe et note…</div></div>`);
+  $('msgs').scrollTop=$('msgs').scrollHeight;
+  try{
+    const {data:s}=await sb.auth.getSession();
+    const r=await fetch('/api/arene',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${s.session.access_token}`},body:JSON.stringify({action:'end',id:arene.id})});
+    const o=await r.json();
+    if(!r.ok){ toast(o.error||'Verdict impossible.'); return; }
+    arene=o.arene;
+    renderArene();
+  }catch(e){ toast('Connexion perdue.'); }
+  finally{ $('advEnd').disabled=false; }
+});
+
+function renderVerdict(v){
+  $('ainp').style.display='none';
+  $('advNew').style.display='';
+  $('advEnd').style.display='none';
+  const html=`<div class="verd">
+    <div class="top"><div class="lb">Verdict de la session</div><h4>« ${esc(v.verdict||'')} »</h4></div>
+    <div class="vgrid">
+      <div class="vcard"><div class="k">Découverte</div><div class="n">${v.decouverte?v.decouverte.note:'—'}<s>/10</s></div><div class="p">${esc(v.decouverte?v.decouverte.pourquoi:'')}</div></div>
+      <div class="vcard"><div class="k">Tenue face à l'objection</div><div class="n">${v.tenue?v.tenue.note:'—'}<s>/10</s></div><div class="p">${esc(v.tenue?v.tenue.pourquoi:'')}</div></div>
+      <div class="vcard"><div class="k">Closing</div><div class="n">${v.closing?v.closing.note:'—'}<s>/10</s></div><div class="p">${esc(v.closing?v.closing.pourquoi:'')}</div></div>
+    </div>
+    <div class="vtips"><div class="tt">Pour la prochaine fois</div>${(v.conseils||[]).map(c=>`<div class="tip">${esc(c)}</div>`).join('')}</div>
+  </div>`;
+  $('msgs').insertAdjacentHTML('beforeend',html);
+  $('msgs').scrollTop=$('msgs').scrollHeight;
+}
+
+$('advNew').addEventListener('click',()=>{
+  arene=null; advSel=null;
+  document.querySelectorAll('.advcard').forEach(x=>x.classList.remove('on'));
+  $('startAr').disabled=true; $('startAr').querySelector('span:last-child').textContent='Choisis un adversaire';
+  $('arenaCont').classList.remove('on');
+  $('arenePick').style.display='';
+  $('ainp').style.display='';
+  $('advNew').style.display='none';
+  $('advEnd').style.display='';
+  clrAr();
+});
+
 /* ═══ COMMAND PALETTE ═══ */
 let palIdx=0, palItems=[];
 const palNav=[
@@ -1081,6 +1218,7 @@ const palNav=[
   {t:'Suivi',go:'suivi',i:'<path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/>'},
   {t:'Mes deals',go:'deals',i:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'},
   {t:'Brief',go:'brief',i:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'},
+  {t:'Arène',go:'arene',i:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'},
   {t:'Réglages',go:'reglages',i:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'}
 ];
 function palOpenF(){ $('pal').classList.add('on'); $('palQ').value=''; palRender(''); setTimeout(()=>$('palQ').focus(),30); }
@@ -1091,11 +1229,8 @@ $('palQ').addEventListener('input',()=>palRender($('palQ').value.trim().toLowerC
 function palRender(q){
   palIdx=0; palItems=[];
   const nav=palNav.filter(n=>!q||n.t.toLowerCase().includes(q));
-  const ds=q?briefs.map((b,i)=>({b,i})).filter(x=>((x.b.entreprise||'')+' '+(x.b.poste||'')).toLowerCase().includes(q)).slice(0,6)
-           :briefs.slice(0,4).map(b=>({b,i:briefs.indexOf(b)}));
-  const acts=[{t:'Préparer un brief',fn:()=>{palClose();go('brief');},i:'<path d="M12 5v14M5 12h14"/>'},
-              {t:'Exporter mes briefs',fn:()=>{palClose();$('exp').click();},i:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>'}]
-    .filter(a=>!q||a.t.toLowerCase().includes(q));
+  const ds=q?briefs.map((b,i)=>({b,i})).filter(x=>((x.b.entreprise||'')+' '+(x.b.poste||'')).toLowerCase().includes(q)).slice(0,6):briefs.slice(0,4).map(b=>({b,i:briefs.indexOf(b)}));
+  const acts=[{t:'Préparer un brief',fn:()=>{palClose();go('brief');},i:'<path d="M12 5v14M5 12h14"/>'},{t:"Ouvrir l'Arène",fn:()=>{palClose();go('arene');},i:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'},{t:'Exporter mes briefs',fn:()=>{palClose();$('exp').click();},i:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>'}].filter(a=>!q||a.t.toLowerCase().includes(q));
   let html='';
   if(ds.length){ html+='<div class="palg">Deals</div>'+ds.map(({b,i})=>{palItems.push({fn:()=>{palClose();openBrief(briefs[i]);}});
     return `<div class="pali" data-k="${palItems.length-1}"><span class="mono" style="background:${grad(b.entreprise)}">${ini(b.entreprise)}</span>${esc(b.entreprise||'Prospect')}<span class="m">${esc(b.poste||'')}</span></div>`;}).join(''); }
@@ -1110,7 +1245,7 @@ function palRender(q){
 function palHl(){ $('palL').querySelectorAll('.pali').forEach((el,i)=>el.classList.toggle('hl',i===palIdx)); }
 document.addEventListener('keydown',e=>{
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); $('pal').classList.contains('on')?palClose():palOpenF(); return; }
-  if(e.key==='Escape'){ if($('pal').classList.contains('on')){palClose();return;} if($('live').classList.contains('on')){liveClose();return;} }
+  if(e.key==='Escape'){ if($('pal').classList.contains('on')){palClose();return;} if($('liveOv').classList.contains('on')){liveClose();return;} }
   if($('pal').classList.contains('on')){
     const its=$('palL').querySelectorAll('.pali');
     if(e.key==='ArrowDown'){e.preventDefault();palIdx=Math.min(palIdx+1,its.length-1);palHl();its[palIdx]&&its[palIdx].scrollIntoView({block:'nearest'});}
@@ -1119,7 +1254,6 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-/* ═══ RÉGLAGES + MON OFFRE : save ═══ */
 async function save(patch,btn){
   btn.classList.add('load'); btn.disabled=true;
   const row={user_id:uid,...set,...patch,updated_at:new Date().toISOString()};
@@ -1133,17 +1267,8 @@ $('saveP').addEventListener('click',async()=>{
     const h=new Date().getHours(); $('greet').textContent=`${h<18?'Bonjour':'Bonsoir'} ${f.split(' ')[0].replace(/^./,c=>c.toUpperCase())}.`; }
 });
 $('saveO').addEventListener('click',async()=>{
-  const p={
-    company:$('sComp').value.trim()||null,
-    site:$('sSite').value.trim()||null,
-    secteur:$('sSec').value.trim()||null,
-    cible:$('sCible').value.trim()||null,
-    offre:$('sOff').value.trim()||null,
-    contexte:$('sVal').value.trim()||null,
-    preuves:$('sPr').value.trim()||null
-  };
-  await save(p,$('saveO'));
-  refreshOffre(); home();
+  const p={company:$('sComp').value.trim()||null,site:$('sSite').value.trim()||null,secteur:$('sSec').value.trim()||null,cible:$('sCible').value.trim()||null,offre:$('sOff').value.trim()||null,contexte:$('sVal').value.trim()||null,preuves:$('sPr').value.trim()||null};
+  await save(p,$('saveO')); refreshOffre(); home();
 });
 $('savePw').addEventListener('click',async()=>{
   const p=$('sPass').value; if(p.length<6){toast('Six caractères minimum');return;}
