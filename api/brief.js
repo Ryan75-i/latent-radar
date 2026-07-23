@@ -52,22 +52,22 @@ INTERDITS ABSOLUS : aucun tiret cadratin, aucun emoji, aucune puce dans les text
 
 TOUT SE PRONONCE. Jamais "aborder la question du budget", toujours la phrase exacte à dire.
 
-L'OUVERTURE se joue en trois temps, les trente premières secondes du rendez-vous :
-1. accroche : remerciement bref qui cadre le temps. Si l'interlocuteur est nommé (dirigeant), utilise son prénom.
-2. qui_nous_sommes : une phrase qui présente l'entreprise du vendeur À TRAVERS le problème que vit ce prospect précis. Jamais une plaquette. Elle change selon l'interlocuteur.
+L'OUVERTURE se joue en trois temps :
+1. accroche : remerciement bref qui cadre le temps. Si l'interlocuteur est nommé, utilise son prénom.
+2. qui_nous_sommes : une phrase qui présente l'entreprise du vendeur À TRAVERS le problème du prospect.
 3. pourquoi_vous : le pont vers leur monde, ancré sur un fait réel de leur entreprise.
 
-LES QUESTIONS suivent SPIN : situation, problème, implication. L'une des trois identifie toujours qui décide vraiment.
+LES QUESTIONS suivent SPIN : situation, problème, implication. Chaque question a une INTENTION explicitement rédigée (à quoi elle sert, ce qu'elle révèle). L'une des trois identifie toujours qui décide vraiment.
 
-L'OBJECTION est la plus probable pour CE poste dans CE secteur, avec une riposte qui débloque.
+L'OBJECTION est la plus probable pour CE poste dans CE secteur, avec une riposte qui débloque. Si tu cites une source, mets aussi son URL quand tu la connais.
 
-LE CHIFFRE est une donnée sectorielle défendable, attribuée à une source crédible (Gartner, McKinsey, Forrester, HBR, Bloomberg, INSEE).
+LE CHIFFRE est une donnée sectorielle défendable, attribuée à une source crédible (Gartner, McKinsey, Forrester TEI, HBR, Bloomberg, INSEE, Statista, IDC). Fournis le nom de la source ET son URL si tu la connais.
 
 LES PIÈGES : deux erreurs à ne pas commettre avec ce profil précis.
 
-LA MATURITÉ : score de 0 à 100 sur l'ouverture du marché pour l'offre ET l'ouverture du prospect. Un label court (ex : "Fenêtre ouverte", "À chauffer", "Trop tôt"). Trois raisons courtes qui expliquent CE score pour CE prospect (secteur en croissance, taille idéale, signal récent, etc). Un verdict d'une phrase.
+LA MATURITÉ : score 0 à 100 sur l'ouverture du marché et du prospect. Label court, trois raisons courtes, un verdict d'une phrase.
 
-HONNÊTETÉ : dans faits_verifies tu ne mets QUE ce qui figure dans les données fournies. Dans hypotheses tu mets ce que tu déduis, formulé comme une supposition à vérifier en réunion.`;
+HONNÊTETÉ : dans faits_verifies tu ne mets QUE ce qui figure dans les données fournies. Dans hypotheses tu mets ce que tu déduis.`;
 
 const TOOL = {
   name:'rediger_brief', description:'Rédige le brief de rendez-vous.',
@@ -77,13 +77,13 @@ const TOOL = {
     hypotheses:{type:'array',items:{type:'string'}},
     maturite_score:{type:'integer'},
     maturite_label:{type:'string'},
-    maturite_raisons:{type:'array',items:{type:'string'},description:'3 raisons courtes (5 mots) qui expliquent ce score pour ce prospect'},
+    maturite_raisons:{type:'array',items:{type:'string'},description:'3 raisons courtes qui expliquent ce score'},
     maturite_verdict:{type:'string',description:'Une phrase : que faire de ce score'},
     ouverture:{type:'object',properties:{accroche:{type:'string'},qui_nous_sommes:{type:'string'},pourquoi_vous:{type:'string'}},required:['accroche','qui_nous_sommes','pourquoi_vous']},
     ouverture_source:{type:'string',description:'Source du signal cité dans pourquoi_vous, si applicable'},
-    questions:{type:'array',items:{type:'object',properties:{question:{type:'string'},intention:{type:'string'}},required:['question','intention']}},
-    objection:{type:'object',properties:{texte:{type:'string'},riposte:{type:'string'},source:{type:'string'}},required:['texte','riposte']},
-    chiffre:{type:'object',properties:{valeur:{type:'string'},phrase:{type:'string'},source:{type:'string'}},required:['valeur','phrase','source']},
+    questions:{type:'array',items:{type:'object',properties:{question:{type:'string'},intention:{type:'string',description:'Pourquoi cette question, à quoi elle sert'}},required:['question','intention']}},
+    objection:{type:'object',properties:{texte:{type:'string'},riposte:{type:'string'},source:{type:'string'},source_url:{type:'string',description:'URL de la source si connue'}},required:['texte','riposte']},
+    chiffre:{type:'object',properties:{valeur:{type:'string'},phrase:{type:'string'},source:{type:'string'},source_url:{type:'string',description:'URL de la source si connue'}},required:['valeur','phrase','source']},
     pieges:{type:'array',items:{type:'string'}},
     next_step:{type:'object',properties:{phrase:{type:'string'},delai_jours:{type:'integer'}},required:['phrase','delai_jours']}
   }, required:['entreprise','faits_verifies','hypotheses','maturite_score','maturite_label','maturite_raisons','maturite_verdict','ouverture','questions','objection','chiffre','pieges','next_step'] }
@@ -116,7 +116,7 @@ TYPE DE RENDEZ-VOUS : ${rdv}
 CE QUE VEND LE COMMERCIAL : ${input.offre||'non précisé'}
 ${input.valeur?`SA PROPOSITION DE VALEUR : ${input.valeur}`:''}
 ${input.company?`SON ENTREPRISE : ${input.company}`:''}
-${input.preuves?`SES PREUVES (clients, résultats) : ${input.preuves}`:''}
+${input.preuves?`SES PREUVES : ${input.preuves}`:''}
 ${input.contexte?`CE QU'IL SAIT EN PLUS : ${input.contexte}`:''}`;
 
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
