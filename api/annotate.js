@@ -16,6 +16,27 @@ async function patchBrief(uid,id,patch){
   const j=await r.json(); return Array.isArray(j)&&j.length?j[0]:null;
 }
 
+
+const ORDER=['contact','decouverte','negociation','closing'];
+async function updateDealAfterDebrief(uid,brief,deb){
+  if(!brief.deal_id) return null;
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/deals?id=eq.${brief.deal_id}&user_id=eq.${uid}&select=*`,{headers:H});
+    const j=await r.json(); if(!Array.isArray(j)||!j.length) return null;
+    const d=j[0];
+    const patch={prochaine_action:deb.next_action||d.prochaine_action,updated_at:new Date().toISOString()};
+    if(deb.temperature==='close'){ patch.etape='gagne'; patch.etape_suggeree=null; }
+    else if(deb.temperature==='mort'){ patch.etape='perdu'; patch.etape_suggeree=null; }
+    else if(deb.temperature==='chaud'){
+      const i=ORDER.indexOf(d.etape);
+      const next=i>=0&&i<ORDER.length-1?ORDER[i+1]:(i===-1?'decouverte':null);
+      if(next&&next!==d.etape) patch.etape_suggeree=next;
+    }
+    const p=await fetch(`${SUPABASE_URL}/rest/v1/deals?id=eq.${brief.deal_id}`,{method:'PATCH',headers:{...H,Prefer:'return=representation'},body:JSON.stringify(patch)});
+    const pj=await p.json(); return Array.isArray(pj)&&pj.length?pj[0]:null;
+  }catch(e){ return null; }
+}
+
 const SYSTEM = `Tu es Faro, copilote de vente B2B. Un commercial sort d'un rendez-vous. Il a annoté son brief pendant l'échange. Tu lis tout et tu en tires l'essentiel.
 
 RÈGLES D'ÉCRITURE : phrases courtes, vingt mots maximum. Aucun tiret cadratin, aucun emoji, aucune puce. Tutoiement. Direct.
@@ -114,7 +135,8 @@ export default async function handler(req,res){
       const patch={ annotations:ann, debrief:deb, synthese_post:syn, statut, rdv_ended_at:new Date().toISOString() };
       const saved=await patchBrief(uid,id,patch);
       if(!saved) return res.status(500).json({error:'Sauvegarde impossible.'});
-      return res.status(200).json({ok:true,brief:saved,synthese:syn,statut});
+      const deal=await updateDealAfterDebrief(uid,saved,deb);
+      return res.status(200).json({ok:true,brief:saved,synthese:syn,statut,deal:deal||null});
     }
 
     return res.status(400).json({error:'Action inconnue.'});
