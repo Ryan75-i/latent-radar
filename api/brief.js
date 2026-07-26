@@ -21,9 +21,28 @@ async function createProfile(uid,resetAt){
   const r=await fetch(`${SUPABASE_URL}/rest/v1/profiles`,{method:'POST',headers:{...H,Prefer:'return=representation'},body:JSON.stringify({user_id:uid,plan:'free',tokens_left:5,tokens_month:5,reset_at:resetAt})});
   const j=await r.json(); return Array.isArray(j)&&j.length?j[0]:null;
 }
-async function saveBrief(uid,input,b){
+
+async function findOrCreateDeal(uid,input){
+  const siren=input.entreprise_data&&input.entreprise_data.siren;
+  let url=`${SUPABASE_URL}/rest/v1/deals?user_id=eq.${uid}&select=*`;
+  url+=siren?`&siren=eq.${siren}`:`&entreprise=eq.${encodeURIComponent(input.entreprise)}`;
+  try{
+    const r=await fetch(url,{headers:H}); const j=await r.json();
+    if(Array.isArray(j)&&j.length){
+      const d=j[0];
+      const patch={entreprise_data:input.entreprise_data||d.entreprise_data,site:input.site||d.site,interlocuteur:input.poste||d.interlocuteur,updated_at:new Date().toISOString()};
+      await fetch(`${SUPABASE_URL}/rest/v1/deals?id=eq.${d.id}`,{method:'PATCH',headers:H,body:JSON.stringify(patch)});
+      return {...d,...patch};
+    }
+    const row={user_id:uid,siren:siren||null,entreprise:input.entreprise,entreprise_data:input.entreprise_data||null,site:input.site||null,etape:'contact',interlocuteur:input.poste||null};
+    const c=await fetch(`${SUPABASE_URL}/rest/v1/deals`,{method:'POST',headers:{...H,Prefer:'return=representation'},body:JSON.stringify(row)});
+    const cj=await c.json(); return Array.isArray(cj)&&cj.length?cj[0]:null;
+  }catch(e){ return null; }
+}
+async function saveBrief(uid,input,b,dealId){
   const row={
     user_id:uid,
+    deal_id:dealId||null,
     entreprise:b.entreprise||input.entreprise||null,
     entreprise_data:input.entreprise_data||null,
     site:input.site||null,
@@ -156,8 +175,9 @@ export default async function handler(req,res){
     try{ brief=await generate(body); }
     catch(e){ await patchTokens(uid,tl,tl+1,null); return res.status(502).json({error:'La génération a échoué. Ton jeton n a pas été consommé.'}); }
 
-    let saved=null; try{ saved=await saveBrief(uid,body,brief); }catch(e){}
-    const out={...brief,id:saved?saved.id:null,statut:'a_relancer',created_at:saved?saved.created_at:new Date().toISOString(),poste:body.poste||null,entreprise_data:body.entreprise_data||null,site:body.site||null};
-    return res.status(200).json({brief:out,tokens_left:tl,reset_at:resetAt});
+    const deal=await findOrCreateDeal(uid,body);
+    let saved=null; try{ saved=await saveBrief(uid,body,brief,deal?deal.id:null); }catch(e){}
+    const out={...brief,id:saved?saved.id:null,deal_id:deal?deal.id:null,statut:'a_relancer',created_at:saved?saved.created_at:new Date().toISOString(),poste:body.poste||null,entreprise_data:body.entreprise_data||null,site:body.site||null};
+    return res.status(200).json({brief:out,deal:deal||null,tokens_left:tl,reset_at:resetAt});
   }catch(e){ return res.status(500).json({error:'Erreur serveur.'}); }
 }
