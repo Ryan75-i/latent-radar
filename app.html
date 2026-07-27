@@ -494,6 +494,40 @@
   .taginp{width:90px;border:1px solid var(--copper-l);border-radius:5px;padding:2px 6px;font-size:10.5px;font-family:var(--mono);outline:none;display:none;}
   .taginp.on{display:inline-block;}
 
+
+  /* v5 : drag, manuel, frise, mic, confiance, esvg */
+  .dcard[draggable="true"]{cursor:grab;}
+  .dcard.dragging{opacity:.45;transform:rotate(2deg) scale(.98);}
+  .col.dropok{outline:2px dashed var(--copper-l);outline-offset:-4px;background:var(--washc);}
+  .esvg{display:flex;justify-content:center;padding:10px 0 4px;}
+  .esvg svg{width:210px;height:auto;opacity:.95;}
+  .esvg.big svg{width:260px;}
+  .manrow{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;border-top:1px solid var(--line3);background:var(--wash);transition:.12s;font-size:12.5px;color:var(--dim);}
+  .manrow:hover{color:var(--copper-d);}
+  .manrow.primary{background:var(--washc);color:var(--copper-d);font-weight:600;}
+  .manrow svg{width:14px;height:14px;stroke-width:2;}
+  .manform{padding:13px 14px;border-top:1px solid var(--line3);display:flex;flex-direction:column;gap:9px;}
+  .manform .fld{padding:8px 11px;font-size:12.5px;}
+  .aci.best{background:var(--wash);}
+  .bestb{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--green-d);background:var(--greenbg);border:1px solid var(--greenbd);border-radius:20px;padding:2px 7px;margin-left:auto;white-space:nowrap;}
+  .manbadge{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);background:var(--wash);border:1px dashed var(--line2);border-radius:20px;padding:2px 8px;}
+  .frise{padding:14px 16px 6px;border-bottom:1px solid var(--line3);}
+  .frise svg{width:100%;height:56px;display:block;}
+  .microw{display:flex;align-items:center;gap:10px;margin-top:8px;}
+  .micbtn{border:1.5px solid var(--line2);background:#fff;color:var(--soft);border-radius:9px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;}
+  .micbtn:hover{border-color:var(--copper-l);color:var(--copper-d);}
+  .micbtn.rec{background:var(--copper);border-color:var(--copper);color:#fff;}
+  .micbtn svg{width:14px;height:14px;stroke-width:2;}
+  @keyframes micpulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  .micbtn.rec .dot3{width:7px;height:7px;border-radius:50%;background:#fff;animation:micpulse 1s ease-in-out infinite;}
+  .micst{font-size:10.5px;color:var(--dim);flex:1;}
+  .confline{display:flex;align-items:center;gap:10px;}
+  .confbar{flex:1;height:7px;border-radius:5px;background:var(--line3);overflow:hidden;}
+  .confbar i{display:block;height:100%;border-radius:5px;background:var(--copper);transition:width .8s cubic-bezier(.2,.7,.2,1);}
+  .confpct{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--copper);}
+  .confweak{margin-top:8px;font-size:11px;color:var(--dim);line-height:1.45;}
+  .confweak b{color:var(--gold);font-weight:600;}
+  .relbtn{border:none;background:var(--washc);color:var(--copper-d);border:1px solid var(--copper-l);font-size:9.5px;font-weight:700;border-radius:6px;padding:3px 9px;cursor:pointer;}
   @media(max-width:960px){
     .shell{grid-template-columns:1fr;}
     .side{position:sticky;height:auto;flex-direction:row;align-items:center;gap:6px;padding:8px 12px;overflow-x:auto;}
@@ -560,7 +594,7 @@
   </section>
 
   <section class="view" id="v-fiche">
-    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="entreprises">Retour</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
+    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="entreprises">Retour</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div class="card"><div class="chd"><span class="t">Le deal</span></div><div class="cbd">
@@ -676,6 +710,7 @@
         </div>
         <div class="reasons" id="dReasons"></div>
       </div></div>
+      <div class="card" id="confCard"><div class="chd"><span class="t">Confiance du brief</span></div><div class="cbd"><div class="confline"><span class="confpct" id="confPct">—</span><div class="confbar"><i id="confBar" style="width:0%"></i></div></div><div class="confweak" id="confWeak"></div></div></div>
       <div class="card" id="covCard"><div class="chd"><span class="t">Couverture du rendez-vous</span></div><div class="cbd" id="covList"></div></div>
     </aside>
     <div class="docmain" id="dMain"></div>
@@ -694,10 +729,12 @@
   <input class="fld" id="debNext" placeholder="Ce que tu fais ensuite…"/>
   <div class="dq">Une phrase à retenir <span>· facultatif</span></div>
   <textarea class="fld" id="debPhrase" placeholder="Ce que tu veux garder de ce rendez-vous…"></textarea>
+  <div class="microw"><button class="micbtn" id="micBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg><span id="micL">Dicter</span></button><span class="micst" id="micSt">Raconte ton RDV en marchant, Faro écrit.</span></div>
   <div class="debfoot"><button class="btn g" id="debCancel">Revenir au brief</button><button class="btn" id="debSave"><span class="spin"></span><span>Valider</span></button></div>
 </div></div>
 
 <div class="verd" id="verdOv"><div class="in">
+  <div class="esvg big" id="verdArt"></div>
   <div class="stamp" id="verdStamp">Closé</div>
   <div class="steps" id="verdSteps"></div>
   <div class="acts" id="verdActs">
@@ -716,8 +753,8 @@
 <div id="liveOv"><div class="lvbar"><span class="t" id="lvT">En rendez-vous</span><button class="lvx" id="lvX">Fermer</button></div><div class="lvcont" id="lvCont"></div><div class="lvseq" id="lvSeq"></div></div>
 
 <div class="recapov" id="recapOv"><div class="recapbox">
-  <div class="rk">Le mail de recap</div>
-  <div class="rd">Rédigé depuis ton brief et tes notes. Relis, ajuste, envoie de ta boîte.</div>
+  <div class="rk" id="rTitle">Le mail de recap</div>
+  <div class="rd" id="rDesc">Rédigé depuis ton brief et tes notes. Relis, ajuste, envoie de ta boîte.</div>
   <div class="rtabs" id="rtabs"><button class="on" data-r="bref">Bref</button><button data-r="complet">Complet</button><button data-r="chaleureux">Chaleureux</button></div>
   <div class="robj" id="robj"><span>Objet : </span>—</div>
   <div class="rcbody" id="rcbody"></div>
@@ -764,6 +801,7 @@ const RDVS=[
   {k:'negociation',n:'Négociation',d:'Le sujet est le prix et les conditions.'}
 ];
 
+const ESVG={pipeline:'<svg width="480" height="320" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg"> <g stroke="#C96A2E" stroke-width="5" stroke-linecap="round" fill="none"> <path d="M104 154 C82 168 80 224 104 238" opacity="0.9"></path> <path d="M135 126 C99 148 96 244 135 266" opacity="0.55"></path> <path d="M166 98 C114 130 111 262 166 294" opacity="0.3"></path> </g> <g fill="#C96A2E"> <circle cx="58" cy="196" r="11"></circle> <circle cx="104" cy="154" r="7"></circle> <circle cx="135" cy="126" r="6.5" opacity="0.65"></circle> <circle cx="166" cy="98" r="6" opacity="0.4"></circle> </g> <path transform="translate(192,132)" d="M3 12 C2 5 6 1 14 1 C34 -1 56 -1 68 1 C74 2 76 6 75 13 C77 55 77 105 75 141 C74 148 70 151 62 151 C42 153 22 153 10 151 C4 150 2 146 3 139 C1 100 1 50 3 12 Z" fill="#F7F3EA" stroke="#26221D" stroke-width="7" stroke-linejoin="round"></path> <path transform="translate(288,116)" d="M3 12 C2 5 6 1 14 1 C34 -1 56 -1 68 1 C74 2 76 6 75 13 C77 55 77 105 75 141 C74 148 70 151 62 151 C42 153 22 153 10 151 C4 150 2 146 3 139 C1 100 1 50 3 12 Z" fill="#E8804A" fill-opacity="0.18" stroke="#C96A2E" stroke-width="7" stroke-linejoin="round"></path> <path transform="translate(384,100)" d="M3 12 C2 5 6 1 14 1 C34 -1 56 -1 68 1 C74 2 76 6 75 13 C77 55 77 105 75 141 C74 148 70 151 62 151 C42 153 22 153 10 151 C4 150 2 146 3 139 C1 100 1 50 3 12 Z" fill="#F7F3EA" stroke="#26221D" stroke-width="7" stroke-linejoin="round"></path> </svg>',entreprises:'<svg width="480" height="320" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M56 281 C160 278 320 278 424 281" stroke="#E6DECC" stroke-width="5" stroke-linecap="round"></path> <g stroke="#C96A2E" stroke-width="5" stroke-linecap="round" fill="none"> <path d="M143 169 C152 70 328 70 337 169" opacity="0.9"></path> <path d="M116 162 C128 40 352 40 364 162" opacity="0.4"></path> </g> <path d="M74 158 C73 152 77 149 84 148 C104 146 132 146 150 148 C156 149 158 152 157 158 C159 200 159 240 157 268 C156 274 152 276 145 275 C120 277 96 277 82 275 C75 274 73 271 74 265 C72 230 72 190 74 158 Z" fill="#F7F3EA" stroke="#26221D" stroke-width="7" stroke-linejoin="round"></path> <path d="M199 152 L238 116 C240 114 242 114 244 116 L281 152 C283 195 283 240 281 268 C280 274 276 276 269 275 C244 277 220 277 207 275 C200 274 198 271 199 265 C197 230 197 190 199 152 Z" fill="#E8804A" fill-opacity="0.18" stroke="#C96A2E" stroke-width="7" stroke-linejoin="round"></path> <path d="M324 178 C323 172 327 169 334 168 C354 166 382 166 400 168 C406 169 408 172 407 178 C409 210 409 245 407 268 C406 274 402 276 395 275 C370 277 346 277 332 275 C325 274 323 271 324 265 C322 235 322 205 324 178 Z" fill="#F7F3EA" stroke="#26221D" stroke-width="7" stroke-linejoin="round"></path> <circle cx="240" cy="42" r="13" fill="#C96A2E"></circle> </svg>',historique:'<svg width="440" height="300" viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg"> <g stroke="#C96A2E" stroke-width="5" stroke-linecap="round" fill="none"> <path d="M144 122 C160 132 160 168 144 178" opacity="0.6"></path> <path d="M165 104 C190 120 190 180 165 196" opacity="0.35"></path> <path d="M187 86 C220 108 220 192 187 214" opacity="0.18"></path> </g> <path d="M46 150 C80 148 110 148 134 150" stroke="#26221D" stroke-width="6" stroke-linecap="round" fill="none"></path> <path d="M150 150 L396 150" stroke="#E6DECC" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 26" fill="none"></path> <circle cx="110" cy="150" r="12" fill="#C96A2E"></circle> </svg>',victoire:'<svg width="480" height="360" viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg"> <g stroke="#C96A2E" stroke-width="5" fill="none"> <circle cx="240" cy="180" r="140" opacity="0.16"></circle> <circle cx="240" cy="180" r="175" opacity="0.09"></circle> </g> <g transform="rotate(-6 240 180)"> <path d="M134 132 C133 122 139 116 150 115 C190 111 292 111 331 115 C342 116 348 122 347 132 C349 156 349 204 347 228 C346 238 340 244 329 245 C290 249 188 249 149 245 C138 244 132 238 133 228 C131 204 131 156 134 132 Z" fill="#F7F3EA" stroke="#4F9D69" stroke-width="9" stroke-linejoin="round"></path> <path d="M191 183 L223 213 L292 145" stroke="#4F9D69" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"></path> </g> <path d="M96 62 L118 96 L76 98 Z" fill="#C96A2E"></path> <path d="M394 84 L414 114 L376 116 Z" fill="#4F9D69" opacity="0.9"></path> <path d="M406 286 L424 314 L388 316 Z" fill="#C96A2E" opacity="0.85"></path> <circle cx="330" cy="56" r="9" fill="#C96A2E"></circle> <circle cx="132" cy="298" r="8" fill="#4F9D69"></circle> <circle cx="58" cy="196" r="7" fill="#4F9D69" opacity="0.85"></circle> </svg>',perdu:'<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg"> <g transform="rotate(-3 140 155)"> <path d="M156 190 L182 190 L182 282 L169 268 L156 282 Z" fill="#C96A2E"></path> <path d="M62 72 C61 64 66 59 75 58 C116 54 176 54 201 58 C209 59 214 64 213 72 C215 120 215 190 213 238 C212 246 207 251 198 252 C166 256 106 256 76 252 C67 251 62 246 63 238 C60 190 60 120 62 72 Z" fill="#F7F3EA" stroke="#26221D" stroke-width="7" stroke-linejoin="round"></path> <path d="M85 70 C83 120 83 190 85 240" stroke="#26221D" stroke-width="5" stroke-linecap="round" opacity="0.8" fill="none"></path> </g> <path d="M252 156 C286 153 320 153 352 155" stroke="#26221D" stroke-width="7" stroke-linecap="round" fill="none"></path> <path d="M330 134 L354 155 L330 176" stroke="#26221D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"></path> </svg>'};
 /* ═══ Helpers ═══ */
 const hue=s=>{let h=0;s=s||'F';for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;};
 const grad=s=>`linear-gradient(135deg,hsl(${hue(s)} 50% 52%),hsl(${(hue(s)+34)%360} 56% 42%))`;
@@ -860,7 +898,10 @@ function dash(){
   $('dashSub').textContent=briefs.length?`${briefs.length} brief${briefs.length>1?'s':''} préparé${briefs.length>1?'s':''} · ${wins} deal${wins>1?'s':''} gagné${wins>1?'s':''}.`:'Prépare ton premier rendez-vous en vingt secondes.';
   const todo=[];
   aDeb.slice(0,4).forEach(b=>todo.push({html:`<div class="row" data-b="${b.id}">${logoHtml(b.entreprise,(b.entreprise_data||{}).logo,(b.entreprise_data||{}).site||b.site)}<div class="info"><div class="nm">${esc(b.entreprise)}</div><div class="mt">RDV à débriefer · ${rel(b.created_at)}</div></div><span class="chip" style="color:#1E5F8A;background:#E4EEF5;border-color:#C6DAE6">Débriefer</span></div>`}));
-  aRel.slice(0,4).forEach(d=>todo.push({html:`<div class="row" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${esc(trunc(d.prochaine_action,52))}</div></div><span class="chip" style="color:#A9531E;background:#F6E8DA;border-color:#E8B58C">Relance</span></div>`}));
+  aRel.slice(0,4).forEach(d=>{
+    const lb=dealBriefs(d).find(b=>b.debrief);
+    todo.push({html:`<div class="row" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${esc(trunc(d.prochaine_action,46))}</div></div>${lb?`<button class="relbtn" data-rel="${lb.id}">Relancer</button>`:'<span class="chip" style="color:#A9531E;background:#F6E8DA;border-color:#E8B58C">Relance</span>'}</div>`});
+  });
   $('todoW').innerHTML=todo.length?todo.map(t=>t.html).join(''):'<div class="empty">Rien en attente. Prépare ton prochain rendez-vous.</div>';
   wireRows($('todoW'));
   const rec=briefs.slice(0,6);
@@ -870,24 +911,49 @@ function dash(){
 function wireRows(root){
   root.querySelectorAll('[data-b]').forEach(el=>el.addEventListener('click',()=>{const b=briefs.find(x=>x.id===el.dataset.b);if(b)openBrief(b);}));
   root.querySelectorAll('[data-d]').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
+  root.querySelectorAll('[data-rel]').forEach(el=>el.addEventListener('click',ev=>{
+    ev.stopPropagation();
+    const b=briefs.find(x=>x.id===el.dataset.rel);
+    if(b){current=b;openRecap('relance');}
+  }));
 }
 
 /* ═══ Pipeline board ═══ */
 function boardRender(root,mini){
   if(!root)return;
+  if(!deals.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">Ton pipeline est vide. Prépare ton premier brief, le deal se crée tout seul.</div></div>`;return;}
   root.innerHTML=STAGES.map(s=>{
     const ds=deals.filter(d=>d.etape===s.k);
     const show=mini?ds.slice(0,2):ds;
     const cards=show.map(d=>{
       const tags=(d.tags||[]).slice(0,2).map(t=>`<span class="tagc">${esc(t)}</span>`).join('');
       const sugg=(!mini&&d.etape_suggeree)?`<div class="sugg"><span>Faro propose : ${stg(d.etape_suggeree).l}</span><button data-acc="${d.id}">OK</button></div>`:'';
-      return `<div class="dcard" data-d="${d.id}"><div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span></div><div class="m">${d.interlocuteur?esc(trunc(d.interlocuteur,22))+' · ':''}${rel(d.updated_at)}${tags?' '+tags:''}</div>${sugg}</div>`;
+      return `<div class="dcard" data-d="${d.id}" ${mini?'':'draggable="true"'}><div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span></div><div class="m">${d.interlocuteur?esc(trunc(d.interlocuteur,22))+' · ':''}${rel(d.updated_at)}${tags?' '+tags:''}</div>${sugg}</div>`;
     }).join('');
     const more=mini&&ds.length>2?`<div style="font-size:10px;color:var(--faint);text-align:center;padding:3px;">+ ${ds.length-2}</div>`:'';
-    return `<div class="col"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${ds.length}</span></div><div class="colbd">${cards||'<div style="font-size:10.5px;color:var(--faint);text-align:center;padding:10px 4px;">Vide</div>'}${more}</div></div>`;
+    return `<div class="col" data-st="${s.k}"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${ds.length}</span></div><div class="colbd">${cards||'<div style="font-size:10.5px;color:var(--faint);text-align:center;padding:10px 4px;">Vide</div>'}${more}</div></div>`;
   }).join('');
   root.querySelectorAll('.dcard').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
   root.querySelectorAll('[data-acc]').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();acceptSugg(el.dataset.acc);}));
+  if(!mini){
+    root.querySelectorAll('.dcard[draggable]').forEach(el=>{
+      el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',el.dataset.d);e.dataTransfer.effectAllowed='move';el.classList.add('dragging');});
+      el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+    });
+    root.querySelectorAll('.col').forEach(col=>{
+      col.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';col.classList.add('dropok');});
+      col.addEventListener('dragleave',()=>col.classList.remove('dropok'));
+      col.addEventListener('drop',async e=>{
+        e.preventDefault();col.classList.remove('dropok');
+        const id=e.dataTransfer.getData('text/plain');const st=col.dataset.st;
+        const d=deals.find(x=>x.id===id);
+        if(!d||d.etape===st)return;
+        d.etape=st;d.etape_suggeree=null;d.updated_at=new Date().toISOString();
+        renderAll();toast('Deal déplacé en '+stg(st).l);
+        try{await sb.from('deals').update({etape:st,etape_suggeree:null,updated_at:d.updated_at}).eq('id',id);}catch(err){}
+      });
+    });
+  }
 }
 async function acceptSugg(id){
   const d=deals.find(x=>x.id===id); if(!d||!d.etape_suggeree)return;
@@ -907,11 +973,34 @@ function entList(){
     const bs=dealBriefs(d);
     const tags=(d.tags||[]).slice(0,3).map(t=>`<span class="tagc">${esc(t)}</span>`).join(' ');
     return `<div class="row" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${bs.length} brief${bs.length>1?'s':''} · ${rel(d.updated_at)}${tags?' · '+tags:''}</div></div>${stageChip(d.etape)}</div>`;
-  }).join(''):'<div class="empty">Aucune entreprise pour l\'instant.</div>';
+  }).join(''):(entQuery?'<div class="empty">Rien ne correspond à cette recherche.</div>':`<div class="esvg">${ESVG.entreprises}</div><div class="empty">Tes entreprises apparaîtront ici, avec leur mémoire.</div>`);
   wireRows($('entW'));
 }
 
 /* ═══ Fiche entreprise / deal ═══ */
+
+function friseHtml(bs,d){
+  const asc=bs.slice().reverse();
+  if(!asc.length)return'';
+  const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
+  const w=560,y=30,x0=24,gap=asc.length>1?Math.min(90,(w-140)/(asc.length-1)):0;
+  let dots='',line='';
+  const lastX=x0+gap*(asc.length-1);
+  line=`<line x1="${x0}" y1="${y}" x2="${lastX}" y2="${y}" stroke="#E6DECC" stroke-width="2"/>`;
+  asc.forEach((b,i)=>{
+    const t=b.debrief&&b.debrief.temperature;
+    const c=t?TC[t]||'#7A7266':'#DAD0B9';
+    const x=x0+gap*i;
+    const dt=new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+    dots+=`<circle cx="${x}" cy="${y}" r="${t==='close'?8:6}" fill="${c}"/>${t==='close'?`<circle cx="${x}" cy="${y}" r="12" fill="none" stroke="${c}" stroke-opacity=".3" stroke-width="1.5"/>`:''}<text x="${x}" y="${y+22}" font-size="8.5" fill="#A69C8B" text-anchor="middle" font-family="DM Mono,monospace">${dt}</text>`;
+  });
+  let next='';
+  if(d&&d.prochaine_action&&!['gagne','perdu'].includes(d.etape)){
+    const nx=lastX+70;
+    next=`<line x1="${lastX+12}" y1="${y}" x2="${nx-10}" y2="${y}" stroke="#C96A2E" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="${nx}" cy="${y}" r="6" fill="none" stroke="#C96A2E" stroke-width="1.5" stroke-dasharray="2 2"/><text x="${nx}" y="${y+22}" font-size="8.5" fill="#A9531E" text-anchor="middle" font-family="DM Mono,monospace">relance</text>`;
+  }
+  return `<div class="frise"><svg viewBox="0 0 ${w} 60" preserveAspectRatio="xMinYMid meet">${line}${dots}${next}</svg></div>`;
+}
 function openFiche(d,silent){
   currentDeal=d; const ed=d.entreprise_data||{};
   $('fName').textContent=d.entreprise;
@@ -925,10 +1014,13 @@ function openFiche(d,silent){
   const rows=[['Activité',ed.activite],['Effectif',ed.effectif],['Taille',ed.taille],['Créée en',ed.annee_creation],['Siège',ed.ville],['Dirigeant',ed.dirigeants&&ed.dirigeants[0]?ed.dirigeants[0].nom:null],['SIREN',d.siren]].filter(r=>r[1]);
   $('fData').innerHTML=rows.length?rows.map(r=>`<div class="kv"><span class="k">${r[0]}</span><span class="v">${esc(r[1])}</span></div>`).join(''):'<div class="empty">Pas de données officielles.</div>';
   const bs=dealBriefs(d);
-  $('fTimeline').innerHTML=bs.length?bs.map(b=>{
+  const lastDeb=bs.find(b=>b.debrief);
+  if(lastDeb&&!['gagne'].includes(d.etape)){$('fRelance').style.display='';$('fRelance').onclick=()=>{current=lastDeb;openRecap('relance');};}
+  else $('fRelance').style.display='none';
+  $('fTimeline').innerHTML=(bs.length?friseHtml(bs,d):'')+(bs.length?bs.map(b=>{
     const syn=b.synthese_post&&b.synthese_post.observations?`<div class="mt" style="margin-top:3px;color:var(--violet)">${esc(trunc(b.synthese_post.observations[0],70))}</div>`:'';
     return `<div class="row" data-b="${b.id}"><div class="info"><div class="nm">${new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} · ${esc(trunc(b.poste||'',34))}</div><div class="mt">${b.debrief&&b.debrief.next_action?esc(trunc(b.debrief.next_action,60)):'Brief préparé'}</div>${syn}</div>${briefTempChip(b)}</div>`;
-  }).join(''):'<div class="empty">Aucun brief encore. Prépare le premier.</div>';
+  }).join(''):`<div class="esvg">${ESVG.historique}</div><div class="empty">Aucun brief encore. Prépare le premier, la mémoire commence là.</div>`);
   wireRows($('fTimeline'));
   $('fNewBrief').onclick=()=>startFromDeal(d);
   if(!silent)go('fiche');
@@ -960,13 +1052,15 @@ $('qEnt').addEventListener('input',()=>{
     try{
       const r=await fetch('/api/entreprise?q='+encodeURIComponent(q));
       const j=await r.json(); acData=j.results||[]; acIdx=-1;
-      if(!acData.length){$('acList').innerHTML='<div class="acs">Aucune entreprise trouvée.</div>';return;}
+      if(!acData.length){$('acList').innerHTML='<div class="acs">Aucune entreprise trouvée dans le référentiel officiel.</div>'+manRow(q,true);wireMan(q);return;}
       $('acList').innerHTML=acData.map((e,i)=>{
         const known=findDeal(e);
         const meta=[e.activite,e.ville,e.effectif].filter(Boolean).map(esc).join(' · ');
-        return `<div class="aci" data-i="${i}">${logoHtml(e.nom,e.logo,e.site)}<div style="flex:1;min-width:0"><div class="n">${esc(e.nom)}</div><div class="m">${meta||'—'}</div></div>${known?`<span class="known">${stg(known.etape).l}</span>`:''}</div>`;
-      }).join('');
+        const best=i===0?'<span class="bestb">Meilleure correspondance</span>':'';
+        return `<div class="aci ${i===0?'best':''}" data-i="${i}">${logoHtml(e.nom,e.logo,e.site)}<div style="flex:1;min-width:0"><div class="n">${esc(e.nom)}</div><div class="m">${meta||'—'}</div></div>${known?`<span class="known">${stg(known.etape).l}</span>`:best}</div>`;
+      }).join('')+manRow(q,false);
       $('acList').querySelectorAll('.aci').forEach(el=>el.addEventListener('click',()=>pick(acData[+el.dataset.i])));
+      wireMan(q);
     }catch(e){$('acList').innerHTML='<div class="acs">Recherche indisponible.</div>';}
   },260);
 });
@@ -990,6 +1084,29 @@ async function pick(e){
     const j=await r.json();
     if(j.entreprise){ent={...ent,...j.entreprise};lockedRender();}
   }catch(err){}
+}
+
+function manRow(q,primary){
+  return `<div class="manrow ${primary?'primary':''}" id="manRow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Tu ne trouves pas ? Créer l'entreprise à la main</div>`;
+}
+function wireMan(q){
+  const r=$('manRow'); if(!r)return;
+  r.addEventListener('click',()=>{
+    r.outerHTML=`<div class="manform" id="manForm">
+      <input class="fld" id="mNom" placeholder="Nom de l'entreprise" value="${esc(q||'')}"/>
+      <div style="display:flex;gap:8px;"><input class="fld" id="mVille" placeholder="Ville · facultatif"/><input class="fld" id="mSec" placeholder="Secteur · facultatif"/></div>
+      <button class="btn sm" id="mGo">Créer et préparer le brief</button>
+    </div>`;
+    $('mNom').focus();
+    $('mGo').addEventListener('click',()=>{
+      const nom=$('mNom').value.trim();
+      if(!nom){$('mNom').focus();return;}
+      $('acList').classList.remove('on');
+      ent={nom,ville:$('mVille').value.trim()||null,activite:$('mSec').value.trim()||null,saisie_manuelle:true};
+      openCtx();
+    });
+    $('mNom').addEventListener('keydown',e=>{if(e.key==='Enter')$('mGo').click();});
+  });
 }
 $('backTo1').addEventListener('click',()=>{ent=null;go('nouveau');});
 
@@ -1031,7 +1148,8 @@ function suggestRdv(){
 }
 function lockedRender(){
   const meta=[ent.activite,ent.taille||ent.effectif,ent.ville,ent.annee_creation?'depuis '+ent.annee_creation:null].filter(Boolean).map(esc).join(' · ');
-  $('lockedCard').innerHTML=`${logoHtml(ent.nom,ent.logo,ent.site)}<div style="flex:1;min-width:0"><div class="n">${esc(ent.nom)}</div><div class="m">${meta||'Chargement des données officielles…'}</div></div><button class="btn g sm change" id="btnChange">Changer</button>`;
+  const badge=ent.saisie_manuelle?'<span class="manbadge">Saisie manuelle</span>':'';
+  $('lockedCard').innerHTML=`${logoHtml(ent.nom,ent.logo,ent.site)}<div style="flex:1;min-width:0"><div class="n">${esc(ent.nom)}</div><div class="m">${meta||(ent.saisie_manuelle?'Créée à la main, sans données officielles.':'Chargement des données officielles…')} ${badge}</div></div><button class="btn g sm change" id="btnChange">Changer</button>`;
   $('btnChange').addEventListener('click',()=>{ent=null;go('nouveau');});
 }
 function openCtx(){
@@ -1157,6 +1275,11 @@ function openBrief(b){
   $('dRing').style.strokeDashoffset=220;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{$('dRing').style.strokeDashoffset=220-220*score/100;}));
   $('dReasons').innerHTML=(b.maturite_raisons||[]).map(r=>`<div class="rs">${esc(r)}</div>`).join('');
+  const cf=confidence(b);
+  $('confPct').textContent=cf.pct+' %';
+  $('confBar').style.width='0%';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{$('confBar').style.width=cf.pct+'%';}));
+  $('confWeak').innerHTML=cf.weak?`<b>Point faible :</b> ${esc(cf.weak)}.`:'Toutes les sources sont au vert.';
   $('covList').innerHTML=COVER.map(c=>`<div class="covrow" id="cov_${c.k}"><span class="ck2"></span>${c.lbl}</div>`).join('');
 
   const ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ch=b.chiffre||{}, pg=b.pieges||[], ns=b.next_step||{};
@@ -1196,6 +1319,22 @@ function openBrief(b){
   $('libreAdd').addEventListener('click',()=>addLibre('',null,true));
   wireDoc(); coverUpdate(); renderActions();
   $('briefDoc').classList.add('on'); $('briefDoc').scrollTop=0;
+}
+
+function confidence(b){
+  const ed=b.entreprise_data||{};
+  const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
+  const checks=[
+    {ok:!!(ed.effectif&&ed.activite),w:'les données officielles sont incomplètes'},
+    {ok:!!(b.chiffre&&b.chiffre.source),w:'le chiffre n\'a pas de source premium'},
+    {ok:!!(d&&dealBriefs(d).filter(x=>x.debrief).length),w:'aucun historique de RDV avec cette entreprise'},
+    {ok:!!(b.maturite_raisons&&b.maturite_raisons.length>=2),w:'peu de signaux de marché identifiés'},
+    {ok:!ed.saisie_manuelle,w:'entreprise saisie à la main, sans fiche INSEE'}
+  ];
+  const pass=checks.filter(c=>c.ok).length;
+  const pct=Math.round(40+60*pass/checks.length);
+  const weak=checks.find(c=>!c.ok);
+  return {pct,weak:weak?weak.w:null};
 }
 function wireDoc(){
   $('dMain').querySelectorAll('[data-copy]').forEach(el=>el.addEventListener('click',()=>navigator.clipboard.writeText(el.dataset.copy).then(()=>toast('Bloc copié'))));
@@ -1429,6 +1568,7 @@ $('debSave').addEventListener('click',async()=>{
 const VERD={close:'Closé !',chaud:"Ça avance",tiede:'À réchauffer',mort:'Suivant.'};
 function showVerdict(t,deal,hasSyn){
   $('verdOv').className='verd on '+t;
+  $('verdArt').innerHTML=t==='close'?ESVG.victoire:(t==='mort'?ESVG.perdu:'');
   $('verdStamp').textContent=VERD[t]||'Terminé';
   const lines=[];
   lines.push(`<div class="vline"><span class="ok2">✓</span>${hasSyn?'Synthèse du rendez-vous enregistrée':'Débrief enregistré'}</div>`);
@@ -1501,37 +1641,80 @@ function openLive(){
 $('lvX').addEventListener('click',()=>$('liveOv').classList.remove('on'));
 
 /* ═══ Mail de recap ═══ */
-let recapTab='bref';
+let recapTab='bref', recapMode='recap';
+function recapCache(b){b._rc=b._rc||{};return b._rc;}
 function renderRecap(){
-  const b=current; if(!b||!b._recaps)return;
-  $('robj').innerHTML=`<span>Objet : </span>${esc(b._recaps.objet||'Suite à notre échange')}`;
-  $('rcbody').textContent=b._recaps[recapTab]||'';
+  const b=current; if(!b)return;
+  const data=recapCache(b)[recapMode]; if(!data)return;
+  $('robj').innerHTML=`<span>Objet : </span>${esc(data.objet||'Suite à notre échange')}`;
+  $('rcbody').textContent=data[recapTab]||'';
 }
 $('rtabs').querySelectorAll('button').forEach(t=>t.addEventListener('click',()=>{
   $('rtabs').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===t));
   recapTab=t.dataset.r; renderRecap();
 }));
-async function openRecap(){
+async function openRecap(mode){
   if(!current)return;
+  recapMode=mode==='relance'?'relance':'recap';
+  $('rTitle').textContent=recapMode==='relance'?'Le message de relance':'Le mail de recap';
+  $('rDesc').textContent=recapMode==='relance'?'Il relance par la valeur, jamais par la culpabilité. Relis, ajuste, envoie.':'Rédigé depuis ton brief et tes notes. Relis, ajuste, envoie de ta boîte.';
   $('recapOv').classList.add('on');
-  if(current._recaps){renderRecap();return;}
+  if(recapCache(current)[recapMode]){renderRecap();return;}
   $('rcbody').innerHTML='<div class="rcload"><span class="spin"></span>Faro rédige les trois versions…</div>';
   $('robj').innerHTML='<span>Objet : </span>—';
   try{
-    const r=await fetch('/api/recap',{method:'POST',headers:await auth(),body:JSON.stringify({id:current.id})});
+    const r=await fetch('/api/recap',{method:'POST',headers:await auth(),body:JSON.stringify({id:current.id,type:recapMode})});
     const o=await r.json(); if(!r.ok)throw new Error(o.error||'');
-    current._recaps=o.recaps; renderRecap();
+    recapCache(current)[recapMode]=o.recaps; renderRecap();
   }catch(e){$('rcbody').textContent='La rédaction a échoué. Ferme et réessaie.';}
 }
 $('rClose').addEventListener('click',()=>$('recapOv').classList.remove('on'));
 $('rCopy').addEventListener('click',()=>{
-  const b=current; if(!b||!b._recaps)return;
-  navigator.clipboard.writeText('Objet : '+(b._recaps.objet||'')+'\n\n'+(b._recaps[recapTab]||'')).then(()=>toast('Mail copié'));
+  const b=current; if(!b)return; const data=recapCache(b)[recapMode]; if(!data)return;
+  navigator.clipboard.writeText('Objet : '+(data.objet||'')+'\n\n'+(data[recapTab]||'')).then(()=>toast('Message copié'));
 });
 $('rMail').addEventListener('click',()=>{
-  const b=current; if(!b||!b._recaps)return;
-  location.href='mailto:?subject='+encodeURIComponent(b._recaps.objet||'Suite à notre échange')+'&body='+encodeURIComponent(b._recaps[recapTab]||'');
+  const b=current; if(!b)return; const data=recapCache(b)[recapMode]; if(!data)return;
+  location.href='mailto:?subject='+encodeURIComponent(data.objet||'Suite à notre échange')+'&body='+encodeURIComponent(data[recapTab]||'');
 });
+
+
+/* ═══ Dictée vocale du débrief ═══ */
+let recog=null, recOn=false;
+(function(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const btn=$('micBtn');
+  if(!SR){btn.style.display='none';$('micSt').textContent='La dictée vocale n\'est pas disponible sur ce navigateur.';return;}
+  recog=new SR(); recog.lang='fr-FR'; recog.continuous=true; recog.interimResults=true;
+  let base='';
+  recog.onresult=e=>{
+    let fin='',inter='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal)fin+=t; else inter+=t;
+    }
+    if(fin){base=(base+' '+fin).trim();}
+    $('debPhrase').value=(base+(inter?' '+inter:'')).trim();
+  };
+  recog.onerror=()=>{stopRec();$('micSt').textContent='Micro indisponible. Vérifie les autorisations.';};
+  recog.onend=()=>{if(recOn)try{recog.start();}catch(e){}};
+  function startRec(){
+    base=$('debPhrase').value.trim();
+    try{recog.start();}catch(e){}
+    recOn=true;btn.classList.add('rec');
+    btn.innerHTML='<span class="dot3"></span><span id="micL">J\'écoute…</span>';
+    $('micSt').textContent='Parle naturellement. Retape sur le bouton pour arrêter.';
+  }
+  function stopRec(){
+    recOn=false;try{recog.stop();}catch(e){}
+    btn.classList.remove('rec');
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg><span id="micL">Dicter</span>';
+    $('micSt').textContent='Raconte ton RDV en marchant, Faro écrit.';
+  }
+  btn.addEventListener('click',()=>recOn?stopRec():startRec());
+  $('debCancel').addEventListener('click',()=>{if(recOn)stopRec();});
+  $('debSave').addEventListener('click',()=>{if(recOn)stopRec();});
+})();
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
