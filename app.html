@@ -561,20 +561,33 @@
   .relbtn:hover{background:var(--copper);color:#fff;}
 
   /* ═══ Dashboard 3 bandes ═══ */
-  .band1{display:grid;grid-template-columns:1.1fr 1.4fr;grid-template-rows:auto auto;gap:14px;margin-bottom:16px;}
-  .hero-metric{grid-row:span 2;display:flex;flex-direction:column;padding:20px;}
-  .hm-main{flex:1;}
-  .hm-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
-  .hm-v{font-family:var(--serif);font-weight:700;font-size:44px;line-height:1;color:var(--copper);margin-top:8px;font-variant-numeric:tabular-nums;}
-  .hm-sub{font-size:12px;color:var(--dim);margin-top:8px;}
-  .hm-split{margin-top:16px;border-top:1px dashed var(--line3);padding-top:12px;display:flex;flex-direction:column;gap:2px;}
-  .hm-row{display:flex;align-items:center;gap:9px;font-size:12px;padding:5px 0;cursor:pointer;border-radius:7px;transition:.12s;}
-  .hm-row:hover{background:var(--wash);}
-  .hm-row .hd{width:8px;height:8px;border-radius:3px;flex-shrink:0;}
-  .hm-row .hl{color:var(--soft);flex:1;}
-  .hm-row .hn{font-family:var(--mono);font-size:11px;color:var(--dim);}
-  .hm-row .hv{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
-  .kpi-grid{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  /* ═══ Money hero ═══ */
+  .money-hero{display:grid;grid-template-columns:1.15fr 1fr;gap:0;margin-bottom:16px;overflow:hidden;}
+  .mh-left{padding:22px 24px;background:linear-gradient(135deg,#FCF3E9,#F8EAD9);position:relative;}
+  .mh-period{display:inline-flex;gap:3px;background:rgba(255,255,255,.6);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:16px;}
+  .mhp{border:none;background:none;font-size:11px;font-weight:600;color:var(--dim);padding:5px 11px;border-radius:7px;cursor:pointer;transition:.13s;}
+  .mhp.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
+  .mh-k{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);}
+  .mh-big{font-family:var(--serif);font-weight:700;font-size:52px;line-height:1;color:var(--copper);margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .mh-move{margin-top:12px;font-size:13px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .mh-move .tag{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:12px;border-radius:20px;padding:3px 10px;}
+  .mh-move .tag.up{background:var(--greenbg);color:var(--green-d);border:1px solid var(--greenbd);}
+  .mh-move .tag.down{background:var(--redbg);color:var(--red);border:1px solid var(--redbd);}
+  .mh-move .tag.flat{background:var(--wash);color:var(--dim);border:1px solid var(--line2);}
+  .mh-move .txt{color:var(--soft);}
+  .mh-move svg{width:12px;height:12px;stroke-width:2.6;}
+  .mh-right{padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:14px;background:var(--card);}
+  .mh-metric{cursor:pointer;transition:.13s;border-radius:10px;padding:8px 10px;margin:-8px -10px;}
+  .mh-metric:hover{background:var(--wash);}
+  .mh-metric .mm-k{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:7px;font-weight:600;}
+  .mh-metric .mm-k .dt{width:8px;height:8px;border-radius:3px;}
+  .mh-metric .mm-v{font-family:var(--serif);font-weight:700;font-size:27px;color:var(--ink);line-height:1;margin-top:5px;font-variant-numeric:tabular-nums;}
+  .mh-metric .mm-h{font-size:10.5px;color:var(--faint);margin-top:3px;}
+  .band1{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px;}
+  .hm-split{}
+  .ct{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:7px;padding:3px 9px;font-size:10.5px;font-weight:600;cursor:pointer;margin-left:4px;transition:.13s;}
+  .ct.on{background:var(--washc);border-color:var(--copper);color:var(--copper-d);}
+  .ct:hover{border-color:var(--copper-l);}
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:13px 15px;box-shadow:var(--sh);position:relative;overflow:hidden;}
   .kpi .kk{font-size:10.5px;font-weight:600;color:var(--dim);display:flex;align-items:center;gap:5px;}
   .kpi .kk svg{width:12px;height:12px;stroke-width:2;color:var(--faint);}
@@ -582,7 +595,8 @@
   .kpi .kh{font-size:10px;color:var(--faint);margin-top:3px;}
   .kpi .ktrend{position:absolute;top:13px;right:14px;font-size:10px;font-weight:700;font-family:var(--mono);}
   .kpi .ktrend.up{color:var(--green-d);} .kpi .ktrend.down{color:var(--red);}
-  .chart-card{grid-column:2;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .chart-card{width:100%;}
   .lg-item{font-size:10px;color:var(--dim);display:inline-flex;align-items:center;gap:5px;margin-left:10px;}
   .lg-item i{width:8px;height:8px;border-radius:2px;display:inline-block;}
   #chartW{padding:12px 16px 16px;}
@@ -704,19 +718,23 @@
   <section class="view on" id="v-dash">
     <div class="ptitle"><div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
 
-    <!-- BANDE 1 : état des lieux chiffré -->
-    <div class="band1" id="band1">
-      <div class="hero-metric card" id="heroCard">
-        <div class="hm-main">
-          <div class="hm-k">Pipeline actif</div>
-          <div class="hm-v" id="hmVal">—</div>
-          <div class="hm-sub" id="hmSub"></div>
+    <!-- BANDE 1 : l'argent en roi -->
+    <div class="money-hero card" id="moneyHero">
+      <div class="mh-left">
+        <div class="mh-period" id="mhPeriod">
+          <button class="mhp on" data-per="month">Ce mois</button>
+          <button class="mhp" data-per="all">Depuis le début</button>
         </div>
-        <div class="hm-split" id="hmSplit"></div>
+        <div class="mh-k" id="mhKing">Signé</div>
+        <div class="mh-big" id="mhBig">—</div>
+        <div class="mh-move" id="mhMove"></div>
       </div>
+      <div class="mh-right" id="mhRight"></div>
+    </div>
+    <div class="band1">
       <div class="kpi-grid" id="kpiGrid"></div>
       <div class="card chart-card" id="chartCard">
-        <div class="chd"><span class="t">Ton activité</span><span class="d">30 derniers jours.</span><div class="right"><span class="lg-item"><i style="background:var(--copper)"></i>Briefs</span><span class="lg-item"><i style="background:var(--green)"></i>Débriefés</span></div></div>
+        <div class="chd"><span class="t">Ton activité</span><div class="right" id="chartTabs"><button class="ct on" data-d="30">30 j</button><button class="ct" data-d="90">90 j</button></div><div class="right" style="margin-left:10px"><span class="lg-item"><i style="background:var(--copper)"></i>Briefs</span><span class="lg-item"><i style="background:var(--green)"></i>Débriefés</span></div></div>
         <div class="cbd" id="chartW"></div>
       </div>
     </div>
@@ -877,6 +895,10 @@
   <div class="dd">Trente secondes, et Faro capitalise tout.</div>
   <div class="dq">Température du deal</div>
   <div class="temps" id="temps"><button data-t="close">Closé, c'est signé</button><button data-t="chaud">Chaud, ça avance</button><button data-t="tiede">Tiède, à recontacter</button><button data-t="mort">Mort, on passe</button></div>
+  <div id="debMontantWrap" style="display:none;">
+    <div class="dq" id="debMontantQ">Quel est l'enjeu de ce deal ? <span>· en euros</span></div>
+    <input class="fld" id="debMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/>
+  </div>
   <div class="dq">Prochaine action</div>
   <input class="fld" id="debNext" placeholder="Ce que tu fais ensuite…"/>
   <div class="dq">Une phrase à retenir <span>· facultatif</span></div>
@@ -1015,7 +1037,7 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   $('sCible').value=set.cible||'';$('sOff').value=set.offre||'';$('sVal').value=set.contexte||'';$('sPr').value=set.preuves||'';
   try{const {data:p}=await sb.from('profiles').select('tokens_left,tokens_month,reset_at').eq('user_id',uid).single();
     if(p){tokMax=p.tokens_month;tok(p.tokens_left);$('uM').textContent=p.tokens_month||5;if(p.reset_at)$('uR').textContent=new Date(p.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric'});}}catch(e){}
-  buildPList(); buildRdv(); refreshOffre();
+  buildPList(); buildRdv(); refreshOffre(); wireDashTabs();
   const [dr,br]=await Promise.all([
     sb.from('deals').select('*').eq('user_id',uid).order('updated_at',{ascending:false}),
     sb.from('briefs').select('*').eq('user_id',uid).order('created_at',{ascending:false})
@@ -1059,35 +1081,25 @@ function dash(){
   const ws=weekStats();
   $('weekline').innerHTML=briefs.length?`<span><b>${ws.briefs}</b> brief${ws.briefs>1?'s':''} cette semaine</span><span class="wd"></span><span><b>${ws.debriefs}</b> débriefé${ws.debriefs>1?'s':''}</span><span class="wd"></span><span><b>${ws.wins}</b> gagné${ws.wins>1?'s':''}</span>${ws.streak>1?`<span class="wd"></span><span>série de <b>${ws.streak}</b> débriefs</span>`:''}`:'<span>Ton tableau de bord se remplit dès ton premier rendez-vous.</span>';
 
-  // ═══ BANDE 1 : chiffres ═══
-  const totVal=actifs.reduce((a,d)=>a+dealVal(d),0);
-  const withVal=actifs.filter(d=>dealVal(d)>0).length;
-  $('hmVal').textContent=totVal?eur(totVal):(actifs.length?actifs.length+' deals':'—');
-  $('hmSub').innerHTML=totVal?`${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}${withVal<actifs.length?` · ${actifs.length-withVal} sans montant`:''}`:(actifs.length?`Ajoute un montant sur tes deals pour voir la valeur en jeu.`:'Aucun deal actif pour l\'instant.');
-  // split par étape
-  const activeStages=STAGES.filter(s=>!['gagne','perdu'].includes(s.k));
-  $('hmSplit').innerHTML=activeStages.map(s=>{
-    const ds=actifs.filter(d=>d.etape===s.k);
-    if(!ds.length)return'';
-    const v=ds.reduce((a,d)=>a+dealVal(d),0);
-    return `<div class="hm-row" data-st2="${s.k}"><span class="hd" style="background:${s.c}"></span><span class="hl">${s.l}</span><span class="hn">${ds.length}</span><span class="hv">${v?eur(v):'—'}</span></div>`;
-  }).join('')||'<div style="font-size:11.5px;color:var(--faint);text-align:center;padding:8px;">Prépare un brief, ton premier deal apparaîtra ici.</div>';
-  $('hmSplit').querySelectorAll('[data-st2]').forEach(el=>el.addEventListener('click',()=>go('pipeline')));
+  // ═══ BANDE 1 : l'argent en roi ═══
+  renderMoney();
 
-  // KPI : conversion, vélocité, panier moyen
+  // KPI : conversion, vélocité, panier moyen, avec tendance
   const closed=wins.length+losts.length;
   const winRate=closed?Math.round(wins.length/closed*100):null;
   const vel=velocity();
-  const avgDeal=withVal?Math.round(wins.concat(actifs).filter(d=>dealVal(d)>0).reduce((a,d)=>a+dealVal(d),0)/wins.concat(actifs).filter(d=>dealVal(d)>0).length):null;
+  const valDeals=wins.concat(actifs).filter(d=>dealVal(d)>0);
+  const avgDeal=valDeals.length?Math.round(valDeals.reduce((a,d)=>a+dealVal(d),0)/valDeals.length):null;
   const KPI=[
-    {k:'Taux de closing',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length} gagné${wins.length>1?'s':''} sur ${closed}`:'Dès ton premier deal clos'},
-    {k:'Vélocité',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure un deal':'Se calcule avec l\'historique'},
-    {k:'Panier moyen',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
+    {k:'Taux de closing',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length} gagné${wins.length>1?'s':''} sur ${closed}`:'Dès ton premier deal clos',go:'pipeline'},
+    {k:'Vélocité',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure un deal':'Se calcule avec l\'historique',go:'pipeline'},
+    {k:'Panier moyen',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Sur tes deals chiffrés':'Ajoute des montants',go:'pipeline'}
   ];
-  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi"><div class="kk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg>${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div>`).join('');
+  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="${k.go}"><div class="kk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg>${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div>`).join('');
+  $('kpiGrid').querySelectorAll('[data-kgo]').forEach(el=>{el.style.cursor='pointer';el.addEventListener('click',()=>go(el.dataset.kgo));});
 
-  // Graphe 30j
-  $('chartW').innerHTML=chart30();
+  // Graphe (période courante)
+  $('chartW').innerHTML=chart30(chartDays);
 
   // ═══ BANDE 2 : plan de bataille + intelligence ═══
   renderFocus(aDeb,aRel,cold);
@@ -1110,6 +1122,79 @@ function dash(){
 }
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
+// ─── L'argent en roi ───
+let moneyPeriod='month', chartDays=30;
+function wireDashTabs(){
+  $('mhPeriod').querySelectorAll('.mhp').forEach(b=>b.addEventListener('click',()=>{
+    $('mhPeriod').querySelectorAll('.mhp').forEach(x=>x.classList.toggle('on',x===b));
+    moneyPeriod=b.dataset.per; renderMoney();
+  }));
+  $('chartTabs').querySelectorAll('.ct').forEach(b=>b.addEventListener('click',()=>{
+    $('chartTabs').querySelectorAll('.ct').forEach(x=>x.classList.toggle('on',x===b));
+    chartDays=+b.dataset.d; $('chartW').innerHTML=chart30(chartDays);
+  }));
+}
+function monthStart(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),1).getTime();}
+function prevMonthRange(){const d=new Date();const s=new Date(d.getFullYear(),d.getMonth()-1,1).getTime();const e=new Date(d.getFullYear(),d.getMonth(),1).getTime();return [s,e];}
+function signedIn(from,to){
+  return deals.filter(d=>d.etape==='gagne'&&d.updated_at&&new Date(d.updated_at).getTime()>=from&&(to?new Date(d.updated_at).getTime()<to:true));
+}
+function renderMoney(){
+  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
+  const wonAll=deals.filter(d=>d.etape==='gagne');
+  const totActif=actifs.reduce((a,d)=>a+dealVal(d),0);
+  const closing=actifs.filter(d=>d.etape==='closing');
+  const closingVal=closing.reduce((a,d)=>a+dealVal(d),0);
+  const hasWon=wonAll.length>0;
+  const hasAnyMontant=deals.some(d=>dealVal(d)>0);
+
+  // Roi : signé sur la période. Si rien signé, bascule sur "en jeu".
+  let kingLabel, kingVal, moveHtml='';
+  if(moneyPeriod==='month'){
+    const mSigned=signedIn(monthStart()).reduce((a,d)=>a+dealVal(d),0);
+    const mCount=signedIn(monthStart()).length;
+    const [ps,pe]=prevMonthRange();
+    const prevSigned=signedIn(ps,pe).reduce((a,d)=>a+dealVal(d),0);
+    if(hasWon||mSigned>0){
+      kingLabel='Signé ce mois'; kingVal=mSigned?eur(mSigned):'0 €';
+      const diff=mSigned-prevSigned;
+      const moisPrec=new Date(new Date().setMonth(new Date().getMonth()-1)).toLocaleDateString('fr-FR',{month:'long'});
+      if(prevSigned>0||mSigned>0){
+        const cls=diff>0?'up':diff<0?'down':'flat';
+        const ico=diff>0?'<path d="M7 17L17 7M17 7H8M17 7v9"/>':diff<0?'<path d="M7 7l10 10M17 17H8M17 17V8"/>':'<path d="M5 12h14"/>';
+        moveHtml=`<span class="tag ${cls}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${diff>=0?'+':''}${eur(Math.abs(diff))||'0 €'}</span><span class="txt">contre ${moisPrec} · ${mCount} deal${mCount>1?'s':''} signé${mCount>1?'s':''}</span>`;
+      } else moveHtml=`<span class="txt">Ta première signature du mois t'attend.</span>`;
+    } else {
+      kingLabel='En jeu'; kingVal=totActif?eur(totActif):'—';
+      moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} en cours. Signe le premier pour lancer le compteur.</span>`;
+    }
+  } else {
+    const allSigned=wonAll.reduce((a,d)=>a+dealVal(d),0);
+    if(hasWon){
+      kingLabel='Signé au total'; kingVal=allSigned?eur(allSigned):'0 €';
+      moveHtml=`<span class="txt">${wonAll.length} deal${wonAll.length>1?'s':''} gagné${wonAll.length>1?'s':''} depuis le début.</span>`;
+    } else {
+      kingLabel='En jeu'; kingVal=totActif?eur(totActif):'—';
+      moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} en cours.</span>`;
+    }
+  }
+  $('mhKing').textContent=kingLabel;
+  $('mhBig').textContent=kingVal;
+  $('mhMove').innerHTML=moveHtml;
+
+  // Colonne droite : en jeu + à portée de signature
+  const metrics=[
+    {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}`,go:'pipeline'},
+    {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' deal'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucun deal en closing',go:'pipeline'}
+  ];
+  $('mhRight').innerHTML=metrics.map(m=>`<div class="mh-metric" data-mgo="${m.go}"><div class="mm-k"><span class="dt" style="background:${m.dt}"></span>${m.k}</div><div class="mm-v">${m.v}</div><div class="mm-h">${m.h}</div></div>`).join('');
+  $('mhRight').querySelectorAll('[data-mgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.mgo)));
+
+  if(!hasAnyMontant){
+    $('mhMove').innerHTML=`<span class="txt">Renseigne le montant de tes deals au débrief pour voir ton argent grandir ici.</span>`;
+  }
+}
+
 function velocity(){
   const w=deals.filter(d=>d.etape==='gagne'&&d.created_at&&d.updated_at);
   if(w.length<2)return null;
@@ -1118,8 +1203,9 @@ function velocity(){
 }
 
 // Graphe 30 jours : briefs préparés vs débriefés, deux courbes
-function chart30(){
-  const W=560,H=130,days30=30,pad=6;
+function chart30(days30){
+  days30=days30||30;
+  const W=560,H=130,pad=6;
   const now=new Date(); now.setHours(23,59,59,999);
   const bkt=Array.from({length:days30},()=>({b:0,d:0}));
   briefs.forEach(x=>{
@@ -1876,6 +1962,13 @@ function copyAll(){
 /* ═══ Débrief + cinématique ═══ */
 $('temps').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   $('temps').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));debTemp=b.dataset.t;
+  const show=debTemp==='close'||debTemp==='chaud';
+  $('debMontantWrap').style.display=show?'':'none';
+  if(show){
+    $('debMontantQ').innerHTML=debTemp==='close'?'Montant signé ? <span>· en euros</span>':'Quel est l\'enjeu de ce deal ? <span>· en euros</span>';
+    const d=current&&current.deal_id?deals.find(x=>x.id===current.deal_id):null;
+    if(d&&d.montant&&!$('debMontant').value)$('debMontant').value=d.montant;
+  }
 }));
 $('debCancel').addEventListener('click',()=>$('debOv').classList.remove('on'));
 $('debSave').addEventListener('click',async()=>{
@@ -1889,6 +1982,15 @@ $('debSave').addEventListener('click',async()=>{
     current.debrief=deb; current.synthese_post=o.synthese||null; current.statut=o.statut||current.statut;
     current.annotations=JSON.parse(JSON.stringify(ann));
     if(o.deal){const i=deals.findIndex(d=>d.id===o.deal.id);if(i>=0)deals[i]=o.deal;else deals.unshift(o.deal);}
+    // Capture du montant si renseigné
+    const mv=parseFloat($('debMontant').value);
+    const targetDeal=o.deal||(current.deal_id?deals.find(d=>d.id===current.deal_id):null);
+    if(!isNaN(mv)&&mv>0&&targetDeal){
+      targetDeal.montant=mv;
+      const di=deals.findIndex(d=>d.id===targetDeal.id);if(di>=0)deals[di].montant=mv;
+      try{await sb.from('deals').update({montant:mv}).eq('id',targetDeal.id);}catch(e){}
+    }
+    $('debMontant').value=''; $('debMontantWrap').style.display='none';
     const i=briefs.findIndex(x=>x.id===current.id); if(i>=0)briefs[i]=current;
     rdvStop(); $('debOv').classList.remove('on');
     showVerdict(debTemp,o.deal||null,!!o.synthese);
