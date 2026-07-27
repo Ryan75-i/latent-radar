@@ -58,6 +58,8 @@ function mapResult(r){
   const s=r.siege||{};
   return {
     siren:r.siren,
+    _cat:r.categorie_entreprise||null,
+    _eff:r.tranche_effectif_salarie||null,
     nom:titre(r.nom_complet||r.nom_raison_sociale||''),
     sigle:r.sigle||null,
     activite:nafLabel(r.activite_principale)||null,
@@ -115,6 +117,15 @@ export default async function handler(req,res){
       const lg=await logoFor(shortName(e.nom));
       if(lg){ e.logo=lg.logo; e.site=lg.domain; }
     }));
+    // Tri : taille d'abord (GE > ETI > PME > effectif), logo en départage seulement
+    const CATR={'GE':3,'ETI':2,'PME':1};
+    const EFFR={'53':15,'52':14,'51':13,'42':12,'41':11,'32':10,'31':9,'22':8,'21':7,'12':6,'11':5,'03':4,'02':3,'01':2,'00':1};
+    results.sort((a,b)=>{
+      const sa=(CATR[a._cat]||0)*1000+(EFFR[a._eff]||0)*10+(a.logo?1:0);
+      const sb=(CATR[b._cat]||0)*1000+(EFFR[b._eff]||0)*10+(b.logo?1:0);
+      return sb-sa;
+    });
+    results.forEach(e=>{delete e._cat;delete e._eff;});
     res.setHeader('Cache-Control','s-maxage=3600, stale-while-revalidate');
     return res.status(200).json({results});
   }catch(e){ return res.status(500).json({error:'Erreur serveur.'}); }
