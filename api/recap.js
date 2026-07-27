@@ -13,7 +13,7 @@ async function getUser(t){ const r=await fetch(`${SUPABASE_URL}/auth/v1/user`,{h
 async function getBrief(uid,id){ const r=await fetch(`${SUPABASE_URL}/rest/v1/briefs?id=eq.${id}&user_id=eq.${uid}&select=*`,{headers:H}); const j=await r.json(); return Array.isArray(j)&&j.length?j[0]:null; }
 async function getSettings(uid){ const r=await fetch(`${SUPABASE_URL}/rest/v1/user_settings?user_id=eq.${uid}&select=*`,{headers:H}); const j=await r.json(); return Array.isArray(j)&&j.length?j[0]:{}; }
 
-const SYSTEM = `Tu rédiges le mail que le commercial envoie à son prospect juste après leur rendez-vous.
+const SYSTEM_RECAP = `Tu rédiges le mail que le commercial envoie à son prospect juste après leur rendez-vous.
 
 RÈGLES ABSOLUES :
 - Le mail s'adresse au prospect : vouvoiement obligatoire.
@@ -28,6 +28,23 @@ TROIS VERSIONS DU MÊME MAIL :
 - chaleureux : même contenu que bref mais avec un ton plus humain, une touche personnelle si les annotations en donnent une. Jamais obséquieux.
 
 L'objet du mail est court, factuel, sans point d'exclamation. Exemple de forme : "Suite à notre échange" ou "Notre rendez-vous de ce matin".`;
+
+const SYSTEM_RELANCE = `Tu rédiges le message de RELANCE que le commercial envoie à son prospect plusieurs jours après leur rendez-vous, parce que le fil s'est un peu refroidi.
+
+RÈGLES ABSOLUES :
+- Le message s'adresse au prospect : vouvoiement obligatoire.
+- Phrases courtes, vingt mots maximum. Aucun tiret cadratin, aucun emoji, aucune formule corporate creuse.
+- Interdit d'inventer : tu ne t'appuies QUE sur le brief, les annotations, le débrief et l'angle de relance fourni. Si une information manque, tu n'en parles pas.
+- Une relance n'est pas un rappel à l'ordre : elle apporte quelque chose (l'angle de relance, un point resté ouvert, une échéance évoquée) puis propose une étape simple et datée.
+- Jamais de "je me permets de revenir vers vous" ni de "sans nouvelles de votre part". On relance par la valeur, pas par la culpabilité.
+- Signature : le prénom du commercial et le nom de son entreprise, fournis dans les données. Si absents, formule simple sans nom.
+
+TROIS VERSIONS DU MÊME MESSAGE :
+- bref : trois ou quatre lignes. L'angle, la proposition d'étape, c'est tout.
+- complet : six à dix lignes. Le contexte rappelé en une phrase, l'angle développé, l'étape proposée avec deux créneaux possibles.
+- chaleureux : même contenu que bref, ton plus humain, une touche personnelle si les annotations en donnent une.
+
+L'objet est court et factuel, orienté sur l'angle plutôt que sur la relance elle-même.`;
 
 const TOOL = {
   name:'rediger_recap',
@@ -61,12 +78,15 @@ export default async function handler(req,res){
     const uid=user.id;
     const body=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{});
     if(!body.id) return res.status(400).json({error:'Brief manquant.'});
+    const type=body.type==='relance'?'relance':'recap';
 
     const brief=await getBrief(uid,body.id);
     if(!brief) return res.status(404).json({error:'Brief introuvable.'});
     const set=await getSettings(uid);
     const deb=brief.debrief||{};
     const prenom=(set.full_name||'').trim().split(/\s+/)[0]||'';
+    const syn=brief.synthese_post||{};
+    const extra=type==='relance'?`\nANGLE DE RELANCE SUGGÉRÉ PAR L'ANALYSE : ${syn.relance_angle||'aucun, appuie-toi sur le point le plus fort du débrief'}\nJOURS ÉCOULÉS DEPUIS LE RDV : ${Math.max(1,Math.floor((Date.now()-new Date(brief.created_at).getTime())/864e5))}`:'';
 
     const msg=`ENTREPRISE RENCONTRÉE : ${brief.entreprise||''}
 INTERLOCUTEUR : ${brief.poste||''}
@@ -85,11 +105,11 @@ DÉBRIEF
 Température : ${deb.temperature==='close'?'closé, le deal est signé, le mail confirme et remercie':deb.temperature||'non renseignée'}
 Prochaine action convenue : ${deb.next_action||'non renseignée'}
 ${deb.phrase?`À retenir : ${deb.phrase}`:''}
-${brief.synthese_post&&brief.synthese_post.relance_angle?`Angle conseillé : ${brief.synthese_post.relance_angle}`:''}`;
+${brief.synthese_post&&brief.synthese_post.relance_angle?`Angle conseillé : ${brief.synthese_post.relance_angle}`:''}${extra}`;
 
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
       headers:{'x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01','content-type':'application/json'},
-      body:JSON.stringify({model:MODEL,max_tokens:1400,system:SYSTEM,tools:[TOOL],tool_choice:{type:'tool',name:'rediger_recap'},messages:[{role:'user',content:msg}]})});
+      body:JSON.stringify({model:MODEL,max_tokens:1400,system:type==='relance'?SYSTEM_RELANCE:SYSTEM_RECAP,tools:[TOOL],tool_choice:{type:'tool',name:'rediger_recap'},messages:[{role:'user',content:msg}]})});
     if(!r.ok) return res.status(502).json({error:'La rédaction a échoué.'});
     const d=await r.json();
     const b=(d.content||[]).find(x=>x.type==='tool_use');
