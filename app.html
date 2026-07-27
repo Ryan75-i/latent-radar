@@ -605,7 +605,10 @@
   .focus-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line3);transition:.12s;}
   .focus-row:last-child{border-bottom:none;}
   .focus-row:hover{background:var(--wash);}
-  .focus-rank{width:22px;height:22px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:12px;color:#fff;}
+  .focus-ic{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .focus-ic svg{width:15px;height:15px;}
+  .focus-badge{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--blue);background:var(--bluebg);border:1px solid #C6DAE6;border-radius:20px;padding:1px 7px;margin-left:2px;}
+  .chart-empty{text-align:center;padding:38px 10px;font-size:12px;color:var(--faint);}
   .focus-body{flex:1;min-width:0;cursor:pointer;}
   .focus-nm{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px;}
   .focus-why{font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.4;}
@@ -1203,72 +1206,96 @@ function velocity(){
 }
 
 // Graphe 30 jours : briefs préparés vs débriefés, deux courbes
+// Graphe hebdomadaire : barres par semaine, briefs vs débriefés, lisible et honnête
 function chart30(days30){
   days30=days30||30;
-  const W=560,H=130,pad=6;
+  const weeks=Math.round(days30/7);
   const now=new Date(); now.setHours(23,59,59,999);
-  const bkt=Array.from({length:days30},()=>({b:0,d:0}));
+  const bkt=Array.from({length:weeks},()=>({b:0,d:0,label:''}));
+  // borne de chaque semaine (la plus récente à droite)
+  for(let w=0;w<weeks;w++){
+    const end=new Date(now); end.setDate(end.getDate()-7*(weeks-1-w));
+    const start=new Date(end); start.setDate(start.getDate()-6);
+    bkt[w].start=start.getTime(); bkt[w].end=end.getTime()+1;
+    bkt[w].label=start.toLocaleDateString('fr-FR',{day:'numeric',month:'short'}).replace('.','');
+  }
   briefs.forEach(x=>{
-    const bi=days30-1-Math.floor((now-new Date(x.created_at))/864e5);
-    if(bi>=0&&bi<days30)bkt[bi].b++;
-    if(x.debrief){const di=days30-1-Math.floor((now-new Date(x.updated_at||x.created_at))/864e5);if(di>=0&&di<days30)bkt[di].d++;}
+    const t=new Date(x.created_at).getTime();
+    const wb=bkt.find(w=>t>=w.start&&t<w.end); if(wb)wb.b++;
+    if(x.debrief){const td=new Date(x.updated_at||x.created_at).getTime();const wd=bkt.find(w=>td>=w.start&&td<w.end);if(wd)wd.d++;}
   });
-  const max=Math.max(1,...bkt.map(x=>Math.max(x.b,x.d)));
-  const xw=(W-pad*2)/(days30-1);
-  const yb=H-18;
-  const pt=(arr,key)=>arr.map((x,i)=>`${(pad+i*xw).toFixed(1)},${(yb-(x[key]/max)*(yb-8)).toFixed(1)}`).join(' ');
-  const area=(key)=>`${pad},${yb} ${pt(bkt,key)} ${(pad+(days30-1)*xw).toFixed(1)},${yb}`;
   const hasData=bkt.some(x=>x.b||x.d);
-  if(!hasData)return '<div style="text-align:center;padding:34px 10px;font-size:12px;color:var(--faint);">Ton activité des 30 derniers jours s\'affichera ici.</div>';
-  // gridlines
+  if(!hasData)return '<div class="chart-empty">Ton activité s\'affichera ici, semaine après semaine.</div>';
+  const max=Math.max(2,...bkt.map(x=>Math.max(x.b,x.d)));
+  const W=560,H=150,padL=4,padR=4,padT=10,padB=26;
+  const plotW=W-padL-padR, plotH=H-padT-padB;
+  const slot=plotW/weeks;
+  const bw=Math.min(18,slot*0.28);
+  const gap=4;
   let grid='';
-  for(let g=0;g<=2;g++){const yy=8+(yb-8)*g/2;grid+=`<line x1="${pad}" y1="${yy}" x2="${W-pad}" y2="${yy}" stroke="#F0EADB" stroke-width="1"/>`;}
-  // week ticks
-  let ticks='';
-  for(let d=0;d<days30;d+=7){const dt=new Date(now);dt.setDate(dt.getDate()-(days30-1-d));ticks+=`<text x="${(pad+d*xw).toFixed(1)}" y="${H-2}" font-size="8" fill="#A69C8B" font-family="DM Mono,monospace" text-anchor="middle">${dt.getDate()}/${dt.getMonth()+1}</text>`;}
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
-    ${grid}
-    <polygon points="${area('b')}" fill="#C96A2E" fill-opacity="0.07"/>
-    <polyline points="${pt(bkt,'b')}" fill="none" stroke="#C96A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <polyline points="${pt(bkt,'d')}" fill="none" stroke="#4F9D69" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 0"/>
-    ${ticks}
-  </svg>`;
+  for(let g=0;g<=2;g++){const yy=padT+plotH*g/2;const val=Math.round(max*(1-g/2));grid+=`<line x1="${padL}" y1="${yy.toFixed(1)}" x2="${W-padR}" y2="${yy.toFixed(1)}" stroke="#F0EADB" stroke-width="1"/><text x="${padL}" y="${(yy-3).toFixed(1)}" font-size="8" fill="#C9BFA9" font-family="DM Mono,monospace">${val}</text>`;}
+  let bars='';
+  bkt.forEach((wk,i)=>{
+    const cx=padL+slot*i+slot/2;
+    const hb=(wk.b/max)*plotH, hd=(wk.d/max)*plotH;
+    const x1=cx-bw-gap/2, x2=cx+gap/2;
+    const baseY=padT+plotH;
+    if(wk.b>0)bars+=`<rect x="${x1.toFixed(1)}" y="${(baseY-hb).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(2,hb).toFixed(1)}" rx="3" fill="#C96A2E"><title>Semaine du ${wk.label} : ${wk.b} brief${wk.b>1?'s':''}</title></rect>`;
+    if(wk.d>0)bars+=`<rect x="${x2.toFixed(1)}" y="${(baseY-hd).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(2,hd).toFixed(1)}" rx="3" fill="#4F9D69"><title>Semaine du ${wk.label} : ${wk.d} débriefé${wk.d>1?'s':''}</title></rect>`;
+    bars+=`<text x="${cx.toFixed(1)}" y="${H-8}" font-size="8.5" fill="#A69C8B" font-family="DM Mono,monospace" text-anchor="middle">${wk.label}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">${grid}${bars}</svg>`;
 }
 
 // Plan de bataille : décisions triées par urgence, avec la raison mémorisée
+// Plan de bataille : décisions groupées, jamais répétitives, la raison mémorisée
 function renderFocus(aDeb,aRel,cold){
-  const items=[];
-  aDeb.forEach(b=>{
-    const n=days(b.created_at);
-    items.push({score:1000+n,rank:'!',rc:'var(--blue)',nm:b.entreprise,logo:1,b,
-      why:`Rendez-vous à débriefer depuis <b>${n<=0?"aujourd'hui":n+' j'}</b>. Ta mémoire s'efface vite.`,
-      act:'Débriefer',ac:'deb',fn:()=>{const x=briefs.find(y=>y.id===b.id);if(x)openBrief(x);}});
-  });
-  aRel.forEach(d=>{
+  const rows=[];
+  // 1) Débriefs groupés en une seule ligne si plusieurs
+  if(aDeb.length){
+    const sorted=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+    const oldest=sorted[0];
+    const n=days(oldest.created_at);
+    if(aDeb.length===1){
+      rows.push({rc:'var(--blue)',ic:'clock',nm:oldest.entreprise,
+        why:`Rendez-vous à débriefer${n>0?` depuis <b>${n} j</b>`:" <b>aujourd'hui</b>"}. Capture-le avant qu'il s'efface.`,
+        act:'Débriefer',ac:'deb',fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
+    } else {
+      rows.push({rc:'var(--blue)',ic:'clock',nm:`${aDeb.length} rendez-vous à débriefer`,
+        why:`Le plus ancien remonte à <b>${n} j</b>. Commence par <b>${esc(oldest.entreprise)}</b>.`,
+        act:'Débriefer',ac:'deb',count:aDeb.length,fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
+    }
+  }
+  // 2) Relances, distinctes, raison mémorisée, max 3
+  const relSorted=aRel.slice().sort((a,b)=>days(b.updated_at)-days(a.updated_at));
+  relSorted.slice(0,3).forEach(d=>{
     const lb=dealBriefs(d).find(x=>x.debrief);
     const n=days(d.updated_at);
-    let why=`Tu as prévu : <b>${esc(trunc(d.prochaine_action,44))}</b>.`;
-    if(lb&&lb.debrief&&lb.debrief.next_action)why=`Tu avais convenu : <b>${esc(trunc(lb.debrief.next_action,44))}</b>. ${n>=5?n+' jours ont passé.':''}`;
-    items.push({score:500+n,rank:'→',rc:'var(--copper)',nm:d.entreprise,d,
-      why,act:lb?'Relancer':'Voir',ac:lb?'rel':'see',fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d)});
+    let why;
+    if(lb&&lb.debrief&&lb.debrief.next_action){
+      why=`Tu avais convenu : <b>${esc(trunc(lb.debrief.next_action,50))}</b>${n>=5?`. ${n} j ont passé`:''}.`;
+    } else why=`Prochaine action : <b>${esc(trunc(d.prochaine_action,50))}</b>.`;
+    rows.push({rc:'var(--copper)',ic:'arrow',nm:d.entreprise,why,
+      act:lb?'Relancer':'Voir',ac:lb?'rel':'see',fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d)});
   });
-  cold.filter(d=>days(d.updated_at)>=10&&!aRel.includes(d)).forEach(d=>{
-    const n=days(d.updated_at);
-    items.push({score:200+n,rank:'·',rc:'var(--gold)',nm:d.entreprise,d,
-      why:`Deal en <b>${stg(d.etape).l}</b> sans mouvement depuis <b>${n} jours</b>. Ne le laisse pas filer.`,
-      act:'Voir',ac:'see',fn:()=>openFiche(d)});
-  });
-  items.sort((a,b)=>b.score-a.score);
-  const top=items.slice(0,6);
-  if(!top.length){
+  // 3) Un seul deal froid, le plus critique, si pas déjà en relance
+  const coldest=cold.filter(d=>days(d.updated_at)>=10&&!aRel.includes(d))[0];
+  if(coldest&&rows.length<5){
+    const n=days(coldest.updated_at);
+    rows.push({rc:'var(--gold)',ic:'snow',nm:coldest.entreprise,
+      why:`En <b>${stg(coldest.etape).l}</b>, sans mouvement depuis <b>${n} j</b>. Ne le laisse pas filer.`,
+      act:'Voir',ac:'see',fn:()=>openFiche(coldest)});
+  }
+  if(!rows.length){
     $('focusW').innerHTML=`<div class="focus-empty"><div class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><div class="fe-t">Tout est à jour.</div><div class="fe-d">Aucune action en attente. Prépare ton prochain rendez-vous quand tu veux.</div></div>`;
     return;
   }
-  $('focusW').innerHTML=top.map(it=>`<div class="focus-row"><span class="focus-rank" style="background:${it.rc}">${it.rank}</span><div class="focus-body" data-open="${it.b?('b:'+it.b.id):('d:'+it.d.id)}"><div class="focus-nm">${esc(it.nm)}</div><div class="focus-why">${it.why}</div></div><button class="focus-act ${it.ac}" data-fx="${it.ac}">${it.act}</button></div>`).join('');
-  const rows=$('focusW').querySelectorAll('.focus-row');
-  rows.forEach((row,i)=>{
-    const it=top[i];
-    row.querySelector('.focus-body').addEventListener('click',()=>{if(it.b){const x=briefs.find(y=>y.id===it.b.id);if(x)openBrief(x);}else openFiche(it.d);});
+  const ICO={clock:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',snow:'<path d="M12 2v20M4 6l16 12M20 6L4 18"/>'};
+  $('focusW').innerHTML=rows.map(it=>`<div class="focus-row"><span class="focus-ic" style="color:${it.rc};background:${it.rc}18"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span><div class="focus-body"><div class="focus-nm">${esc(it.nm)}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="focus-why">${it.why}</div></div><button class="focus-act ${it.ac}">${it.act}</button></div>`).join('');
+  const els=$('focusW').querySelectorAll('.focus-row');
+  els.forEach((row,i)=>{
+    const it=rows[i];
+    row.querySelector('.focus-body').addEventListener('click',it.fn);
     row.querySelector('.focus-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
   });
 }
