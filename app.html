@@ -495,6 +495,36 @@
   .taginp.on{display:inline-block;}
 
 
+
+  /* v6 : vue d'ensemble enrichie */
+  .prio{display:flex;align-items:flex-start;gap:12px;background:linear-gradient(135deg,#FCF3E9,#F8EADB);border:1px solid #F0DCC5;border-radius:12px;padding:14px 16px;margin-bottom:16px;}
+  .prio .pico{width:34px;height:34px;border-radius:9px;background:var(--copper);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .prio .pico svg{width:17px;height:17px;stroke-width:2;}
+  .prio.calm .pico{background:var(--green);}
+  .prio .ptxt{flex:1;min-width:0;}
+  .prio .pk{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:2px;}
+  .prio.calm .pk{color:var(--green-d);}
+  .prio .pv{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;}
+  .prio .pv b{color:var(--copper-d);}
+  .prio .pgo{border:none;background:var(--copper);color:#fff;font-size:11.5px;font-weight:600;border-radius:8px;padding:7px 13px;cursor:pointer;white-space:nowrap;align-self:center;}
+  .prio .pgo:hover{background:var(--copper-d);}
+  .stat.alert::after{width:4px;}
+  .stat .badge{position:absolute;top:12px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px var(--redbg);}
+  .stat .sv2{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:5px;}
+  .stat .sv2 b{color:var(--copper-d);font-weight:600;}
+  .weekline{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin-top:3px;}
+  .weekline b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;}
+  .weekline .wd{width:1px;height:11px;background:var(--line2);}
+  .coldsec{margin-top:16px;}
+  .coldrow{display:flex;align-items:center;gap:11px;padding:10px 16px;border-bottom:1px solid var(--line3);cursor:pointer;transition:.12s;}
+  .coldrow:last-child{border-bottom:none;}
+  .coldrow:hover{background:var(--wash);}
+  .coldrow .cage{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+  .coldrow .cage.warm{color:var(--gold);background:var(--goldbg);border:1px solid #E7CE8C;}
+  .coldrow .cage.cold{color:var(--red);background:var(--redbg);border:1px solid var(--redbd);}
+  .colv{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--copper-d);font-weight:600;}
+  .colhd .colv{margin-left:6px;}
+
   /* v5 : drag, manuel, frise, mic, confiance, esvg */
   .dcard[draggable="true"]{cursor:grab;}
   .dcard.dragging{opacity:.45;transform:rotate(2deg) scale(.98);}
@@ -574,9 +604,11 @@
   <div class="page">
 
   <section class="view on" id="v-dash">
-    <div class="ptitle"><div><h1 id="greet">Bonjour.</h1><div class="sub" id="dashSub">Voilà où en est ton activité.</div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+    <div class="ptitle"><div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+    <div id="prioBox"></div>
     <div class="stats" id="statsRow"></div>
-    <div class="card" style="margin-bottom:16px;"><div class="chd"><span class="t">Pipeline</span><span class="d">Tes deals par étape.</span><div class="right"><button class="btn g sm" data-go2="pipeline">Ouvrir</button></div></div><div class="cbd p0" style="padding:12px;"><div class="board" id="miniBoard"></div></div></div>
+    <div class="card coldsec" id="coldCard" style="margin-bottom:16px;display:none;"><div class="chd"><span class="t">Ça refroidit</span><span class="d">Deals sans mouvement depuis plus d'une semaine.</span></div><div class="cbd p0" id="coldW"></div></div>
+    <div class="card" style="margin-bottom:16px;"><div class="chd"><span class="t">Pipeline</span><span class="d" id="pipeSub">Tes deals par étape.</span><div class="right"><button class="btn g sm" data-go2="pipeline">Ouvrir</button></div></div><div class="cbd p0" style="padding:12px;"><div class="board" id="miniBoard"></div></div></div>
     <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:14px;" id="dashCols">
       <div class="card"><div class="chd"><span class="t">À faire maintenant</span><span class="d">Débriefs et relances en attente.</span></div><div class="cbd p0" id="todoW"><div class="empty">Rien en attente.</div></div></div>
       <div class="card"><div class="chd"><span class="t">Derniers briefs</span></div><div class="cbd p0" id="recentW"></div></div>
@@ -600,7 +632,8 @@
         <div class="card"><div class="chd"><span class="t">Le deal</span></div><div class="cbd">
           <div class="fg"><label>Étape de closing</label><select class="fld" id="fStage"></select></div>
           <div class="sugg" id="fSugg" style="display:none;"></div>
-          <div class="fg" style="margin-top:12px;"><label>Tags</label><div class="tagwrap" id="fTags"></div></div>
+          <div class="fg" style="margin-top:12px;"><label>Montant du deal <span>· en euros, facultatif</span></label><input class="fld" id="fMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/></div>
+          <div class="fg"><label>Tags</label><div class="tagwrap" id="fTags"></div></div>
           <div class="fg"><label>Prochaine action</label><div id="fNext" style="font-size:12.5px;color:var(--soft);">—</div></div>
         </div></div>
         <div class="card"><div class="chd"><span class="t">Fiche entreprise</span><span class="d">Données officielles.</span></div><div class="cbd" id="fData"></div></div>
@@ -881,21 +914,51 @@ function renderAll(){
 }
 
 /* ═══ Dashboard ═══ */
+
+const eur=n=>{if(!n||isNaN(n))return null;return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(n)+' €';};
+const dealVal=d=>{const m=parseFloat(d.montant);return isNaN(m)?0:m;};
+function weekStats(){
+  const wk=Date.now()-7*864e5;
+  const bw=briefs.filter(b=>new Date(b.created_at).getTime()>=wk);
+  const dw=briefs.filter(b=>b.debrief&&new Date((b.updated_at||b.created_at)).getTime()>=wk);
+  const gw=deals.filter(d=>d.etape==='gagne'&&new Date(d.updated_at).getTime()>=wk);
+  return {briefs:bw.length,debriefs:dw.length,wins:gw.length};
+}
 function dash(){
   const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
   const chauds=deals.filter(d=>['negociation','closing'].includes(d.etape));
   const aDeb=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer');
   const aRel=deals.filter(d=>!['gagne','perdu'].includes(d.etape)&&d.prochaine_action);
+  const actifsVal=actifs.reduce((a,d)=>a+dealVal(d),0);
+  const chaudsVal=chauds.reduce((a,d)=>a+dealVal(d),0);
+  const cold=actifs.filter(d=>days(d.updated_at)>=7).sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   const S=[
-    {v:actifs.length,l:'Deals actifs',h:'Dans ton pipeline',c:'var(--copper)',go:'pipeline'},
-    {v:chauds.length,l:'Deals chauds',h:'Négociation ou closing',c:'var(--violet)',go:'pipeline'},
-    {v:aDeb.length,l:'À débriefer',h:'RDV sans compte rendu',c:'var(--blue)',go:'dash'},
-    {v:aRel.length,l:'Relances prévues',h:'Une action attend',c:'#B8860B',go:'dash'}
+    {v:actifs.length,l:'Deals actifs',h:'Dans ton pipeline',sv:actifsVal?eur(actifsVal)+' en jeu':null,c:'var(--copper)',go:'pipeline'},
+    {v:chauds.length,l:'Deals chauds',h:'Négociation ou closing',sv:chaudsVal?eur(chaudsVal)+' en jeu':null,c:'var(--violet)',go:'pipeline'},
+    {v:aDeb.length,l:'À débriefer',h:'RDV sans compte rendu',alert:aDeb.length>=3,c:'var(--blue)',go:'dash'},
+    {v:aRel.length,l:'Relances prévues',h:'Une action attend',alert:aRel.length>=3,c:'#B8860B',go:'dash'}
   ];
-  $('statsRow').innerHTML=S.map((s,i)=>`<div class="stat" style="--sc:${s.c}" data-g="${s.go}"><div class="v">${s.v}</div><div class="l">${s.l}</div><div class="h">${s.h}</div></div>`).join('');
+  $('statsRow').innerHTML=S.map(s=>`<div class="stat ${s.alert?'alert':''}" style="--sc:${s.c}" data-g="${s.go}">${s.alert?'<span class="badge"></span>':''}<div class="v">${s.v}</div><div class="l">${s.l}</div><div class="h">${s.h}</div>${s.sv?`<div class="sv2"><b>${s.sv}</b></div>`:''}</div>`).join('');
   $('statsRow').querySelectorAll('.stat').forEach(el=>el.addEventListener('click',()=>go(el.dataset.g)));
   const wins=deals.filter(d=>d.etape==='gagne').length;
-  $('dashSub').textContent=briefs.length?`${briefs.length} brief${briefs.length>1?'s':''} préparé${briefs.length>1?'s':''} · ${wins} deal${wins>1?'s':''} gagné${wins>1?'s':''}.`:'Prépare ton premier rendez-vous en vingt secondes.';
+  // Rythme de la semaine
+  const ws=weekStats();
+  $('weekline').innerHTML=briefs.length?`<span>Cette semaine</span><span class="wd"></span><span><b>${ws.briefs}</b> brief${ws.briefs>1?'s':''}</span><span class="wd"></span><span><b>${ws.debriefs}</b> débriefé${ws.debriefs>1?'s':''}</span><span class="wd"></span><span><b>${ws.wins}</b> gagné${ws.wins>1?'s':''}</span>`:'<span>Prépare ton premier rendez-vous en vingt secondes.</span>';
+  // Phrase de priorité
+  renderPrio(aDeb,aRel,cold,chauds);
+  // Valeur pipeline
+  const totVal=actifs.reduce((a,d)=>a+dealVal(d),0);
+  $('pipeSub').textContent=totVal?`Tes deals par étape · ${eur(totVal)} en jeu.`:'Tes deals par étape.';
+  // Zone refroidit
+  if(cold.length){
+    $('coldCard').style.display='';
+    $('coldW').innerHTML=cold.slice(0,5).map(d=>{
+      const n=days(d.updated_at);
+      const cls=n>=14?'cold':'warm';
+      return `<div class="coldrow" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${stg(d.etape).l}${d.prochaine_action?' · '+esc(trunc(d.prochaine_action,40)):''}</div></div><span class="cage ${cls}">${n} j de silence</span></div>`;
+    }).join('');
+    wireRows($('coldW'));
+  } else $('coldCard').style.display='none';
   const todo=[];
   aDeb.slice(0,4).forEach(b=>todo.push({html:`<div class="row" data-b="${b.id}">${logoHtml(b.entreprise,(b.entreprise_data||{}).logo,(b.entreprise_data||{}).site||b.site)}<div class="info"><div class="nm">${esc(b.entreprise)}</div><div class="mt">RDV à débriefer · ${rel(b.created_at)}</div></div><span class="chip" style="color:#1E5F8A;background:#E4EEF5;border-color:#C6DAE6">Débriefer</span></div>`}));
   aRel.slice(0,4).forEach(d=>{
@@ -907,6 +970,38 @@ function dash(){
   const rec=briefs.slice(0,6);
   $('recentW').innerHTML=rec.length?rec.map(b=>`<div class="row" data-b="${b.id}">${logoHtml(b.entreprise,(b.entreprise_data||{}).logo,(b.entreprise_data||{}).site||b.site)}<div class="info"><div class="nm">${esc(b.entreprise)}</div><div class="mt">${esc(trunc(b.poste||'',30))} · ${rel(b.created_at)}</div></div>${briefTempChip(b)}</div>`).join(''):'<div class="empty">Ton premier brief apparaîtra ici.</div>';
   wireRows($('recentW'));
+}
+
+function renderPrio(aDeb,aRel,cold,chauds){
+  const box=$('prioBox');
+  if(!briefs.length){box.innerHTML='';return;}
+  let ico,kind,txt,go2,calm=false;
+  const oldestDeb=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];
+  const coldest=cold[0];
+  if(aDeb.length){
+    ico='<path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/>';kind='Priorité du jour';
+    txt=`<b>${aDeb.length} rendez-vous</b> attend${aDeb.length>1?'ent':''} son débrief. Commence par <b>${esc(oldestDeb.entreprise)}</b>, ${rel(oldestDeb.created_at)}.`;
+    go2=()=>{const b=briefs.find(x=>x.id===oldestDeb.id);if(b)openBrief(b);};
+  } else if(coldest&&days(coldest.updated_at)>=10){
+    ico='<path d="M12 2v20M2 12h20"/>';kind='À ne pas laisser filer';
+    txt=`<b>${esc(coldest.entreprise)}</b> dort depuis <b>${days(coldest.updated_at)} jours</b>. Une relance vaut mieux qu'un deal perdu.`;
+    go2=()=>openFiche(deals.find(d=>d.id===coldest.id));
+  } else if(aRel.length){
+    ico='<path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/>';kind='À relancer';
+    const d0=aRel[0];
+    txt=`<b>${aRel.length} relance${aRel.length>1?'s':''}</b> prévue${aRel.length>1?'s':''}. La plus fraîche : <b>${esc(d0.entreprise)}</b>.`;
+    go2=()=>openFiche(aRel[0]);
+  } else if(chauds.length){
+    ico='<path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/>';kind='Tout est à jour';calm=true;
+    txt=`<b>${chauds.length} deal${chauds.length>1?'s':''} chaud${chauds.length>1?'s':''}</b> en cours. Garde le rythme, prépare le prochain rendez-vous.`;
+    go2=()=>go('nouveau');
+  } else {
+    ico='<path d="M5 12l5 5L20 7"/>';kind='Rien ne presse';calm=true;
+    txt='Ton suivi est à jour. Prépare ton prochain rendez-vous quand tu veux.';
+    go2=()=>go('nouveau');
+  }
+  box.innerHTML=`<div class="prio ${calm?'calm':''}"><div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${ico}</svg></div><div class="ptxt"><div class="pk">${kind}</div><div class="pv">${txt}</div></div><button class="pgo" id="prioGo">${calm?'Nouveau brief':'Y aller'}</button></div>`;
+  $('prioGo').onclick=go2;
 }
 function wireRows(root){
   root.querySelectorAll('[data-b]').forEach(el=>el.addEventListener('click',()=>{const b=briefs.find(x=>x.id===el.dataset.b);if(b)openBrief(b);}));
@@ -1010,6 +1105,13 @@ function openFiche(d,silent){
   if(d.etape_suggeree){$('fSugg').style.display='flex';$('fSugg').innerHTML=`<span>Faro propose : passer en ${stg(d.etape_suggeree).l}</span><button id="fAcc">Accepter</button>`;$('fAcc').onclick=()=>acceptSugg(d.id);}
   else $('fSugg').style.display='none';
   renderTags(d);
+  $('fMontant').value=d.montant!=null?d.montant:'';
+  $('fMontant').onchange=async()=>{
+    const v=$('fMontant').value.trim();
+    d.montant=v===''?null:parseFloat(v);
+    d.updated_at=new Date().toISOString();renderAll();toast('Montant enregistré');
+    try{await sb.from('deals').update({montant:d.montant,updated_at:d.updated_at}).eq('id',d.id);}catch(e){}
+  };
   $('fNext').textContent=d.prochaine_action||'—';
   const rows=[['Activité',ed.activite],['Effectif',ed.effectif],['Taille',ed.taille],['Créée en',ed.annee_creation],['Siège',ed.ville],['Dirigeant',ed.dirigeants&&ed.dirigeants[0]?ed.dirigeants[0].nom:null],['SIREN',d.siren]].filter(r=>r[1]);
   $('fData').innerHTML=rows.length?rows.map(r=>`<div class="kv"><span class="k">${r[0]}</span><span class="v">${esc(r[1])}</span></div>`).join(''):'<div class="empty">Pas de données officielles.</div>';
