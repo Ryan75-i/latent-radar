@@ -601,7 +601,8 @@
   .lg-item i{width:8px;height:8px;border-radius:2px;display:inline-block;}
   #chartW{padding:12px 16px 16px;}
   #chartW svg{width:100%;height:130px;display:block;overflow:visible;}
-  .band2{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-bottom:16px;align-items:start;}
+  .dash-cols{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start;margin-bottom:16px;}
+  .dash-col{display:flex;flex-direction:column;gap:14px;min-width:0;}
   .focus-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line3);transition:.12s;}
   .focus-row:last-child{border-bottom:none;}
   .focus-row:hover{background:var(--wash);}
@@ -642,14 +643,11 @@
   .intel-lock{border-top:1px dashed var(--line3);padding-top:10px;font-size:11px;color:var(--faint);line-height:1.45;text-align:center;}
   .intel-lock b{color:var(--copper-d);cursor:pointer;font-weight:600;}
   .intel-empty{text-align:center;padding:20px 10px;font-size:12px;color:var(--dim);line-height:1.5;}
-  .band3{display:grid;grid-template-columns:1fr 1.3fr;gap:14px;}
-  .band3 .coldsec{align-self:start;}
   .coldrow{display:flex;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line3);cursor:pointer;transition:.12s;}
   .coldrow:last-child{border-bottom:none;} .coldrow:hover{background:var(--wash);}
   .cage{font-size:9.5px;font-weight:700;border-radius:20px;padding:2.5px 9px;white-space:nowrap;border:1px solid;}
   .cage.warm{color:var(--gold);background:var(--goldbg);border-color:#E7CE8C;}
   .cage.cold{color:var(--red);background:var(--redbg);border-color:var(--redbd);}
-  .band3 .coldsec:only-child,.band3.solo{grid-column:1/-1;}
   .weekline{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--dim);margin-top:5px;flex-wrap:wrap;}
   .weekline b{color:var(--ink);font-weight:700;}
   .weekline .wd{width:3px;height:3px;border-radius:50%;background:var(--faint);}
@@ -671,7 +669,7 @@
   .stat.alert .badge{position:absolute;top:10px;right:12px;width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px var(--redbg);}
   @media(max-width:960px){
     .band1{grid-template-columns:1fr;} .hero-metric{grid-row:auto;} .kpi-grid,.chart-card{grid-column:1;} .kpi-grid{grid-template-columns:1fr 1fr 1fr;}
-    .band2,.band3{grid-template-columns:1fr;}
+    .dash-cols{grid-template-columns:1fr;}
   }
   @media(max-width:960px){
     .shell{grid-template-columns:1fr;}
@@ -742,16 +740,16 @@
       </div>
     </div>
 
-    <!-- BANDE 2 : décisions + intelligence -->
-    <div class="band2">
-      <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant, classé par urgence.</span></div><div class="cbd p0" id="focusW"></div></div>
-      <div class="card intel-card"><div class="chd"><span class="t">Ce que Faro sait de toi</span><span class="d">Tiré de tes rendez-vous.</span></div><div class="cbd" id="intelW"></div></div>
-    </div>
-
-    <!-- BANDE 3 : mémoire vivante -->
-    <div class="band3">
-      <div class="card coldsec" id="coldCard" style="display:none;"><div class="chd"><span class="t">Ça refroidit</span><span class="d">Sans mouvement depuis plus d'une semaine.</span></div><div class="cbd p0" id="coldW"></div></div>
-      <div class="card"><div class="chd"><span class="t">Derniers rendez-vous</span><span class="d">Ta mémoire récente.</span><div class="right"><button class="btn g sm" data-go2="entreprises">Toutes les entreprises</button></div></div><div class="cbd p0" id="recentW"></div></div>
+    <!-- BANDES 2 + 3 : deux colonnes équilibrées -->
+    <div class="dash-cols">
+      <div class="dash-col">
+        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant, classé par urgence.</span></div><div class="cbd p0" id="focusW"></div></div>
+        <div class="card coldsec" id="coldCard" style="display:none;"><div class="chd"><span class="t">Ça refroidit</span><span class="d">Sans mouvement depuis plus d'une semaine.</span></div><div class="cbd p0" id="coldW"></div></div>
+      </div>
+      <div class="dash-col">
+        <div class="card intel-card"><div class="chd"><span class="t">Ce que Faro sait de toi</span><span class="d">Tiré de tes rendez-vous.</span></div><div class="cbd" id="intelW"></div></div>
+        <div class="card"><div class="chd"><span class="t">Derniers rendez-vous</span><span class="d">Ta mémoire récente.</span><div class="right"><button class="btn g sm" data-go2="entreprises">Toutes</button></div></div><div class="cbd p0" id="recentW"></div></div>
+      </div>
     </div>
   </section>
 
@@ -1111,15 +1109,14 @@ function dash(){
   // ═══ BANDE 3 : mémoire ═══
   if(cold.length){
     $('coldCard').style.display='';
-    document.querySelector('.band3').classList.remove('solo');
     $('coldW').innerHTML=cold.slice(0,5).map(d=>{
       const n=days(d.updated_at);const cls=n>=14?'cold':'warm';
       return `<div class="coldrow" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${stg(d.etape).l}${d.prochaine_action?' · '+esc(trunc(d.prochaine_action,32)):''}</div></div><span class="cage ${cls}">${n} j de silence</span></div>`;
     }).join('');
     wireRows($('coldW'));
-  } else { $('coldCard').style.display='none'; document.querySelector('.band3').classList.add('solo'); }
+  } else { $('coldCard').style.display='none'; }
 
-  const rec=briefs.slice(0,7);
+  const rec=briefs.slice(0,5);
   $('recentW').innerHTML=rec.length?rec.map(b=>`<div class="row" data-b="${b.id}">${logoHtml(b.entreprise,(b.entreprise_data||{}).logo,(b.entreprise_data||{}).site||b.site)}<div class="info"><div class="nm">${esc(b.entreprise)}</div><div class="mt">${esc(trunc(b.poste||'',30))} · ${rel(b.created_at)}</div></div>${briefTempChip(b)}</div>`).join(''):'<div class="empty">Ton premier brief apparaîtra ici.</div>';
   wireRows($('recentW'));
 }
