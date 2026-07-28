@@ -561,48 +561,48 @@
   .relbtn:hover{background:var(--copper);color:#fff;}
 
   /* ═══ Dashboard 3 bandes ═══ */
-  /* ═══ Money hero ═══ */
-  .money-hero{display:grid;grid-template-columns:1.15fr 1fr;gap:0;margin-bottom:16px;overflow:hidden;}
-  .mh-left{padding:22px 24px;background:linear-gradient(135deg,#FCF3E9,#F8EAD9);position:relative;}
-  .mh-period{display:inline-flex;gap:3px;background:rgba(255,255,255,.6);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:16px;}
+  /* ═══ Cockpit ═══ */
+  .cockpit{display:flex;flex-direction:column;gap:14px;}
+  .ck-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;}
+  .ck-head h1{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.015em;line-height:1.1;}
+  /* Money hero compact */
+  .money-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:0;overflow:hidden;}
+  .mh-left{padding:16px 20px;background:linear-gradient(135deg,#FCF3E9,#F8EAD9);position:relative;display:flex;flex-direction:column;}
+  .mh-topline{display:flex;justify-content:flex-start;margin-bottom:10px;}
+  .mh-period{display:inline-flex;gap:3px;background:rgba(255,255,255,.6);border:1px solid var(--line2);border-radius:9px;padding:3px;}
   .mhp{border:none;background:none;font-size:11px;font-weight:600;color:var(--dim);padding:5px 11px;border-radius:7px;cursor:pointer;transition:.13s;}
   .mhp.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .mh-k{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);}
-  .mh-big{font-family:var(--serif);font-weight:700;font-size:52px;line-height:1;color:var(--copper);margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
-  .mh-move{margin-top:12px;font-size:13px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-  .mh-move .tag{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:12px;border-radius:20px;padding:3px 10px;}
+  .mh-big{font-family:var(--serif);font-weight:700;font-size:42px;line-height:1;color:var(--copper);margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .mh-move{margin-top:9px;font-size:12.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .mh-move .tag{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:11.5px;border-radius:20px;padding:3px 10px;}
   .mh-move .tag.up{background:var(--greenbg);color:var(--green-d);border:1px solid var(--greenbd);}
   .mh-move .tag.down{background:var(--redbg);color:var(--red);border:1px solid var(--redbd);}
   .mh-move .tag.flat{background:var(--wash);color:var(--dim);border:1px solid var(--line2);}
   .mh-move .txt{color:var(--soft);}
   .mh-move svg{width:12px;height:12px;stroke-width:2.6;}
-  .mh-right{padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:14px;background:var(--card);}
-  .mh-metric{cursor:pointer;transition:.13s;border-radius:10px;padding:8px 10px;margin:-8px -10px;}
+  .mh-right{padding:16px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;background:var(--card);}
+  .mh-metric{cursor:pointer;transition:.13s;border-radius:10px;padding:7px 10px;margin:-7px -10px;}
   .mh-metric:hover{background:var(--wash);}
   .mh-metric .mm-k{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:7px;font-weight:600;}
   .mh-metric .mm-k .dt{width:8px;height:8px;border-radius:3px;}
-  .mh-metric .mm-v{font-family:var(--serif);font-weight:700;font-size:27px;color:var(--ink);line-height:1;margin-top:5px;font-variant-numeric:tabular-nums;}
-  .mh-metric .mm-h{font-size:10.5px;color:var(--faint);margin-top:3px;}
-  .band1{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px;}
-  .hm-split{}
-  .ct{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:7px;padding:3px 9px;font-size:10.5px;font-weight:600;cursor:pointer;margin-left:4px;transition:.13s;}
-  .ct.on{background:var(--washc);border-color:var(--copper);color:var(--copper-d);}
-  .ct:hover{border-color:var(--copper-l);}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:13px 15px;box-shadow:var(--sh);position:relative;overflow:hidden;}
-  .kpi .kk{font-size:10.5px;font-weight:600;color:var(--dim);display:flex;align-items:center;gap:5px;}
-  .kpi .kk svg{width:12px;height:12px;stroke-width:2;color:var(--faint);}
-  .kpi .kv{font-family:var(--serif);font-weight:700;font-size:23px;line-height:1;margin-top:8px;color:var(--ink);font-variant-numeric:tabular-nums;}
-  .kpi .kh{font-size:10px;color:var(--faint);margin-top:3px;}
-  .kpi .ktrend{position:absolute;top:13px;right:14px;font-size:10px;font-weight:700;font-family:var(--mono);}
-  .kpi .ktrend.up{color:var(--green-d);} .kpi .ktrend.down{color:var(--red);}
+  .mh-metric .mm-v{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--ink);line-height:1;margin-top:4px;font-variant-numeric:tabular-nums;}
+  .mh-metric .mm-h{font-size:10.5px;color:var(--faint);margin-top:2px;}
+  /* KPI fins */
   .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-  .chart-card{width:100%;}
-  .lg-item{font-size:10px;color:var(--dim);display:inline-flex;align-items:center;gap:5px;margin-left:10px;}
-  .lg-item i{width:8px;height:8px;border-radius:2px;display:inline-block;}
-  #chartW{padding:12px 16px 16px;}
-  #chartW svg{width:100%;height:130px;display:block;overflow:visible;}
-  .dash-cols{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start;margin-bottom:16px;}
-  .dash-col{display:flex;flex-direction:column;gap:14px;min-width:0;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:12px 15px;box-shadow:var(--sh);display:flex;align-items:center;gap:13px;cursor:pointer;transition:.14s;}
+  .kpi:hover{border-color:var(--line2);transform:translateY(-1px);box-shadow:var(--shm);}
+  .kpi .ki{width:34px;height:34px;border-radius:9px;background:var(--wash);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .kpi .ki svg{width:16px;height:16px;stroke-width:2;color:var(--copper);}
+  .kpi .kmid{flex:1;min-width:0;}
+  .kpi .kk{font-size:11px;font-weight:600;color:var(--dim);}
+  .kpi .kv{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .kpi .kh{font-size:10px;color:var(--faint);margin-top:1px;}
+  /* Deux blocs même hauteur */
+  .dash-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:stretch;}
+  .dash-cols>.card{display:flex;flex-direction:column;min-width:0;}
+  .dash-cols>.card .cbd,.dash-cols>.card #focusW{flex:1;}
+  .focus-card #focusW{display:flex;flex-direction:column;}
   .focus-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line3);transition:.12s;}
   .focus-row:last-child{border-bottom:none;}
   .focus-row:hover{background:var(--wash);}
@@ -668,7 +668,7 @@
   .sv2{margin-top:6px;font-size:11px;} .sv2 b{color:var(--copper-d);font-weight:700;}
   .stat.alert .badge{position:absolute;top:10px;right:12px;width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px var(--redbg);}
   @media(max-width:960px){
-    .band1{grid-template-columns:1fr;} .hero-metric{grid-row:auto;} .kpi-grid,.chart-card{grid-column:1;} .kpi-grid{grid-template-columns:1fr 1fr 1fr;}
+    .kpi-grid{grid-template-columns:1fr;} .dash-cols{grid-template-columns:1fr;}
     .dash-cols{grid-template-columns:1fr;}
   }
   @media(max-width:960px){
@@ -717,38 +717,32 @@
   <div class="page">
 
   <section class="view on" id="v-dash">
-    <div class="ptitle"><div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+    <div class="cockpit">
+      <div class="ck-head"><div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
 
-    <!-- BANDE 1 : l'argent en roi -->
-    <div class="money-hero card" id="moneyHero">
-      <div class="mh-left">
-        <div class="mh-period" id="mhPeriod">
-          <button class="mhp on" data-per="month">Ce mois</button>
-          <button class="mhp" data-per="all">Depuis le début</button>
+      <!-- Héros argent compact -->
+      <div class="money-hero card" id="moneyHero">
+        <div class="mh-left">
+          <div class="mh-topline">
+            <div class="mh-period" id="mhPeriod">
+              <button class="mhp on" data-per="month">Ce mois</button>
+              <button class="mhp" data-per="all">Depuis le début</button>
+            </div>
+          </div>
+          <div class="mh-k" id="mhKing">Signé</div>
+          <div class="mh-big" id="mhBig">—</div>
+          <div class="mh-move" id="mhMove"></div>
         </div>
-        <div class="mh-k" id="mhKing">Signé</div>
-        <div class="mh-big" id="mhBig">—</div>
-        <div class="mh-move" id="mhMove"></div>
+        <div class="mh-right" id="mhRight"></div>
       </div>
-      <div class="mh-right" id="mhRight"></div>
-    </div>
-    <div class="band1">
-      <div class="kpi-grid" id="kpiGrid"></div>
-      <div class="card chart-card" id="chartCard">
-        <div class="chd"><span class="t">Ton activité</span><div class="right" id="chartTabs"><button class="ct on" data-d="30">30 j</button><button class="ct" data-d="90">90 j</button></div><div class="right" style="margin-left:10px"><span class="lg-item"><i style="background:var(--copper)"></i>Briefs</span><span class="lg-item"><i style="background:var(--green)"></i>Débriefés</span></div></div>
-        <div class="cbd" id="chartW"></div>
-      </div>
-    </div>
 
-    <!-- BANDES 2 + 3 : deux colonnes équilibrées -->
-    <div class="dash-cols">
-      <div class="dash-col">
-        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant, classé par urgence.</span></div><div class="cbd p0" id="focusW"></div></div>
-        <div class="card coldsec" id="coldCard" style="display:none;"><div class="chd"><span class="t">Ça refroidit</span><span class="d">Sans mouvement depuis plus d'une semaine.</span></div><div class="cbd p0" id="coldW"></div></div>
-      </div>
-      <div class="dash-col">
+      <!-- 3 KPI fins -->
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <!-- 2 blocs de même hauteur : plan de bataille + intelligence -->
+      <div class="dash-cols">
+        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant.</span><div class="right"><button class="btn g sm" id="focusAll" style="display:none" data-go2="pipeline">Voir tout</button></div></div><div class="cbd p0" id="focusW"></div></div>
         <div class="card intel-card"><div class="chd"><span class="t">Ce que Faro sait de toi</span><span class="d">Tiré de tes rendez-vous.</span></div><div class="cbd" id="intelW"></div></div>
-        <div class="card"><div class="chd"><span class="t">Derniers rendez-vous</span><span class="d">Ta mémoire récente.</span><div class="right"><button class="btn g sm" data-go2="entreprises">Toutes</button></div></div><div class="cbd p0" id="recentW"></div></div>
       </div>
     </div>
   </section>
@@ -1071,7 +1065,6 @@ function weekStats(){
 }
 function dash(){
   const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
-  const chauds=deals.filter(d=>['negociation','closing'].includes(d.etape));
   const aDeb=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer');
   const aRel=deals.filter(d=>!['gagne','perdu'].includes(d.etape)&&d.prochaine_action);
   const cold=actifs.filter(d=>days(d.updated_at)>=7).sort((a,b)=>days(b.updated_at)-days(a.updated_at));
@@ -1080,45 +1073,28 @@ function dash(){
 
   // ─── Greeting + weekline ───
   const ws=weekStats();
-  $('weekline').innerHTML=briefs.length?`<span><b>${ws.briefs}</b> brief${ws.briefs>1?'s':''} cette semaine</span><span class="wd"></span><span><b>${ws.debriefs}</b> débriefé${ws.debriefs>1?'s':''}</span><span class="wd"></span><span><b>${ws.wins}</b> gagné${ws.wins>1?'s':''}</span>${ws.streak>1?`<span class="wd"></span><span>série de <b>${ws.streak}</b> débriefs</span>`:''}`:'<span>Ton tableau de bord se remplit dès ton premier rendez-vous.</span>';
+  $('weekline').innerHTML=briefs.length?`<span><b>${ws.briefs}</b> brief${ws.briefs>1?'s':''} cette semaine</span><span class="wd"></span><span><b>${ws.debriefs}</b> débriefé${ws.debriefs>1?'s':''}</span><span class="wd"></span><span><b>${ws.wins}</b> gagné${ws.wins>1?'s':''}</span>${ws.streak>1?`<span class="wd"></span><span>série de <b>${ws.streak}</b> débriefs</span>`:''}`:'<span>Ton cockpit se remplit dès ton premier rendez-vous.</span>';
 
-  // ═══ BANDE 1 : l'argent en roi ═══
+  // ─── Héros argent ───
   renderMoney();
 
-  // KPI : conversion, vélocité, panier moyen, avec tendance
+  // ─── KPI compacts ───
   const closed=wins.length+losts.length;
   const winRate=closed?Math.round(wins.length/closed*100):null;
   const vel=velocity();
   const valDeals=wins.concat(actifs).filter(d=>dealVal(d)>0);
   const avgDeal=valDeals.length?Math.round(valDeals.reduce((a,d)=>a+dealVal(d),0)/valDeals.length):null;
   const KPI=[
-    {k:'Taux de closing',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length} gagné${wins.length>1?'s':''} sur ${closed}`:'Dès ton premier deal clos',go:'pipeline'},
-    {k:'Vélocité',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure un deal':'Se calcule avec l\'historique',go:'pipeline'},
-    {k:'Panier moyen',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Sur tes deals chiffrés':'Ajoute des montants',go:'pipeline'}
+    {k:'Taux de closing',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} deals clos`:'Dès ton premier deal clos'},
+    {k:'Vélocité',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
+    {k:'Panier moyen',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
   ];
-  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="${k.go}"><div class="kk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg>${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div>`).join('');
-  $('kpiGrid').querySelectorAll('[data-kgo]').forEach(el=>{el.style.cursor='pointer';el.addEventListener('click',()=>go(el.dataset.kgo));});
+  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="pipeline"><div class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg></div><div class="kmid"><div class="kk">${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div></div>`).join('');
+  $('kpiGrid').querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
 
-  // Graphe (période courante)
-  $('chartW').innerHTML=chart30(chartDays);
-
-  // ═══ BANDE 2 : plan de bataille + intelligence ═══
+  // ─── Plan de bataille + intelligence ───
   renderFocus(aDeb,aRel,cold);
   renderIntel();
-
-  // ═══ BANDE 3 : mémoire ═══
-  if(cold.length){
-    $('coldCard').style.display='';
-    $('coldW').innerHTML=cold.slice(0,5).map(d=>{
-      const n=days(d.updated_at);const cls=n>=14?'cold':'warm';
-      return `<div class="coldrow" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${stg(d.etape).l}${d.prochaine_action?' · '+esc(trunc(d.prochaine_action,32)):''}</div></div><span class="cage ${cls}">${n} j de silence</span></div>`;
-    }).join('');
-    wireRows($('coldW'));
-  } else { $('coldCard').style.display='none'; }
-
-  const rec=briefs.slice(0,5);
-  $('recentW').innerHTML=rec.length?rec.map(b=>`<div class="row" data-b="${b.id}">${logoHtml(b.entreprise,(b.entreprise_data||{}).logo,(b.entreprise_data||{}).site||b.site)}<div class="info"><div class="nm">${esc(b.entreprise)}</div><div class="mt">${esc(trunc(b.poste||'',30))} · ${rel(b.created_at)}</div></div>${briefTempChip(b)}</div>`).join(''):'<div class="empty">Ton premier brief apparaîtra ici.</div>';
-  wireRows($('recentW'));
 }
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
@@ -1129,10 +1105,7 @@ function wireDashTabs(){
     $('mhPeriod').querySelectorAll('.mhp').forEach(x=>x.classList.toggle('on',x===b));
     moneyPeriod=b.dataset.per; renderMoney();
   }));
-  $('chartTabs').querySelectorAll('.ct').forEach(b=>b.addEventListener('click',()=>{
-    $('chartTabs').querySelectorAll('.ct').forEach(x=>x.classList.toggle('on',x===b));
-    chartDays=+b.dataset.d; $('chartW').innerHTML=chart30(chartDays);
-  }));
+  const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('pipeline'));
 }
 function monthStart(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),1).getTime();}
 function prevMonthRange(){const d=new Date();const s=new Date(d.getFullYear(),d.getMonth()-1,1).getTime();const e=new Date(d.getFullYear(),d.getMonth(),1).getTime();return [s,e];}
@@ -1285,13 +1258,17 @@ function renderFocus(aDeb,aRel,cold){
   }
   if(!rows.length){
     $('focusW').innerHTML=`<div class="focus-empty"><div class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><div class="fe-t">Tout est à jour.</div><div class="fe-d">Aucune action en attente. Prépare ton prochain rendez-vous quand tu veux.</div></div>`;
+    if($('focusAll'))$('focusAll').style.display='none';
     return;
   }
+  const total=rows.length;
+  const shown=rows.slice(0,3);
+  if($('focusAll'))$('focusAll').style.display=total>3?'':'none';
   const ICO={clock:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',snow:'<path d="M12 2v20M4 6l16 12M20 6L4 18"/>'};
-  $('focusW').innerHTML=rows.map(it=>`<div class="focus-row"><span class="focus-ic" style="color:${it.rc};background:${it.rc}18"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span><div class="focus-body"><div class="focus-nm">${esc(it.nm)}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="focus-why">${it.why}</div></div><button class="focus-act ${it.ac}">${it.act}</button></div>`).join('');
+  $('focusW').innerHTML=shown.map(it=>`<div class="focus-row"><span class="focus-ic" style="color:${it.rc};background:${it.rc}18"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span><div class="focus-body"><div class="focus-nm">${esc(it.nm)}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="focus-why">${it.why}</div></div><button class="focus-act ${it.ac}">${it.act}</button></div>`).join('');
   const els=$('focusW').querySelectorAll('.focus-row');
   els.forEach((row,i)=>{
-    const it=rows[i];
+    const it=shown[i];
     row.querySelector('.focus-body').addEventListener('click',it.fn);
     row.querySelector('.focus-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
   });
