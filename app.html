@@ -643,6 +643,20 @@
   .intel-lock{border-top:1px dashed var(--line3);padding-top:10px;font-size:11px;color:var(--faint);line-height:1.45;text-align:center;}
   .intel-lock b{color:var(--copper-d);cursor:pointer;font-weight:600;}
   .intel-empty{text-align:center;padding:20px 10px;font-size:12px;color:var(--dim);line-height:1.5;}
+  .intel-learn{text-align:center;padding:20px 14px;}
+  .il-ic{width:44px;height:44px;border-radius:50%;background:var(--washc);color:var(--copper-d);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+  .il-ic svg{width:22px;height:22px;}
+  .il-t{font-size:13px;font-weight:700;color:var(--ink);}
+  .il-d{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.5;}
+  .il-d b{color:var(--copper-d);font-weight:600;}
+  .obs-list{display:flex;flex-direction:column;gap:11px;}
+  .obs-row{display:flex;align-items:center;gap:10px;}
+  .obs-ic{width:30px;height:30px;border-radius:9px;background:var(--wash);color:var(--copper);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .obs-ic svg{width:15px;height:15px;}
+  .obs-body{flex:1;min-width:0;}
+  .obs-t{font-size:12.5px;color:var(--soft);line-height:1.35;}
+  .obs-t b{color:var(--ink);font-weight:700;}
+  .obs-h{font-size:10.5px;color:var(--faint);margin-top:1px;}
   .coldrow{display:flex;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line3);cursor:pointer;transition:.12s;}
   .coldrow:last-child{border-bottom:none;} .coldrow:hover{background:var(--wash);}
   .cage{font-size:9.5px;font-weight:700;border-radius:20px;padding:2.5px 9px;white-space:nowrap;border:1px solid;}
@@ -1236,17 +1250,28 @@ function renderFocus(aDeb,aRel,cold){
         act:'Débriefer',ac:'deb',count:aDeb.length,fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
     }
   }
-  // 2) Relances, distinctes, raison mémorisée, max 3
+  // 2) Relances : le sens, jamais le texte brut du mail. Max 3.
   const relSorted=aRel.slice().sort((a,b)=>days(b.updated_at)-days(a.updated_at));
+  const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
   relSorted.slice(0,3).forEach(d=>{
     const lb=dealBriefs(d).find(x=>x.debrief);
     const n=days(d.updated_at);
+    const temp=lb&&lb.debrief?lb.debrief.temperature:null;
+    const note=lb&&lb.debrief?lb.debrief.next_action:d.prochaine_action;
     let why;
-    if(lb&&lb.debrief&&lb.debrief.next_action){
-      why=`Tu avais convenu : <b>${esc(trunc(lb.debrief.next_action,50))}</b>${n>=5?`. ${n} j ont passé`:''}.`;
-    } else why=`Prochaine action : <b>${esc(trunc(d.prochaine_action,50))}</b>.`;
-    rows.push({rc:'var(--copper)',ic:'arrow',nm:d.entreprise,why,
-      act:lb?'Relancer':'Voir',ac:lb?'rel':'see',fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d)});
+    // Une note d'action courte et lisible : on l'affiche. Sinon on montre le temps écoulé.
+    if(note&&!looksLikeMail(note)&&note.length<=48){
+      why=`Tu devais : <b>${esc(note)}</b>${n>=7?` · ${n} j`:''}.`;
+    } else if(n>=1){
+      const chaud=temp==='chaud'?'Deal chaud, ':'';
+      why=`${chaud}sans relance depuis <b>${n} jour${n>1?'s':''}</b>.`;
+    } else {
+      why=`À relancer, tu avais prévu une suite.`;
+    }
+    const hot=temp==='chaud';
+    rows.push({rc:hot?'var(--copper)':'var(--gold)',ic:'arrow',nm:d.entreprise,why,
+      act:lb?'Relancer':'Voir',ac:lb?'rel':'see',
+      fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d)});
   });
   // 3) Un seul deal froid, le plus critique, si pas déjà en relance
   const coldest=cold.filter(d=>days(d.updated_at)>=10&&!aRel.includes(d))[0];
@@ -1275,49 +1300,80 @@ function renderFocus(aDeb,aRel,cold){
 }
 
 // Intelligence : taux par interlocuteur, objections fréquentes
+// Ce que Faro sait de toi : observations vraies dès le début, taux seulement si significatif
 function renderIntel(){
-  const debriefed=briefs.filter(b=>b.debrief);
   const w=$('intelW');
+  const debriefed=briefs.filter(b=>b.debrief);
+  const wins=deals.filter(d=>d.etape==='gagne');
+  const losts=deals.filter(d=>d.etape==='perdu');
+  const closed=wins.length+losts.length;
+
+  // ÉTAT 1 : trop tôt, on explique ce que Faro va apprendre
   if(debriefed.length<3){
-    w.innerHTML=`<div class="intel-empty">Faro apprend de chaque rendez-vous débriefé.<br>Encore <b>${3-debriefed.length}</b> débrief${3-debriefed.length>1?'s':''} et tes premières statistiques personnelles apparaîtront ici.</div>`;
+    const reste=3-debriefed.length;
+    w.innerHTML=`<div class="intel-learn">
+      <div class="il-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+      <div class="il-t">Faro apprend de chaque rendez-vous.</div>
+      <div class="il-d">Encore <b>${reste} débrief${reste>1?'s':''}</b> et tes premières tendances personnelles apparaîtront ici : tes interlocuteurs, ta tonalité, ton terrain de prédilection.</div>
+    </div>`;
     return;
   }
+
   let html='';
-  // Taux de closing par type d'interlocuteur
-  const byPost={};
-  briefs.forEach(b=>{
-    if(!b.poste)return;
-    const short=b.poste.replace(/\s*\(.*\)/,'').replace('Direction ','').replace('Direction','').trim();
-    const key=short.charAt(0).toUpperCase()+short.slice(1);
-    byPost[key]=byPost[key]||{tot:0,win:0};
-    const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
-    byPost[key].tot++;
-    if(d&&d.etape==='gagne')byPost[key].win++;
-  });
-  const posts=Object.entries(byPost).filter(([k,v])=>v.tot>=2).sort((a,b)=>b[1].win/b[1].tot-a[1].win/a[1].tot).slice(0,3);
-  if(posts.length){
-    const best=posts[0];
-    html+=`<div class="intel-block"><div class="ib-k">Ton terrain de prédilection</div><div class="intel-stat"><span class="is-v">${Math.round(best[1].win/best[1].tot*100)}%</span><span class="is-l">de closing avec les <b>${esc(best[0])}</b></span></div><div class="intel-bar">`;
-    posts.forEach(([k,v])=>{const pct=Math.round(v.win/v.tot*100);html+=`<div class="ibar-row"><div class="ibar-top"><span class="ibl">${esc(k)}</span><span class="ibn">${v.win}/${v.tot}</span></div><div class="ibar-track"><i style="width:${Math.max(4,pct)}%;background:${pct>=50?'var(--green)':pct>=25?'var(--copper)':'var(--line2)'}"></i></div></div>`;});
-    html+='</div></div>';
+
+  // Toujours : observations neutres et vraies
+  html+='<div class="intel-block"><div class="ib-k">Ce que Faro observe</div><div class="obs-list">';
+  const obs=[];
+  // Interlocuteur le plus fréquent
+  const posts={};
+  briefs.forEach(b=>{if(b.poste){const k=cleanPoste(b.poste);posts[k]=(posts[k]||0)+1;}});
+  const topPost=Object.entries(posts).sort((a,b)=>b[1]-a[1])[0];
+  if(topPost)obs.push({ic:'user',t:`Tu rencontres surtout des <b>${esc(topPost[0])}</b>`,h:`${topPost[1]} rendez-vous`});
+  // Tonalité dominante
+  const temps={};
+  debriefed.forEach(b=>{const t=b.debrief.temperature;temps[t]=(temps[t]||0)+1;});
+  const TLABEL={close:'plutôt closés',chaud:'plutôt chauds',tiede:'plutôt tièdes',mort:'souvent difficiles'};
+  const topTemp=Object.entries(temps).sort((a,b)=>b[1]-a[1])[0];
+  if(topTemp)obs.push({ic:'temp',t:`Tes rendez-vous ressortent <b>${TLABEL[topTemp[0]]||''}</b>`,h:`${debriefed.length} débriefés`});
+  // Rythme
+  const ws=weekStats();
+  if(ws.briefs>0)obs.push({ic:'pace',t:`<b>${ws.briefs} brief${ws.briefs>1?'s':''}</b> préparé${ws.briefs>1?'s':''} cette semaine`,h:ws.streak>1?`série de ${ws.streak}`:''});
+  const OBSIC={user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',temp:'<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',pace:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>'};
+  html+=obs.map(o=>`<div class="obs-row"><span class="obs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${OBSIC[o.ic]}</svg></span><div class="obs-body"><div class="obs-t">${o.t}</div>${o.h?`<div class="obs-h">${o.h}</div>`:''}</div></div>`).join('');
+  html+='</div></div>';
+
+  // Si assez de deals conclus : taux de réussite par interlocuteur, seulement le positif
+  if(closed>=5){
+    const byPost={};
+    briefs.forEach(b=>{
+      if(!b.poste)return;
+      const k=cleanPoste(b.poste);
+      const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
+      if(!d||!['gagne','perdu'].includes(d.etape))return;
+      byPost[k]=byPost[k]||{tot:0,win:0};
+      byPost[k].tot++; if(d.etape==='gagne')byPost[k].win++;
+    });
+    const ranked=Object.entries(byPost).filter(([k,v])=>v.tot>=2).sort((a,b)=>b[1].win/b[1].tot-a[1].win/a[1].tot);
+    if(ranked.length){
+      const best=ranked[0];
+      html+=`<div class="intel-block"><div class="ib-k">Ton terrain de prédilection</div><div class="intel-stat"><span class="is-v">${Math.round(best[1].win/best[1].tot*100)}%</span><span class="is-l">de réussite avec les <b>${esc(best[0])}</b></span></div><div class="intel-bar">`;
+      ranked.slice(0,3).forEach(([k,v])=>{const pct=Math.round(v.win/v.tot*100);html+=`<div class="ibar-row"><div class="ibar-top"><span class="ibl">${esc(k)}</span><span class="ibn">${v.win}/${v.tot}</span></div><div class="ibar-track"><i style="width:${Math.max(5,pct)}%;background:${pct>=50?'var(--green)':pct>=25?'var(--copper)':'var(--line2)'}"></i></div></div>`;});
+      html+='</div></div>';
+    }
   }
-  // Objections fréquentes tirées des annotations
-  const objs={};
-  briefs.forEach(b=>{
-    const a=b.annotations||{};
-    const txt=((a.objection&&a.objection.note)||'').toLowerCase();
-    if(!txt)return;
-    const pats=[['Prix',/(cher|prix|coût|cout|budget|tarif)/],['Timing',/(pas le moment|plus tard|timing|trop tôt|trop tot|attendre)/],['Concurrent',/(concurrent|déjà|deja|autre solution|travaille avec)/],['Besoin',/(pas besoin|pas convaincu|pas sûr|pas sur|utilité|utilite)/]];
-    pats.forEach(([lbl,rx])=>{if(rx.test(txt)){objs[lbl]=(objs[lbl]||0)+1;}});
-  });
-  const objList=Object.entries(objs).sort((a,b)=>b[1]-a[1]).slice(0,3);
-  if(objList.length){
-    html+=`<div class="intel-block"><div class="ib-k">Tes objections les plus fréquentes</div>${objList.map(([k,n])=>`<div class="intel-obj"><span class="ion">${n}×</span>${esc(k)}</div>`).join('')}</div>`;
-  }
-  // Lien vers page future
-  html+=`<div class="intel-lock">Ta banque d'objections complète et tes tendances arrivent bientôt. <b data-soon="1">En savoir plus</b></div>`;
+
+  // Lien vers page future, discret
+  html+=`<div class="intel-lock">Ta banque d'objections et tes tendances complètes arrivent bientôt. <b data-soon="1">En savoir plus</b></div>`;
   w.innerHTML=html;
   const soon=w.querySelector('[data-soon]'); if(soon)soon.addEventListener('click',()=>toast('Bientôt : ta banque d\'objections personnelle'));
+}
+// Nettoie un intitulé de poste pour l'affichage : libellé complet, jamais tronqué bizarrement
+function cleanPoste(p){
+  if(!p)return'';
+  let s=p.replace(/\s*\(.*?\)/g,'').trim();
+  const map=[[/directions? financi/i,'Directions financières'],[/directions? g[ée]n[ée]ral/i,'Directions générales'],[/directions? des syst/i,'DSI'],[/directions? des op[ée]r/i,'Directions des opérations'],[/directions? commercial/i,'Directions commerciales'],[/directions? marketing/i,'Directions marketing'],[/ressources humaines/i,'DRH'],[/achat/i,'Services achats'],[/responsable/i,'Responsables de service'],[/fondateur|dirigeant/i,'Fondateurs et dirigeants']];
+  for(const [rx,lbl] of map){if(rx.test(s))return lbl;}
+  return s.charAt(0).toUpperCase()+s.slice(1);
 }
 function wireRows(root){
   root.querySelectorAll('[data-b]').forEach(el=>el.addEventListener('click',()=>{const b=briefs.find(x=>x.id===el.dataset.b);if(b)openBrief(b);}));
