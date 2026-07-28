@@ -107,6 +107,44 @@
   .tagc{font-family:var(--mono);font-size:9px;border-radius:4px;padding:1.5px 6px;background:var(--wash);border:1px solid var(--line);color:var(--dim);}
 
   .col-val{font-family:var(--mono);font-size:9.5px;color:var(--copper-d);padding:0 12px 6px;margin-top:-2px;}
+  /* ═══ Entreprises : table Attio-Faro ═══ */
+  .ent-ctx{display:flex;gap:24px;padding:2px 4px 14px;flex-wrap:wrap;}
+  .ent-ctx .ec{display:flex;flex-direction:column;gap:2px;}
+  .ent-ctx .ec-v{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .ent-ctx .ec-v em{font-style:normal;color:var(--copper);}
+  .ent-ctx .ec-k{font-size:11px;color:var(--dim);}
+  .ent-tablecard{overflow:hidden;}
+  .ent-toolbar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line3);flex-wrap:wrap;}
+  .ent-toolbar .pt-search{max-width:300px;}
+  .ent-table{width:100%;}
+  .ent-thead{display:grid;grid-template-columns:2.4fr 1.1fr 1fr 1fr 1.6fr;gap:12px;padding:9px 18px;border-bottom:1px solid var(--line3);background:var(--head);}
+  .eth{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);cursor:pointer;display:flex;align-items:center;gap:4px;transition:.13s;user-select:none;white-space:nowrap;}
+  .eth:hover{color:var(--copper-d);}
+  .eth .ar{width:9px;height:9px;opacity:0;transition:.13s;}
+  .eth.sorted .ar{opacity:1;}
+  .eth.sorted{color:var(--copper-d);}
+  .etr{display:grid;grid-template-columns:2.4fr 1.1fr 1fr 1fr 1.6fr;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line3);cursor:pointer;transition:.12s;align-items:center;}
+  .etr:last-child{border-bottom:none;}
+  .etr:hover{background:var(--wash);}
+  .etd{min-width:0;display:flex;align-items:center;}
+  .etd-comp{gap:11px;}
+  .etd-comp .mono{width:34px;height:34px;border-radius:9px;font-size:12px;flex-shrink:0;}
+  .etd-comp .ecn{min-width:0;}
+  .etd-comp .ecn-n{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .etd-comp .ecn-m{font-size:11px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .etd-temp{gap:7px;font-size:12px;color:var(--soft);}
+  .etd-temp .tdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .etd-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink);}
+  .etd-val.none{color:var(--faint);font-weight:400;}
+  .etd-next{font-size:12px;color:var(--soft);line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+  .etd-next.none{color:var(--faint);font-style:italic;}
+  .etd-next b{color:var(--copper-d);font-weight:600;}
+  .ent-empty{text-align:center;padding:20px;}
+  @media(max-width:960px){
+    .ent-thead{display:none;}
+    .etr{grid-template-columns:1fr;gap:6px;padding:14px 16px;}
+    .etd-temp,.etd-val,.etd-next{padding-left:45px;}
+  }
   /* Pipeline board */
   .board{display:grid;grid-template-columns:repeat(6,minmax(170px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px;}
   /* ═══ Pipeline atelier ═══ */
@@ -832,8 +870,19 @@
   </section>
 
   <section class="view" id="v-entreprises">
-    <div class="ptitle"><div><h1>Entreprises</h1><div class="sub">Ta mémoire commerciale, entreprise par entreprise.</div></div></div>
-    <div class="card"><div class="chd"><span class="t">Toutes</span><div class="right"><input class="fld" id="entq" placeholder="Chercher…" style="width:180px;padding:6px 10px;font-size:12px;"></div></div><div class="cbd p0" id="entW"></div></div>
+    <div class="ptitle"><div><h1>Entreprises</h1><div class="sub">Ta mémoire commerciale. Chaque compte, son histoire, d'un coup d'œil.</div></div></div>
+
+    <!-- Ligne de contexte -->
+    <div class="ent-ctx" id="entCtx"></div>
+
+    <!-- Table -->
+    <div class="card ent-tablecard">
+      <div class="ent-toolbar">
+        <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="entq" placeholder="Chercher une entreprise, un tag…" autocomplete="off"></div>
+        <div class="pt-filters" id="entFilters"></div>
+      </div>
+      <div class="ent-table" id="entW"></div>
+    </div>
   </section>
 
   <section class="view" id="v-fiche">
@@ -1583,17 +1632,112 @@ async function acceptSugg(id){
 }
 
 /* ═══ Entreprises ═══ */
-let entQuery='';
+let entQuery='', entSort={key:'recent',dir:-1}, entFilter={etape:null};
 $('entq').addEventListener('input',()=>{entQuery=$('entq').value.trim().toLowerCase();entList();});
+
+function entLastActivity(d){
+  const bs=dealBriefs(d);
+  const lb=bs.find(b=>b.debrief)||bs[0];
+  return lb;
+}
+function entNextText(d){
+  // Ce qui t'attend : prochaine action propre, sinon état
+  const bs=dealBriefs(d);
+  const lb=bs.find(b=>b.debrief);
+  const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
+  const note=(lb&&lb.debrief&&lb.debrief.next_action)||d.prochaine_action;
+  if(['gagne'].includes(d.etape))return {t:'Deal gagné, entretiens la relation.',cls:''};
+  if(['perdu'].includes(d.etape))return {t:'Deal clos. Reste en veille.',cls:'none'};
+  if(note&&!looksLikeMail(note)&&note.length<=52)return {t:`<b>${esc(note)}</b>`,cls:''};
+  const n=days(d.updated_at);
+  if(n>=7)return {t:`Sans mouvement depuis ${n} jours.`,cls:''};
+  return {t:'Prépare le prochain rendez-vous.',cls:'none'};
+}
+
 function entList(){
-  let list=deals;
-  if(entQuery)list=list.filter(d=>((d.entreprise||'')+' '+(d.tags||[]).join(' ')).toLowerCase().includes(entQuery));
-  $('entW').innerHTML=list.length?list.map(d=>{
+  // Contexte
+  const total=deals.length;
+  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
+  const totVal=actifs.reduce((a,d)=>a+dealVal(d),0);
+  const wins=deals.filter(d=>d.etape==='gagne').length;
+  $('entCtx').innerHTML=`
+    <div class="ec"><div class="ec-v">${total}</div><div class="ec-k">entreprise${total>1?'s':''} en mémoire</div></div>
+    <div class="ec"><div class="ec-v"><em>${actifs.length}</em></div><div class="ec-k">deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}</div></div>
+    ${totVal?`<div class="ec"><div class="ec-v">${eur(totVal)}</div><div class="ec-k">en jeu</div></div>`:''}
+    ${wins?`<div class="ec"><div class="ec-v">${wins}</div><div class="ec-k">gagné${wins>1?'s':''}</div></div>`:''}`;
+
+  // Filtres par étape
+  renderEntFilters();
+
+  // Filtrage
+  let list=deals.slice();
+  if(entQuery)list=list.filter(d=>((d.entreprise||'')+' '+(d.tags||[]).join(' ')+' '+(d.interlocuteur||'')).toLowerCase().includes(entQuery));
+  if(entFilter.etape)list=list.filter(d=>d.etape===entFilter.etape);
+
+  // Tri
+  const STORD={contact:0,decouverte:1,negociation:2,closing:3,gagne:4,perdu:5};
+  list.sort((a,b)=>{
+    let v=0;
+    if(entSort.key==='recent')v=new Date(a.updated_at)-new Date(b.updated_at);
+    else if(entSort.key==='nom')v=(a.entreprise||'').localeCompare(b.entreprise||'');
+    else if(entSort.key==='etape')v=STORD[a.etape]-STORD[b.etape];
+    else if(entSort.key==='valeur')v=dealVal(a)-dealVal(b);
+    return v*entSort.dir;
+  });
+
+  if(!list.length){
+    $('entW').innerHTML=`<div class="ent-empty">${entQuery||entFilter.etape?'<div class="empty">Rien ne correspond.</div>':`<div class="esvg">${ESVG.entreprises}</div><div class="empty">Tes entreprises apparaîtront ici, avec leur mémoire.</div>`}</div>`;
+    return;
+  }
+
+  const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
+  const TLBL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
+  const arw='<svg class="ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>';
+  const sc=k=>entSort.key===k?'sorted':'';
+  const head=`<div class="ent-thead">
+    <div class="eth ${sc('nom')}" data-sort="nom">Entreprise ${arw}</div>
+    <div class="eth ${sc('etape')}" data-sort="etape">Où ça en est ${arw}</div>
+    <div class="eth ${sc('recent')}" data-sort="recent">Dernier RDV ${arw}</div>
+    <div class="eth ${sc('valeur')}" data-sort="valeur">Valeur ${arw}</div>
+    <div class="eth">Ce qui t'attend</div>
+  </div>`;
+  const rows=list.map(d=>{
     const bs=dealBriefs(d);
-    const tags=(d.tags||[]).slice(0,3).map(t=>`<span class="tagc">${esc(t)}</span>`).join(' ');
-    return `<div class="row" data-d="${d.id}">${dealLogo(d)}<div class="info"><div class="nm">${esc(d.entreprise)}</div><div class="mt">${bs.length} brief${bs.length>1?'s':''} · ${rel(d.updated_at)}${tags?' · '+tags:''}</div></div>${stageChip(d.etape)}</div>`;
-  }).join(''):(entQuery?'<div class="empty">Rien ne correspond à cette recherche.</div>':`<div class="esvg">${ESVG.entreprises}</div><div class="empty">Tes entreprises apparaîtront ici, avec leur mémoire.</div>`);
-  wireRows($('entW'));
+    const lb=entLastActivity(d);
+    const temp=lb&&lb.debrief?lb.debrief.temperature:null;
+    const mv=dealVal(d);
+    const nx=entNextText(d);
+    const tempCell=temp
+      ? `<span class="tdot" style="background:${TC[temp]}"></span>${TLBL[temp]} · ${rel(lb.updated_at||lb.created_at)}`
+      : (lb?`<span class="tdot" style="background:var(--line2)"></span>${rel(lb.created_at)}`:`<span class="tdot" style="background:var(--line2)"></span>—`);
+    return `<div class="etr" data-d="${d.id}">
+      <div class="etd etd-comp">${dealLogo(d)}<div class="ecn"><div class="ecn-n">${esc(d.entreprise)}</div><div class="ecn-m">${bs.length} brief${bs.length>1?'s':''}${(d.tags||[]).length?' · '+esc((d.tags||[]).slice(0,2).join(', ')):''}</div></div></div>
+      <div class="etd">${stageChip(d.etape)}</div>
+      <div class="etd etd-temp">${tempCell}</div>
+      <div class="etd etd-val ${mv?'':'none'}">${mv?eur(mv):'—'}</div>
+      <div class="etd etd-next ${nx.cls}">${nx.t}</div>
+    </div>`;
+  }).join('');
+  $('entW').innerHTML=head+rows;
+  $('entW').querySelectorAll('.eth[data-sort]').forEach(el=>el.addEventListener('click',()=>{
+    const k=el.dataset.sort;
+    if(entSort.key===k)entSort.dir*=-1;
+    else {entSort.key=k;entSort.dir=k==='nom'?1:(k==='recent'?-1:-1);}
+    entList();
+  }));
+  $('entW').querySelectorAll('.etr').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
+}
+
+function renderEntFilters(){
+  const el=$('entFilters'); if(!el)return;
+  const stages=[['contact','Contact'],['decouverte','Découverte'],['negociation','Négociation'],['closing','Closing'],['gagne','Gagné']];
+  el.innerHTML=stages.filter(([k])=>deals.some(d=>d.etape===k)).map(([k,l])=>{
+    const s=stg(k);
+    return `<button class="ptf ${entFilter.etape===k?'on':''}" data-ef="${k}"><span class="dt" style="background:${s.c}"></span>${l}</button>`;
+  }).join('');
+  el.querySelectorAll('[data-ef]').forEach(b=>b.addEventListener('click',()=>{
+    entFilter.etape=entFilter.etape===b.dataset.ef?null:b.dataset.ef;entList();
+  }));
 }
 
 /* ═══ Fiche entreprise / deal ═══ */
