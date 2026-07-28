@@ -147,8 +147,56 @@
     .etr{grid-template-columns:1fr;gap:6px;height:auto;padding:14px 16px;}
     .etd-temp,.etd-val,.etd-next{padding-left:48px;}
   }
+  /* ═══ Mon offre ═══ */
+  .offre-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;}
+  .offre-form{display:flex;flex-direction:column;gap:16px;}
+  .offre-side{display:flex;flex-direction:column;gap:16px;position:sticky;top:20px;}
+  .btn.lg{padding:12px 20px;font-size:13px;align-self:flex-start;}
+  .offre-ring-card{padding:24px;text-align:center;}
+  .offre-ring{position:relative;width:96px;height:96px;margin:0 auto 14px;}
+  .offre-ring svg{width:96px;height:96px;transform:rotate(-90deg);}
+  .offre-ring .orb{fill:none;stroke:var(--line3);stroke-width:7;}
+  .offre-ring .orf{fill:none;stroke:var(--copper);stroke-width:7;stroke-linecap:round;stroke-dasharray:251.3;stroke-dashoffset:251.3;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1);}
+  .offre-ring-v{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--ink);}
+  .offre-ring-v em{font-style:normal;font-size:15px;color:var(--dim);margin-left:1px;}
+  .offre-ring-t{font-size:14px;font-weight:700;letter-spacing:-.01em;}
+  .offre-ring-d{font-size:12px;color:var(--dim);margin-top:4px;line-height:1.45;}
+  .offre-why{display:flex;flex-direction:column;gap:15px;}
+  .ow-row{display:flex;gap:12px;align-items:flex-start;}
+  .ow-ic{width:32px;height:32px;border-radius:8px;background:var(--wash);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ow-ic svg{width:16px;height:16px;}
+  .ow-t{font-size:12.5px;font-weight:700;}
+  .ow-d{font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.45;}
+  @media(max-width:960px){
+    .offre-grid{grid-template-columns:1fr;}
+    .offre-side{position:static;}
+  }
   /* Pipeline board */
-  .board{display:grid;grid-template-columns:repeat(6,minmax(170px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px;}
+  .board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding-bottom:2px;}
+  .col-see{margin:2px 8px 8px;border:1px solid var(--line2);background:#fff;color:var(--copper-d);border-radius:7px;padding:7px;font-size:11px;font-weight:600;cursor:pointer;transition:.13s;text-align:center;}
+  .col-see:hover{background:var(--washc);border-color:var(--copper-l);}
+  /* Panneau d'étape en grand */
+  .stage-ov{position:fixed;inset:0;background:rgba(30,25,18,.42);backdrop-filter:blur(4px);z-index:95;display:none;align-items:stretch;justify-content:flex-end;}
+  .stage-ov.on{display:flex;animation:fadein .2s ease;}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .stage-panel{width:min(560px,100%);background:var(--bg);height:100%;box-shadow:var(--shl);display:flex;flex-direction:column;animation:slidein .28s cubic-bezier(.2,.7,.2,1);}
+  @keyframes slidein{from{transform:translateX(40px);opacity:.6}to{transform:none;opacity:1}}
+  .sp-head{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);background:var(--card);}
+  .sp-dot{width:11px;height:11px;border-radius:4px;flex-shrink:0;}
+  .sp-title{font-family:var(--serif);font-weight:600;font-size:18px;}
+  .sp-meta{font-size:11.5px;color:var(--dim);margin-top:1px;}
+  .sp-close{margin-left:auto;border:1px solid var(--line2);background:#fff;color:var(--soft);border-radius:7px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.13s;}
+  .sp-close:hover{border-color:var(--copper);color:var(--copper-d);}
+  .sp-close svg{width:15px;height:15px;stroke-width:2;}
+  .sp-body{flex:1;overflow-y:auto;padding:14px 18px;}
+  .sp-row{display:flex;align-items:center;gap:13px;padding:13px 14px;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);margin-bottom:9px;cursor:pointer;transition:.13s;box-shadow:var(--sh);}
+  .sp-row:hover{border-color:var(--line2);transform:translateY(-1px);box-shadow:var(--shm);}
+  .sp-row .mono{width:38px;height:38px;border-radius:8px;font-size:13px;flex-shrink:0;}
+  .sp-row .spr-body{flex:1;min-width:0;}
+  .sp-row .spr-n{font-size:14px;font-weight:700;letter-spacing:-.01em;}
+  .sp-row .spr-m{font-size:11.5px;color:var(--dim);margin-top:2px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .sp-row .spr-money{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--copper-d);}
+  .sp-row .tdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
   /* ═══ Pipeline atelier ═══ */
   .pilot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;}
   .pilot-cell{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:13px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;}
@@ -781,7 +829,7 @@
     .topbar{padding:0 14px;} .search{min-width:0;flex:1;} .search span.txt{display:none;} .crumb{display:none;}
     .page{padding:16px 14px;}
     .stats{grid-template-columns:1fr 1fr;} .g2{grid-template-columns:1fr;} .rdvrow{grid-template-columns:1fr;}
-    .board{grid-template-columns:repeat(6,220px);}
+    .board{grid-template-columns:repeat(6,minmax(150px,1fr));font-size:12px;}
     .docbody{grid-template-columns:1fr;padding:14px 14px 130px;} .rail{position:static;}
     .prescont{padding:16px 14px;} .presnav{display:none;}
   }
@@ -871,6 +919,12 @@
     <div class="funnel-wrap" id="funnelWrap"></div>
   </section>
 
+  <!-- Panneau d'étape en grand -->
+  <div class="stage-ov" id="stageOv"><div class="stage-panel">
+    <div class="sp-head"><span class="sp-dot" id="spDot"></span><div><div class="sp-title" id="spTitle">Étape</div><div class="sp-meta" id="spMeta"></div></div><button class="sp-close" id="spClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div class="sp-body" id="spBody"></div>
+  </div></div>
+
   <section class="view" id="v-entreprises">
     <div class="ptitle"><div><h1>Entreprises</h1><div class="sub">Ta mémoire commerciale. Chaque compte, son histoire, d'un coup d'œil.</div></div></div>
 
@@ -942,15 +996,45 @@
   </section>
 
   <section class="view" id="v-offre">
-    <div class="ptitle"><div><h1>Mon offre</h1><div class="sub">Saisie une fois, elle nourrit chaque brief.</div></div><span class="pill" id="offPill">0 % complété</span></div>
-    <div class="card"><div class="cbd">
-      <div class="g2"><div class="fg"><label>Ton entreprise</label><input class="fld" id="sComp" autocomplete="off"/></div><div class="fg"><label>Site web <span>· pour ton logo</span></label><input class="fld" id="sSite" autocomplete="off"/></div></div>
-      <div class="g2"><div class="fg"><label>Ton secteur</label><input class="fld" id="sSec" autocomplete="off"/></div><div class="fg"><label>Ta cible type</label><input class="fld" id="sCible" autocomplete="off"/></div></div>
-      <div class="fg"><label>Ce que tu vends</label><input class="fld" id="sOff"/></div>
-      <div class="fg"><label>Ta proposition de valeur</label><textarea class="fld" id="sVal"></textarea></div>
-      <div class="fg"><label>Tes preuves <span>· clients, résultats, chiffres</span></label><textarea class="fld" id="sPr"></textarea></div>
-      <button class="btn" id="saveO"><span class="spin"></span><span>Enregistrer</span></button>
-    </div></div>
+    <div class="ptitle"><div><h1>Mon offre</h1><div class="sub">Le socle de chaque brief. Saisi une fois, Faro s'en sert à chaque rendez-vous.</div></div></div>
+    <div class="offre-grid">
+      <div class="offre-form">
+        <div class="card">
+          <div class="chd"><span class="t">Ton identité</span><span class="d">Qui tu es, ce que tu vends.</span></div>
+          <div class="cbd">
+            <div class="g2"><div class="fg"><label>Ton entreprise</label><input class="fld" id="sComp" autocomplete="off"/></div><div class="fg"><label>Site web <span>· pour ton logo</span></label><input class="fld" id="sSite" autocomplete="off"/></div></div>
+            <div class="g2"><div class="fg"><label>Ton secteur</label><input class="fld" id="sSec" autocomplete="off"/></div><div class="fg"><label>Ta cible type</label><input class="fld" id="sCible" autocomplete="off"/></div></div>
+            <div class="fg" style="margin-bottom:0;"><label>Ce que tu vends</label><input class="fld" id="sOff"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="chd"><span class="t">Ton argumentaire</span><span class="d">Ce qui convainc. Faro s'en sert pour l'ouverture et les ripostes.</span></div>
+          <div class="cbd">
+            <div class="fg"><label>Ta proposition de valeur</label><textarea class="fld" id="sVal" placeholder="Le problème que tu résous, mieux que les autres."></textarea></div>
+            <div class="fg" style="margin-bottom:0;"><label>Tes preuves <span>· clients, résultats, chiffres</span></label><textarea class="fld" id="sPr" placeholder="Des faits vérifiables : noms de clients, gains mesurés, ROI."></textarea></div>
+          </div>
+        </div>
+        <button class="btn lg" id="saveO"><span class="spin"></span><span>Enregistrer mon offre</span></button>
+      </div>
+      <aside class="offre-side">
+        <div class="card offre-ring-card">
+          <div class="offre-ring">
+            <svg viewBox="0 0 96 96"><circle class="orb" cx="48" cy="48" r="40"/><circle class="orf" cx="48" cy="48" r="40" id="offRing"/></svg>
+            <div class="offre-ring-v"><span id="offPct">0</span><em>%</em></div>
+          </div>
+          <div class="offre-ring-t" id="offRingT">Complète ton offre</div>
+          <div class="offre-ring-d" id="offRingD">Plus elle est riche, plus tes briefs sont précis.</div>
+        </div>
+        <div class="card">
+          <div class="chd"><span class="t">Pourquoi ça compte</span></div>
+          <div class="cbd offre-why">
+            <div class="ow-row"><span class="ow-ic" style="color:var(--copper)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div><div class="ow-t">L'ouverture sur mesure</div><div class="ow-d">Faro adapte ta phrase d'accroche à ton offre et à l'interlocuteur.</div></div></div>
+            <div class="ow-row"><span class="ow-ic" style="color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg></span><div><div class="ow-t">Les ripostes aux objections</div><div class="ow-d">Tes preuves nourrissent les réponses aux objections probables.</div></div></div>
+            <div class="ow-row"><span class="ow-ic" style="color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span><div><div class="ow-t">Le bon angle, à chaque fois</div><div class="ow-d">Ta cible et ta valeur orientent tout le brief vers ce qui touche.</div></div></div>
+          </div>
+        </div>
+      </aside>
+    </div>
   </section>
 
   <section class="view" id="v-reglages">
@@ -1236,6 +1320,8 @@ function wireDashTabs(){
     moneyPeriod=b.dataset.per; renderMoney();
   }));
   const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('pipeline'));
+  const spc=$('spClose'); if(spc)spc.addEventListener('click',closeStagePanel);
+  const sov=$('stageOv'); if(sov)sov.addEventListener('click',e=>{if(e.target===sov)closeStagePanel();});
   // Outils pipeline
   const pq=$('pipeQ');
   if(pq)pq.addEventListener('input',()=>{pipeSearch=pq.value.trim();boardRender($('board'),false);});
@@ -1377,20 +1463,24 @@ function renderFocus(aDeb,aRel,cold){
   // 2) Relances : le sens, jamais le texte brut du mail. Max 3.
   const relSorted=aRel.slice().sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
+  const TLBL={close:'closé',chaud:'chaud',tiede:'tiède',mort:'difficile'};
   relSorted.slice(0,3).forEach(d=>{
     const lb=dealBriefs(d).find(x=>x.debrief);
     const n=days(d.updated_at);
     const temp=lb&&lb.debrief?lb.debrief.temperature:null;
     const note=lb&&lb.debrief?lb.debrief.next_action:d.prochaine_action;
     let why;
-    // Une note d'action courte et lisible : on l'affiche. Sinon on montre le temps écoulé.
+    // Priorité 1 : une note d'action claire et courte
     if(note&&!looksLikeMail(note)&&note.length<=48){
-      why=`Tu devais : <b>${esc(note)}</b>${n>=7?` · ${n} j`:''}.`;
-    } else if(n>=1){
-      const chaud=temp==='chaud'?'Deal chaud, ':'';
-      why=`${chaud}sans relance depuis <b>${n} jour${n>1?'s':''}</b>.`;
+      why=`Tu devais <b>${esc(note.toLowerCase())}</b>${n>=7?` · ${n} j déjà`:''}.`;
     } else {
-      why=`À relancer, tu avais prévu une suite.`;
+      // Sinon, du concret : temps, étape, température
+      const bits=[];
+      bits.push(`vu ${n<=0?"aujourd'hui":'il y a '+n+' j'}`);
+      if(temp)bits.push(`RDV ${TLBL[temp]}`);
+      bits.push(`en ${stg(d.etape).l.toLowerCase()}`);
+      const urgence=temp==='chaud'?'À relancer vite : ':n>=10?'Ne le laisse pas filer : ':'À relancer : ';
+      why=`${urgence}<b>${bits.join(', ')}</b>.`;
     }
     const hot=temp==='chaud';
     rows.push({rc:hot?'var(--copper)':'var(--gold)',ic:'arrow',nm:d.entreprise,why,
@@ -1533,7 +1623,9 @@ function boardRender(root,mini){
   };
   root.innerHTML=STAGES.map(s=>{
     const all=deals.filter(d=>d.etape===s.k);
-    const ds=all.filter(match).sort(sortFn);
+    const filtered=all.filter(match).sort(sortFn);
+    const CAP=4;
+    const ds=filtered.slice(0,CAP);
     const val=all.reduce((a,d)=>a+dealVal(d),0);
     const cards=ds.map(d=>{
       const tags=(d.tags||[]).slice(0,2).map(t=>`<span class="tagc">${esc(t)}</span>`).join('');
@@ -1548,12 +1640,15 @@ function boardRender(root,mini){
       const foot=(mv||temp||staleTag)?`<div class="dc-foot">${mv?`<span class="dc-money">${eur(mv)}</span>`:''}${temp?`<span class="dc-temp" style="background:${TC[temp]}" title="Dernier RDV : ${temp}"></span>`:''}${staleTag}</div>`:'';
       return `<div class="dcard ${alClass}" data-d="${d.id}" draggable="true"><span class="dc-alert"></span><div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span></div><div class="m">${d.interlocuteur?esc(trunc(cleanPoste(d.interlocuteur),22))+' · ':''}${rel(d.updated_at)}${tags?' '+tags:''}</div>${foot}${sugg}</div>`;
     }).join('');
-    const hidden=all.length-ds.length;
-    const valTag=val?`<span class="cv-money">${eur(val)}</span>`:'';
-    return `<div class="col" data-st="${s.k}"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${all.length}</span></div>${val?`<div class="col-val">${eur(val)} en jeu</div>`:''}<div class="colbd">${cards||`<div style="font-size:10.5px;color:var(--faint);text-align:center;padding:10px 4px;">${hidden>0?hidden+' masqué'+(hidden>1?'s':''):'Vide'}</div>`}</div></div>`;
+    const hiddenFilter=all.length-filtered.length;
+    const overflow=filtered.length-ds.length;
+    const seeBtn=overflow>0?`<button class="col-see" data-see="${s.k}">Voir les ${overflow} autre${overflow>1?'s':''}</button>`:'';
+    const emptyMsg=hiddenFilter>0?hiddenFilter+' masqué'+(hiddenFilter>1?'s':''):'Vide';
+    return `<div class="col" data-st="${s.k}"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${all.length}</span></div>${val?`<div class="col-val">${eur(val)} en jeu</div>`:''}<div class="colbd">${cards||`<div style="font-size:10.5px;color:var(--faint);text-align:center;padding:10px 4px;">${emptyMsg}</div>`}</div>${seeBtn}</div>`;
   }).join('');
   root.querySelectorAll('.dcard').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
   root.querySelectorAll('[data-acc]').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();acceptSugg(el.dataset.acc);}));
+  root.querySelectorAll('[data-see]').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();openStagePanel(el.dataset.see);}));
   root.querySelectorAll('.dcard[draggable]').forEach(el=>{
     el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',el.dataset.d);e.dataTransfer.effectAllowed='move';el.classList.add('dragging');});
     el.addEventListener('dragend',()=>el.classList.remove('dragging'));
@@ -1572,6 +1667,31 @@ function boardRender(root,mini){
     });
   });
 }
+
+// Panneau d'étape en grand
+function openStagePanel(stageKey){
+  const s=stg(stageKey);
+  const all=deals.filter(d=>d.etape===stageKey).sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
+  const val=all.reduce((a,d)=>a+dealVal(d),0);
+  $('spDot').style.background=s.c;
+  $('spTitle').textContent=s.l;
+  $('spMeta').textContent=`${all.length} deal${all.length>1?'s':''}${val?' · '+eur(val)+' en jeu':''}`;
+  const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
+  const TLBL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
+  $('spBody').innerHTML=all.map(d=>{
+    const mv=dealVal(d);
+    const temp=dealTemp(d);
+    const n=days(d.updated_at);
+    const active=!['gagne','perdu'].includes(d.etape);
+    const tempPart=temp?`<span class="tdot" style="background:${TC[temp]}"></span>${TLBL[temp]}`:'';
+    const stalePart=active&&n>=7?`<span style="color:${n>=14?'var(--red)':'var(--gold)'}">${n} j sans mouvement</span>`:'';
+    const meta=[d.interlocuteur?cleanPoste(d.interlocuteur):'',rel(d.updated_at)].filter(Boolean).map(esc).join(' · ');
+    return `<div class="sp-row" data-d="${d.id}">${dealLogo(d)}<div class="spr-body"><div class="spr-n">${esc(d.entreprise)}</div><div class="spr-m">${meta}${tempPart?' · '+tempPart:''}${stalePart?' · '+stalePart:''}</div></div>${mv?`<span class="spr-money">${eur(mv)}</span>`:''}</div>`;
+  }).join('')||'<div class="empty">Aucun deal à cette étape.</div>';
+  $('spBody').querySelectorAll('.sp-row').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d){closeStagePanel();openFiche(d);}}));
+  $('stageOv').classList.add('on');
+}
+function closeStagePanel(){$('stageOv').classList.remove('on');}
 
 // Barre de pilotage
 function renderPilot(){
@@ -2549,9 +2669,21 @@ document.addEventListener('keydown',e=>{
 /* ═══ Offre + réglages ═══ */
 function refreshOffre(){
   const fields=['company','site','secteur','cible','offre','contexte','preuves'];
-  const pct=Math.round(fields.filter(f=>(set[f]||'').trim()).length/fields.length*100);
-  $('offPill').textContent=pct+' % complété';
-  $('offDot').style.display=pct<100?'':'none';
+  const filled=fields.filter(f=>(set[f]||'').trim()).length;
+  const pct=Math.round(filled/fields.length*100);
+  const ring=$('offRing');
+  if(ring){
+    const C=2*Math.PI*40;
+    ring.style.strokeDashoffset=C*(1-pct/100);
+  }
+  if($('offPct'))$('offPct').textContent=pct;
+  if($('offRingT')&&$('offRingD')){
+    if(pct===100){$('offRingT').textContent='Offre complète';$('offRingD').textContent='Tes briefs ont tout ce qu\'il faut pour viser juste.';}
+    else if(pct>=60){$('offRingT').textContent='Presque là';$('offRingD').textContent=`Encore ${fields.length-filled} champ${fields.length-filled>1?'s':''} et ton offre est complète.`;}
+    else if(pct>0){$('offRingT').textContent='Bon début';$('offRingD').textContent='Plus tu enrichis, plus tes briefs sont précis.';}
+    else {$('offRingT').textContent='Complète ton offre';$('offRingD').textContent='Plus elle est riche, plus tes briefs sont précis.';}
+  }
+  const od=$('offDot'); if(od)od.style.display=pct<100?'':'none';
 }
 async function save(patch,btn){
   btn.classList.add('load'); btn.disabled=true;
