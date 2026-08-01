@@ -528,6 +528,9 @@
   .verd.on{display:flex;}
   .verd .in{text-align:center;max-width:460px;width:100%;}
   @keyframes stampin{from{transform:rotate(-4deg) scale(1.6);opacity:0;}to{transform:rotate(-4deg) scale(1);opacity:1;}}
+  .verd-streak{display:flex;align-items:center;gap:9px;justify-content:center;margin-top:20px;padding:10px 18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:13px;color:#fff;max-width:400px;margin-left:auto;margin-right:auto;animation:fadein .5s ease .3s both;}
+  .verd-streak svg{width:17px;height:17px;flex-shrink:0;opacity:.9;}
+  .verd-streak b{font-weight:700;}
   .verd .stamp{display:inline-block;font-family:var(--serif);font-weight:700;font-size:clamp(30px,6vw,48px);letter-spacing:.02em;text-transform:uppercase;padding:12px 30px;border:4px solid currentColor;border-radius:10px;transform:rotate(-4deg);animation:stampin .35s cubic-bezier(.2,.7,.2,1);}
   .verd.close .stamp{color:var(--green-d);}
   .verd.chaud .stamp{color:var(--copper-d);}
@@ -796,7 +799,15 @@
   .cage{font-size:9.5px;font-weight:700;border-radius:6px;padding:2.5px 9px;white-space:nowrap;border:1px solid;}
   .cage.warm{color:var(--gold);background:var(--goldbg);border-color:#E7CE8C;}
   .cage.cold{color:var(--red);background:var(--redbg);border-color:var(--redbd);}
-  .weekline{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--dim);margin-top:5px;flex-wrap:wrap;}
+  .weekline{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--dim);margin-top:6px;flex-wrap:wrap;}
+  .weekline b{color:var(--ink);font-weight:700;}
+  .weekline .wl-act{display:inline-flex;align-items:center;gap:8px;transition:.13s;}
+  .weekline .wl-act:hover b{color:var(--copper-d);}
+  .wl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block;}
+  .wl-dot.blue{background:var(--blue);box-shadow:0 0 0 3px var(--bluebg);}
+  .wl-dot.copper{background:var(--copper);box-shadow:0 0 0 3px var(--washc);}
+  .wl-dot.gold{background:var(--gold);box-shadow:0 0 0 3px var(--goldbg);}
+  .wl-dot.green{background:var(--green);box-shadow:0 0 0 3px var(--greenbg);}
   .weekline b{color:var(--ink);font-weight:700;}
   .weekline .wd{width:3px;height:3px;border-radius:50%;background:var(--faint);}
   .prio{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#FCF3E9,#F8EADB);border:1px solid #F0DCC5;border-radius:var(--rl);padding:14px 18px;margin-bottom:16px;}
@@ -1119,6 +1130,7 @@
 <div class="verd" id="verdOv"><div class="in">
   <div class="esvg big" id="verdArt"></div>
   <div class="stamp" id="verdStamp">Closé</div>
+  <div class="verd-streak" id="verdStreak"></div>
   <div class="steps" id="verdSteps"></div>
   <div class="acts" id="verdActs">
     <button class="btn" id="verdDeal">Voir le deal</button>
@@ -1277,6 +1289,7 @@ function weekStats(){
   for(const b of briefs){ if(b.debrief)streak++; else break; }
   return {briefs:bw.length,debriefs:dw.length,wins:gw.length,streak};
 }
+function coldGlobal(cold){return cold&&cold.some(d=>days(d.updated_at)>=10);}
 function dash(){
   const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
   const aDeb=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer');
@@ -1285,9 +1298,29 @@ function dash(){
   const wins=deals.filter(d=>d.etape==='gagne');
   const losts=deals.filter(d=>d.etape==='perdu');
 
-  // ─── Greeting + weekline ───
+  // Ligne d'accueil : un déclencheur d'action, pas un bilan
   const ws=weekStats();
-  $('weekline').innerHTML=briefs.length?`<span><b>${ws.briefs}</b> brief${ws.briefs>1?'s':''} cette semaine</span><span class="wd"></span><span><b>${ws.debriefs}</b> débriefé${ws.debriefs>1?'s':''}</span><span class="wd"></span><span><b>${ws.wins}</b> gagné${ws.wins>1?'s':''}</span>${ws.streak>1?`<span class="wd"></span><span>série de <b>${ws.streak}</b> débriefs</span>`:''}`:'<span>Ton cockpit se remplit dès ton premier rendez-vous.</span>';
+  const h=new Date().getHours();
+  const wl=$('weekline');
+  if(!briefs.length){
+    wl.innerHTML='<span>Prépare ton premier rendez-vous, Faro fait le reste.</span>';
+  } else {
+    // Priorité : ce qui appelle une action maintenant
+    if(aDeb.length>=1){
+      const oldest=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];
+      const n=days(oldest.created_at);
+      wl.innerHTML=`<span class="wl-act" data-wl="deb"><span class="wl-dot blue"></span>${aDeb.length===1?`Un rendez-vous attend son débrief${n>=3?`, depuis ${n} j`:''}`:`${aDeb.length} rendez-vous attendent leur débrief`}. <b>Capture pendant que c'est frais.</b></span>`;
+    } else if(aRel.length>=1){
+      wl.innerHTML=`<span class="wl-act" data-wl="rel"><span class="wl-dot copper"></span>${aRel.length===1?'Une relance':`${aRel.length} relances`} t'attend${aRel.length>1?'ent':''}. <b>Ne laisse pas l'élan retomber.</b></span>`;
+    } else if(coldGlobal(cold)){
+      wl.innerHTML=`<span class="wl-act" data-wl="cold"><span class="wl-dot gold"></span>Un deal dort depuis un moment. <b>Un signe de vie, et il repart.</b></span>`;
+    } else {
+      const salut=h<12?'Belle journée pour avancer':h<18?'Bon moment pour préparer la suite':'Tout est à jour, beau travail';
+      wl.innerHTML=`<span><span class="wl-dot green"></span>${salut}.${ws.streak>1?` Série de <b>${ws.streak}</b> débriefs, tiens-la.`:''}</span>`;
+    }
+    const act=wl.querySelector('[data-wl]');
+    if(act){act.style.cursor='pointer';act.addEventListener('click',()=>{const w=act.dataset.wl;if(w==='deb'){const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}else go('pipeline');});}
+  }
 
   // ─── Héros argent ───
   renderMoney();
@@ -2478,6 +2511,18 @@ function showVerdict(t,deal,hasSyn){
   $('verdOv').className='verd on '+t;
   $('verdArt').innerHTML=t==='close'?ESVG.victoire:(t==='mort'?ESVG.perdu:'');
   $('verdStamp').textContent=VERD[t]||'Terminé';
+  // Renfort d'habitude : la série de débriefs
+  const ws=weekStats();
+  const vs=$('verdStreak');
+  if(vs){
+    if(ws.streak>=2){
+      vs.style.display='';
+      vs.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg><span><b>${ws.streak} débriefs d'affilée.</b> Tu construis ta mémoire, continue.</span>`;
+    } else if(ws.debriefs>=1){
+      vs.style.display='';
+      vs.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Chaque débrief rend Faro plus précis pour toi.</span>`;
+    } else vs.style.display='none';
+  }
   const lines=[];
   lines.push(`<div class="vline"><span class="ok2">✓</span>${hasSyn?'Synthèse du rendez-vous enregistrée':'Débrief enregistré'}</div>`);
   if(deal&&(t==='close'||t==='mort'))lines.push(`<div class="vline"><span class="ok2">✓</span>Deal marqué ${stg(deal.etape).l}</div>`);
