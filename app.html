@@ -1326,18 +1326,28 @@ function dash(){
   // ─── Héros argent ───
   renderMoney();
 
-  // ─── KPI compacts ───
+  // ─── KPI compacts : jamais un tiret ───
   const closed=wins.length+losts.length;
   const winRate=closed?Math.round(wins.length/closed*100):null;
   const vel=velocity();
   const valDeals=wins.concat(actifs).filter(d=>dealVal(d)>0);
   const avgDeal=valDeals.length?Math.round(valDeals.reduce((a,d)=>a+dealVal(d),0)/valDeals.length):null;
-  const KPI=[
-    {k:'Taux de closing',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} deals clos`:'Dès ton premier deal clos'},
-    {k:'Vélocité',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
-    {k:'Panier moyen',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
-  ];
-  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="pipeline"><div class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg></div><div class="kmid"><div class="kk">${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div></div>`).join('');
+  const hasRealKpi=closed>0||vel||avgDeal;
+  let KPI;
+  if(hasRealKpi){
+    KPI=[
+      {k:'Taux de closing',go:'pipeline',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} deals clos`:'Dès ton premier deal clos'},
+      {k:'Vélocité',go:'pipeline',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
+      {k:'Panier moyen',go:'pipeline',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
+    ];
+  } else {
+    KPI=[
+      {k:'Briefs préparés',go:'pipeline',ic:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>',v:briefs.length,h:briefs.length?'ta mémoire grandit':'prépare le premier'},
+      {k:'Deals actifs',go:'pipeline',ic:'<path d="M3 6h18M7 12h10M10 18h4"/>',v:actifs.length,h:actifs.length?'dans ton pipeline':'aucun encore'},
+      {k:'Entreprises',go:'entreprises',ic:'<path d="M4 21h16M7 21V6l5-3 5 3v15M10 9h4M10 13h4"/>',v:deals.length,h:deals.length?'suivies par Faro':'à venir'}
+    ];
+  }
+  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="${k.go}"><div class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg></div><div class="kmid"><div class="kk">${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div></div>`).join('');
   $('kpiGrid').querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
 
   // ─── Plan de bataille + intelligence ───
@@ -1378,9 +1388,31 @@ function renderMoney(){
   const closingVal=closing.reduce((a,d)=>a+dealVal(d),0);
   const hasWon=wonAll.length>0;
   const hasAnyMontant=deals.some(d=>dealVal(d)>0);
+  const ws=weekStats();
 
-  // Roi : signé sur la période. Si rien signé, bascule sur "en jeu".
-  let kingLabel, kingVal, moveHtml='';
+  let kingLabel, kingVal, moveHtml='', kingClass='';
+
+  if(!hasAnyMontant){
+    // AUCUN MONTANT : le héros bascule sur l'activité, vivant et fier, jamais un tiret
+    if(ws.briefs>0){
+      kingLabel='Cette semaine'; kingVal=ws.briefs+(ws.briefs>1?' briefs':' brief');
+      const parts=[];
+      if(ws.debriefs>0)parts.push(`${ws.debriefs} débriefé${ws.debriefs>1?'s':''}`);
+      if(actifs.length>0)parts.push(`${actifs.length} deal${actifs.length>1?'s':''} en cours`);
+      moveHtml=parts.length?`<span class="txt">${parts.join(' · ')}. Ajoute un montant au débrief pour suivre ton argent.</span>`:`<span class="txt">Ajoute un montant au débrief pour suivre ton argent.</span>`;
+    } else if(deals.length>0){
+      kingLabel='Ton pipeline'; kingVal=deals.length+(deals.length>1?' entreprises':' entreprise');
+      moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}. Prépare, débriefe, l'argent suivra.</span>`;
+    } else {
+      kingLabel='Bienvenue'; kingVal='Prêt';
+      moveHtml=`<span class="txt">Prépare ton premier rendez-vous, Faro s'occupe du reste.</span>`;
+    }
+    $('mhKing').textContent=kingLabel; $('mhBig').textContent=kingVal; $('mhMove').innerHTML=moveHtml;
+    renderMhRight(actifs,closing,closingVal,totActif,true);
+    return;
+  }
+
+  // AVEC MONTANTS : logique argent normale
   if(moneyPeriod==='month'){
     const mSigned=signedIn(monthStart()).reduce((a,d)=>a+dealVal(d),0);
     const mCount=signedIn(monthStart()).length;
@@ -1412,18 +1444,26 @@ function renderMoney(){
   $('mhKing').textContent=kingLabel;
   $('mhBig').textContent=kingVal;
   $('mhMove').innerHTML=moveHtml;
+  renderMhRight(actifs,closing,closingVal,totActif,false);
+}
 
-  // Colonne droite : en jeu + à portée de signature
-  const metrics=[
-    {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}`,go:'pipeline'},
-    {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' deal'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucun deal en closing',go:'pipeline'}
-  ];
+function renderMhRight(actifs,closing,closingVal,totActif,noMontant){
+  // Colonne droite : contexte, adapté selon qu'on a des montants ou non
+  let metrics;
+  if(noMontant){
+    const stale=actifs.filter(d=>days(d.updated_at)>=7).length;
+    metrics=[
+      {k:'Deals en cours',dt:'var(--copper)',v:actifs.length||'0',h:actifs.length?'dans ton pipeline':'aucun pour l\'instant',go:'pipeline'},
+      {k:'À portée de signature',dt:'var(--green)',v:closing.length||'0',h:closing.length?'en closing':'aucun en closing',go:'pipeline'}
+    ];
+  } else {
+    metrics=[
+      {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}`,go:'pipeline'},
+      {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' deal'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucun deal en closing',go:'pipeline'}
+    ];
+  }
   $('mhRight').innerHTML=metrics.map(m=>`<div class="mh-metric" data-mgo="${m.go}"><div class="mm-k"><span class="dt" style="background:${m.dt}"></span>${m.k}</div><div class="mm-v">${m.v}</div><div class="mm-h">${m.h}</div></div>`).join('');
   $('mhRight').querySelectorAll('[data-mgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.mgo)));
-
-  if(!hasAnyMontant){
-    $('mhMove').innerHTML=`<span class="txt">Renseigne le montant de tes deals au débrief pour voir ton argent grandir ici.</span>`;
-  }
 }
 
 function velocity(){
