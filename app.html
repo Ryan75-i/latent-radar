@@ -373,6 +373,7 @@
   .colhd .t{font-size:11px;font-weight:700;}
   .colhd .c{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--dim);}
   .colbd{padding:8px;display:flex;flex-direction:column;gap:7px;flex:1;overflow-y:auto;}
+  .col-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint);text-align:center;padding:14px 10px;line-height:1.5;font-style:italic;}
   .colbd::-webkit-scrollbar{width:5px;} .colbd::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   .dcard{background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.14s;box-shadow:var(--sh);}
   .dcard:hover{transform:translateY(-2px);box-shadow:var(--shm);border-color:var(--line2);}
@@ -1247,28 +1248,34 @@
   </section>
 
   <section class="view" id="v-reglages">
-    <div class="ptitle"><div><h1>Réglages</h1><div class="sub">Ton compte et tes données.</div></div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="regGrid">
-      <div class="card"><div class="chd"><span class="t">Profil</span></div><div class="cbd">
-        <div class="fg"><label>Prénom et nom</label><input class="fld" id="sName" autocomplete="off"/></div>
-        <div class="fg"><label>Email</label><input class="fld" id="sMail2" disabled/></div>
-        <button class="btn sm" id="saveP"><span class="spin"></span><span>Enregistrer</span></button>
-      </div></div>
-      <div class="card"><div class="chd"><span class="t">Sécurité</span></div><div class="cbd">
-        <div class="fg"><label>Nouveau mot de passe <span>· six caractères minimum</span></label><input class="fld" id="sPass" type="password"/></div>
-        <button class="btn sm" id="savePw"><span class="spin"></span><span>Mettre à jour</span></button>
-      </div></div>
-      <div class="card"><div class="chd"><span class="t">Jetons</span></div><div class="cbd">
-        <div class="kv"><span class="k">Restants</span><span class="v" id="uL">—</span></div>
-        <div class="kv"><span class="k">Quota hebdomadaire</span><span class="v" id="uM">—</span></div>
-        <div class="kv"><span class="k">Recharge</span><span class="v" id="uR">lundi</span></div>
-        <div class="kv"><span class="k">Briefs au total</span><span class="v" id="uT">0</span></div>
-      </div></div>
-      <div class="card"><div class="chd"><span class="t">Données</span><span class="d">Prêtes pour ton CRM.</span></div><div class="cbd">
-        <div style="font-size:12px;color:var(--dim);margin-bottom:12px;">Affaires, briefs, annotations et débriefs, dans un format structuré. La connexion HubSpot et Pipedrive arrive.</div>
-        <button class="btn g sm" id="exp">Exporter tout en JSON</button>
-        <a class="btn g sm" href="mailto:hello@farobrief.com" style="margin-left:6px;">Nous écrire</a>
-      </div></div>
+    <div class="ptitle"><div><h1>Réglages</h1><div class="sub">Ton compte, tes jetons, tes données. Tout ce qui fait tourner Faro pour toi.</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;" id="regGrid">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card"><div class="chd"><span class="t">Profil</span><span class="d">Qui tu es dans Faro.</span></div><div class="cbd">
+          <div class="fg"><label>Prénom et nom</label><input class="fld" id="sName" autocomplete="off"/></div>
+          <div class="fg"><label>Email</label><input class="fld" id="sMail2" disabled/></div>
+          <button class="btn sm" id="saveP"><span class="spin"></span><span>Enregistrer</span></button>
+        </div></div>
+        <div class="card"><div class="chd"><span class="t">Sécurité</span><span class="d">Ton accès.</span></div><div class="cbd">
+          <div class="fg"><label>Nouveau mot de passe <span>· six caractères minimum</span></label><input class="fld" id="sPass" type="password"/></div>
+          <button class="btn sm" id="savePw"><span class="spin"></span><span>Mettre à jour</span></button>
+        </div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card"><div class="chd"><span class="t">Jetons</span><span class="d">Chaque brief consomme un jeton.</span></div><div class="cbd">
+          <div class="kv"><span class="k">Restants</span><span class="v" id="uL">—</span></div>
+          <div class="kv"><span class="k">Quota hebdomadaire</span><span class="v" id="uM">—</span></div>
+          <div class="kv"><span class="k">Recharge</span><span class="v" id="uR">lundi</span></div>
+          <div class="kv"><span class="k">Briefs au total</span><span class="v" id="uT">0</span></div>
+        </div></div>
+        <div class="card"><div class="chd"><span class="t">Tes données</span><span class="d">Elles t'appartiennent, tu les emportes.</span></div><div class="cbd">
+          <div style="font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.5;">Affaires, briefs, annotations et débriefs, dans un format structuré. La connexion HubSpot et Pipedrive arrive.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn g sm" id="exp">Exporter tout en JSON</button>
+            <a class="btn g sm" href="mailto:hello@farobrief.com">Nous écrire</a>
+          </div>
+        </div></div>
+      </div>
     </div>
   </section>
 
@@ -2044,8 +2051,9 @@ function boardRender(root,mini){
     const hiddenFilter=all.length-filtered.length;
     const overflow=filtered.length-ds.length;
     const seeBtn=overflow>0?`<button class="col-see" data-see="${s.k}">Voir les ${overflow} autre${overflow>1?'s':''}</button>`:'';
-    const emptyMsg=hiddenFilter>0?hiddenFilter+' masqué'+(hiddenFilter>1?'s':''):'Vide';
-    return `<div class="col" data-st="${s.k}"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${all.length}</span></div>${val?`<div class="col-val">${eur(val)} en jeu</div>`:''}<div class="colbd">${cards||`<div style="font-size:10.5px;color:var(--faint);text-align:center;padding:10px 4px;">${emptyMsg}</div>`}</div>${seeBtn}</div>`;
+    const COLHELP={contact:'Les nouvelles affaires arrivent ici.',decouverte:'Après un premier rendez-vous débriefé.',negociation:'Quand on parle conditions.',closing:'À portée de signature.',gagne:'Tes victoires s\'empilent ici.',perdu:'On note, on apprend, on passe.'};
+    const emptyMsg=hiddenFilter>0?hiddenFilter+' masqué'+(hiddenFilter>1?'s':''):(COLHELP[s.k]||'');
+    return `<div class="col" data-st="${s.k}"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${all.length}</span></div>${val?`<div class="col-val">${eur(val)} en jeu</div>`:''}<div class="colbd">${cards||`<div class="col-empty">${emptyMsg}</div>`}</div>${seeBtn}</div>`;
   }).join('');
   root.querySelectorAll('.dcard').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
   root.querySelectorAll('[data-acc]').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();acceptSugg(el.dataset.acc);}));
