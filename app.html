@@ -179,6 +179,47 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* Confirmation de suppression */
+  .confirmov{position:fixed;inset:0;background:rgba(30,25,18,.45);backdrop-filter:blur(5px);z-index:110;display:none;align-items:center;justify-content:center;padding:20px;}
+  .confirmov.on{display:flex;}
+  .confirmbox{max-width:400px;width:100%;background:var(--card);border:1px solid var(--line2);border-radius:16px;box-shadow:var(--shl);padding:26px;text-align:center;animation:up .28s cubic-bezier(.2,.7,.2,1);}
+  .cf-ic{width:48px;height:48px;border-radius:50%;background:var(--redbg);color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+  .cf-ic svg{width:23px;height:23px;}
+  .cf-t{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:6px;}
+  .cf-d{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:20px;}
+  .cf-acts{display:flex;gap:9px;justify-content:center;}
+  .btn.danger{background:var(--red);border-color:var(--red);color:#fff;}
+  .btn.danger:hover{background:#82311f;border-color:#82311f;}
+  .btn.g.danger{background:none;border-color:var(--redbd);color:var(--red);}
+  .btn.g.danger:hover{background:var(--redbg);border-color:var(--red);}
+  .row-del{border:none;background:none;color:var(--faint);cursor:pointer;padding:6px;border-radius:6px;opacity:0;transition:.13s;flex-shrink:0;line-height:0;}
+  .row:hover .row-del{opacity:1;}
+  .row-del:hover{color:var(--red);background:var(--redbg);}
+  .row-del svg{width:15px;height:15px;}
+  /* Interrupteur avant-après 1-2 */
+  .dip-switch{display:inline-flex;gap:2px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-right:12px;}
+  .ds-b{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12px;font-weight:600;color:var(--dim);padding:5px 11px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
+  .ds-b .ds-num{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:5px;font-family:var(--serif);font-weight:700;font-size:10px;background:var(--line2);color:#fff;}
+  .ds-b.on{background:#fff;color:var(--ink);box-shadow:var(--sh);}
+  .ds-b[data-face="brief"].on .ds-num{background:var(--copper);}
+  .ds-b[data-face="debrief"].on .ds-num{background:var(--copper-d);}
+  /* Document débrief */
+  .deb-doc-head{display:flex;align-items:center;gap:13px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--line);}
+  .deb-doc-head .dip-badge{width:38px;height:38px;border-radius:10px;font-size:20px;box-shadow:0 3px 10px -3px rgba(169,83,30,.5);}
+  .ddh-t{font-family:var(--serif);font-weight:600;font-size:22px;line-height:1.1;}
+  .ddh-s{font-size:12.5px;color:var(--dim);margin-top:2px;}
+  .deb-conf{display:flex;flex-direction:column;gap:12px;}
+  .dc-line{}
+  .dc-k{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:6px;}
+  .dc-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .dc-prevu,.dc-vecu{padding:10px 12px;border-radius:8px;font-size:13px;line-height:1.45;color:var(--soft);}
+  .dc-prevu{background:var(--wash);border:1px solid var(--line3);}
+  .dc-vecu{background:var(--washc);border:1px solid #EBD6C2;color:var(--ink);}
+  .dc-tag{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;color:var(--faint);}
+  .dc-tag.v{color:var(--copper-d);}
+  .dc-prevu i,.dc-vecu i{color:var(--faint);font-style:italic;}
+  .deb-next{font-size:14px;color:var(--ink);font-weight:600;padding:12px 14px;background:var(--bluebg);border-radius:8px;border:1px solid #C6DCEA;}
+  .deb-phrase{font-family:var(--serif);font-size:16px;font-style:italic;color:var(--soft);line-height:1.5;padding:4px 0;}
   /* Verrouillage du brief après la réunion */
   .brief-lock-banner{display:flex;align-items:flex-start;gap:11px;background:linear-gradient(135deg,#F4F1EC,#F0ECE4);border:1px solid var(--line2);border-radius:var(--rl);padding:13px 15px;margin-bottom:16px;font-size:12.5px;color:var(--soft);line-height:1.5;}
   .brief-lock-banner svg{width:20px;height:20px;flex-shrink:0;color:var(--dim);margin-top:1px;}
@@ -845,7 +886,16 @@
   .dash-cols>.card{display:flex;flex-direction:column;min-width:0;}
   .dash-cols>.card .cbd,.dash-cols>.card #focusW{flex:1;}
   .focus-card #focusW{display:flex;flex-direction:column;}
-  .focus-row{display:flex;align-items:center;gap:12px;padding:0 16px;min-height:66px;border-bottom:1px solid var(--line3);transition:.12s;}
+  .focus-row{display:flex;align-items:center;gap:12px;padding:0 16px;min-height:66px;border-bottom:1px solid var(--line3);transition:height .3s ease,opacity .3s ease,padding .3s ease,background .12s;overflow:hidden;}
+  .focus-count{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;font-size:11px;color:var(--dim);border-bottom:1px solid var(--line3);background:var(--wash);}
+  .focus-count b{color:var(--ink);font-weight:700;}
+  .focus-count .fc-done{color:var(--green-d);font-weight:600;}
+  .focus-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line2);background:#fff;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent;transition:.14s;padding:0;}
+  button.focus-check:hover{border-color:var(--green);background:var(--greenbg);}
+  button.focus-check svg{width:13px;height:13px;}
+  .focus-row.checked .focus-check{background:var(--green);border-color:var(--green);color:#fff;}
+  .focus-row.checked .focus-body{opacity:.5;text-decoration:line-through;}
+  .focus-check.nocheck{border:none;background:none;cursor:default;width:22px;}
   .focus-row:last-child{border-bottom:none;}
   .focus-row:hover{background:var(--wash);}
   .focus-ic{width:32px;height:32px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
@@ -1054,7 +1104,7 @@
 
   <section class="view" id="v-fiche">
     <nav class="fildar fildar-page" id="ficheFil"></nav>
-    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
+    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g danger" id="fDelete">Supprimer</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div class="card"><div class="chd"><span class="t">L'affaire</span><span class="d">Où en est la vente.</span></div><div class="cbd">
@@ -1184,8 +1234,12 @@
 <div class="briefDoc" id="briefDoc">
   <div class="docbar">
     <button class="backb" id="docClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
-    <div class="bc"><span class="dip-badge b1">1</span><nav class="fildar" id="briefFil"></nav></div>
+    <div class="bc"><nav class="fildar" id="briefFil"></nav></div>
     <div class="g1"></div>
+    <div class="dip-switch" id="dipSwitch" style="display:none;">
+      <button class="ds-b on" data-face="brief"><span class="ds-num">1</span>Brief</button>
+      <button class="ds-b" data-face="debrief"><span class="ds-num">2</span>Débrief</button>
+    </div>
     <span class="chrono" id="chrono">00:00</span>
   </div>
   <div class="docbody">
@@ -1205,6 +1259,7 @@
       <div class="card" id="covCard"><div class="chd"><span class="t">Couverture du rendez-vous</span></div><div class="cbd" id="covList"></div></div>
     </aside>
     <div class="docmain" id="dMain"></div>
+    <div class="docmain" id="dMainDeb" style="display:none;"></div>
     <!-- Carnet de débrief : compagnon en direct pendant le RDV -->
     <aside class="carnet" id="carnet">
       <div class="carnet-head"><span class="dip-badge b2">2</span><div><div class="carnet-t">Ton débrief</div><div class="carnet-s" id="carnetS">Il s'écrit pendant que tu notes.</div></div><span class="carnet-live" id="carnetLive"></span></div>
@@ -1228,6 +1283,13 @@
   <div class="coach" id="coach"></div>
   <div class="savedtag" id="savedTag">Sauvegardé</div>
 </div>
+
+<div class="confirmov" id="confirmOv"><div class="confirmbox">
+  <div class="cf-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></div>
+  <div class="cf-t" id="cfTitle">Supprimer ?</div>
+  <div class="cf-d" id="cfBody"></div>
+  <div class="cf-acts"><button class="btn g" id="cfCancel">Annuler</button><button class="btn danger" id="cfConfirm">Supprimer</button></div>
+</div></div>
 
 <div class="debov" id="debOv"><div class="debbox">
   <div class="dip-head deb"><span class="dip-badge b2">2</span><div class="dip-txt"><div class="dip-t">Le débrief</div><div class="dip-s">Après le rendez-vous. Le tome 2 de ton brief.</div></div></div>
@@ -1669,11 +1731,11 @@ function renderFocus(aDeb,aRel,cold){
     const oldest=sorted[0];
     const n=days(oldest.created_at);
     if(aDeb.length===1){
-      rows.push({rc:'var(--blue)',ic:'clock',nm:oldest.entreprise,
+      rows.push({rc:'var(--blue)',ic:'clock',nm:oldest.entreprise,nocheck:true,
         why:`Rendez-vous à débriefer${n>0?` depuis <b>${n} j</b>`:" <b>aujourd'hui</b>"}. Capture-le avant qu'il s'efface.`,
         act:'Débriefer',ac:'deb',fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
     } else {
-      rows.push({rc:'var(--blue)',ic:'clock',nm:`${aDeb.length} rendez-vous à débriefer`,
+      rows.push({rc:'var(--blue)',ic:'clock',nm:`${aDeb.length} rendez-vous à débriefer`,nocheck:true,
         why:`Le plus ancien remonte à <b>${n} j</b>. Commence par <b>${esc(oldest.entreprise)}</b>.`,
         act:'Débriefer',ac:'deb',count:aDeb.length,fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
     }
@@ -1703,7 +1765,8 @@ function renderFocus(aDeb,aRel,cold){
     const hot=temp==='chaud';
     rows.push({rc:hot?'var(--copper)':'var(--gold)',ic:'arrow',nm:d.entreprise,why,
       act:lb?'Relancer':'Voir',ac:lb?'rel':'see',
-      fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d)});
+      fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d),
+      done:async()=>{d.updated_at=new Date().toISOString();try{await sb.from('deals').update({updated_at:d.updated_at}).eq('id',d.id);}catch(e){}toast('Relance marquée comme faite');}});
   });
   // 3) Un seul deal froid, le plus critique, si pas déjà en relance
   const coldest=cold.filter(d=>days(d.updated_at)>=10&&!aRel.includes(d))[0];
@@ -1711,7 +1774,8 @@ function renderFocus(aDeb,aRel,cold){
     const n=days(coldest.updated_at);
     rows.push({rc:'var(--gold)',ic:'snow',nm:coldest.entreprise,
       why:`En <b>${stg(coldest.etape).l}</b>, sans mouvement depuis <b>${n} j</b>. Ne le laisse pas filer.`,
-      act:'Voir',ac:'see',fn:()=>openFiche(coldest)});
+      act:'Voir',ac:'see',fn:()=>openFiche(coldest),
+      done:async()=>{coldest.updated_at=new Date().toISOString();try{await sb.from('deals').update({updated_at:coldest.updated_at}).eq('id',coldest.id);}catch(e){}toast('Marqué comme suivi');}});
   }
   if(!rows.length){
     $('focusW').innerHTML=`<div class="focus-empty"><div class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><div class="fe-t">Tout est à jour.</div><div class="fe-d">Aucune action en attente. Prépare ton prochain rendez-vous quand tu veux.</div></div>`;
@@ -1719,15 +1783,32 @@ function renderFocus(aDeb,aRel,cold){
     return;
   }
   const total=rows.length;
-  const shown=rows.slice(0,3);
-  if($('focusAll'))$('focusAll').style.display=total>3?'':'none';
+  const shown=rows.slice(0,4);
+  if($('focusAll'))$('focusAll').style.display=total>4?'':'none';
   const ICO={clock:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',snow:'<path d="M12 2v20M4 6l16 12M20 6L4 18"/>'};
-  $('focusW').innerHTML=shown.map(it=>`<div class="focus-row"><span class="focus-ic" style="color:${it.rc};background:${it.rc}18"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span><div class="focus-body"><div class="focus-nm">${esc(it.nm)}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="focus-why">${it.why}</div></div><button class="focus-act ${it.ac}">${it.act}</button></div>`).join('');
+  $('focusW').innerHTML=`<div class="focus-count" id="focusCount"></div>`+shown.map((it,i)=>`<div class="focus-row" data-fi="${i}">${it.nocheck?'<span class="focus-check nocheck"></span>':'<button class="focus-check" title="Marquer comme fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}<span class="focus-ic" style="color:${it.rc};background:${it.rc}18"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span><div class="focus-body"><div class="focus-nm">${esc(it.nm)}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="focus-why">${it.why}</div></div><button class="focus-act ${it.ac}">${it.act}</button></div>`).join('');
+  const doneCount=weekStats().debriefs;
+  const fc=$('focusCount');
+  if(fc)fc.innerHTML=`<span><b>${total}</b> action${total>1?'s':''} en attente</span>${doneCount>0?`<span class="fc-done">${doneCount} traitée${doneCount>1?'s':''} cette semaine</span>`:''}`;
   const els=$('focusW').querySelectorAll('.focus-row');
   els.forEach((row,i)=>{
     const it=shown[i];
     row.querySelector('.focus-body').addEventListener('click',it.fn);
     row.querySelector('.focus-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
+    // Case à cocher : marque la tâche traitée, la fait disparaître
+    const chk=row.querySelector('button.focus-check');
+    if(chk)chk.addEventListener('click',e=>{
+      e.stopPropagation();
+      row.classList.add('checked');
+      setTimeout(()=>{
+        row.style.height=row.offsetHeight+'px';
+        requestAnimationFrame(()=>{row.style.height='0';row.style.opacity='0';row.style.minHeight='0';row.style.paddingTop='0';row.style.paddingBottom='0';});
+        setTimeout(()=>{
+          if(it.done)it.done();
+          renderAll();
+        },320);
+      },200);
+    });
   });
 }
 
@@ -1810,6 +1891,21 @@ function cleanPoste(p){
 function wireRows(root){
   root.querySelectorAll('[data-b]').forEach(el=>el.addEventListener('click',()=>{const b=briefs.find(x=>x.id===el.dataset.b);if(b)openBrief(b);}));
   root.querySelectorAll('[data-d]').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
+  root.querySelectorAll('[data-delb]').forEach(el=>el.addEventListener('click',ev=>{
+    ev.stopPropagation();
+    const b=briefs.find(x=>x.id===el.dataset.delb); if(!b)return;
+    confirmDelete({
+      title:'Supprimer ce rendez-vous ?',
+      body:`Le brief${b.debrief?' et son débrief':''} du ${new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} seront effacés. C'est définitif.`,
+      confirmLabel:'Supprimer',
+      onConfirm:async()=>{
+        briefs=briefs.filter(x=>x.id!==b.id);
+        if(currentDeal)openFiche(currentDeal,true);
+        renderAll(); toast('Rendez-vous supprimé');
+        try{await sb.from('briefs').delete().eq('id',b.id);}catch(e){}
+      }
+    });
+  }));
   root.querySelectorAll('[data-rel]').forEach(el=>el.addEventListener('click',ev=>{
     ev.stopPropagation();
     const b=briefs.find(x=>x.id===el.dataset.rel);
@@ -2118,6 +2214,25 @@ function friseHtml(bs,d){
   }
   return `<div class="frise"><svg viewBox="0 0 ${w} 60" preserveAspectRatio="xMinYMid meet">${line}${dots}${next}</svg></div>`;
 }
+// Confirmation de suppression réutilisable
+let _cfAction=null;
+function confirmDelete({title,body,confirmLabel,onConfirm}){
+  $('cfTitle').textContent=title;
+  $('cfBody').textContent=body;
+  $('cfConfirm').textContent=confirmLabel||'Supprimer';
+  _cfAction=onConfirm;
+  $('confirmOv').classList.add('on');
+}
+(function(){
+  const cancel=()=>{$('confirmOv').classList.remove('on');_cfAction=null;};
+  $('cfCancel').addEventListener('click',cancel);
+  $('confirmOv').addEventListener('click',e=>{if(e.target===$('confirmOv'))cancel();});
+  $('cfConfirm').addEventListener('click',async()=>{
+    const fn=_cfAction; $('confirmOv').classList.remove('on'); _cfAction=null;
+    if(fn)await fn();
+  });
+})();
+
 function openFiche(d,silent){
   currentDeal=d; const ed=d.entreprise_data||{};
   const bs0=dealBriefs(d);
@@ -2159,10 +2274,25 @@ function openFiche(d,silent){
     const syn=b.synthese_post&&b.synthese_post.observations?`<div class="mt" style="margin-top:3px;color:var(--violet)">${esc(trunc(b.synthese_post.observations[0],70))}</div>`:'';
     const done=!!b.debrief;
     const dip=`<span class="rdv-dip"><span class="rd-b b1">1</span><span class="rd-arrow">→</span><span class="rd-b b2 ${done?'':'off'}">2</span></span>`;
-    return `<div class="row" data-b="${b.id}"><div class="info"><div class="nm">${dip}${new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} · ${esc(trunc(b.poste||'',30))}</div><div class="mt">${done?(b.debrief.next_action?esc(trunc(b.debrief.next_action,60)):'Débriefé'):'Brief prêt, pas encore débriefé'}</div>${syn}</div>${briefTempChip(b)}</div>`;
+    return `<div class="row" data-b="${b.id}"><div class="info"><div class="nm">${dip}${new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} · ${esc(trunc(b.poste||'',30))}</div><div class="mt">${done?(b.debrief.next_action?esc(trunc(b.debrief.next_action,60)):'Débriefé'):'Brief prêt, pas encore débriefé'}</div>${syn}</div>${briefTempChip(b)}<button class="row-del" data-delb="${b.id}" title="Supprimer ce rendez-vous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></div>`;
   }).join(''):`<div class="esvg">${ESVG.historique}</div><div class="empty">Aucun brief encore. Prépare le premier, la mémoire commence là.</div>`);
   wireRows($('fTimeline'));
   $('fNewBrief').onclick=()=>startFromDeal(d);
+  $('fDelete').onclick=()=>confirmDelete({
+    title:`Supprimer ${d.entreprise} ?`,
+    body:`L'affaire, ses ${dealBriefs(d).length} rendez-vous et toute la mémoire liée seront effacés. C'est définitif.`,
+    confirmLabel:'Supprimer définitivement',
+    onConfirm:async()=>{
+      const bs=dealBriefs(d);
+      deals=deals.filter(x=>x.id!==d.id);
+      briefs=briefs.filter(b=>!bs.some(x=>x.id===b.id));
+      go('affaires'); renderAll(); toast('Affaire supprimée');
+      try{
+        for(const b of bs)await sb.from('briefs').delete().eq('id',b.id);
+        await sb.from('deals').delete().eq('id',d.id);
+      }catch(e){}
+    }
+  });
   if(!silent)go('fiche');
 }
 function renderTags(d){
@@ -2467,7 +2597,83 @@ function openBrief(b){
   $('libreAdd').addEventListener('click',()=>addLibre('',null,true));
   wireDoc(); coverUpdate(); renderActions();
   applyBriefLock(b);
+  // Interrupteur avant-après : visible si débriefé
+  setupDipSwitch(b);
   $('briefDoc').classList.add('on'); $('briefDoc').scrollTop=0;
+}
+
+// Interrupteur 1-2 et bascule brief/débrief
+function setupDipSwitch(b){
+  const sw=$('dipSwitch'); if(!sw)return;
+  const hasDeb=!!b.debrief;
+  if(!hasDeb || rdvActive){
+    sw.style.display='none';
+    $('dMain').style.display=''; $('dMainDeb').style.display='none';
+    return;
+  }
+  sw.style.display='';
+  // Rendu du débrief
+  renderDebriefDoc(b);
+  // Un rendez-vous passé s'ouvre sur le débrief (face 2)
+  setFace('debrief');
+  sw.querySelectorAll('.ds-b').forEach(btn=>{
+    btn.onclick=()=>setFace(btn.dataset.face);
+  });
+}
+function setFace(face){
+  const sw=$('dipSwitch'); if(!sw)return;
+  sw.querySelectorAll('.ds-b').forEach(x=>x.classList.toggle('on',x.dataset.face===face));
+  const isDeb=face==='debrief';
+  $('dMain').style.display=isDeb?'none':'';
+  $('dMainDeb').style.display=isDeb?'':'none';
+  $('briefDoc').scrollTop=0;
+}
+// Le débrief comme vrai document, aussi soigné que le brief
+function renderDebriefDoc(b){
+  const el=$('dMainDeb'); if(!el)return;
+  const deb=b.debrief||{};
+  const TL={close:{l:'Closé, signé',c:'#2f6b3f',bg:'#EAF4EC',bd:'#CBE5D0'},chaud:{l:'Chaud, ça avance',c:'#A9531E',bg:'#F6E8DA',bd:'#E8B58C'},tiede:{l:'Tiède, à recontacter',c:'#8a6508',bg:'#FBF3D2',bd:'#E7CE8C'},mort:{l:'Mort, on passe',c:'#9a3d2a',bg:'#F9E9E2',bd:'#F0CDBF'}};
+  const t=TL[deb.temperature]||TL.tiede;
+  const a=b.annotations||{};
+  // Confrontation prévu / capté
+  const rows=[];
+  const ou=b.ouverture||{}; const acc=ou.accroche||(typeof b.ouverture==='string'?b.ouverture:'');
+  if(acc||(a.ouverture&&a.ouverture.note))rows.push({k:'Ouverture',prevu:acc,vecu:a.ouverture&&a.ouverture.note});
+  const ob=b.objection||{};
+  if(ob.texte||(a.objection&&a.objection.note))rows.push({k:'Objection',prevu:ob.texte,vecu:a.objection&&a.objection.note});
+  const ch=b.chiffre||{};
+  if(ch.valeur||(a.chiffre&&a.chiffre.note))rows.push({k:'Le chiffre',prevu:ch.valeur,vecu:a.chiffre&&a.chiffre.note});
+  const libre=(a.libre||[]).filter(n=>n.t&&n.t.trim());
+  const syn=b.synthese_post;
+  let html='';
+  // En-tête débrief
+  html+=`<div class="deb-doc-head"><span class="dip-badge b2">2</span><div><div class="ddh-t">Le débrief</div><div class="ddh-s">Ce que ce rendez-vous a donné.</div></div><span class="chip" style="margin-left:auto;color:${t.c};background:${t.bg};border-color:${t.bd}">${t.l}</span></div>`;
+  // Synthèse Faro
+  if(syn&&syn.observations&&syn.observations.length){
+    html+=`<div class="sect reveal"><div class="secthd"><span class="num">◆</span><span class="tt">Ce que Faro retient</span></div><div class="sectbd">${syn.observations.map(o=>`<div class="so">${esc(o)}</div>`).join('')}${syn.relance_angle?`<div class="sa"><b>Angle de relance</b>${esc(syn.relance_angle)}</div>`:''}</div></div>`;
+  }
+  // Confrontation prévu vs vécu
+  if(rows.length){
+    html+=`<div class="sect reveal"><div class="secthd"><span class="num">⇄</span><span class="tt">Prévu face au terrain</span><span class="dd">Ton brief à gauche, ce qui s'est vraiment passé à droite.</span></div><div class="sectbd"><div class="deb-conf">`;
+    rows.forEach(r=>{
+      html+=`<div class="dc-line"><div class="dc-k">${r.k}</div><div class="dc-pair"><div class="dc-prevu"><span class="dc-tag">Prévu</span>${r.prevu?esc(r.prevu):'<i>—</i>'}</div><div class="dc-vecu"><span class="dc-tag v">Vécu</span>${r.vecu?esc(r.vecu):'<i>rien noté</i>'}</div></div></div>`;
+    });
+    html+=`</div></div></div>`;
+  }
+  // Notes libres
+  if(libre.length){
+    html+=`<div class="sect reveal"><div class="secthd"><span class="num">✎</span><span class="tt">Tes notes du rendez-vous</span></div><div class="sectbd">${libre.map(n=>`<div class="so">${esc(n.t)}</div>`).join('')}</div></div>`;
+  }
+  // Prochaine action
+  if(deb.next_action){
+    html+=`<div class="sect reveal"><div class="secthd"><span class="num">→</span><span class="tt">La prochaine action</span></div><div class="sectbd"><div class="deb-next">${esc(deb.next_action)}</div></div></div>`;
+  }
+  // Phrase à retenir
+  if(deb.phrase){
+    html+=`<div class="sect reveal"><div class="secthd"><span class="num">"</span><span class="tt">Ce que tu gardes</span></div><div class="sectbd"><div class="deb-phrase">${esc(deb.phrase)}</div></div></div>`;
+  }
+  el.innerHTML=html;
+  el.querySelectorAll('.sect').forEach((s,i)=>setTimeout(()=>s.classList.add('reveal'),60+i*120));
 }
 
 // Verrouillage : une fois la réunion passée (brief débriefé), le brief se fige
@@ -2756,6 +2962,8 @@ function rdvStop(){
 function closeDoc(){
   if(rdvActive){rdvEndAsk();return;}
   document.body.classList.remove('brief-locked');
+  const sw=$('dipSwitch'); if(sw)sw.style.display='none';
+  $('dMain').style.display=''; $('dMainDeb').style.display='none';
   $('briefDoc').classList.remove('on'); renderAll();
 }
 $('docClose').addEventListener('click',closeDoc);
