@@ -977,16 +977,16 @@
     <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="entreprises">Retour</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="card"><div class="chd"><span class="t">Le deal</span></div><div class="cbd">
-          <div class="fg"><label>Étape de closing</label><select class="fld" id="fStage"></select></div>
+        <div class="card"><div class="chd"><span class="t">L'affaire</span><span class="d">Où en est la vente.</span></div><div class="cbd">
+          <div class="fg"><label>Étape</label><select class="fld" id="fStage"></select></div>
           <div class="sugg" id="fSugg" style="display:none;"></div>
-          <div class="fg" style="margin-top:12px;"><label>Montant du deal <span>· en euros, facultatif</span></label><input class="fld" id="fMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/></div>
+          <div class="fg" style="margin-top:12px;"><label>Montant <span>· en euros, facultatif</span></label><input class="fld" id="fMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/></div>
           <div class="fg"><label>Tags</label><div class="tagwrap" id="fTags"></div></div>
-          <div class="fg"><label>Prochaine action</label><div id="fNext" style="font-size:12.5px;color:var(--soft);">—</div></div>
+          <div class="fg"><label>Ce qui t'attend</label><div id="fNext" style="font-size:12.5px;color:var(--soft);">—</div></div>
         </div></div>
-        <div class="card"><div class="chd"><span class="t">Fiche entreprise</span><span class="d">Données officielles.</span></div><div class="cbd" id="fData"></div></div>
+        <div class="card"><div class="chd"><span class="t">L'entreprise</span><span class="d">Données officielles.</span></div><div class="cbd" id="fData"></div></div>
       </div>
-      <div class="card"><div class="chd"><span class="t">Historique</span><span class="d">Briefs et rendez-vous, du plus récent au plus ancien.</span></div><div class="cbd p0" id="fTimeline"></div></div>
+      <div class="card"><div class="chd"><span class="t">Vos rendez-vous</span><span class="d">Chaque échange, du plus récent au plus ancien. Clique pour rouvrir le brief.</span></div><div class="cbd p0" id="fTimeline"></div></div>
     </div>
   </section>
 
@@ -1088,7 +1088,7 @@
         <div class="kv"><span class="k">Briefs au total</span><span class="v" id="uT">0</span></div>
       </div></div>
       <div class="card"><div class="chd"><span class="t">Données</span><span class="d">Prêtes pour ton CRM.</span></div><div class="cbd">
-        <div style="font-size:12px;color:var(--dim);margin-bottom:12px;">Deals, briefs, annotations et débriefs, dans un format structuré. La connexion HubSpot et Pipedrive arrive.</div>
+        <div style="font-size:12px;color:var(--dim);margin-bottom:12px;">Affaires, briefs, annotations et débriefs, dans un format structuré. La connexion HubSpot et Pipedrive arrive.</div>
         <button class="btn g sm" id="exp">Exporter tout en JSON</button>
         <a class="btn g sm" href="mailto:hello@farobrief.com" style="margin-left:6px;">Nous écrire</a>
       </div></div>
@@ -1134,10 +1134,10 @@
 <div class="debov" id="debOv"><div class="debbox">
   <div class="dk">Boucler le rendez-vous</div>
   <div class="dd">Trente secondes, et Faro capitalise tout.</div>
-  <div class="dq">Température du deal</div>
+  <div class="dq">Température de l'affaire</div>
   <div class="temps" id="temps"><button data-t="close">Closé, c'est signé</button><button data-t="chaud">Chaud, ça avance</button><button data-t="tiede">Tiède, à recontacter</button><button data-t="mort">Mort, on passe</button></div>
   <div id="debMontantWrap" style="display:none;">
-    <div class="dq" id="debMontantQ">Quel est l'enjeu de ce deal ? <span>· en euros</span></div>
+    <div class="dq" id="debMontantQ">Quel est l'enjeu de cette affaire ? <span>· en euros</span></div>
     <input class="fld" id="debMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/>
   </div>
   <div class="dq">Prochaine action</div>
@@ -1154,7 +1154,7 @@
   <div class="verd-streak" id="verdStreak"></div>
   <div class="steps" id="verdSteps"></div>
   <div class="acts" id="verdActs">
-    <button class="btn" id="verdDeal">Voir le deal</button>
+    <button class="btn" id="verdDeal">Voir l'affaire</button>
     <button class="btn g" id="verdRecap">Mail de recap</button>
     <button class="btn g" id="verdHome">Accueil</button>
   </div>
@@ -1348,7 +1348,7 @@ function dash(){
     } else if(aRel.length>=1){
       wl.innerHTML=`<span class="wl-act" data-wl="rel"><span class="wl-dot copper"></span>${aRel.length===1?'Une relance':`${aRel.length} relances`} t'attend${aRel.length>1?'ent':''}. <b>Ne laisse pas l'élan retomber.</b></span>`;
     } else if(coldGlobal(cold)){
-      wl.innerHTML=`<span class="wl-act" data-wl="cold"><span class="wl-dot gold"></span>Un deal dort depuis un moment. <b>Un signe de vie, et il repart.</b></span>`;
+      wl.innerHTML=`<span class="wl-act" data-wl="cold"><span class="wl-dot gold"></span>Une affaire dort depuis un moment. <b>Un signe de vie, et il repart.</b></span>`;
     } else {
       const salut=h<12?'Belle journée pour avancer':h<18?'Bon moment pour préparer la suite':'Tout est à jour, beau travail';
       wl.innerHTML=`<span><span class="wl-dot green"></span>${salut}.${ws.streak>1?` Série de <b>${ws.streak}</b> débriefs, tiens-la.`:''}</span>`;
@@ -1370,14 +1370,14 @@ function dash(){
   let KPI;
   if(hasRealKpi){
     KPI=[
-      {k:'Taux de closing',go:'pipeline',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} deals clos`:'Dès ton premier deal clos'},
+      {k:'Taux de closing',go:'pipeline',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} affaires closes`:'Dès ta première affaire close'},
       {k:'Vélocité',go:'pipeline',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
       {k:'Panier moyen',go:'pipeline',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
     ];
   } else {
     KPI=[
       {k:'Briefs préparés',go:'pipeline',ic:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>',v:briefs.length,h:briefs.length?'ta mémoire grandit':'prépare le premier'},
-      {k:'Deals actifs',go:'pipeline',ic:'<path d="M3 6h18M7 12h10M10 18h4"/>',v:actifs.length,h:actifs.length?'dans ton pipeline':'aucun encore'},
+      {k:'Affaires actives',go:'pipeline',ic:'<path d="M3 6h18M7 12h10M10 18h4"/>',v:actifs.length,h:actifs.length?'dans ton pipeline':'aucune encore'},
       {k:'Entreprises',go:'entreprises',ic:'<path d="M4 21h16M7 21V6l5-3 5 3v15M10 9h4M10 13h4"/>',v:deals.length,h:deals.length?'suivies par Faro':'à venir'}
     ];
   }
@@ -1436,7 +1436,7 @@ function renderMoney(){
       moveHtml=parts.length?`<span class="txt">${parts.join(' · ')}. Ajoute un montant au débrief pour suivre ton argent.</span>`:`<span class="txt">Ajoute un montant au débrief pour suivre ton argent.</span>`;
     } else if(deals.length>0){
       kingLabel='Ton pipeline'; kingVal=deals.length+(deals.length>1?' entreprises':' entreprise');
-      moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}. Prépare, débriefe, l'argent suivra.</span>`;
+      moveHtml=`<span class="txt">${actifs.length} affaire${actifs.length>1?'s':''} en cours. Prépare, débriefe, l'argent suivra.</span>`;
     } else {
       kingLabel='Bienvenue'; kingVal='Prêt';
       moveHtml=`<span class="txt">Prépare ton premier rendez-vous, Faro s'occupe du reste.</span>`;
@@ -1459,17 +1459,17 @@ function renderMoney(){
       if(prevSigned>0||mSigned>0){
         const cls=diff>0?'up':diff<0?'down':'flat';
         const ico=diff>0?'<path d="M7 17L17 7M17 7H8M17 7v9"/>':diff<0?'<path d="M7 7l10 10M17 17H8M17 17V8"/>':'<path d="M5 12h14"/>';
-        moveHtml=`<span class="tag ${cls}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${diff>=0?'+':''}${eur(Math.abs(diff))||'0 €'}</span><span class="txt">contre ${moisPrec} · ${mCount} deal${mCount>1?'s':''} signé${mCount>1?'s':''}</span>`;
+        moveHtml=`<span class="tag ${cls}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${diff>=0?'+':''}${eur(Math.abs(diff))||'0 €'}</span><span class="txt">contre ${moisPrec} · ${mCount} affaire${mCount>1?'s':''} signée${mCount>1?'s':''}</span>`;
       } else moveHtml=`<span class="txt">Ta première signature du mois t'attend.</span>`;
     } else {
       kingLabel='En jeu'; kingVal=totActif?eur(totActif):'—';
-      moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} en cours. Signe le premier pour lancer le compteur.</span>`;
+      moveHtml=`<span class="txt">${actifs.length} affaire${actifs.length>1?'s':''} en cours. Signe la première pour lancer le compteur.</span>`;
     }
   } else {
     const allSigned=wonAll.reduce((a,d)=>a+dealVal(d),0);
     if(hasWon){
       kingLabel='Signé au total'; kingVal=allSigned?eur(allSigned):'0 €';
-      moveHtml=`<span class="txt">${wonAll.length} deal${wonAll.length>1?'s':''} gagné${wonAll.length>1?'s':''} depuis le début.</span>`;
+      moveHtml=`<span class="txt">${wonAll.length} affaire${wonAll.length>1?'s':''} gagnée${wonAll.length>1?'s':''} depuis le début.</span>`;
     } else {
       kingLabel='En jeu'; kingVal=totActif?eur(totActif):'—';
       moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} en cours.</span>`;
@@ -1487,13 +1487,13 @@ function renderMhRight(actifs,closing,closingVal,totActif,noMontant){
   if(noMontant){
     const stale=actifs.filter(d=>days(d.updated_at)>=7).length;
     metrics=[
-      {k:'Deals en cours',dt:'var(--copper)',v:actifs.length||'0',h:actifs.length?'dans ton pipeline':'aucun pour l\'instant',go:'pipeline'},
-      {k:'À portée de signature',dt:'var(--green)',v:closing.length||'0',h:closing.length?'en closing':'aucun en closing',go:'pipeline'}
+      {k:'Affaires en cours',dt:'var(--copper)',v:actifs.length||'0',h:actifs.length?'dans ton pipeline':'aucune pour l\'instant',go:'pipeline'},
+      {k:'À portée de signature',dt:'var(--green)',v:closing.length||'0',h:closing.length?'en closing':'aucune en closing',go:'pipeline'}
     ];
   } else {
     metrics=[
-      {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}`,go:'pipeline'},
-      {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' deal'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucun deal en closing',go:'pipeline'}
+      {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} affaire${actifs.length>1?'s':''} en cours`,go:'pipeline'},
+      {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' affaire'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucune affaire en closing',go:'pipeline'}
     ];
   }
   $('mhRight').innerHTML=metrics.map(m=>`<div class="mh-metric" data-mgo="${m.go}"><div class="mm-k"><span class="dt" style="background:${m.dt}"></span>${m.k}</div><div class="mm-v">${m.v}</div><div class="mm-h">${m.h}</div></div>`).join('');
@@ -1733,13 +1733,13 @@ function dealNextAction(d){
   if(n>=14)return {ic:ICO.arrow,txt:`Relancer, ${n} j de silence`,urg:'late'};
   if(n>=7)return {ic:ICO.arrow,txt:`Relancer, vu il y a ${n} j`,urg:'warn'};
   const temp=lb&&lb.debrief?lb.debrief.temperature:null;
-  if(temp==='chaud')return {ic:ICO.arrow,txt:'Deal chaud, garde le rythme',urg:'due'};
+  if(temp==='chaud')return {ic:ICO.arrow,txt:'Affaire chaude, garde le rythme',urg:'due'};
   return {ic:ICO.arrow,txt:'Fais avancer',urg:'ok'};
 }
 
 function boardRender(root,mini){
   if(!root)return;
-  if(!deals.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">Ton pipeline est vide. Prépare ton premier brief, le deal se crée tout seul.</div></div>`;return;}
+  if(!deals.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">Ton pipeline est vide. Prépare ton premier rendez-vous, l'affaire se crée toute seule.</div></div>`;return;}
   // Filtrage global (search + filtres), tri par colonne
   const q=pipeSearch.toLowerCase();
   const match=d=>{
@@ -1796,7 +1796,7 @@ function boardRender(root,mini){
       const d=deals.find(x=>x.id===id);
       if(!d||d.etape===st)return;
       d.etape=st;d.etape_suggeree=null;d.updated_at=new Date().toISOString();
-      renderAll();toast('Deal déplacé en '+stg(st).l);
+      renderAll();toast('Affaire déplacée en '+stg(st).l);
       try{await sb.from('deals').update({etape:st,etape_suggeree:null,updated_at:d.updated_at}).eq('id',id);}catch(err){}
     });
   });
@@ -1821,7 +1821,7 @@ function openStagePanel(stageKey){
     const stalePart=active&&n>=7?`<span style="color:${n>=14?'var(--red)':'var(--gold)'}">${n} j sans mouvement</span>`:'';
     const meta=[d.interlocuteur?cleanPoste(d.interlocuteur):'',rel(d.updated_at)].filter(Boolean).map(esc).join(' · ');
     return `<div class="sp-row" data-d="${d.id}">${dealLogo(d)}<div class="spr-body"><div class="spr-n">${esc(d.entreprise)}</div><div class="spr-m">${meta}${tempPart?' · '+tempPart:''}${stalePart?' · '+stalePart:''}</div></div>${mv?`<span class="spr-money">${eur(mv)}</span>`:''}</div>`;
-  }).join('')||'<div class="empty">Aucun deal à cette étape.</div>';
+  }).join('')||'<div class="empty">Aucune affaire à cette étape.</div>';
   $('spBody').querySelectorAll('.sp-row').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d){closeStagePanel();openFiche(d);}}));
   $('stageOv').classList.add('on');
 }
@@ -1837,9 +1837,9 @@ function renderPilot(){
   const stale=actifs.filter(dealStale).length;
   const wins=deals.filter(d=>d.etape==='gagne');
   const cells=[
-    {k:'Valeur du pipeline',v:totVal?eur(totVal):'—',h:`${actifs.length} deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}`,c:'var(--copper)'},
-    {k:'À portée de signature',v:closeVal?eur(closeVal):(closing.length||'—'),h:closing.length?`${closing.length} en closing`:'Aucun en closing',c:'var(--green)'},
-    {k:'Deals gagnés',v:wins.length||'—',h:wins.length?eur(wins.reduce((a,d)=>a+dealVal(d),0))+' signés':'Pas encore',c:'#2f6b3f'},
+    {k:'Valeur du pipeline',v:totVal?eur(totVal):'—',h:`${actifs.length} affaire${actifs.length>1?'s':''} en cours`,c:'var(--copper)'},
+    {k:'À portée de signature',v:closeVal?eur(closeVal):(closing.length||'—'),h:closing.length?`${closing.length} en closing`:'Aucune en closing',c:'var(--green)'},
+    {k:'Affaires gagnées',v:wins.length||'—',h:wins.length?eur(wins.reduce((a,d)=>a+dealVal(d),0))+' signés':'Pas encore',c:'#2f6b3f'},
     {k:'À surveiller',v:stale||'0',h:stale?'sans mouvement 7 j+':'tout avance',c:stale?'var(--gold)':'var(--line2)'}
   ];
   el.innerHTML=cells.map(c=>`<div class="pilot-cell" style="--pc:${c.c}"><div class="pk">${c.k}</div><div class="pv">${c.v}</div><div class="ph">${c.h}</div></div>`).join('');
@@ -1883,7 +1883,7 @@ async function acceptSugg(id){
   const d=deals.find(x=>x.id===id); if(!d||!d.etape_suggeree)return;
   const nv=d.etape_suggeree;
   d.etape=nv; d.etape_suggeree=null; d.updated_at=new Date().toISOString();
-  renderAll(); toast('Deal passé en '+stg(nv).l);
+  renderAll(); toast('Affaire passée en '+stg(nv).l);
   try{await sb.from('deals').update({etape:nv,etape_suggeree:null,updated_at:d.updated_at}).eq('id',id);}catch(e){}
 }
 
@@ -1903,7 +1903,7 @@ function entNextText(d){
   const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
   const note=(lb&&lb.debrief&&lb.debrief.next_action)||d.prochaine_action;
   if(['gagne'].includes(d.etape))return {t:'Deal gagné, entretiens la relation.',cls:''};
-  if(['perdu'].includes(d.etape))return {t:'Deal clos. Reste en veille.',cls:'none'};
+  if(['perdu'].includes(d.etape))return {t:'Affaire close. Reste en veille.',cls:'none'};
   if(note&&!looksLikeMail(note)&&note.length<=52)return {t:`<b>${esc(note)}</b>`,cls:''};
   const n=days(d.updated_at);
   if(n>=7)return {t:`Sans mouvement depuis ${n} jours.`,cls:''};
@@ -2160,8 +2160,8 @@ function suggestRdv(){
   if(currentDeal){
     const e=currentDeal.etape;
     if(e==='gagne'){k='relance';why='Client gagné, on entretient la relation.';}
-    else if(e==='perdu'){k='premier';why='Deal passé perdu, on repart proprement.';}
-    else if(e==='negociation'||e==='closing'){k='negociation';why='Le deal est avancé, cap sur les conditions.';}
+    else if(e==='perdu'){k='premier';why='Affaire perdue, on repart proprement.';}
+    else if(e==='negociation'||e==='closing'){k='negociation';why='L\'affaire est avancée, cap sur les conditions.';}
     else {k='relance';why='Un échange est déjà en cours.';}
   }
   typeRdv=k;
@@ -2184,7 +2184,7 @@ function openCtx(){
   if(currentDeal){
     const bs=dealBriefs(currentDeal);
     const last=bs[0];
-    $('histBand').innerHTML=`<div class="histband"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span>Tu connais cette entreprise : <b>${bs.length} brief${bs.length>1?'s':''}</b>${last?', dernier '+rel(last.created_at):''} · deal en <b>${stg(currentDeal.etape).l}</b>.</span></div>`;
+    $('histBand').innerHTML=`<div class="histband"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span>Tu connais cette entreprise : <b>${bs.length} brief${bs.length>1?'s':''}</b>${last?', dernier '+rel(last.created_at):''} · affaire en <b>${stg(currentDeal.etape).l}</b>.</span></div>`;
   } else $('histBand').innerHTML='';
   // Conseil de Faro
   let lines=[];
@@ -2635,7 +2635,7 @@ function showVerdict(t,deal,hasSyn){
   const vls=$('verdSteps').querySelectorAll('.vline');
   vls.forEach((el,i)=>setTimeout(()=>el.classList.add('show'),420+i*380));
   setTimeout(()=>$('verdActs').classList.add('show'),420+vls.length*380+200);
-  const va=$('vAcc'); if(va)va.addEventListener('click',()=>{acceptSugg(deal.id);va.closest('.vline').innerHTML='<span class="ok2">✓</span>Deal passé en '+stg(deal.etape_suggeree?deal.etape_suggeree:deal.etape).l;});
+  const va=$('vAcc'); if(va)va.addEventListener('click',()=>{acceptSugg(deal.id);va.closest('.vline').innerHTML='<span class="ok2">✓</span>Affaire passée en '+stg(deal.etape_suggeree?deal.etape_suggeree:deal.etape).l;});
   $('verdDeal').onclick=()=>{$('verdOv').className='verd';$('briefDoc').classList.remove('on');const d=deal?deals.find(x=>x.id===deal.id):null;if(d)openFiche(d);else go('dash');};
   $('verdHome').onclick=()=>{$('verdOv').className='verd';$('briefDoc').classList.remove('on');go('dash');renderAll();};
   $('verdRecap').onclick=()=>{$('verdOv').className='verd';openRecap();};
