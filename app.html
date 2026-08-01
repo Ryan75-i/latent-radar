@@ -179,7 +179,27 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
-  /* Hint subtil façon Notion/Linear */
+  /* Badges avant-après (1 brief / 2 débrief) dans les lignes de rendez-vous */
+  .rdv-dip{display:inline-flex;align-items:center;gap:4px;margin-right:8px;vertical-align:middle;}
+  .rd-b{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:5px;font-family:var(--serif);font-weight:700;font-size:10px;color:#fff;}
+  .rd-b.b1{background:var(--copper);}
+  .rd-b.b2{background:var(--copper-d);}
+  .rd-b.b2.off{background:var(--line2);color:var(--faint);}
+  .rd-arrow{color:var(--faint);font-size:11px;}
+  /* Fil d'ariane : entreprise › affaire › rendez-vous */
+  .fildar{display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap;}
+  .fildar-page{margin-bottom:12px;}
+  .fd-node{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--dim);background:none;border:none;padding:3px 7px;border-radius:6px;cursor:default;font-family:inherit;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  button.fd-node{cursor:pointer;transition:.12s;}
+  button.fd-node:hover{background:var(--wash);color:var(--ink);}
+  .fd-node.fd-cur{color:var(--ink);font-weight:700;}
+  .fd-logo{width:20px;height:20px;border-radius:5px;font-size:9px;flex-shrink:0;}
+  .fd-logo img{width:100%;height:100%;object-fit:contain;border-radius:5px;}
+  .fd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .fd-sep{color:var(--faint);font-size:13px;flex-shrink:0;}
+  .fd-count{color:var(--copper-d);}
+  .docbar .fildar{font-size:12px;}
+  .docbar .fd-node{max-width:170px;}
   .hint{display:flex;align-items:flex-start;gap:11px;background:linear-gradient(135deg,#FCF6EF,#FBF3E9);border:1px solid #F0E2D0;border-radius:var(--rl);padding:12px 14px;margin-bottom:14px;font-size:12.5px;color:var(--soft);line-height:1.5;animation:hintin .3s ease;}
   @keyframes hintin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
   .hint .hi-ic{width:26px;height:26px;border-radius:7px;background:#fff;border:1px solid var(--copper-l);color:var(--copper);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -1027,6 +1047,7 @@
   </div></div>
 
   <section class="view" id="v-fiche">
+    <nav class="fildar fildar-page" id="ficheFil"></nav>
     <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
@@ -1157,7 +1178,7 @@
 <div class="briefDoc" id="briefDoc">
   <div class="docbar">
     <button class="backb" id="docClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
-    <div class="bc"><span class="dip-badge b1">1</span><span class="mono" id="bcLogo">F</span><span id="bcName">Brief</span><span class="chip stage" id="bcStage" style="display:none"></span></div>
+    <div class="bc"><span class="dip-badge b1">1</span><nav class="fildar" id="briefFil"></nav></div>
     <div class="g1"></div>
     <span class="chrono" id="chrono">00:00</span>
   </div>
@@ -2093,6 +2114,20 @@ function friseHtml(bs,d){
 }
 function openFiche(d,silent){
   currentDeal=d; const ed=d.entreprise_data||{};
+  const bs0=dealBriefs(d);
+  const st=stg(d.etape);
+  const ff=$('ficheFil');
+  if(ff){
+    ff.innerHTML=`
+      <button class="fd-node" data-go2="affaires">Mes affaires</button>
+      <span class="fd-sep">›</span>
+      <span class="fd-node fd-cur">${esc(trunc(d.entreprise,28))}</span>
+      <span class="fd-sep">›</span>
+      <span class="fd-node fd-aff"><span class="fd-dot" style="background:${st.c}"></span>${st.l}</span>
+      <span class="fd-sep">›</span>
+      <span class="fd-node fd-count">${bs0.length} rendez-vous</span>`;
+    ff.querySelector('[data-go2]').addEventListener('click',()=>go('affaires'));
+  }
   $('fName').textContent=d.entreprise;
   $('fSub').textContent=[ed.activite,ed.ville].filter(Boolean).join(' · ');
   $('fStage').innerHTML=STAGES.map(s=>`<option value="${s.k}" ${s.k===d.etape?'selected':''}>${s.l}</option>`).join('');
@@ -2116,7 +2151,9 @@ function openFiche(d,silent){
   else $('fRelance').style.display='none';
   $('fTimeline').innerHTML=(bs.length?friseHtml(bs,d):'')+(bs.length?bs.map(b=>{
     const syn=b.synthese_post&&b.synthese_post.observations?`<div class="mt" style="margin-top:3px;color:var(--violet)">${esc(trunc(b.synthese_post.observations[0],70))}</div>`:'';
-    return `<div class="row" data-b="${b.id}"><div class="info"><div class="nm">${new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} · ${esc(trunc(b.poste||'',34))}</div><div class="mt">${b.debrief&&b.debrief.next_action?esc(trunc(b.debrief.next_action,60)):'Brief préparé'}</div>${syn}</div>${briefTempChip(b)}</div>`;
+    const done=!!b.debrief;
+    const dip=`<span class="rdv-dip"><span class="rd-b b1">1</span><span class="rd-arrow">→</span><span class="rd-b b2 ${done?'':'off'}">2</span></span>`;
+    return `<div class="row" data-b="${b.id}"><div class="info"><div class="nm">${dip}${new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} · ${esc(trunc(b.poste||'',30))}</div><div class="mt">${done?(b.debrief.next_action?esc(trunc(b.debrief.next_action,60)):'Débriefé'):'Brief prêt, pas encore débriefé'}</div>${syn}</div>${briefTempChip(b)}</div>`;
   }).join(''):`<div class="esvg">${ESVG.historique}</div><div class="empty">Aucun brief encore. Prépare le premier, la mémoire commence là.</div>`);
   wireRows($('fTimeline'));
   $('fNewBrief').onclick=()=>startFromDeal(d);
@@ -2352,10 +2389,18 @@ function openBrief(b){
   current=b; ann=JSON.parse(JSON.stringify(b.annotations||{})); lastCoach='';
   const ed=b.entreprise_data||{}; const n=b.entreprise||'Prospect';
   const d=b.deal_id?deals.find(x=>x.id===b.deal_id):findDeal({nom:n,siren:ed.siren});
-  $('bcName').textContent=n;
-  $('bcLogo').outerHTML=logoHtml(n,ed.logo,ed.site||b.site).replace('class="mono','id="bcLogo" class="mono');
-  if(d){const s=stg(d.etape);$('bcStage').style.display='';$('bcStage').textContent=s.l;$('bcStage').style.cssText=`display:inline-block;color:${s.c};background:${s.bg};border-color:${s.bd}`;}
-  else $('bcStage').style.display='none';
+  const fil=$('briefFil');
+  if(fil){
+    const st=d?stg(d.etape):null;
+    const rdvLabel=b.debrief?'Rendez-vous débriefé':(b.created_at?'Rendez-vous du '+new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'Ce rendez-vous');
+    fil.innerHTML=`
+      <button class="fd-node fd-ent" data-fdfiche="1">${logoHtml(n,ed.logo,ed.site||b.site).replace('class="mono','class="fd-logo mono')}<span>${esc(trunc(n,26))}</span></button>
+      <span class="fd-sep">›</span>
+      <button class="fd-node fd-aff" data-fdfiche="1">${st?`<span class="fd-dot" style="background:${st.c}"></span>${st.l}`:'L\'affaire'}</button>
+      <span class="fd-sep">›</span>
+      <span class="fd-node fd-cur">${esc(rdvLabel)}</span>`;
+    fil.querySelectorAll('[data-fdfiche]').forEach(el=>el.addEventListener('click',()=>{if(d){closeDoc();setTimeout(()=>openFiche(d),50);}}));
+  }
   $('dName').textContent=n;
   $('dSecline').textContent=[ed.activite,ed.ville].filter(Boolean).join(' · ')||(b.poste||'');
   const lg=$('dLogo');
