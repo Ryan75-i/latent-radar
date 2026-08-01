@@ -179,6 +179,38 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* Page nouveau : clients récents + déroulé */
+  .nv-recent{max-width:640px;margin:26px auto 0;}
+  .nv-recent-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;text-align:center;}
+  .nv-recent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;}
+  .nv-card{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:10px 12px;cursor:pointer;font-family:inherit;text-align:left;transition:.14s;box-shadow:var(--sh);}
+  .nv-card:hover{border-color:var(--copper-l);box-shadow:var(--shm);transform:translateY(-1px);}
+  .nv-logo{width:28px;height:28px;border-radius:7px;font-size:10px;flex-shrink:0;}
+  .nv-logo img{width:100%;height:100%;object-fit:contain;border-radius:7px;}
+  .nv-body{min-width:0;}
+  .nv-n{font-size:12px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .nv-s{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--dim);margin-top:2px;}
+  .nv-steps{max-width:640px;margin:34px auto 0;padding-top:22px;border-top:1px solid var(--line3);}
+  .nv-steps-t{font-size:12px;color:var(--dim);text-align:center;margin-bottom:14px;}
+  .nv-steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .nv-step{display:flex;gap:10px;align-items:flex-start;}
+  .nv-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:7px;background:var(--washc);color:var(--copper-d);font-family:var(--serif);font-weight:700;font-size:12px;flex-shrink:0;}
+  .nv-step b{display:block;font-size:12px;color:var(--ink);}
+  .nv-step span{display:block;font-size:11px;color:var(--dim);line-height:1.4;margin-top:2px;}
+  @media(max-width:700px){.nv-steps-grid{grid-template-columns:1fr;}}
+  /* Section Rattaché à */
+  .lk-row{display:flex;align-items:center;gap:9px;width:100%;border:none;background:none;padding:8px 6px;border-radius:8px;cursor:pointer;text-align:left;font-family:inherit;transition:.12s;}
+  .lk-row:hover{background:var(--wash);}
+  .lk-row:hover .lk-go{color:var(--copper);transform:translateX(2px);}
+  .lk-ic .lk-logo{width:26px;height:26px;border-radius:7px;font-size:10px;}
+  .lk-ic .lk-logo img{width:100%;height:100%;object-fit:contain;border-radius:7px;}
+  .lk-body{flex:1;min-width:0;}
+  .lk-t{font-size:12.5px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .lk-s{font-size:10.5px;color:var(--dim);margin-top:1px;}
+  .lk-go{color:var(--faint);font-size:15px;transition:.13s;flex-shrink:0;}
+  .lk-sub{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:8px 6px 3px;border-top:1px solid var(--line3);margin-top:4px;}
+  .lk-row.sm{padding:6px;}
+  .lk-row.sm .lk-t{font-size:11.5px;}
   /* Confirmation de suppression */
   .confirmov{position:fixed;inset:0;background:rgba(30,25,18,.45);backdrop-filter:blur(5px);z-index:110;display:none;align-items:center;justify-content:center;padding:20px;}
   .confirmov.on{display:flex;}
@@ -674,7 +706,9 @@
   .verd.on{display:flex;}
   .verd .in{text-align:center;max-width:460px;width:100%;}
   @keyframes stampin{from{transform:rotate(-4deg) scale(1.6);opacity:0;}to{transform:rotate(-4deg) scale(1);opacity:1;}}
-  .verd-streak{display:flex;align-items:center;gap:9px;justify-content:center;margin-top:20px;padding:10px 18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:13px;color:#fff;max-width:400px;margin-left:auto;margin-right:auto;animation:fadein .5s ease .3s both;}
+  .verd-streak{display:flex;align-items:center;gap:9px;justify-content:center;margin-top:20px;padding:10px 18px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.28);border-radius:10px;font-size:13px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);max-width:400px;margin-left:auto;margin-right:auto;animation:fadein .5s ease .3s both;}
+  .dcard.just-ranged{animation:ranged 2.4s ease;}
+  @keyframes ranged{0%{box-shadow:0 0 0 3px var(--copper-l);background:var(--cream2);}70%{box-shadow:0 0 0 3px var(--copper-l);background:var(--cream2);}100%{box-shadow:none;background:#fff;}}
   .verd-streak svg{width:17px;height:17px;flex-shrink:0;opacity:.9;}
   .verd-streak b{font-weight:700;}
   .verd .stamp{display:inline-block;font-family:var(--serif);font-weight:700;font-size:clamp(30px,6vw,48px);letter-spacing:.02em;text-transform:uppercase;padding:12px 30px;border:4px solid currentColor;border-radius:10px;transform:rotate(-4deg);animation:stampin .35s cubic-bezier(.2,.7,.2,1);}
@@ -1129,6 +1163,19 @@
         <input id="qEnt" placeholder="Nom d'une entreprise française…" autocomplete="off"/>
         <div class="aclist" id="acList"></div>
       </div>
+
+      <!-- Reprendre un client existant -->
+      <div class="nv-recent" id="nvRecent"></div>
+
+      <!-- Ce que Faro prépare -->
+      <div class="nv-steps">
+        <div class="nv-steps-t">Pendant que tu choisis ton interlocuteur, Faro prépare :</div>
+        <div class="nv-steps-grid">
+          <div class="nv-step"><span class="nv-num">1</span><div><b>Les données officielles</b><span>Effectif, dirigeants, ancienneté, secteur.</span></div></div>
+          <div class="nv-step"><span class="nv-num">2</span><div><b>Les signaux du marché</b><span>Ce qui bouge dans son secteur, maintenant.</span></div></div>
+          <div class="nv-step"><span class="nv-num">3</span><div><b>Ton brief complet</b><span>Ouverture, questions, objections, chiffre d'attaque.</span></div></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1257,6 +1304,7 @@
       </div></div>
       <div class="card" id="confCard"><div class="chd"><span class="t">Confiance du brief</span></div><div class="cbd"><div class="confline"><span class="confpct" id="confPct">—</span><div class="confbar"><i id="confBar" style="width:0%"></i></div></div><div class="confweak" id="confWeak"></div></div></div>
       <div class="card" id="covCard"><div class="chd"><span class="t">Couverture du rendez-vous</span></div><div class="cbd" id="covList"></div></div>
+      <div class="card" id="linkCard"><div class="chd"><span class="t">Rattaché à</span><span class="d">D'où vient ce rendez-vous.</span></div><div class="cbd" id="linkList"></div></div>
     </aside>
     <div class="docmain" id="dMain"></div>
     <div class="docmain" id="dMainDeb" style="display:none;"></div>
@@ -1425,6 +1473,7 @@ function go(v){
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='affaires')||((v==='nouveau'||v==='ctx')&&false)));
   $('crumb').textContent=CRUMBS[v]||'';
   if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se crée et avance. Bascule entre <b>Étapes</b> pour visualiser et <b>Liste</b> pour tout voir en détail.');
+  if(v==='nouveau')renderNvRecent();
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
@@ -1481,6 +1530,18 @@ function weekStats(){
   let streak=0;
   for(const b of briefs){ if(b.debrief)streak++; else break; }
   return {briefs:bw.length,debriefs:dw.length,wins:gw.length,streak};
+}
+// Clients récents sur la page nouveau : reprendre là où on en était
+function renderNvRecent(){
+  const el=$('nvRecent'); if(!el)return;
+  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape)).slice(0,4);
+  if(!actifs.length){el.innerHTML='';return;}
+  el.innerHTML=`<div class="nv-recent-t">Ou reprends un client en cours</div><div class="nv-recent-grid">${actifs.map(d=>{
+    const ed=d.entreprise_data||{};
+    const st=stg(d.etape);
+    return `<button class="nv-card" data-nvd="${d.id}">${logoHtml(d.entreprise,ed.logo,ed.site).replace('class="mono','class="nv-logo mono')}<div class="nv-body"><div class="nv-n">${esc(trunc(d.entreprise,20))}</div><div class="nv-s"><span class="fd-dot" style="background:${st.c}"></span>${st.l}</div></div></button>`;
+  }).join('')}</div>`;
+  el.querySelectorAll('[data-nvd]').forEach(b=>b.addEventListener('click',()=>{const d=deals.find(x=>x.id===b.dataset.nvd);if(d)startFromDeal(d);}));
 }
 function coldGlobal(cold){return cold&&cold.some(d=>days(d.updated_at)>=10);}
 function dash(){
@@ -2537,6 +2598,20 @@ function openBrief(b){
       <span class="fd-node fd-cur">${esc(rdvLabel)}</span>`;
     fil.querySelectorAll('[data-fdfiche]').forEach(el=>el.addEventListener('click',()=>{if(d){closeDoc();setTimeout(()=>openFiche(d),50);}}));
   }
+  // Section "Rattaché à" : l'entreprise, l'affaire, et les autres rendez-vous de la même affaire
+  const lk=$('linkList');
+  if(lk){
+    const siblings=d?dealBriefs(d).filter(x=>x.id!==b.id):[];
+    let lh='';
+    lh+=`<button class="lk-row" data-lkfiche="1"><span class="lk-ic">${logoHtml(n,ed.logo,ed.site||b.site).replace('class="mono','class="lk-logo mono')}</span><div class="lk-body"><div class="lk-t">${esc(trunc(n,24))}</div><div class="lk-s">${d?stg(d.etape).l+(dealVal(d)?' · '+eur(dealVal(d)):''):'L\'entreprise'}</div></div><span class="lk-go">›</span></button>`;
+    if(siblings.length){
+      lh+=`<div class="lk-sub">${siblings.length} autre${siblings.length>1?'s':''} rendez-vous</div>`;
+      lh+=siblings.slice(0,3).map(s=>`<button class="lk-row sm" data-lkb="${s.id}"><span class="rd-b ${s.debrief?'b2':'b1'}" style="width:16px;height:16px;font-size:9px;border-radius:4px;">${s.debrief?'2':'1'}</span><div class="lk-body"><div class="lk-t">${new Date(s.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</div><div class="lk-s">${s.debrief?'Débriefé':'Brief prêt'}</div></div><span class="lk-go">›</span></button>`).join('');
+    }
+    lk.innerHTML=lh;
+    lk.querySelectorAll('[data-lkfiche]').forEach(el=>el.addEventListener('click',()=>{if(d){closeDoc();setTimeout(()=>openFiche(d),50);}}));
+    lk.querySelectorAll('[data-lkb]').forEach(el=>el.addEventListener('click',()=>{const x=briefs.find(y=>y.id===el.dataset.lkb);if(x)openBrief(x);}));
+  }
   $('dName').textContent=n;
   $('dSecline').textContent=[ed.activite,ed.ville].filter(Boolean).join(' · ')||(b.poste||'');
   const lg=$('dLogo');
@@ -3012,8 +3087,27 @@ async function saveDebrief(fromModal){
     if($('carnetMontantWrap'))$('carnetMontantWrap').style.display='none';
     const i=briefs.findIndex(x=>x.id===current.id); if(i>=0)briefs[i]=current;
     rdvStop(); $('debOv').classList.remove('on');
-    showVerdict(debTemp,o.deal||null,!!o.synthese);
-    renderAll();
+    const savedDeal=o.deal||(current.deal_id?deals.find(x=>x.id===current.deal_id):null);
+    if(debTemp==='close'){
+      // La signature mérite la célébration
+      showVerdict(debTemp,savedDeal||null,!!o.synthese);
+      renderAll();
+    } else {
+      // Rangement sobre : le rendez-vous se classe, l'affaire se range
+      $('briefDoc').classList.remove('on');
+      document.body.classList.remove('brief-locked');
+      renderAll();
+      go('affaires');
+      const ws=weekStats();
+      const serieTxt=ws.streak>1?` · série de ${ws.streak} débriefs`:'';
+      const TL2={chaud:'Rendez-vous classé, affaire au chaud',tiede:'Rendez-vous classé, à recontacter',mort:'Rendez-vous classé, on passe au suivant'};
+      toast((TL2[debTemp]||'Débrief enregistré')+serieTxt);
+      // Surligne l'affaire fraîchement rangée dans le board
+      if(savedDeal)setTimeout(()=>{
+        const card=document.querySelector(`.dcard[data-d="${savedDeal.id}"]`);
+        if(card){card.classList.add('just-ranged');card.scrollIntoView({behavior:'smooth',block:'nearest'});setTimeout(()=>card.classList.remove('just-ranged'),2400);}
+      },350);
+    }
   }catch(e){toast('Sauvegarde impossible, réessaie');}
   finally{if(finBtn){finBtn.classList.remove('load');finBtn.disabled=false;}}
 }
