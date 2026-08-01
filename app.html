@@ -179,6 +179,12 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* Verrouillage du brief après la réunion */
+  .brief-lock-banner{display:flex;align-items:flex-start;gap:11px;background:linear-gradient(135deg,#F4F1EC,#F0ECE4);border:1px solid var(--line2);border-radius:var(--rl);padding:13px 15px;margin-bottom:16px;font-size:12.5px;color:var(--soft);line-height:1.5;}
+  .brief-lock-banner svg{width:20px;height:20px;flex-shrink:0;color:var(--dim);margin-top:1px;}
+  .brief-lock-banner b{color:var(--ink);font-weight:700;}
+  body.brief-locked .qtags{opacity:.45;pointer-events:none;}
+  body.brief-locked .aninput{background:var(--wash);}
   /* Badges avant-après (1 brief / 2 débrief) dans les lignes de rendez-vous */
   .rdv-dip{display:inline-flex;align-items:center;gap:4px;margin-right:8px;vertical-align:middle;}
   .rd-b{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:5px;font-family:var(--serif);font-weight:700;font-size:10px;color:#fff;}
@@ -2460,7 +2466,30 @@ function openBrief(b){
   (ann.libre||[]).forEach(nt=>addLibre(nt.t,nt.at,false));
   $('libreAdd').addEventListener('click',()=>addLibre('',null,true));
   wireDoc(); coverUpdate(); renderActions();
+  applyBriefLock(b);
   $('briefDoc').classList.add('on'); $('briefDoc').scrollTop=0;
+}
+
+// Verrouillage : une fois la réunion passée (brief débriefé), le brief se fige
+function applyBriefLock(b){
+  const locked=!!b.debrief && !rdvActive;
+  document.body.classList.toggle('brief-locked',locked);
+  const main=$('dMain');
+  if(!main)return;
+  // Zones d'édition
+  main.querySelectorAll('.aninput[contenteditable]').forEach(el=>el.setAttribute('contenteditable',locked?'false':'true'));
+  main.querySelectorAll('.refbox').forEach(el=>el.style.display=locked?'none':'');
+  // Bandeau explicite
+  let banner=$('briefLockBanner');
+  if(locked){
+    if(!banner){
+      banner=document.createElement('div');
+      banner.id='briefLockBanner'; banner.className='brief-lock-banner';
+      main.insertBefore(banner,main.firstChild);
+    }
+    const dt=b.updated_at?new Date(b.updated_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long'}):'';
+    banner.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div><b>Ce rendez-vous est passé.</b> Le brief est figé${dt?', débriefé le '+dt:''}. Tu retrouves ce qui était préparé et ce que tu as capté, mais tu ne peux plus le modifier.</div>`;
+  } else if(banner){banner.remove();}
 }
 
 function confidence(b){
@@ -2651,6 +2680,9 @@ function renderActions(){
 }
 function rdvStart(){
   rdvActive=true; rdvT0=Date.now(); document.body.classList.add('rdv');
+  document.body.classList.remove('brief-locked');
+  const blb=$('briefLockBanner'); if(blb)blb.remove();
+  $('dMain').querySelectorAll('.aninput[contenteditable]').forEach(el=>el.setAttribute('contenteditable','true'));
   $('chrono').textContent='00:00'; $('chrono').className='chrono';
   clearInterval(timerInt);
   timerInt=setInterval(()=>{
@@ -2723,6 +2755,7 @@ function rdvStop(){
 }
 function closeDoc(){
   if(rdvActive){rdvEndAsk();return;}
+  document.body.classList.remove('brief-locked');
   $('briefDoc').classList.remove('on'); renderAll();
 }
 $('docClose').addEventListener('click',closeDoc);
