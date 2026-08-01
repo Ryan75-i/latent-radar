@@ -172,6 +172,16 @@
     .offre-grid{grid-template-columns:1fr;}
     .offre-side{position:static;}
   }
+  /* Hint subtil façon Notion/Linear */
+  .hint{display:flex;align-items:flex-start;gap:11px;background:linear-gradient(135deg,#FCF6EF,#FBF3E9);border:1px solid #F0E2D0;border-radius:var(--rl);padding:12px 14px;margin-bottom:14px;font-size:12.5px;color:var(--soft);line-height:1.5;animation:hintin .3s ease;}
+  @keyframes hintin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .hint .hi-ic{width:26px;height:26px;border-radius:7px;background:#fff;border:1px solid var(--copper-l);color:var(--copper);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hint .hi-ic svg{width:14px;height:14px;}
+  .hint .hi-body{flex:1;min-width:0;}
+  .hint .hi-body b{color:var(--ink);font-weight:700;}
+  .hint .hi-x{border:none;background:none;color:var(--faint);cursor:pointer;padding:2px;border-radius:5px;flex-shrink:0;transition:.12s;line-height:0;}
+  .hint .hi-x:hover{color:var(--soft);background:rgba(0,0,0,.04);}
+  .hint .hi-x svg{width:14px;height:14px;stroke-width:2;}
   /* Pipeline board */
   .board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding-bottom:2px;}
   .col-see{margin:2px 8px 8px;border:1px solid var(--line2);background:#fff;color:var(--copper-d);border-radius:7px;padding:7px;font-size:11px;font-weight:600;cursor:pointer;transition:.13s;text-align:center;}
@@ -919,7 +929,8 @@
   </section>
 
   <section class="view" id="v-pipeline">
-    <div class="ptitle"><div><h1>Pipeline</h1><div class="sub">Ton atelier. Chaque deal à son étape, Faro suggère, tu confirmes.</div></div><button class="btn" data-go2="nouveau">Nouveau deal</button></div>
+    <div class="ptitle"><div><h1>Pipeline</h1><div class="sub">Tes affaires en cours, du premier contact à la signature. Elles avancent toutes seules quand tu débriefes.</div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+    <div id="pipeHint"></div>
 
     <!-- Barre de pilotage -->
     <div class="pilot" id="pilotBar"></div>
@@ -946,7 +957,8 @@
   </div></div>
 
   <section class="view" id="v-entreprises">
-    <div class="ptitle"><div><h1>Entreprises</h1><div class="sub">Ta mémoire commerciale. Chaque compte, son histoire, d'un coup d'œil.</div></div></div>
+    <div class="ptitle"><div><h1>Entreprises</h1><div class="sub">Ta mémoire client. Chaque entreprise que tu as rencontrée, avec toute son histoire au même endroit.</div></div></div>
+    <div id="entHint"></div>
 
     <!-- Ligne de contexte -->
     <div class="ent-ctx" id="entCtx"></div>
@@ -1173,6 +1185,17 @@ const sb = createClient('https://icofqeisjfoywusolbqs.supabase.co','sb_publishab
 const $ = id => document.getElementById(id);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let session=null, uid=null, tokMax=null, deals=[], briefs=[], set={}, ent=null, currentDeal=null, current=null;
+// Hints subtils : vus une fois, ne reviennent pas
+let hintsSeen={};
+function showHint(container,key,html){
+  const el=$(container); if(!el)return;
+  if(hintsSeen[key]){el.innerHTML='';return;}
+  el.innerHTML=`<div class="hint"><span class="hi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg></span><div class="hi-body">${html}</div><button class="hi-x" aria-label="Compris"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>`;
+  el.querySelector('.hi-x').addEventListener('click',()=>{
+    hintsSeen[key]=1; el.innerHTML='';
+    try{const hs=Object.keys(hintsSeen);set.hints_seen=hs.join(',');sb.from('user_settings').update({hints_seen:set.hints_seen}).eq('user_id',uid).then(()=>{},()=>{});}catch(e){}
+  });
+}
 let typeRdv='premier', posteSel='';
 let rdvActive=false, rdvT0=0, timerInt=null, ann={}, saveT=null, coachT=null, lastCoach='', debTemp='';
 
@@ -1241,6 +1264,8 @@ function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
   $('crumb').textContent=CRUMBS[v]||'';
+  if(v==='pipeline')showHint('pipeHint','pipe1','<b>Tu ne gères pas ce tableau à la main.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se place et avance toute seule. Glisse une carte seulement si tu veux corriger.');
+  if(v==='entreprises')showHint('entHint','ent1','<b>Ici, c\'est la mémoire.</b> Le pipeline sert à agir, cette page à te souvenir. Clique une entreprise pour retrouver tous vos échanges.');
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
@@ -1254,6 +1279,7 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   if(!data.session){location.href='/connexion';return;}
   session=data.session; uid=session.user.id; const u=session.user;
   try{const {data:s}=await sb.from('user_settings').select('*').eq('user_id',uid).single(); if(s)set=s;}catch(e){}
+  if(set.hints_seen){(set.hints_seen+'').split(',').forEach(k=>{if(k)hintsSeen[k]=1;});}
   const meta=(u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||'';
   const name=(set.full_name||meta||(u.email?u.email.split('@')[0]:'')).trim();
   const pre=name?name.split(' ')[0].replace(/^./,c=>c.toUpperCase()):'';
