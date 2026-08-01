@@ -172,6 +172,13 @@
     .offre-grid{grid-template-columns:1fr;}
     .offre-side{position:static;}
   }
+  /* Bascule de vue Mes affaires */
+  .aff-tools{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .aff-viewtabs{display:inline-flex;gap:2px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;}
+  .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:7px;cursor:pointer;transition:.13s;font-family:inherit;}
+  .avt svg{width:14px;height:14px;}
+  .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
+  .avt:hover:not(.on){color:var(--soft);}
   /* Hint subtil façon Notion/Linear */
   .hint{display:flex;align-items:flex-start;gap:11px;background:linear-gradient(135deg,#FCF6EF,#FBF3E9);border:1px solid #F0E2D0;border-radius:var(--rl);padding:12px 14px;margin-bottom:14px;font-size:12.5px;color:var(--soft);line-height:1.5;animation:hintin .3s ease;}
   @keyframes hintin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
@@ -876,9 +883,8 @@
   <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Nouveau brief</span></button>
   <div class="ngroup">Pilotage</div>
   <nav class="nav">
-    <button class="on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Vue d'ensemble</span></button>
-    <button data-go="pipeline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Pipeline</span><span class="cnt" id="cntDeals">0</span></button>
-    <button data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h1M9 13h1M14 9h1M14 13h1M11 21v-4h2v4"/></svg><span class="lb">Entreprises</span><span class="cnt" id="cntEnt">0</span></button>
+    <button class="on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Aujourd'hui</span></button>
+    <button data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Mes affaires</span><span class="cnt" id="cntDeals">0</span></button>
   </nav>
   <div class="ngroup">Configuration</div>
   <nav class="nav">
@@ -922,22 +928,26 @@
 
       <!-- 2 blocs de même hauteur : plan de bataille + intelligence -->
       <div class="dash-cols">
-        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant.</span><div class="right"><button class="btn g sm" id="focusAll" style="display:none" data-go2="pipeline">Voir tout</button></div></div><div class="cbd p0" id="focusW"></div></div>
+        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant.</span><div class="right"><button class="btn g sm" id="focusAll" style="display:none" data-go2="affaires">Voir tout</button></div></div><div class="cbd p0" id="focusW"></div></div>
         <div class="card intel-card"><div class="chd"><span class="t">Ce que Faro sait de toi</span><span class="d">Tiré de tes rendez-vous.</span></div><div class="cbd" id="intelW"></div></div>
       </div>
     </div>
   </section>
 
-  <section class="view" id="v-pipeline">
-    <div class="ptitle"><div><h1>Pipeline</h1><div class="sub">Tes affaires en cours, du premier contact à la signature. Elles avancent toutes seules quand tu débriefes.</div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+  <section class="view" id="v-affaires">
+    <div class="ptitle"><div><h1>Mes affaires</h1><div class="sub">Toutes tes affaires au même endroit. Elles se créent et avancent quand tu débriefes tes rendez-vous.</div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
     <div id="pipeHint"></div>
 
     <!-- Barre de pilotage -->
     <div class="pilot" id="pilotBar"></div>
 
-    <!-- Outils : recherche, tri, filtres -->
-    <div class="pipe-tools">
-      <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="pipeQ" placeholder="Chercher un deal…" autocomplete="off"/></div>
+    <!-- Bascule vue + outils -->
+    <div class="aff-tools">
+      <div class="aff-viewtabs" id="affViewTabs">
+        <button class="avt on" data-view="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="16" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg>Étapes</button>
+        <button class="avt" data-view="table"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Liste</button>
+      </div>
+      <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="pipeQ" placeholder="Chercher une affaire, un tag…" autocomplete="off"/></div>
       <div class="pt-seg" id="pipeSort">
         <span class="pt-lbl">Trier</span>
         <button class="pts on" data-sort="recent">Récent</button>
@@ -947,7 +957,15 @@
       <div class="pt-filters" id="pipeFilters"></div>
     </div>
 
-    <div class="card"><div class="cbd p0" style="padding:12px;"><div class="board" id="board"></div></div></div>
+    <!-- Vue board (étapes) -->
+    <div id="affBoard">
+      <div class="card"><div class="cbd p0" style="padding:12px;"><div class="board" id="board"></div></div></div>
+    </div>
+
+    <!-- Vue table (liste) -->
+    <div id="affTable" style="display:none;">
+      <div class="card ent-tablecard"><div class="ent-table" id="entW"></div></div>
+    </div>
   </section>
 
   <!-- Panneau d'étape en grand -->
@@ -956,25 +974,8 @@
     <div class="sp-body" id="spBody"></div>
   </div></div>
 
-  <section class="view" id="v-entreprises">
-    <div class="ptitle"><div><h1>Entreprises</h1><div class="sub">Ta mémoire client. Chaque entreprise que tu as rencontrée, avec toute son histoire au même endroit.</div></div></div>
-    <div id="entHint"></div>
-
-    <!-- Ligne de contexte -->
-    <div class="ent-ctx" id="entCtx"></div>
-
-    <!-- Table -->
-    <div class="card ent-tablecard">
-      <div class="ent-toolbar">
-        <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="entq" placeholder="Chercher une entreprise, un tag…" autocomplete="off"></div>
-        <div class="pt-filters" id="entFilters"></div>
-      </div>
-      <div class="ent-table" id="entW"></div>
-    </div>
-  </section>
-
   <section class="view" id="v-fiche">
-    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="entreprises">Retour</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
+    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div class="card"><div class="chd"><span class="t">L'affaire</span><span class="d">Où en est la vente.</span></div><div class="cbd">
@@ -1259,13 +1260,12 @@ const briefTempChip=b=>{
 };
 
 /* ═══ Navigation ═══ */
-const CRUMBS={dash:"Vue d'ensemble",pipeline:'Pipeline',entreprises:'Entreprises',fiche:'Entreprise',nouveau:'Nouveau brief',ctx:'Nouveau brief',offre:'Mon offre',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",affaires:'Mes affaires',fiche:'Entreprise',nouveau:'Nouveau brief',ctx:'Nouveau brief',offre:'Mon offre',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
-  document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
+  document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='affaires')||((v==='nouveau'||v==='ctx')&&false)));
   $('crumb').textContent=CRUMBS[v]||'';
-  if(v==='pipeline')showHint('pipeHint','pipe1','<b>Tu ne gères pas ce tableau à la main.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se place et avance toute seule. Glisse une carte seulement si tu veux corriger.');
-  if(v==='entreprises')showHint('entHint','ent1','<b>Ici, c\'est la mémoire.</b> Le pipeline sert à agir, cette page à te souvenir. Clique une entreprise pour retrouver tous vos échanges.');
+  if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se crée et avance. Bascule entre <b>Étapes</b> pour visualiser et <b>Liste</b> pour tout voir en détail.');
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
@@ -1304,7 +1304,6 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
 function tok(n){if(typeof n!=='number')return;const s=n+(n>1?' jetons':' jeton');$('pillTok').textContent=s;$('utok').textContent=s;$('left').textContent=n;$('uL').textContent=n;}
 function renderAll(){
   $('cntDeals').textContent=deals.filter(d=>!['gagne','perdu'].includes(d.etape)).length;
-  $('cntEnt').textContent=deals.length;
   $('uT').textContent=briefs.length;
   dash(); boardRender($('board'),false); renderPilot(); renderPipeFilters(); entList();
   if(currentDeal&&document.getElementById('v-fiche').classList.contains('on')) openFiche(deals.find(d=>d.id===currentDeal.id)||currentDeal,true);
@@ -1354,7 +1353,7 @@ function dash(){
       wl.innerHTML=`<span><span class="wl-dot green"></span>${salut}.${ws.streak>1?` Série de <b>${ws.streak}</b> débriefs, tiens-la.`:''}</span>`;
     }
     const act=wl.querySelector('[data-wl]');
-    if(act){act.style.cursor='pointer';act.addEventListener('click',()=>{const w=act.dataset.wl;if(w==='deb'){const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}else go('pipeline');});}
+    if(act){act.style.cursor='pointer';act.addEventListener('click',()=>{const w=act.dataset.wl;if(w==='deb'){const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}else go('affaires');});}
   }
 
   // ─── Héros argent ───
@@ -1370,15 +1369,15 @@ function dash(){
   let KPI;
   if(hasRealKpi){
     KPI=[
-      {k:'Taux de closing',go:'pipeline',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} affaires closes`:'Dès ta première affaire close'},
-      {k:'Vélocité',go:'pipeline',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
-      {k:'Panier moyen',go:'pipeline',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
+      {k:'Taux de closing',go:'affaires',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} affaires closes`:'Dès ta première affaire close'},
+      {k:'Vélocité',go:'affaires',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
+      {k:'Panier moyen',go:'affaires',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
     ];
   } else {
     KPI=[
-      {k:'Briefs préparés',go:'pipeline',ic:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>',v:briefs.length,h:briefs.length?'ta mémoire grandit':'prépare le premier'},
-      {k:'Affaires actives',go:'pipeline',ic:'<path d="M3 6h18M7 12h10M10 18h4"/>',v:actifs.length,h:actifs.length?'dans ton pipeline':'aucune encore'},
-      {k:'Entreprises',go:'entreprises',ic:'<path d="M4 21h16M7 21V6l5-3 5 3v15M10 9h4M10 13h4"/>',v:deals.length,h:deals.length?'suivies par Faro':'à venir'}
+      {k:'Briefs préparés',go:'affaires',ic:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>',v:briefs.length,h:briefs.length?'ta mémoire grandit':'prépare le premier'},
+      {k:'Affaires actives',go:'affaires',ic:'<path d="M3 6h18M7 12h10M10 18h4"/>',v:actifs.length,h:actifs.length?'dans ton pipeline':'aucune encore'},
+      {k:'Entreprises',go:'affaires',ic:'<path d="M4 21h16M7 21V6l5-3 5 3v15M10 9h4M10 13h4"/>',v:deals.length,h:deals.length?'suivies par Faro':'à venir'}
     ];
   }
   $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="${k.go}"><div class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg></div><div class="kmid"><div class="kk">${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div></div>`).join('');
@@ -1391,22 +1390,36 @@ function dash(){
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
 // ─── L'argent en roi ───
-let moneyPeriod='month', chartDays=30;
+let moneyPeriod='month', chartDays=30, affView='board';
 function wireDashTabs(){
   $('mhPeriod').querySelectorAll('.mhp').forEach(b=>b.addEventListener('click',()=>{
     $('mhPeriod').querySelectorAll('.mhp').forEach(x=>x.classList.toggle('on',x===b));
     moneyPeriod=b.dataset.per; renderMoney();
   }));
-  const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('pipeline'));
+  const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('affaires'));
+  // Bascule vue board / tableau
+  const vt=$('affViewTabs');
+  if(vt)vt.querySelectorAll('.avt').forEach(b=>b.addEventListener('click',()=>{
+    vt.querySelectorAll('.avt').forEach(x=>x.classList.toggle('on',x===b));
+    affView=b.dataset.view;
+    $('affBoard').style.display=affView==='board'?'':'none';
+    $('affTable').style.display=affView==='table'?'':'none';
+    if(affView==='table')entList();
+  }));
   const spc=$('spClose'); if(spc)spc.addEventListener('click',closeStagePanel);
   const sov=$('stageOv'); if(sov)sov.addEventListener('click',e=>{if(e.target===sov)closeStagePanel();});
   // Outils pipeline
   const pq=$('pipeQ');
-  if(pq)pq.addEventListener('input',()=>{pipeSearch=pq.value.trim();boardRender($('board'),false);});
+  if(pq)pq.addEventListener('input',()=>{pipeSearch=pq.value.trim();boardRender($('board'),false);if(affView==='table')entList();});
   const ps=$('pipeSort');
   if(ps)ps.querySelectorAll('.pts').forEach(b=>b.addEventListener('click',()=>{
     ps.querySelectorAll('.pts').forEach(x=>x.classList.toggle('on',x===b));
-    pipeSort=b.dataset.sort;boardRender($('board'),false);
+    pipeSort=b.dataset.sort;
+    // Le tri du board et de la liste partagent la même clé
+    if(b.dataset.sort==='recent')entSort={key:'recent',dir:-1};
+    else if(b.dataset.sort==='montant')entSort={key:'valeur',dir:-1};
+    else if(b.dataset.sort==='age')entSort={key:'recent',dir:1};
+    boardRender($('board'),false);if(affView==='table')entList();
   }));
 }
 function monthStart(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),1).getTime();}
@@ -1487,13 +1500,13 @@ function renderMhRight(actifs,closing,closingVal,totActif,noMontant){
   if(noMontant){
     const stale=actifs.filter(d=>days(d.updated_at)>=7).length;
     metrics=[
-      {k:'Affaires en cours',dt:'var(--copper)',v:actifs.length||'0',h:actifs.length?'dans ton pipeline':'aucune pour l\'instant',go:'pipeline'},
-      {k:'À portée de signature',dt:'var(--green)',v:closing.length||'0',h:closing.length?'en closing':'aucune en closing',go:'pipeline'}
+      {k:'Affaires en cours',dt:'var(--copper)',v:actifs.length||'0',h:actifs.length?'dans ton pipeline':'aucune pour l\'instant',go:'affaires'},
+      {k:'À portée de signature',dt:'var(--green)',v:closing.length||'0',h:closing.length?'en closing':'aucune en closing',go:'affaires'}
     ];
   } else {
     metrics=[
-      {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} affaire${actifs.length>1?'s':''} en cours`,go:'pipeline'},
-      {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' affaire'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucune affaire en closing',go:'pipeline'}
+      {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} affaire${actifs.length>1?'s':''} en cours`,go:'affaires'},
+      {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' affaire'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucune affaire en closing',go:'affaires'}
     ];
   }
   $('mhRight').innerHTML=metrics.map(m=>`<div class="mh-metric" data-mgo="${m.go}"><div class="mm-k"><span class="dt" style="background:${m.dt}"></span>${m.k}</div><div class="mm-v">${m.v}</div><div class="mm-h">${m.h}</div></div>`).join('');
@@ -1855,8 +1868,8 @@ function renderPipeFilters(){
   ];
   el.innerHTML=chips.map(c=>`<button class="ptf ${pipeFilters.temp===c.k?'on':''}" data-temp="${c.k}"><span class="dt" style="background:${c.dt}"></span>${c.lbl}</button>`).join('')
     +`<button class="ptf ${pipeFilters.stale?'on':''}" data-stale="1">Qui stagnent</button>`;
-  el.querySelectorAll('[data-temp]').forEach(b=>b.addEventListener('click',()=>{pipeFilters.temp=pipeFilters.temp===b.dataset.temp?null:b.dataset.temp;renderPipeFilters();boardRender($('board'),false);}));
-  el.querySelector('[data-stale]').addEventListener('click',()=>{pipeFilters.stale=!pipeFilters.stale;renderPipeFilters();boardRender($('board'),false);});
+  el.querySelectorAll('[data-temp]').forEach(b=>b.addEventListener('click',()=>{pipeFilters.temp=pipeFilters.temp===b.dataset.temp?null:b.dataset.temp;renderPipeFilters();boardRender($('board'),false);if(affView==='table')entList();}));
+  el.querySelector('[data-stale]').addEventListener('click',()=>{pipeFilters.stale=!pipeFilters.stale;renderPipeFilters();boardRender($('board'),false);if(affView==='table')entList();});
 }
 
 // Entonnoir : conversion entre étapes
@@ -1887,9 +1900,8 @@ async function acceptSugg(id){
   try{await sb.from('deals').update({etape:nv,etape_suggeree:null,updated_at:d.updated_at}).eq('id',id);}catch(e){}
 }
 
-/* ═══ Entreprises ═══ */
-let entQuery='', entSort={key:'recent',dir:-1}, entFilter={etape:null};
-$('entq').addEventListener('input',()=>{entQuery=$('entq').value.trim().toLowerCase();entList();});
+/* ═══ Table des affaires (vue liste) ═══ */
+let entSort={key:'recent',dir:-1};
 
 function entLastActivity(d){
   const bs=dealBriefs(d);
@@ -1897,12 +1909,11 @@ function entLastActivity(d){
   return lb;
 }
 function entNextText(d){
-  // Ce qui t'attend : prochaine action propre, sinon état
   const bs=dealBriefs(d);
   const lb=bs.find(b=>b.debrief);
   const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
   const note=(lb&&lb.debrief&&lb.debrief.next_action)||d.prochaine_action;
-  if(['gagne'].includes(d.etape))return {t:'Deal gagné, entretiens la relation.',cls:''};
+  if(['gagne'].includes(d.etape))return {t:'Affaire gagnée, entretiens la relation.',cls:''};
   if(['perdu'].includes(d.etape))return {t:'Affaire close. Reste en veille.',cls:'none'};
   if(note&&!looksLikeMail(note)&&note.length<=52)return {t:`<b>${esc(note)}</b>`,cls:''};
   const n=days(d.updated_at);
@@ -1911,26 +1922,15 @@ function entNextText(d){
 }
 
 function entList(){
-  // Contexte
-  const total=deals.length;
-  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
-  const totVal=actifs.reduce((a,d)=>a+dealVal(d),0);
-  const wins=deals.filter(d=>d.etape==='gagne').length;
-  $('entCtx').innerHTML=`
-    <div class="ec"><div class="ec-v">${total}</div><div class="ec-k">entreprise${total>1?'s':''} en mémoire</div></div>
-    <div class="ec"><div class="ec-v"><em>${actifs.length}</em></div><div class="ec-k">deal${actifs.length>1?'s':''} actif${actifs.length>1?'s':''}</div></div>
-    ${totVal?`<div class="ec"><div class="ec-v">${eur(totVal)}</div><div class="ec-k">en jeu</div></div>`:''}
-    ${wins?`<div class="ec"><div class="ec-v">${wins}</div><div class="ec-k">gagné${wins>1?'s':''}</div></div>`:''}`;
-
-  // Filtres par étape
-  renderEntFilters();
-
-  // Filtrage
+  // Utilise la recherche, le tri et les filtres partagés avec le board
   let list=deals.slice();
-  if(entQuery)list=list.filter(d=>((d.entreprise||'')+' '+(d.tags||[]).join(' ')+' '+(d.interlocuteur||'')).toLowerCase().includes(entQuery));
-  if(entFilter.etape)list=list.filter(d=>d.etape===entFilter.etape);
+  const q=(typeof pipeSearch!=='undefined'?pipeSearch:'').toLowerCase();
+  if(q)list=list.filter(d=>((d.entreprise||'')+' '+(d.tags||[]).join(' ')+' '+(d.interlocuteur||'')).toLowerCase().includes(q));
+  if(typeof pipeFilters!=='undefined'){
+    if(pipeFilters.temp)list=list.filter(d=>dealTemp(d)===pipeFilters.temp);
+    if(pipeFilters.stale)list=list.filter(d=>dealStale(d));
+  }
 
-  // Tri
   const STORD={contact:0,decouverte:1,negociation:2,closing:3,gagne:4,perdu:5};
   list.sort((a,b)=>{
     let v=0;
@@ -1941,8 +1941,9 @@ function entList(){
     return v*entSort.dir;
   });
 
+  const w=$('entW'); if(!w)return;
   if(!list.length){
-    $('entW').innerHTML=`<div class="ent-empty">${entQuery||entFilter.etape?'<div class="empty">Rien ne correspond.</div>':`<div class="esvg">${ESVG.entreprises}</div><div class="empty">Tes entreprises apparaîtront ici, avec leur mémoire.</div>`}</div>`;
+    w.innerHTML=`<div class="ent-empty">${q?'<div class="empty">Rien ne correspond.</div>':`<div class="esvg">${ESVG.entreprises}</div><div class="empty">Tes affaires apparaîtront ici, avec toute leur mémoire.</div>`}</div>`;
     return;
   }
 
@@ -1974,17 +1975,17 @@ function entList(){
       <div class="etd etd-next ${nx.cls}">${nx.t}</div>
     </div>`;
   }).join('');
-  $('entW').innerHTML=head+rows;
-  $('entW').querySelectorAll('.eth[data-sort]').forEach(el=>el.addEventListener('click',()=>{
+  w.innerHTML=head+rows;
+  w.querySelectorAll('.eth[data-sort]').forEach(el=>el.addEventListener('click',()=>{
     const k=el.dataset.sort;
     if(entSort.key===k)entSort.dir*=-1;
-    else {entSort.key=k;entSort.dir=k==='nom'?1:(k==='recent'?-1:-1);}
+    else {entSort.key=k;entSort.dir=k==='nom'?1:-1;}
     entList();
   }));
-  $('entW').querySelectorAll('.etr').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
+  w.querySelectorAll('.etr').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
 }
 
-function renderEntFilters(){
+function renderEntFilters_OBSOLETE(){
   const el=$('entFilters'); if(!el)return;
   const stages=[['contact','Contact'],['decouverte','Découverte'],['negociation','Négociation'],['closing','Closing'],['gagne','Gagné']];
   el.innerHTML=stages.filter(([k])=>deals.some(d=>d.etape===k)).map(([k,l])=>{
@@ -2772,7 +2773,7 @@ let recog=null, recOn=false;
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
-const palNav=[{t:"Vue d'ensemble",go:'dash'},{t:'Pipeline',go:'pipeline'},{t:'Entreprises',go:'entreprises'},{t:'Nouveau brief',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
+const palNav=[{t:"Vue d'ensemble",go:'dash'},{t:'Pipeline',go:'affaires'},{t:'Entreprises',go:'affaires'},{t:'Nouveau brief',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
 function palOpenF(){$('pal').classList.add('on');$('palQ').value='';palRender('');setTimeout(()=>$('palQ').focus(),30);}
 function palClose(){$('pal').classList.remove('on');}
 $('palOpen').addEventListener('click',palOpenF);
