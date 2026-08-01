@@ -179,6 +179,15 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* Pouls de la semaine dans la sidebar */
+  .side-pouls{margin:0 2px 8px;}
+  .sp-in{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.55);border:1px solid #E3D8C2;border-radius:9px;padding:9px 11px;}
+  .sp-in svg{width:16px;height:16px;color:var(--copper);flex-shrink:0;}
+  .sp-in b{display:block;font-size:12px;color:var(--ink);font-weight:700;line-height:1.15;}
+  .sp-in span{display:block;font-size:10px;color:var(--dim);}
+  /* Surtitre éditorial de page */
+  .eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);margin-bottom:7px;}
+  .eyebrow::before{content:"";width:16px;height:2px;background:var(--copper);border-radius:2px;}
   /* Page nouveau : clients récents + déroulé */
   .nv-recent{max-width:640px;margin:26px auto 0;}
   .nv-recent-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;text-align:center;}
@@ -1055,6 +1064,7 @@
     <button data-go="reglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><span class="lb">Réglages</span></button>
   </nav>
   <div class="sp"></div>
+  <div class="side-pouls" id="sidePouls"></div>
   <div class="ucard"><button class="av" id="uav">F</button><div class="uinfo" style="min-width:0;flex:1;"><div class="uname" id="uname">…</div><div class="utok" id="utok">— jetons</div></div><button class="iconbtn" id="out" aria-label="Se déconnecter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></button></div>
 </aside>
 <main class="main">
@@ -1068,7 +1078,7 @@
 
   <section class="view on" id="v-dash">
     <div class="cockpit">
-      <div class="ck-head"><div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+      <div class="ck-head"><div><div class="eyebrow" id="dashEyebrow">Pilotage</div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
 
       <!-- Héros argent compact -->
       <div class="money-hero card" id="moneyHero">
@@ -1098,7 +1108,7 @@
   </section>
 
   <section class="view" id="v-affaires">
-    <div class="ptitle"><div><h1>Mes affaires</h1><div class="sub">Toutes tes affaires au même endroit. Elles se créent et avancent quand tu débriefes tes rendez-vous.</div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
+    <div class="ptitle"><div><div class="eyebrow">Pilotage · Pipeline</div><h1>Mes affaires</h1><div class="sub">Toutes tes affaires au même endroit. Elles se créent et avancent quand tu débriefes tes rendez-vous.</div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
     <div id="pipeHint"></div>
 
     <!-- Barre de pilotage -->
@@ -1139,7 +1149,7 @@
 
   <section class="view" id="v-fiche">
     <nav class="fildar fildar-page" id="ficheFil"></nav>
-    <div class="ptitle"><div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g danger" id="fDelete">Supprimer</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
+    <div class="ptitle"><div><div class="eyebrow">Dossier client</div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g danger" id="fDelete">Supprimer</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div class="card"><div class="chd"><span class="t">L'affaire</span><span class="d">Où en est la vente.</span></div><div class="cbd">
@@ -1206,7 +1216,7 @@
   </section>
 
   <section class="view" id="v-offre">
-    <div class="ptitle"><div><h1>Mon offre</h1><div class="sub">Le socle de chaque brief. Saisi une fois, Faro s'en sert à chaque rendez-vous.</div></div></div>
+    <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Mon offre</h1><div class="sub">Le socle de chaque brief. Saisi une fois, Faro s'en sert à chaque rendez-vous.</div></div></div>
     <div class="offre-grid">
       <div class="offre-form">
         <div class="card">
@@ -1248,7 +1258,7 @@
   </section>
 
   <section class="view" id="v-reglages">
-    <div class="ptitle"><div><h1>Réglages</h1><div class="sub">Ton compte, tes jetons, tes données. Tout ce qui fait tourner Faro pour toi.</div></div></div>
+    <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Réglages</h1><div class="sub">Ton compte, tes jetons, tes données. Tout ce qui fait tourner Faro pour toi.</div></div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;" id="regGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div class="card"><div class="chd"><span class="t">Profil</span><span class="d">Qui tu es dans Faro.</span></div><div class="cbd">
@@ -1500,6 +1510,8 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   const pre=name?name.split(' ')[0].replace(/^./,c=>c.toUpperCase()):'';
   const photo=(u.user_metadata&&(u.user_metadata.avatar_url||u.user_metadata.picture))||'';
   const h=new Date().getHours();
+  const de=$('dashEyebrow');
+  if(de){const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});de.textContent=today.charAt(0).toUpperCase()+today.slice(1);}
   $('greet').textContent=pre?`${h<18?'Bonjour':'Bonsoir'} ${pre}.`:`${h<18?'Bonjour':'Bonsoir'}.`;
   $('uname').textContent=name||u.email; $('sMail2').value=u.email||''; $('sName').value=set.full_name||meta||'';
   if(photo){$('uav').style.background='none';$('uav').innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`;}
@@ -1519,6 +1531,18 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
 function tok(n){if(typeof n!=='number')return;const s=n+(n>1?' jetons':' jeton');$('pillTok').textContent=s;$('utok').textContent=s;$('left').textContent=n;$('uL').textContent=n;}
 function renderAll(){
   $('cntDeals').textContent=deals.filter(d=>!['gagne','perdu'].includes(d.etape)).length;
+  // Pouls de la semaine dans la sidebar
+  const sp=$('sidePouls');
+  if(sp){
+    const ws=weekStats();
+    if(ws.streak>=2){
+      sp.innerHTML=`<div class="sp-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg><div><b>${ws.streak} débriefs</b><span>d'affilée, tiens la série</span></div></div>`;
+      sp.style.display='';
+    } else if(ws.briefs>0){
+      sp.innerHTML=`<div class="sp-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><div><b>${ws.briefs} brief${ws.briefs>1?'s':''}</b><span>cette semaine</span></div></div>`;
+      sp.style.display='';
+    } else sp.style.display='none';
+  }
   $('uT').textContent=briefs.length;
   dash(); boardRender($('board'),false); renderPilot(); renderPipeFilters(); entList();
   if(currentDeal&&document.getElementById('v-fiche').classList.contains('on')) openFiche(deals.find(d=>d.id===currentDeal.id)||currentDeal,true);
