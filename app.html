@@ -418,6 +418,32 @@
   .chrono.warn{color:var(--gold);border-color:#E7CE8C;}
   .chrono.late{color:var(--red);border-color:var(--redbd);}
   .docbody{max-width:1120px;margin:0 auto;padding:22px 22px 120px;display:grid;grid-template-columns:290px 1fr;gap:18px;align-items:start;}
+  /* Mode RDV : le carnet de débrief apparaît à droite, tout s'élargit */
+  body.rdv .docbody{max-width:1500px;grid-template-columns:250px 1fr 340px;}
+  .carnet{display:none;}
+  body.rdv .carnet{display:flex;flex-direction:column;position:sticky;top:76px;max-height:calc(100vh - 96px);background:linear-gradient(180deg,#FCF6EF,#FBF3E9);border:1px solid #E8D9C4;border-radius:var(--rl);box-shadow:var(--shm);overflow:hidden;animation:carnetin .4s cubic-bezier(.2,.7,.2,1);}
+  @keyframes carnetin{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:none;}}
+  .carnet-head{display:flex;align-items:center;gap:11px;padding:14px 16px;border-bottom:1px solid #EEDFCB;background:rgba(255,255,255,.4);}
+  .carnet-t{font-family:var(--serif);font-weight:600;font-size:16px;line-height:1.1;}
+  .carnet-s{font-size:10.5px;color:var(--copper-d);margin-top:1px;}
+  .carnet-live{width:9px;height:9px;border-radius:50%;background:var(--copper);margin-left:auto;flex-shrink:0;animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(201,106,46,.5);}50%{opacity:.6;box-shadow:0 0 0 5px rgba(201,106,46,0);}}
+  .carnet-body{padding:14px 16px;overflow-y:auto;flex:1;}
+  .carnet-q{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:8px;}
+  .carnet-q span{color:var(--faint);text-transform:none;letter-spacing:0;}
+  .temps.sm{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .temps.sm button{padding:8px 6px;font-size:11.5px;border:1px solid var(--line2);background:#fff;border-radius:7px;cursor:pointer;font-weight:600;color:var(--soft);transition:.13s;font-family:inherit;}
+  .temps.sm button:hover{border-color:var(--copper-l);}
+  .temps.sm button.on{background:var(--copper);color:#fff;border-color:var(--copper);}
+  .temps.sm.flash{animation:flashbg .6s ease 2;border-radius:8px;}
+  @keyframes flashbg{0%,100%{box-shadow:0 0 0 0 rgba(201,106,46,0);}50%{box-shadow:0 0 0 4px rgba(201,106,46,.3);}}
+  .carnet-notes{width:100%;min-height:150px;resize:vertical;border:1px solid #E8D9C4;border-radius:8px;padding:11px;font-size:13px;font-family:inherit;line-height:1.5;background:#fff;color:var(--ink);}
+  .carnet-notes:focus{outline:none;border-color:var(--copper-l);box-shadow:0 0 0 3px var(--washc);}
+  .carnet-mic{margin-top:8px;}
+  .carnet-mic .micbtn{width:100%;justify-content:center;}
+  .carnet-foot{padding:12px 16px;border-top:1px solid #EEDFCB;background:rgba(255,255,255,.4);}
+  .carnet-foot .btn{width:100%;justify-content:center;}
+  .carnet #carnetMontant{background:#fff;}
   .rail{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;}
   .kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line3);font-size:12px;}
   .kv:last-child{border-bottom:none;}
@@ -498,7 +524,7 @@
   .synth .sa b{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:2px;}
   /* Terrain (annotations mode RDV) */
   .anz{display:none;margin-top:12px;border-top:1px solid var(--line3);padding-top:11px;}
-  body.rdv .anz{display:block;animation:up .25s ease;}
+  .anz{display:none;}
   .anz .alab{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
   .anz .alab::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--blue);}
   .aninput{width:100%;border:1.5px solid #C6DAE6;background:#FBFDFE;border-radius:8px;padding:8px 11px;font-size:13px;line-height:1.5;color:var(--ink);outline:none;min-height:34px;transition:.14s;}
@@ -537,6 +563,32 @@
   .debov{position:fixed;inset:0;background:rgba(30,25,18,.45);backdrop-filter:blur(5px);z-index:105;display:none;align-items:center;justify-content:center;padding:20px;}
   .debov.on{display:flex;}
   .debbox{max-width:500px;width:100%;background:var(--card);border:1px solid var(--line2);border-radius:16px;box-shadow:var(--shl);padding:26px;animation:up .28s cubic-bezier(.2,.7,.2,1);}
+  /* Diptyque brief (1) / débrief (2) : identité jumelle */
+  .dip-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;font-family:var(--serif);font-weight:700;font-size:14px;color:#fff;flex-shrink:0;}
+  .dip-badge.b1{background:var(--copper);}
+  .dip-badge.b2{background:var(--copper-d);}
+  .dip-head{display:flex;align-items:center;gap:13px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--line);}
+  .dip-head .dip-badge{width:38px;height:38px;border-radius:10px;font-size:20px;}
+  .dip-head.deb .dip-badge{box-shadow:0 3px 10px -3px rgba(169,83,30,.5);}
+  .dip-txt .dip-t{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.1;}
+  .dip-txt .dip-s{font-size:12px;color:var(--dim);margin-top:2px;}
+  .deb-mirror{background:linear-gradient(135deg,#FCF6EF,#FBF3E9);border:1px solid #F0E2D0;border-radius:var(--rl);padding:12px 14px;margin-bottom:18px;}
+  .deb-mirror:empty{display:none;}
+  .dm-head{display:flex;align-items:center;gap:8px;font-size:10px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:10px;}
+  .dm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .dm-col-h{font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding-bottom:5px;}
+  .dm-col-h.prevu{color:var(--faint);}
+  .dm-col-h.vecu{color:var(--copper-d);}
+  .dm-cell{font-size:11.5px;color:var(--soft);padding:6px 0;border-top:1px solid rgba(201,106,46,.12);line-height:1.35;}
+  .dm-cell .dm-lbl{display:block;font-size:9px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:2px;}
+  .dm-cell.v{color:var(--ink);font-weight:500;}
+  .dm-cell i{color:var(--faint);font-style:italic;}
+  .dm-libre{margin-top:10px;padding-top:9px;border-top:1px dashed rgba(201,106,46,.2);font-size:11px;color:var(--dim);}
+  .dm-libre b{color:var(--copper-d);font-weight:600;}
+  .dm-row{display:flex;gap:10px;padding:5px 0;border-top:1px solid rgba(201,106,46,.12);font-size:12px;}
+  .dm-row:first-of-type{border-top:none;}
+  .dm-k{color:var(--dim);flex-shrink:0;min-width:130px;font-weight:600;}
+  .dm-v{color:var(--soft);min-width:0;}
   .debbox .dk{font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:3px;}
   .debbox .dd{font-size:12px;color:var(--dim);margin-bottom:18px;}
   .debbox .dq{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin:15px 0 8px;}
@@ -1105,7 +1157,7 @@
 <div class="briefDoc" id="briefDoc">
   <div class="docbar">
     <button class="backb" id="docClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
-    <div class="bc"><span class="mono" id="bcLogo">F</span><span id="bcName">Brief</span><span class="chip stage" id="bcStage" style="display:none"></span></div>
+    <div class="bc"><span class="dip-badge b1">1</span><span class="mono" id="bcLogo">F</span><span id="bcName">Brief</span><span class="chip stage" id="bcStage" style="display:none"></span></div>
     <div class="g1"></div>
     <span class="chrono" id="chrono">00:00</span>
   </div>
@@ -1126,6 +1178,24 @@
       <div class="card" id="covCard"><div class="chd"><span class="t">Couverture du rendez-vous</span></div><div class="cbd" id="covList"></div></div>
     </aside>
     <div class="docmain" id="dMain"></div>
+    <!-- Carnet de débrief : compagnon en direct pendant le RDV -->
+    <aside class="carnet" id="carnet">
+      <div class="carnet-head"><span class="dip-badge b2">2</span><div><div class="carnet-t">Ton débrief</div><div class="carnet-s" id="carnetS">Il s'écrit pendant que tu notes.</div></div><span class="carnet-live" id="carnetLive"></span></div>
+      <div class="carnet-body">
+        <div class="carnet-q">La température, dès que tu la sens</div>
+        <div class="temps sm" id="tempsLive"><button data-t="close">Closé</button><button data-t="chaud">Chaud</button><button data-t="tiede">Tiède</button><button data-t="mort">Mort</button></div>
+        <div id="carnetMontantWrap" style="display:none;margin-top:12px;">
+          <div class="carnet-q" id="carnetMontantQ">L'enjeu <span>· en euros</span></div>
+          <input class="fld" id="carnetMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/>
+        </div>
+        <div class="carnet-q" style="margin-top:14px;">Ce qui se dit, au fil de l'eau</div>
+        <textarea class="carnet-notes" id="carnetNotes" placeholder="Note tout ici. Son objection, sa réaction, ce qu'il faut retenir…"></textarea>
+        <div class="carnet-mic"><button class="micbtn" id="carnetMic" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg><span id="carnetMicL">Dicter</span></button></div>
+        <div class="carnet-q" style="margin-top:14px;">La prochaine action</div>
+        <input class="fld" id="carnetNext" placeholder="Ce que tu fais ensuite…"/>
+      </div>
+      <div class="carnet-foot"><button class="btn" id="carnetFinish"><span>Terminer et valider le débrief</span></button></div>
+    </aside>
   </div>
   <div class="docactions" id="docActions"></div>
   <div class="coach" id="coach"></div>
@@ -1133,8 +1203,8 @@
 </div>
 
 <div class="debov" id="debOv"><div class="debbox">
-  <div class="dk">Boucler le rendez-vous</div>
-  <div class="dd">Trente secondes, et Faro capitalise tout.</div>
+  <div class="dip-head deb"><span class="dip-badge b2">2</span><div class="dip-txt"><div class="dip-t">Le débrief</div><div class="dip-s">Après le rendez-vous. Le tome 2 de ton brief.</div></div></div>
+  <div class="deb-mirror" id="debMirror"></div>
   <div class="dq">Température de l'affaire</div>
   <div class="temps" id="temps"><button data-t="close">Closé, c'est signé</button><button data-t="chaud">Chaud, ça avance</button><button data-t="tiede">Tiède, à recontacter</button><button data-t="mort">Mort, on passe</button></div>
   <div id="debMontantWrap" style="display:none;">
@@ -2472,7 +2542,10 @@ function addLibre(text,at,focus){
 }
 function collectLibre(){
   const libre=[];
-  $('libreList').querySelectorAll('.aninput').forEach(el=>{const t=el.textContent.trim();if(t)libre.push({t,at:el.dataset.at||new Date().toISOString()});});
+  const el=$('libreList');
+  if(el)el.querySelectorAll('.aninput').forEach(x=>{const t=x.textContent.trim();if(t)libre.push({t,at:x.dataset.at||new Date().toISOString()});});
+  // Préserve les notes du carnet compagnon
+  (ann.libre||[]).filter(n=>n.src==='carnet').forEach(n=>libre.push(n));
   ann.libre=libre;
 }
 function fmtElapsed(){const s=Math.floor((Date.now()-rdvT0)/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
@@ -2541,13 +2614,63 @@ function rdvStart(){
     $('chrono').className='chrono'+(min>=40?' late':min>=20?' warn':'');
     if((Date.now()-rdvT0)%60000<1100)coachEval();
   },1000);
+  // Le carnet reprend ce qui existe déjà
+  const ns=current.next_step||{};
+  if($('carnetNext')&&!$('carnetNext').value&&(ns.phrase||typeof ns==='string'))$('carnetNext').value=ns.phrase||ns;
+  if($('carnetNotes')){
+    // Reconstitue les notes déjà prises (vrac + sections)
+    if(!$('carnetNotes').value){
+      const parts=[];
+      (ann.libre||[]).forEach(n=>{if(n.t&&n.t.trim())parts.push(n.t.trim());});
+      if(parts.length)$('carnetNotes').value=parts.join('\n');
+    }
+  }
   coverUpdate(); renderActions();
-  coachShow('C\'est parti. Note ce qui se dit, Faro veille.');
+  setTimeout(()=>{const c=$('carnetNotes');if(c)c.focus();},300);
+  coachShow('C\'est parti. Note dans ton carnet à droite, ça écrit ton débrief.');
+}
+// Le carnet écrit dans les notes libres en continu
+function syncCarnetNotes(){
+  if(!$('carnetNotes'))return;
+  const txt=$('carnetNotes').value;
+  // On stocke le carnet comme une note libre unique horodatée
+  ann.libre=(ann.libre||[]).filter(n=>n.src!=='carnet');
+  if(txt.trim())ann.libre.push({t:txt.trim(),at:new Date().toISOString(),src:'carnet'});
+  scheduleSave();coachSoon();coverUpdate();
 }
 function rdvEndAsk(){
-  const ns=current.next_step||{};
-  if(!$('debNext').value&&(ns.phrase||typeof ns==='string'))$('debNext').value=ns.phrase||ns;
-  $('debOv').classList.add('on');
+  // Le carnet a déjà tout capté : on valide directement
+  syncCarnetNotes();
+  if(!debTemp){
+    // Pas de température posée, on la demande dans le carnet
+    coachShow('Pose la température dans ton carnet avant de valider.');
+    const t=$('tempsLive'); if(t){t.scrollIntoView({behavior:'smooth',block:'center'});t.classList.add('flash');setTimeout(()=>t.classList.remove('flash'),1200);}
+    return;
+  }
+  saveDebrief();
+}
+// Le miroir : ce que le brief prévoyait, face à ce que tu as capté en direct
+function renderDebMirror(){
+  const b=current; const el=$('debMirror'); if(!el||!b){if(el)el.innerHTML='';return;}
+  const rows=[];
+  const ou=b.ouverture||{};
+  const acc=ou.accroche||(typeof b.ouverture==='string'?b.ouverture:'');
+  if(acc||((ann.ouverture||{}).note))rows.push({k:'Ouverture',prevu:acc,vecu:(ann.ouverture||{}).note});
+  const ob=b.objection||{};
+  if(ob.texte||((ann.objection||{}).note))rows.push({k:'Objection',prevu:ob.texte,vecu:(ann.objection||{}).note});
+  const ch=b.chiffre||{};
+  if(ch.valeur||((ann.chiffre||{}).note))rows.push({k:'Le chiffre',prevu:ch.valeur,vecu:(ann.chiffre||{}).note});
+  const ns=b.next_step||{};
+  const nextTxt=(ns&&ns.phrase)||(typeof ns==='string'?ns:'');
+  if(nextTxt)rows.push({k:'Étape visée',prevu:nextTxt,vecu:null});
+  // Notes vrac captées en direct
+  const libre=(ann.libre||[]).filter(n=>n.t&&n.t.trim());
+  if(!rows.length&&!libre.length){el.innerHTML='';return;}
+  let html=`<div class="dm-head"><span class="dip-badge b1" style="width:18px;height:18px;font-size:11px;border-radius:5px;">1</span>Ton brief face à ton terrain</div>`;
+  html+=`<div class="dm-grid"><div class="dm-col-h prevu">Prévu</div><div class="dm-col-h vecu">Capté en direct</div></div>`;
+  html+=rows.map(r=>`<div class="dm-grid"><div class="dm-cell"><span class="dm-lbl">${r.k}</span>${r.prevu?esc(trunc(r.prevu,60)):'<i>—</i>'}</div><div class="dm-cell v">${r.vecu?esc(trunc(r.vecu,60)):'<i>rien noté</i>'}</div></div>`).join('');
+  if(libre.length)html+=`<div class="dm-libre"><b>${libre.length} note${libre.length>1?'s':''} en vrac</b> capturée${libre.length>1?'s':''} pendant le RDV, gardée${libre.length>1?'s':''} dans l'affaire.</div>`;
+  el.innerHTML=html;
 }
 function rdvStop(){
   rdvActive=false; clearInterval(timerInt); document.body.classList.remove('rdv');
@@ -2570,44 +2693,65 @@ function copyAll(){
 }
 
 /* ═══ Débrief + cinématique ═══ */
-$('temps').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-  $('temps').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));debTemp=b.dataset.t;
-  const show=debTemp==='close'||debTemp==='chaud';
-  $('debMontantWrap').style.display=show?'':'none';
-  if(show){
-    $('debMontantQ').innerHTML=debTemp==='close'?'Montant signé ? <span>· en euros</span>':'Quel est l\'enjeu de ce deal ? <span>· en euros</span>';
-    const d=current&&current.deal_id?deals.find(x=>x.id===current.deal_id):null;
-    if(d&&d.montant&&!$('debMontant').value)$('debMontant').value=d.montant;
-  }
-}));
+$('temps').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setDebTemp(b.dataset.t,false)));
 $('debCancel').addEventListener('click',()=>$('debOv').classList.remove('on'));
-$('debSave').addEventListener('click',async()=>{
+
+// Sauvegarde du débrief : lit le carnet en priorité, le modal en fallback
+async function saveDebrief(fromModal){
   if(!debTemp){toast('Choisis une température');return;}
-  const btn=$('debSave'); btn.classList.add('load'); btn.disabled=true;
+  syncCarnetNotes();
+  const nextVal=fromModal?$('debNext').value.trim():($('carnetNext')?$('carnetNext').value.trim():'');
+  const phraseVal=fromModal?$('debPhrase').value.trim():'';
+  const montantEl=fromModal?$('debMontant'):$('carnetMontant');
+  const finBtn=fromModal?$('debSave'):$('carnetFinish');
+  if(finBtn){finBtn.classList.add('load');finBtn.disabled=true;}
   collectLibre();
-  const deb={temperature:debTemp,next_action:$('debNext').value.trim(),phrase:$('debPhrase').value.trim()};
+  const deb={temperature:debTemp,next_action:nextVal,phrase:phraseVal};
   try{
     const r=await fetch('/api/annotate',{method:'POST',headers:await auth(),body:JSON.stringify({action:'debrief',id:current.id,debrief:deb,annotations:ann})});
     const o=await r.json(); if(!r.ok)throw new Error(o.error||'');
     current.debrief=deb; current.synthese_post=o.synthese||null; current.statut=o.statut||current.statut;
     current.annotations=JSON.parse(JSON.stringify(ann));
     if(o.deal){const i=deals.findIndex(d=>d.id===o.deal.id);if(i>=0)deals[i]=o.deal;else deals.unshift(o.deal);}
-    // Capture du montant si renseigné
-    const mv=parseFloat($('debMontant').value);
+    const mv=montantEl?parseFloat(montantEl.value):NaN;
     const targetDeal=o.deal||(current.deal_id?deals.find(d=>d.id===current.deal_id):null);
     if(!isNaN(mv)&&mv>0&&targetDeal){
       targetDeal.montant=mv;
       const di=deals.findIndex(d=>d.id===targetDeal.id);if(di>=0)deals[di].montant=mv;
       try{await sb.from('deals').update({montant:mv}).eq('id',targetDeal.id);}catch(e){}
     }
-    $('debMontant').value=''; $('debMontantWrap').style.display='none';
+    if($('debMontant'))$('debMontant').value='';
+    if($('carnetMontant'))$('carnetMontant').value='';
+    if($('debMontantWrap'))$('debMontantWrap').style.display='none';
+    if($('carnetMontantWrap'))$('carnetMontantWrap').style.display='none';
     const i=briefs.findIndex(x=>x.id===current.id); if(i>=0)briefs[i]=current;
     rdvStop(); $('debOv').classList.remove('on');
     showVerdict(debTemp,o.deal||null,!!o.synthese);
     renderAll();
   }catch(e){toast('Sauvegarde impossible, réessaie');}
-  finally{btn.classList.remove('load');btn.disabled=false;}
-});
+  finally{if(finBtn){finBtn.classList.remove('load');finBtn.disabled=false;}}
+}
+$('debSave').addEventListener('click',()=>saveDebrief(true));
+
+// ─── Carnet compagnon : câblage ───
+function setDebTemp(t,fromCarnet){
+  debTemp=t;
+  // Sync les deux jeux de boutons
+  const sync=(id)=>{const el=$(id);if(el)el.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));};
+  sync('temps'); sync('tempsLive');
+  const show=t==='close'||t==='chaud';
+  const q=t==='close'?'Montant signé ? <span>· en euros</span>':'L\'enjeu <span>· en euros</span>';
+  if($('carnetMontantWrap')){$('carnetMontantWrap').style.display=show?'':'none';if(show&&$('carnetMontantQ'))$('carnetMontantQ').innerHTML=q;}
+  if($('debMontantWrap')){$('debMontantWrap').style.display=show?'':'none';}
+  if(show){
+    const d=current&&current.deal_id?deals.find(x=>x.id===current.deal_id):null;
+    if(d&&d.montant){if($('carnetMontant')&&!$('carnetMontant').value)$('carnetMontant').value=d.montant;if($('debMontant')&&!$('debMontant').value)$('debMontant').value=d.montant;}
+  }
+}
+if($('tempsLive'))$('tempsLive').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setDebTemp(b.dataset.t,true)));
+if($('carnetNotes')){let ct=null;$('carnetNotes').addEventListener('input',()=>{clearTimeout(ct);ct=setTimeout(syncCarnetNotes,600);});}
+if($('carnetFinish'))$('carnetFinish').addEventListener('click',()=>saveDebrief(false));
+if($('carnetMic'))$('carnetMic').addEventListener('click',()=>toggleCarnetDictation());
 const VERD={close:'Closé !',chaud:"Ça avance",tiede:'À réchauffer',mort:'Suivant.'};
 function showVerdict(t,deal,hasSyn){
   $('verdOv').className='verd on '+t;
@@ -2770,6 +2914,27 @@ let recog=null, recOn=false;
   $('debCancel').addEventListener('click',()=>{if(recOn)stopRec();});
   $('debSave').addEventListener('click',()=>{if(recOn)stopRec();});
 })();
+
+// Dictée du carnet : écrit dans les notes en direct
+let crec=null, crecOn=false;
+function toggleCarnetDictation(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const btn=$('carnetMic'), lbl=$('carnetMicL');
+  if(!SR){toast('Dictée non disponible sur ce navigateur');return;}
+  if(crecOn){crecOn=false;try{crec.stop();}catch(e){}if(btn)btn.classList.remove('rec');if(lbl)lbl.textContent='Dicter';return;}
+  crec=new SR(); crec.lang='fr-FR'; crec.continuous=true; crec.interimResults=true;
+  let base=$('carnetNotes')?$('carnetNotes').value.trim():'';
+  crec.onresult=e=>{
+    let fin='',inter='';
+    for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=t;else inter+=t;}
+    if(fin)base=(base+' '+fin).trim();
+    if($('carnetNotes'))$('carnetNotes').value=(base+(inter?' '+inter:'')).trim();
+  };
+  crec.onerror=()=>{crecOn=false;if(btn)btn.classList.remove('rec');if(lbl)lbl.textContent='Dicter';};
+  crec.onend=()=>{if(crecOn)try{crec.start();}catch(e){}else syncCarnetNotes();};
+  try{crec.start();}catch(e){}
+  crecOn=true;if(btn)btn.classList.add('rec');if(lbl)lbl.textContent='J\'écoute…';
+}
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
