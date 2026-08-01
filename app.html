@@ -906,7 +906,21 @@
   .ck-head h1{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.015em;line-height:1.1;}
   /* Money hero compact */
   .money-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:0;overflow:hidden;}
-  .mh-left{padding:16px 20px;background:linear-gradient(135deg,#FCF3E9,#F8EAD9);position:relative;display:flex;flex-direction:column;}
+  .mh-left{padding:16px 20px;background:linear-gradient(135deg,#FCF3E9,#F8EAD9);position:relative;display:flex;flex-direction:column;overflow:hidden;}
+  /* Balayage de lumière au chargement */
+  .mh-left::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:shine 1.5s ease .35s 1 both;pointer-events:none;}
+  @keyframes shine{from{left:-70%;}to{left:130%;}}
+  /* Pouls graphique 14 jours */
+  .mh-spark{margin-top:auto;padding-top:12px;}
+  .spark-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(169,83,30,.55);margin-bottom:5px;}
+  .spark-bars{display:flex;align-items:flex-end;gap:3px;height:26px;}
+  .spark-bars i{flex:1;min-width:3px;background:linear-gradient(180deg,var(--copper-l),var(--copper));border-radius:2px 2px 1px 1px;transform-origin:bottom;animation:sparkin .5s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes sparkin{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+  /* KPI vivants au survol */
+  .kpi{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;}
+  .kpi:hover{transform:translateY(-2px);box-shadow:var(--shm);border-color:var(--copper-l);cursor:pointer;}
+  .kpi:hover .ki{color:var(--copper);background:var(--washc);}
+  .ki{transition:.16s;}
   .mh-topline{display:flex;justify-content:flex-start;margin-bottom:10px;}
   .mh-period{display:inline-flex;gap:3px;background:rgba(255,255,255,.6);border:1px solid var(--line2);border-radius:9px;padding:3px;}
   .mhp{border:none;background:none;font-size:11px;font-weight:600;color:var(--dim);padding:5px 11px;border-radius:7px;cursor:pointer;transition:.13s;}
@@ -1109,6 +1123,7 @@
           <div class="mh-k" id="mhKing">Signé</div>
           <div class="mh-big" id="mhBig">—</div>
           <div class="mh-move" id="mhMove"></div>
+          <div class="mh-spark" id="mhSpark"></div>
         </div>
         <div class="mh-right" id="mhRight"></div>
       </div>
@@ -1598,6 +1613,33 @@ function renderNvRecent(){
   }).join('')}</div>`;
   el.querySelectorAll('[data-nvd]').forEach(b=>b.addEventListener('click',()=>{const d=deals.find(x=>x.id===b.dataset.nvd);if(d)startFromDeal(d);}));
 }
+// ─── WOW : chiffres vivants + pouls graphique ───
+function countUp(el,target,fmt,dur=900){
+  if(!el)return;
+  if(reduce||!target||target<=0){el.textContent=fmt(target||0);return;}
+  const t0=performance.now();
+  const ease=x=>1-Math.pow(1-x,3);
+  function frame(now){
+    const p=Math.min(1,(now-t0)/dur);
+    el.textContent=fmt(Math.round(target*ease(p)));
+    if(p<1)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+function renderMhSpark(){
+  const el=$('mhSpark'); if(!el)return;
+  // Activité des 14 derniers jours : briefs créés + débriefs
+  const days14=[];
+  for(let i=13;i>=0;i--){
+    const d0=new Date(); d0.setHours(0,0,0,0); d0.setDate(d0.getDate()-i);
+    const d1=new Date(d0); d1.setDate(d1.getDate()+1);
+    const n=briefs.filter(b=>{const t=new Date(b.created_at);return t>=d0&&t<d1;}).length;
+    days14.push(n);
+  }
+  const max=Math.max(...days14,1);
+  if(days14.every(n=>n===0)){el.innerHTML='';return;}
+  el.innerHTML=`<div class="spark-lbl">Ton rythme, 14 jours</div><div class="spark-bars">${days14.map((n,i)=>`<i style="height:${Math.max(8,n/max*100)}%;${n?'':'opacity:.28;'}animation-delay:${i*35}ms" title="${n} brief${n>1?'s':''}"></i>`).join('')}</div>`;
+}
 function coldGlobal(cold){return cold&&cold.some(d=>days(d.updated_at)>=10);}
 function dash(){
   const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
@@ -1729,7 +1771,11 @@ function renderMoney(){
       kingLabel='Bienvenue'; kingVal='Prêt';
       moveHtml=`<span class="txt">Prépare ton premier rendez-vous, Faro s'occupe du reste.</span>`;
     }
-    $('mhKing').textContent=kingLabel; $('mhBig').textContent=kingVal; $('mhMove').innerHTML=moveHtml;
+    $('mhKing').textContent=kingLabel; $('mhMove').innerHTML=moveHtml;
+    const numMatch=String(kingVal).match(/^(\d+)(.*)$/);
+    if(numMatch)countUp($('mhBig'),parseInt(numMatch[1]),v=>v+numMatch[2]);
+    else $('mhBig').textContent=kingVal;
+    renderMhSpark();
     renderMhRight(actifs,closing,closingVal,totActif,true);
     return;
   }
@@ -1764,7 +1810,10 @@ function renderMoney(){
     }
   }
   $('mhKing').textContent=kingLabel;
-  $('mhBig').textContent=kingVal;
+  const rawEur=parseInt(String(kingVal).replace(/[^0-9]/g,''))||0;
+  if(rawEur>0&&String(kingVal).includes('€'))countUp($('mhBig'),rawEur,v=>eur(v));
+  else $('mhBig').textContent=kingVal;
+  renderMhSpark();
   $('mhMove').innerHTML=moveHtml;
   renderMhRight(actifs,closing,closingVal,totActif,false);
 }
