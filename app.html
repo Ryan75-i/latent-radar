@@ -226,6 +226,14 @@
   .dc-foot{display:flex;align-items:center;gap:6px;margin-top:7px;flex-wrap:wrap;}
   .dc-money{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--copper-d);background:var(--washc);border-radius:5px;padding:2px 6px;}
   .dc-temp{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .dc-temp-l{font-size:10px;color:var(--dim);font-weight:500;}
+  .dc-act{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 8px;border-radius:6px;font-size:10.5px;font-weight:600;line-height:1.25;}
+  .dc-act svg{width:12px;height:12px;flex-shrink:0;}
+  .dc-act span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dc-act.late{background:var(--redbg);color:var(--red);}
+  .dc-act.warn{background:var(--goldbg);color:var(--gold);}
+  .dc-act.due{background:var(--bluebg);color:var(--blue);}
+  .dc-act.ok{background:var(--wash);color:var(--dim);}
   .dc-stale{font-family:var(--mono);font-size:9px;color:var(--gold);}
   .dc-stale.hot{color:var(--red);}
   /* Entonnoir */
@@ -243,12 +251,13 @@
     .pilot{grid-template-columns:1fr 1fr;}
     .funnel-bars{overflow-x:auto;}
   }
-  .col{background:var(--wash);border:1px solid var(--line);border-radius:var(--rl);min-height:120px;display:flex;flex-direction:column;}
-  .colhd{padding:9px 12px;border-bottom:1px solid var(--line3);display:flex;align-items:center;gap:7px;}
+  .col{background:var(--wash);border:1px solid var(--line);border-radius:var(--rl);height:calc(100vh - 340px);min-height:360px;max-height:560px;display:flex;flex-direction:column;overflow:hidden;}
+  .colhd{padding:9px 12px;border-bottom:1px solid var(--line3);display:flex;align-items:center;gap:7px;flex-shrink:0;}
   .colhd .dt2{width:8px;height:8px;border-radius:3px;}
   .colhd .t{font-size:11px;font-weight:700;}
   .colhd .c{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--dim);}
-  .colbd{padding:8px;display:flex;flex-direction:column;gap:7px;flex:1;}
+  .colbd{padding:8px;display:flex;flex-direction:column;gap:7px;flex:1;overflow-y:auto;}
+  .colbd::-webkit-scrollbar{width:5px;} .colbd::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   .dcard{background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.14s;box-shadow:var(--sh);}
   .dcard:hover{transform:translateY(-2px);box-shadow:var(--shm);border-color:var(--line2);}
   .dcard .top{display:flex;align-items:center;gap:8px;}
@@ -741,10 +750,10 @@
   .dash-cols>.card{display:flex;flex-direction:column;min-width:0;}
   .dash-cols>.card .cbd,.dash-cols>.card #focusW{flex:1;}
   .focus-card #focusW{display:flex;flex-direction:column;}
-  .focus-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line3);transition:.12s;}
+  .focus-row{display:flex;align-items:center;gap:12px;padding:0 16px;min-height:66px;border-bottom:1px solid var(--line3);transition:.12s;}
   .focus-row:last-child{border-bottom:none;}
   .focus-row:hover{background:var(--wash);}
-  .focus-ic{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .focus-ic{width:32px;height:32px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   .focus-ic svg{width:15px;height:15px;}
   .focus-badge{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--blue);background:var(--bluebg);border:1px solid #C6DAE6;border-radius:6px;padding:1px 7px;margin-left:2px;}
   .chart-empty{text-align:center;padding:38px 10px;font-size:12px;color:var(--faint);}
@@ -764,12 +773,13 @@
   .focus-empty .fe-ic svg{width:22px;height:22px;stroke-width:2.4;}
   .focus-empty .fe-t{font-size:13px;font-weight:700;}
   .focus-empty .fe-d{font-size:12px;color:var(--dim);margin-top:3px;}
-  .intel-card .cbd{display:flex;flex-direction:column;gap:14px;}
-  .intel-block .ib-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
-  .intel-stat{display:flex;align-items:baseline;gap:8px;}
+  .intel-card .cbd{display:flex;flex-direction:column;gap:0;padding:0;}
+  .intel-block{padding:0;}
+  .intel-block .ib-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);padding:12px 16px 8px;}
+  .intel-stat{display:flex;align-items:baseline;gap:8px;padding:0 16px;}
   .intel-stat .is-v{font-family:var(--serif);font-weight:700;font-size:26px;color:var(--copper);line-height:1;}
   .intel-stat .is-l{font-size:12px;color:var(--soft);line-height:1.35;}
-  .intel-bar{margin-top:9px;display:flex;flex-direction:column;gap:6px;}
+  .intel-bar{margin-top:9px;padding:0 16px 12px;display:flex;flex-direction:column;gap:6px;}
   .ibar-row{font-size:11.5px;}
   .ibar-top{display:flex;justify-content:space-between;margin-bottom:3px;}
   .ibar-top .ibl{color:var(--soft);font-weight:600;}
@@ -778,18 +788,19 @@
   .ibar-track i{display:block;height:100%;border-radius:4px;}
   .intel-obj{display:flex;align-items:center;gap:7px;padding:5px 0;font-size:12px;color:var(--soft);}
   .intel-obj .ion{font-family:var(--mono);font-size:9px;color:#fff;background:var(--red);border-radius:6px;padding:1px 7px;flex-shrink:0;}
-  .intel-lock{border-top:1px dashed var(--line3);padding-top:10px;font-size:11px;color:var(--faint);line-height:1.45;text-align:center;}
+  .intel-lock{padding:12px 16px;font-size:11px;color:var(--faint);line-height:1.45;text-align:center;margin-top:auto;}
   .intel-lock b{color:var(--copper-d);cursor:pointer;font-weight:600;}
   .intel-empty{text-align:center;padding:20px 10px;font-size:12px;color:var(--dim);line-height:1.5;}
-  .intel-learn{text-align:center;padding:20px 14px;}
+  .intel-learn{text-align:center;padding:28px 18px;}
   .il-ic{width:44px;height:44px;border-radius:50%;background:var(--washc);color:var(--copper-d);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
   .il-ic svg{width:22px;height:22px;}
   .il-t{font-size:13px;font-weight:700;color:var(--ink);}
   .il-d{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.5;}
   .il-d b{color:var(--copper-d);font-weight:600;}
-  .obs-list{display:flex;flex-direction:column;gap:11px;}
-  .obs-row{display:flex;align-items:center;gap:10px;}
-  .obs-ic{width:30px;height:30px;border-radius:9px;background:var(--wash);color:var(--copper);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .obs-list{display:flex;flex-direction:column;gap:0;}
+  .obs-row{display:flex;align-items:center;gap:11px;padding:0 16px;min-height:60px;border-bottom:1px solid var(--line3);}
+  .obs-row:last-child{border-bottom:none;}
+  .obs-ic{width:32px;height:32px;border-radius:9px;background:var(--wash);color:var(--copper);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .obs-ic svg{width:15px;height:15px;}
   .obs-body{flex:1;min-width:0;}
   .obs-t{font-size:12.5px;color:var(--soft);line-height:1.35;}
@@ -926,9 +937,6 @@
     </div>
 
     <div class="card"><div class="cbd p0" style="padding:12px;"><div class="board" id="board"></div></div></div>
-
-    <!-- Analyse de l'entonnoir -->
-    <div class="funnel-wrap" id="funnelWrap"></div>
   </section>
 
   <!-- Panneau d'étape en grand -->
@@ -1272,7 +1280,7 @@ function renderAll(){
   $('cntDeals').textContent=deals.filter(d=>!['gagne','perdu'].includes(d.etape)).length;
   $('cntEnt').textContent=deals.length;
   $('uT').textContent=briefs.length;
-  dash(); boardRender($('board'),false); renderPilot(); renderFunnel(); renderPipeFilters(); entList();
+  dash(); boardRender($('board'),false); renderPilot(); renderPipeFilters(); entList();
   if(currentDeal&&document.getElementById('v-fiche').classList.contains('on')) openFiche(deals.find(d=>d.id===currentDeal.id)||currentDeal,true);
 }
 
@@ -1678,6 +1686,30 @@ function wireRows(root){
 let pipeSort='recent', pipeSearch='', pipeFilters={temp:null,stale:false};
 function dealTemp(d){const b=dealBriefs(d).find(x=>x.debrief);return b?b.debrief.temperature:null;}
 function dealStale(d){return !['gagne','perdu'].includes(d.etape)&&days(d.updated_at)>=7;}
+// La prochaine action prescriptive, tirée de la mémoire Faro
+function dealNextAction(d){
+  const ICO={clock:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',check:'<path d="M20 6L9 17l-5-5"/>',flag:'<path d="M4 15V4h13l-2 4 2 4H4"/>'};
+  if(d.etape==='gagne')return {ic:ICO.check,txt:'Gagné, entretiens le lien',urg:'ok'};
+  if(d.etape==='perdu')return null;
+  const bs=dealBriefs(d);
+  const lb=bs.find(x=>x.debrief);
+  const n=days(d.updated_at);
+  const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
+  // Un RDV pas encore débriefé ?
+  const undeb=bs.find(b=>!b.debrief&&b.statut==='a_relancer');
+  if(undeb){const dn=days(undeb.created_at);return {ic:ICO.clock,txt:`À débriefer${dn>=3?`, ${dn} j`:''}`,urg:dn>=3?'late':'due'};}
+  // Une note d'action claire
+  const note=lb&&lb.debrief?lb.debrief.next_action:d.prochaine_action;
+  if(note&&!looksLikeMail(note)&&note.length<=32){
+    return {ic:ICO.arrow,txt:esc(note),urg:n>=7?'late':'due'};
+  }
+  // Sinon, l'urgence par l'ancienneté
+  if(n>=14)return {ic:ICO.arrow,txt:`Relancer, ${n} j de silence`,urg:'late'};
+  if(n>=7)return {ic:ICO.arrow,txt:`Relancer, vu il y a ${n} j`,urg:'warn'};
+  const temp=lb&&lb.debrief?lb.debrief.temperature:null;
+  if(temp==='chaud')return {ic:ICO.arrow,txt:'Deal chaud, garde le rythme',urg:'due'};
+  return {ic:ICO.arrow,txt:'Fais avancer',urg:'ok'};
+}
 
 function boardRender(root,mini){
   if(!root)return;
@@ -1698,7 +1730,7 @@ function boardRender(root,mini){
   root.innerHTML=STAGES.map(s=>{
     const all=deals.filter(d=>d.etape===s.k);
     const filtered=all.filter(match).sort(sortFn);
-    const CAP=4;
+    const CAP=6;
     const ds=filtered.slice(0,CAP);
     const val=all.reduce((a,d)=>a+dealVal(d),0);
     const cards=ds.map(d=>{
@@ -1710,9 +1742,11 @@ function boardRender(root,mini){
       const n=days(d.updated_at);
       const active=!['gagne','perdu'].includes(d.etape);
       const alClass=active&&n>=14?'cold-al':active&&n>=7?'warm-al':'';
-      const staleTag=active&&n>=7?`<span class="dc-stale ${n>=14?'hot':''}">${n} j</span>`:'';
-      const foot=(mv||temp||staleTag)?`<div class="dc-foot">${mv?`<span class="dc-money">${eur(mv)}</span>`:''}${temp?`<span class="dc-temp" style="background:${TC[temp]}" title="Dernier RDV : ${temp}"></span>`:''}${staleTag}</div>`:'';
-      return `<div class="dcard ${alClass}" data-d="${d.id}" draggable="true"><span class="dc-alert"></span><div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span></div><div class="m">${d.interlocuteur?esc(trunc(cleanPoste(d.interlocuteur),22))+' · ':''}${rel(d.updated_at)}${tags?' '+tags:''}</div>${foot}${sugg}</div>`;
+      // Carte d'action : la prochaine action et son urgence
+      const na=dealNextAction(d);
+      const actLine=na?`<div class="dc-act ${na.urg}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${na.ic}</svg><span>${na.txt}</span></div>`:'';
+      const foot=(mv||temp)?`<div class="dc-foot">${mv?`<span class="dc-money">${eur(mv)}</span>`:''}${temp?`<span class="dc-temp" style="background:${TC[temp]}" title="Dernier RDV : ${temp}"></span><span class="dc-temp-l">${({close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'})[temp]}</span>`:''}</div>`:'';
+      return `<div class="dcard ${alClass}" data-d="${d.id}" draggable="true"><span class="dc-alert"></span><div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span></div><div class="m">${d.interlocuteur?esc(trunc(cleanPoste(d.interlocuteur),24)):rel(d.updated_at)}</div>${foot}${actLine}${sugg}</div>`;
     }).join('');
     const hiddenFilter=all.length-filtered.length;
     const overflow=filtered.length-ds.length;
