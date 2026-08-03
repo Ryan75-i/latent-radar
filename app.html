@@ -179,6 +179,25 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* ══ Bascule live / à froid ══ */
+  .passov{position:fixed;inset:0;background:rgba(30,25,18,.5);backdrop-filter:blur(6px);z-index:120;display:none;align-items:center;justify-content:center;padding:20px;}
+  .passov.on{display:flex;}
+  .passbox{position:relative;max-width:480px;width:100%;background:var(--card);border:1px solid var(--line2);border-radius:18px;box-shadow:var(--shl);padding:30px 28px;animation:up .3s cubic-bezier(.2,.7,.2,1);}
+  .pass-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--faint);cursor:pointer;transition:.13s;}
+  .pass-close:hover{background:var(--wash);color:var(--ink);}
+  .pass-close svg{width:17px;height:17px;}
+  .pass-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;margin-bottom:8px;}
+  .pass-t{font-family:var(--serif);font-weight:600;font-size:23px;color:var(--ink);line-height:1.15;}
+  .pass-d{font-size:13px;color:var(--dim);margin-top:6px;line-height:1.45;}
+  .pass-choices{display:flex;flex-direction:column;gap:11px;margin-top:22px;}
+  .pass-choice{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:2px 14px;text-align:left;background:var(--card);border:1.5px solid var(--line2);border-radius:13px;padding:16px 17px;cursor:pointer;font-family:inherit;transition:.15s;}
+  .pass-choice:hover{border-color:var(--copper);background:var(--washc);transform:translateY(-1px);box-shadow:var(--shm);}
+  .pc-ic{grid-row:1/3;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;align-self:center;}
+  .pc-ic.live{background:var(--bluebg);color:var(--blue);}
+  .pc-ic.cold{background:var(--washc);color:var(--copper-d);}
+  .pc-ic svg{width:22px;height:22px;}
+  .pc-t{font-size:15px;font-weight:700;color:var(--ink);align-self:end;}
+  .pc-d{font-size:12px;color:var(--dim);line-height:1.4;}
   /* ══ Bande cockpit : priorité + 4 KPI (lecture en F) ══ */
   .cockpit-strip{display:grid;grid-template-columns:1.5fr 2fr;gap:14px;margin-bottom:16px;}
   .ck-hero{position:relative;border-radius:var(--rl);padding:18px 20px;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;transition:transform .14s,box-shadow .14s;border:1px solid;}
@@ -1572,6 +1591,25 @@
   <div class="cf-t" id="cfTitle">Supprimer ?</div>
   <div class="cf-d" id="cfBody"></div>
   <div class="cf-acts"><button class="btn g" id="cfCancel">Annuler</button><button class="btn danger" id="cfConfirm">Supprimer</button></div>
+</div></div>
+
+<div class="passov" id="passOv"><div class="passbox">
+  <div class="pass-close" id="passClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+  <div class="pass-eyebrow">Le rendez-vous</div>
+  <div class="pass-t">Ce rendez-vous, où en es-tu ?</div>
+  <div class="pass-d">Le débrief se remplit pendant ou après. À toi de choisir.</div>
+  <div class="pass-choices">
+    <button class="pass-choice" id="passLive">
+      <span class="pc-ic live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span>
+      <span class="pc-t">Je le fais maintenant</span>
+      <span class="pc-d">Mode live avec ton carnet. Tu notes au fil du rendez-vous, ça écrit ton débrief.</span>
+    </button>
+    <button class="pass-choice" id="passCold">
+      <span class="pc-ic cold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+      <span class="pc-t">Il est déjà passé</span>
+      <span class="pc-d">Raconte à froid ce qui s'est passé. Température, déroulé, prochaine action.</span>
+    </button>
+  </div>
 </div></div>
 
 <div class="debov" id="debOv"><div class="debbox">
@@ -3517,14 +3555,38 @@ function renderActions(){
   else if(b.debrief){a.innerHTML=`<button id="aPres">Présentation</button><button id="aLive">Antisèche</button><button id="aCopy">Copier</button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau</button>`;}
   else{
     const has=Object.keys(ann).some(k=>k!=='libre'&&ann[k]&&(ann[k].note||ann[k].tag))||(ann.libre||[]).length;
-    a.innerHTML=`<button id="aPres">Présentation</button><button id="aLive">Antisèche</button><button id="aCopy">Copier</button><div class="divider"></div><button class="pri" id="aStart">${has?'Reprendre le RDV':'Commencer le RDV'}</button>`;
+    a.innerHTML=`<button id="aPres">Présentation</button><button id="aLive">Antisèche</button><button id="aCopy">Copier</button><div class="divider"></div><button class="pri" id="aStart">${has?'Reprendre le débrief':'Débriefer ce rendez-vous'}</button>`;
   }
   const w=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn);};
-  w('aLive',openLive); w('aCopy',copyAll); w('aStart',rdvStart); w('aEnd',rdvEndAsk);
+  w('aLive',openLive); w('aCopy',copyAll); w('aStart',askPass); w('aEnd',rdvEndAsk);
   w('aPres',openPres); w('aRecap',openRecap);
   w('aNote',()=>{addLibre('',null,true);$('libreCard').scrollIntoView({behavior:'smooth',block:'center'});});
   w('aNew',()=>{closeDoc();go('nouveau');});
 }
+// Bascule : le rendez-vous se fait-il maintenant (live) ou est-il déjà passé (à froid) ?
+function askPass(){
+  $('passOv').classList.add('on');
+}
+(function(){
+  const close=()=>$('passOv').classList.remove('on');
+  const pc=$('passClose'); if(pc)pc.addEventListener('click',close);
+  const po=$('passOv'); if(po)po.addEventListener('click',e=>{if(e.target===po)close();});
+  const pl=$('passLive'); if(pl)pl.addEventListener('click',()=>{close();rdvStart();});
+  const pcold=$('passCold'); if(pcold)pcold.addEventListener('click',()=>{close();startColdDebrief();});
+})();
+// Débrief à froid : le rendez-vous est passé, on raconte via la modale débrief
+function startColdDebrief(){
+  if(!current)return;
+  renderDebMirror();
+  // Pré-remplir si des notes existent déjà
+  debTemp=null;
+  document.querySelectorAll('#temps button').forEach(x=>x.classList.remove('on'));
+  const dn=$('debNext'); if(dn)dn.value='';
+  const dp=$('debPhrase'); if(dp)dp.value='';
+  $('debOv').classList.add('on');
+  setTimeout(()=>{const t=$('temps');if(t)t.scrollIntoView({behavior:'smooth',block:'center'});},100);
+}
+
 function rdvStart(){
   rdvActive=true; rdvT0=Date.now(); document.body.classList.add('rdv');
   document.body.classList.remove('brief-locked');
