@@ -179,6 +179,41 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* ══ Vue Affaires par priorité d'action ══ */
+  .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
+  .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12.5px;font-weight:600;color:var(--dim);padding:7px 14px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
+  .avt svg{width:15px;height:15px;}
+  .avt.on{background:#fff;color:var(--ink);box-shadow:var(--sh);}
+  .act-sec{margin-bottom:22px;}
+  .act-sec-head{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
+  .act-sec-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .act-sec-ic svg{width:19px;height:19px;}
+  .act-sec-t{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--ink);display:flex;align-items:center;gap:9px;}
+  .act-sec-n{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--dim);background:var(--wash);border:1px solid var(--line2);border-radius:20px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px;}
+  .act-sec-d{font-size:12px;color:var(--dim);margin-top:2px;}
+  .act-list{display:flex;flex-direction:column;gap:8px;}
+  .act-card{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--sc);border-radius:var(--rl);padding:13px 15px;cursor:pointer;position:relative;box-shadow:var(--sh);transition:box-shadow .14s,transform .14s;}
+  .act-card:hover{box-shadow:var(--shm);transform:translateX(2px);}
+  .act-logo{width:40px;height:40px;border-radius:10px;font-size:14px;flex-shrink:0;}
+  .act-logo img{width:100%;height:100%;object-fit:contain;border-radius:10px;}
+  .act-card-m{flex:1;min-width:0;}
+  .act-card-top{display:flex;align-items:center;gap:9px;}
+  .act-co{font-size:14px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .act-stage{font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;border:1px solid;white-space:nowrap;flex-shrink:0;}
+  .act-temp{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .act-card-act{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--soft);margin-top:4px;}
+  .act-card-act svg{width:14px;height:14px;color:var(--sc);flex-shrink:0;}
+  .act-card-r{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+  .act-money{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--ink);}
+  .act-age{font-family:var(--mono);font-size:10px;color:var(--faint);}
+  .act-age.warn{color:var(--gold);}
+  .act-age.late{color:var(--red);font-weight:600;}
+  .act-card .kebab{opacity:0;flex-shrink:0;}
+  .act-card:hover .kebab{opacity:1;}
+  .act-won{display:flex;align-items:center;gap:10px;background:var(--greenbg);border:1px solid var(--greenbd);border-radius:var(--rl);padding:14px 16px;font-size:13px;color:var(--green-d);margin-top:6px;}
+  .act-won b{font-weight:700;}
+  .act-won-ic{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .act-won-ic svg{width:16px;height:16px;}
   /* ══ Page Rendez-vous : deux colonnes Brief / Débrief ══ */
   .rdv-filters{display:flex;gap:8px;margin-bottom:14px;}
   .nav .cnt.hot{background:var(--bluebg);color:var(--blue);border-color:#C6DCEA;}
@@ -1259,6 +1294,12 @@
     <!-- Barre de pilotage -->
     <div class="pilot" id="pilotBar"></div>
 
+    <!-- Bascule de vue -->
+    <div class="aff-viewtabs" id="affViewTabs">
+      <button class="avt on" data-view="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>Par priorité</button>
+      <button class="avt" data-view="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="16" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg>Par étape</button>
+    </div>
+
     <!-- Outils -->
     <div class="aff-tools">
       <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="pipeQ" placeholder="Chercher une affaire, un tag…" autocomplete="off"/></div>
@@ -1271,7 +1312,8 @@
       <div class="pt-filters" id="pipeFilters"></div>
     </div>
 
-    <div class="card"><div class="cbd p0" style="padding:12px;"><div class="board" id="board"></div></div></div>
+    <div id="affAction"></div>
+    <div class="card" id="affBoardWrap" style="display:none;"><div class="cbd p0" style="padding:12px;"><div class="board" id="board"></div></div></div>
   </section>
 
   <section class="view" id="v-rdv">
@@ -1651,7 +1693,11 @@ function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
   $('crumb').textContent=CRUMBS[v]||'';
-  if(v==='affaires'){const ae=$('affExport');if(ae&&!ae.dataset.wired){ae.dataset.wired='1';ae.addEventListener('click',()=>exportAffCsv());}}
+  if(v==='affaires'){
+    const ae=$('affExport');if(ae&&!ae.dataset.wired){ae.dataset.wired='1';ae.addEventListener('click',()=>exportAffCsv());}
+    const vt=$('affViewTabs');if(vt&&!vt.dataset.wired){vt.dataset.wired='1';vt.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{affView=b.dataset.view;vt.querySelectorAll('.avt').forEach(x=>x.classList.toggle('on',x===b));$('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';renderAll();}));}
+    $('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';
+  }
   if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
   if(v==='nouveau')renderNvRecent();
   if(v==='rdv')renderRdvList();
@@ -1711,7 +1757,7 @@ function renderAll(){
     } else sp.style.display='none';
   }
   $('uT').textContent=briefs.length;
-  dash(); boardRender($('board'),false); renderPilot(); renderPipeFilters(); entList();
+  dash(); boardRender($('board'),false); renderActionView(); renderPilot(); renderPipeFilters(); entList();
   if(currentDeal&&document.getElementById('v-fiche').classList.contains('on')) openFiche(deals.find(d=>d.id===currentDeal.id)||currentDeal,true);
 }
 
@@ -1840,27 +1886,18 @@ function dash(){
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
 // ─── L'argent en roi ───
-let moneyPeriod='month', chartDays=30, affView='board';
+let moneyPeriod='month', chartDays=30, affView='action';
 function wireDashTabs(){
   $('mhPeriod').querySelectorAll('.mhp').forEach(b=>b.addEventListener('click',()=>{
     $('mhPeriod').querySelectorAll('.mhp').forEach(x=>x.classList.toggle('on',x===b));
     moneyPeriod=b.dataset.per; renderMoney();
   }));
   const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('affaires'));
-  // Bascule vue board / tableau
-  const vt=$('affViewTabs');
-  if(vt)vt.querySelectorAll('.avt').forEach(b=>b.addEventListener('click',()=>{
-    vt.querySelectorAll('.avt').forEach(x=>x.classList.toggle('on',x===b));
-    affView=b.dataset.view;
-    $('affBoard').style.display=affView==='board'?'':'none';
-    $('affTable').style.display=affView==='table'?'':'none';
-    if(affView==='table')entList();
-  }));
   const spc=$('spClose'); if(spc)spc.addEventListener('click',closeStagePanel);
   const sov=$('stageOv'); if(sov)sov.addEventListener('click',e=>{if(e.target===sov)closeStagePanel();});
   // Outils pipeline
   const pq=$('pipeQ');
-  if(pq)pq.addEventListener('input',()=>{pipeSearch=pq.value.trim();boardRender($('board'),false);if(affView==='table')entList();});
+  if(pq)pq.addEventListener('input',()=>{pipeSearch=pq.value.trim();boardRender($('board'),false);renderActionView();});
   const ps=$('pipeSort');
   if(ps)ps.querySelectorAll('.pts').forEach(b=>b.addEventListener('click',()=>{
     ps.querySelectorAll('.pts').forEach(x=>x.classList.toggle('on',x===b));
@@ -2272,6 +2309,90 @@ function dealNextAction(d){
   const temp=lb&&lb.debrief?lb.debrief.temperature:null;
   if(temp==='chaud')return {ic:ICO.arrow,txt:'Affaire chaude, garde le rythme',urg:'due'};
   return {ic:ICO.arrow,txt:'Fais avancer',urg:'ok'};
+}
+
+// Vue par priorité d'action : les affaires regroupées par ce qu'elles demandent
+function renderActionView(){
+  const root=$('affAction'); if(!root)return;
+  const entered=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape));
+  const wins=deals.filter(d=>d.etape==='gagne');
+  // Recherche
+  const q=(pipeSearch||'').toLowerCase();
+  const match=d=>!q||((d.entreprise||'')+' '+(d.tags||[]).join(' ')).toLowerCase().includes(q);
+  const pool=entered.filter(match);
+
+  // Classer chaque affaire dans un seul bucket d'intention
+  const buckets={debrief:[],relance:[],avancer:[],dorment:[]};
+  pool.forEach(d=>{
+    const bs=dealBriefs(d);
+    const undeb=bs.find(b=>!b.debrief&&b.statut==='a_relancer');
+    const n=days(d.updated_at);
+    if(undeb){buckets.debrief.push(d);return;}
+    if(n>=14){buckets.dorment.push(d);return;}
+    const lb=bs.find(x=>x.debrief);
+    const temp=lb&&lb.debrief?lb.debrief.temperature:null;
+    if(temp==='chaud'||temp==='close'||n>=7){buckets.relance.push(d);return;}
+    buckets.avancer.push(d);
+  });
+
+  const SECTIONS=[
+    {k:'debrief',t:'À débriefer',d:'Capture ces rendez-vous avant qu\'ils s\'effacent.',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',col:'var(--blue)',bg:'var(--bluebg)'},
+    {k:'relance',t:'À relancer maintenant',d:'Chaud ou en attente depuis un moment. Ne les laisse pas refroidir.',ic:'<path d="M5 12h14M13 6l6 6-6 6"/>',col:'var(--copper)',bg:'var(--washc)'},
+    {k:'avancer',t:'À faire avancer',d:'Le prochain pas pour les rapprocher de la signature.',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',col:'var(--gold)',bg:'var(--goldbg)'},
+    {k:'dorment',t:'Qui dorment',d:'Sans mouvement depuis deux semaines. À réveiller ou à clore.',ic:'<path d="M12 2v20M4 6l16 12M20 6L4 18"/>',col:'var(--dim)',bg:'var(--wash)'}
+  ];
+
+  const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
+  const TL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
+
+  const anyDeal=pool.length>0;
+  if(!anyDeal){
+    root.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Débriefe tes rendez-vous : chaque débrief fait entrer son affaire ici.':'Prépare un rendez-vous, débriefe-le, et l\'affaire entre ici toute seule.'}</div></div></div>`;
+    return;
+  }
+
+  let html='';
+  SECTIONS.forEach(sec=>{
+    const items=buckets[sec.k];
+    if(!items.length)return;
+    // Tri interne : plus urgent d'abord (ancienneté décroissante)
+    items.sort((a,b)=>days(b.updated_at)-days(a.updated_at));
+    html+=`<div class="act-sec">
+      <div class="act-sec-head">
+        <span class="act-sec-ic" style="color:${sec.col};background:${sec.bg}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${sec.ic}</svg></span>
+        <div class="act-sec-txt"><div class="act-sec-t">${sec.t}<span class="act-sec-n">${items.length}</span></div><div class="act-sec-d">${sec.d}</div></div>
+      </div>
+      <div class="act-list">`;
+    items.forEach(d=>{
+      const ed=d.entreprise_data||{};
+      const na=dealNextAction(d);
+      const mv=dealVal(d);
+      const temp=dealTemp(d);
+      const n=days(d.updated_at);
+      const st=stg(d.etape);
+      html+=`<div class="act-card" data-d="${d.id}" style="--sc:${sec.col}">
+        <div class="act-card-l">${logoHtml(d.entreprise,ed.logo,ed.site).replace('class="mono','class="act-logo mono')}</div>
+        <div class="act-card-m">
+          <div class="act-card-top"><span class="act-co">${esc(trunc(d.entreprise,28))}</span><span class="act-stage" style="color:${st.c};background:${st.bg};border-color:${st.bd}">${st.l}</span>${temp?`<span class="act-temp" style="background:${TC[temp]}" title="${TL[temp]}"></span>`:''}</div>
+          <div class="act-card-act">${na?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${na.ic}</svg><span>${na.txt}</span>`:'Fais avancer'}</div>
+        </div>
+        <div class="act-card-r">${mv?`<span class="act-money">${eur(mv)}</span>`:''}<span class="act-age ${n>=14?'late':n>=7?'warn':''}">${n===0?"aujourd'hui":n+' j'}</span></div>
+        <button class="kebab" data-kd="${d.id}"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+
+  // Section gagnées, repliée en bas, célébration
+  if(wins.length){
+    html+=`<div class="act-won"><span class="act-won-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><b>${wins.length} affaire${wins.length>1?'s':''} gagnée${wins.length>1?'s':''}</b>${(()=>{const v=wins.reduce((a,d)=>a+dealVal(d),0);return v?` · ${eur(v)} signés`:'';})()}. Beau travail.</div>`;
+  }
+
+  root.innerHTML=html;
+  root.querySelectorAll('.act-card').forEach(c=>{
+    c.addEventListener('click',e=>{if(e.target.closest('.kebab'))return;const d=deals.find(x=>x.id===c.dataset.d);if(d)openFiche(d);});
+    c.querySelector('.kebab').addEventListener('click',e=>{e.stopPropagation();openKebab(e.currentTarget,affMenu(c.dataset.d,e.currentTarget));});
+  });
 }
 
 function boardRender(root,mini){
