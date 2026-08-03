@@ -219,13 +219,14 @@
   .fsn-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--line2);background:#fff;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.13s;padding:0;}
   .fsn-btn:hover{border-color:var(--copper-l);color:var(--copper);background:var(--washc);}
   .fsn-btn svg{width:14px;height:14px;}
-  .fcar{display:flex;gap:12px;overflow-x:auto;padding:2px 18px 18px;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:stretch;}
+  .fcar{display:flex;gap:12px;overflow-x:auto;padding:2px 18px 18px;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;}
   .fcar::-webkit-scrollbar{display:none;}
-  .fcard{flex:0 0 236px;scroll-snap-align:start;position:relative;background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--ac);border-radius:12px;padding:15px;display:flex;flex-direction:column;box-shadow:var(--sh);transition:width .3s,opacity .3s,margin .3s,padding .3s,border .3s,transform .14s,box-shadow .14s;overflow:hidden;}
+  .fcard{flex:0 0 236px;scroll-snap-align:start;position:relative;background:linear-gradient(145deg,color-mix(in srgb,var(--ac) 6%,var(--card)),var(--card) 60%);border:1px solid var(--line);border-top:2.5px solid var(--ac);border-radius:12px;padding:15px;display:flex;flex-direction:column;box-shadow:var(--sh);transition:width .3s,opacity .3s,margin .3s,padding .3s,border .3s,transform .14s,box-shadow .14s;overflow:hidden;}
   .fcard:hover{box-shadow:var(--shm);transform:translateY(-2px);}
   .fcard.checked{background:var(--greenbg);border-color:var(--greenbd);}
-  .fcard.prio{flex:0 0 300px;background:linear-gradient(140deg,color-mix(in srgb,var(--ac) 9%,var(--card)),var(--card) 72%);}
-  .fcard-art{position:absolute;top:-16px;right:-14px;width:110px;height:110px;color:var(--ac);opacity:.15;pointer-events:none;}
+  .fcard.prio{flex:0 0 300px;background:linear-gradient(140deg,color-mix(in srgb,var(--ac) 11%,var(--card)),var(--card) 70%);}
+  .fcard-art{position:absolute;top:-14px;right:-12px;width:92px;height:92px;color:var(--ac);opacity:.1;pointer-events:none;}
+  .fcard.prio .fcard-art{width:110px;height:110px;top:-16px;right:-14px;opacity:.15;}
   .fcard-art svg{width:100%;height:100%;}
   .fcard-prio-tag{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);font-weight:700;background:color-mix(in srgb,var(--ac) 12%,transparent);border-radius:5px;padding:3px 8px;margin-left:2px;}
   .fc-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;position:relative;}
@@ -252,18 +253,24 @@
   .heat-wrap{display:flex;flex-direction:column;height:100%;padding:18px;}
   .heat-head{margin-bottom:16px;}
   .heat-t{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--ink);line-height:1.1;}
-  .heat-sub{font-size:11.5px;color:var(--dim);margin-top:3px;}
-  .heat-grid{display:flex;justify-content:center;}
-  .heat-cols{display:flex;gap:4px;}
-  .heat-col{display:flex;flex-direction:column;gap:4px;}
-  .heat-cell{width:15px;height:15px;border-radius:3px;background:var(--line3);display:inline-block;}
+  .heat-summary{font-size:12.5px;color:var(--dim);margin-top:5px;line-height:1.45;}
+  .heat-summary b{color:var(--copper-d);font-weight:700;}
+  .heat-block{display:flex;flex-direction:column;gap:4px;}
+  .heat-months{display:flex;gap:5px;padding-left:22px;}
+  .heat-month{flex:1;font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);text-align:left;}
+  .heat-body{display:flex;gap:6px;}
+  .heat-days{display:flex;flex-direction:column;gap:5px;justify-content:space-between;}
+  .heat-days span{font-family:var(--mono);font-size:8px;color:var(--faint);height:18px;display:flex;align-items:center;width:14px;}
+  .heat-cols{display:flex;gap:5px;flex:1;}
+  .heat-col{display:flex;flex-direction:column;gap:5px;flex:1;}
+  .heat-cell{width:100%;aspect-ratio:1;max-width:22px;height:18px;border-radius:4px;background:#EFEAE0;display:inline-block;}
   .heat-cell.l0{background:#EFEAE0;}
   .heat-cell.l1{background:#E7C9A8;}
   .heat-cell.l2{background:#D89355;}
   .heat-cell.l3{background:var(--copper-d);}
   .heat-cell.lx{background:transparent;}
-  .heat-legend{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;font-size:10px;color:var(--faint);}
-  .heat-legend .heat-cell{width:11px;height:11px;}
+  .heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:12px;font-size:10px;color:var(--faint);}
+  .heat-legend .heat-cell{width:12px;height:12px;max-width:12px;}
   .heat-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:auto;padding-top:18px;}
   .heat-metric{position:relative;padding:12px 14px;background:var(--wash);border:1px solid var(--line3);border-radius:10px;border-left:3px solid var(--mc);}
   .hm-v{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--mc);line-height:1;}
@@ -1054,9 +1061,9 @@
   .kpi .kv{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums;}
   .kpi .kh{font-size:10px;color:var(--faint);margin-top:1px;}
   /* Deux blocs même hauteur */
-  .dash-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start;}
-  .dash-cols>.card{display:flex;flex-direction:column;min-width:0;align-self:start;}
-  .focus-card #focusW{display:flex;flex-direction:column;}
+  .dash-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start !important;}
+  .dash-cols>.card{display:flex;flex-direction:column;min-width:0;align-self:start !important;height:auto !important;}
+  .focus-card #focusW{display:block;}
   .focus-row{display:flex;align-items:center;gap:12px;padding:0 16px 0 0;min-height:70px;border-bottom:1px solid var(--line3);transition:height .3s ease,opacity .3s ease,padding .3s ease,background .14s;overflow:hidden;position:relative;}
   .focus-row:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 6%,transparent),transparent 60%);}
   .focus-bar{width:3px;align-self:stretch;background:var(--ac);opacity:.85;flex-shrink:0;margin-right:13px;}
@@ -2070,7 +2077,7 @@ function renderFocus(aDeb,aRel,cold){
   html+=`<div class="fcar" id="fcar">`;
   html+=rows.map((it,i)=>{
     const isP=i===0;
-    return `<div class="fcard ${isP?'prio':''}" data-fi="${i}" style="--ac:${it.rc}">${isP?`<div class="fcard-art">${BIGART[it.ic]||''}</div>`:''}<div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${isP?'<span class="fcard-prio-tag">Priorité</span>':''}${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,isP?40:26))}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>`;
+    return `<div class="fcard ${isP?'prio':''}" data-fi="${i}" style="--ac:${it.rc}"><div class="fcard-art">${BIGART[it.ic]||''}</div><div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${isP?'<span class="fcard-prio-tag">Priorité</span>':''}${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,isP?40:26))}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>`;
   }).join('');
   html+=`</div>`;
   $('focusW').innerHTML=html;
@@ -2114,7 +2121,7 @@ function renderIntel(){
   const winRate=closed?Math.round(wins.length/closed*100):null;
 
   // 12 semaines x 7 jours d'activité (briefs créés par jour)
-  const WEEKS=12;
+  const WEEKS=8;
   const today=new Date(); today.setHours(0,0,0,0);
   // Aligner sur lundi : recule jusqu'au lundi de cette semaine
   const dow=(today.getDay()+6)%7; // 0=lundi
@@ -2139,31 +2146,50 @@ function renderIntel(){
   const lvl=n=>n===0?0:n===1?1:n===2?2:3;
   const MONTHS=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
 
-  let heat='<div class="heat-grid">';
-  // Colonnes de semaines
+  // Étiquettes de mois : une par colonne quand le mois change
+  const monthLabels=cells.map((col,wi)=>{
+    const firstDay=col[0].day;
+    const prevMonth=wi>0?cells[wi-1][0].day.getMonth():-1;
+    return firstDay.getMonth()!==prevMonth?MONTHS[firstDay.getMonth()]:'';
+  });
+  const DAYS=['L','','M','','J','','D'];
+
+  let heat='<div class="heat-block">';
+  // Ligne des mois
+  heat+='<div class="heat-months"><span class="heat-daycol"></span>'+monthLabels.map(m=>`<span class="heat-month">${m}</span>`).join('')+'</div>';
+  // Grille avec colonne d'initiales de jours
+  heat+='<div class="heat-body">';
+  heat+='<div class="heat-days">'+DAYS.map(d=>`<span>${d}</span>`).join('')+'</div>';
   heat+='<div class="heat-cols">';
-  cells.forEach((col,wi)=>{
+  cells.forEach(col=>{
     heat+='<div class="heat-col">';
     col.forEach(c=>{
-      heat+=`<span class="heat-cell l${c.future?'x':lvl(c.n)}" title="${c.day.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} · ${c.n} brief${c.n>1?'s':''}"></span>`;
+      heat+=`<span class="heat-cell l${c.future?'x':lvl(c.n)}" title="${c.day.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})} · ${c.n} brief${c.n>1?'s':''}"></span>`;
     });
     heat+='</div>';
   });
-  heat+='</div></div>';
+  heat+='</div></div></div>';
 
   // Légende
   heat+='<div class="heat-legend"><span>Moins</span><span class="heat-cell l0"></span><span class="heat-cell l1"></span><span class="heat-cell l2"></span><span class="heat-cell l3"></span><span>Plus</span></div>';
 
-  // Métriques clés en dessous
+  // Phrase de synthèse claire
+  const totalDays=WEEKS*7;
+  const activeWeeks=cells.filter(col=>col.some(c=>c.n>0)).length;
+  const summary=totalActive===0
+    ? 'Prépare ton premier brief pour lancer ton rythme.'
+    : `Tu as préparé des briefs sur <b>${totalActive} jour${totalActive>1?'s':''}</b> ces 8 dernières semaines, actif <b>${activeWeeks} semaine${activeWeeks>1?'s':''}</b> sur ${WEEKS}.`;
+
+  // Métriques clés
   const metrics=[
-    {k:'Jours actifs',v:totalActive,s:'sur 12 semaines',col:'var(--copper)'},
+    {k:'Jours actifs',v:totalActive,s:'ces 8 semaines',col:'var(--copper)'},
     {k:'Chaleur',v:hotRate+'%',s:'chauds ou closés',col:'var(--gold)'},
     {k:ws.streak>1?'Série en cours':'Cette semaine',v:ws.streak>1?ws.streak:ws.briefs,s:ws.streak>1?'débriefs d\'affilée':'briefs préparés',col:'var(--blue)'}
   ];
   if(winRate!=null)metrics.push({k:'Closing',v:winRate+'%',s:'sur '+closed+' conclus',col:'var(--green)'});
 
   let html=`<div class="heat-wrap">
-    <div class="heat-head"><div><div class="heat-t">Ton rythme de chasse</div><div class="heat-sub">Chaque carré, un jour. Plus c'est foncé, plus tu as préparé.</div></div></div>
+    <div class="heat-head"><div class="heat-t">Ton rythme de chasse</div><div class="heat-summary">${summary}</div></div>
     ${heat}
     <div class="heat-metrics">${metrics.map(m=>`<div class="heat-metric" style="--mc:${m.col}"><div class="hm-v">${m.v}</div><div class="hm-k">${m.k}</div><div class="hm-s">${m.s}</div></div>`).join('')}</div>
   </div>`;
