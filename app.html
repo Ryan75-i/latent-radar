@@ -219,7 +219,7 @@
   .fsn-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--line2);background:#fff;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.13s;padding:0;}
   .fsn-btn:hover{border-color:var(--copper-l);color:var(--copper);background:var(--washc);}
   .fsn-btn svg{width:14px;height:14px;}
-  .fcar{display:flex;gap:12px;overflow-x:auto;padding:2px 18px 18px;scroll-snap-type:x mandatory;scrollbar-width:none;}
+  .fcar{display:flex;gap:12px;overflow-x:auto;padding:2px 18px 18px;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:stretch;}
   .fcar::-webkit-scrollbar{display:none;}
   .fcard{flex:0 0 236px;scroll-snap-align:start;position:relative;background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--ac);border-radius:12px;padding:15px;display:flex;flex-direction:column;box-shadow:var(--sh);transition:width .3s,opacity .3s,margin .3s,padding .3s,border .3s,transform .14s,box-shadow .14s;overflow:hidden;}
   .fcard:hover{box-shadow:var(--shm);transform:translateY(-2px);}
@@ -248,20 +248,27 @@
   .fcard-act.see{background:var(--ink);color:#fff;}
   .fcard-act.see:hover{filter:brightness(1.3);}
   .focus-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:6px;background:var(--ac);color:#fff;font-size:11px;font-weight:700;}
-  /* ═══ Radar signature de vendeur ═══ */
-  .radar-wrap{display:flex;flex-direction:column;height:100%;padding:16px 18px 14px;}
-  .radar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
-  .radar-grade{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.1;}
-  .radar-sub{font-size:11.5px;color:var(--dim);margin-top:2px;}
-  .radar-score{font-family:var(--serif);font-weight:700;font-size:32px;line-height:1;}
-  .radar-score span{font-size:13px;color:var(--faint);font-weight:400;}
-  .radar-svg{width:100%;max-width:300px;margin:0 auto;display:block;}
-  .radar-poly{animation:radarpop .6s cubic-bezier(.3,.7,.3,1.2) both;transform-origin:center;}
-  @keyframes radarpop{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
-  .radar-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.04em;text-transform:uppercase;fill:var(--dim);font-weight:600;}
-  .radar-val{font-family:var(--serif);font-size:11px;font-weight:700;}
-  .radar-tip{display:flex;align-items:flex-start;gap:9px;margin-top:auto;padding:11px 13px;background:var(--washc);border:1px solid #EBD6C2;border-radius:10px;font-size:12px;color:var(--soft);line-height:1.4;}
-  .radar-tip svg{width:16px;height:16px;color:var(--copper);flex-shrink:0;margin-top:1px;}
+  /* ═══ Carte de chaleur d'activité ═══ */
+  .heat-wrap{display:flex;flex-direction:column;height:100%;padding:18px;}
+  .heat-head{margin-bottom:16px;}
+  .heat-t{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--ink);line-height:1.1;}
+  .heat-sub{font-size:11.5px;color:var(--dim);margin-top:3px;}
+  .heat-grid{display:flex;justify-content:center;}
+  .heat-cols{display:flex;gap:4px;}
+  .heat-col{display:flex;flex-direction:column;gap:4px;}
+  .heat-cell{width:15px;height:15px;border-radius:3px;background:var(--line3);display:inline-block;}
+  .heat-cell.l0{background:#EFEAE0;}
+  .heat-cell.l1{background:#E7C9A8;}
+  .heat-cell.l2{background:#D89355;}
+  .heat-cell.l3{background:var(--copper-d);}
+  .heat-cell.lx{background:transparent;}
+  .heat-legend{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;font-size:10px;color:var(--faint);}
+  .heat-legend .heat-cell{width:11px;height:11px;}
+  .heat-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:auto;padding-top:18px;}
+  .heat-metric{position:relative;padding:12px 14px;background:var(--wash);border:1px solid var(--line3);border-radius:10px;border-left:3px solid var(--mc);}
+  .hm-v{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--mc);line-height:1;}
+  .hm-k{font-size:12px;font-weight:700;color:var(--ink);margin-top:5px;}
+  .hm-s{font-size:10.5px;color:var(--dim);margin-top:1px;}
   /* État apprentissage */
   .scorecard-learn{display:flex;flex-direction:column;align-items:center;text-align:center;padding:32px 22px;}
   .sl-ring{position:relative;width:80px;height:80px;margin-bottom:16px;}
@@ -2094,62 +2101,66 @@ function renderIntel(){
     return;
   }
 
-  // ─── RADAR : signature de vendeur ───
+  // ─── CARTE DE CHALEUR D'ACTIVITÉ (façon GitHub) ───
   const ws=weekStats();
-  const posts={}; const postTemp={};
-  briefs.forEach(b=>{if(b.poste){const k=cleanPoste(b.poste);posts[k]=(posts[k]||0)+1;if(b.debrief){postTemp[k]=postTemp[k]||{c:0,hot:0};postTemp[k].c++;if(['close','chaud'].includes(b.debrief.temperature))postTemp[k].hot++;}}});
-  const topPost=Object.entries(posts).sort((a,b)=>b[1]-a[1])[0];
-  const nbInterlocs=Object.keys(posts).length;
   const hotRate=debriefed.length?Math.round((debriefed.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length/debriefed.length)*100):0;
   const winRate=closed?Math.round(wins.length/closed*100):null;
 
-  // 5 axes du radar, chacun sur 100
-  const axes=[
-    {k:'Chaleur',v:hotRate,col:'var(--copper)'},
-    {k:'Régularité',v:Math.min(100,ws.streak*20+ws.briefs*8),col:'var(--blue)'},
-    {k:'Closing',v:winRate!=null?winRate:35,col:'var(--green)'},
-    {k:'Activité',v:Math.min(100,briefs.length*8),col:'var(--violet)'},
-    {k:'Réseau',v:Math.min(100,nbInterlocs*22),col:'var(--gold)'}
+  // 12 semaines x 7 jours d'activité (briefs créés par jour)
+  const WEEKS=12;
+  const today=new Date(); today.setHours(0,0,0,0);
+  // Aligner sur lundi : recule jusqu'au lundi de cette semaine
+  const dow=(today.getDay()+6)%7; // 0=lundi
+  const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6); // dimanche de la semaine courante
+  const cells=[];
+  let maxDay=1;
+  const dayCount={};
+  briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);const key=d.getTime();dayCount[key]=(dayCount[key]||0)+1;if(dayCount[key]>maxDay)maxDay=dayCount[key];});
+  let totalActive=0;
+  for(let w=WEEKS-1;w>=0;w--){
+    const col=[];
+    for(let d=0;d<7;d++){
+      const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(w*7)+(d-6));
+      const key=day.getTime();
+      const n=dayCount[key]||0;
+      if(n>0)totalActive++;
+      const future=day>today;
+      col.push({n,future,day});
+    }
+    cells.push(col);
+  }
+  const lvl=n=>n===0?0:n===1?1:n===2?2:3;
+  const MONTHS=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+
+  let heat='<div class="heat-grid">';
+  // Colonnes de semaines
+  heat+='<div class="heat-cols">';
+  cells.forEach((col,wi)=>{
+    heat+='<div class="heat-col">';
+    col.forEach(c=>{
+      heat+=`<span class="heat-cell l${c.future?'x':lvl(c.n)}" title="${c.day.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} · ${c.n} brief${c.n>1?'s':''}"></span>`;
+    });
+    heat+='</div>';
+  });
+  heat+='</div></div>';
+
+  // Légende
+  heat+='<div class="heat-legend"><span>Moins</span><span class="heat-cell l0"></span><span class="heat-cell l1"></span><span class="heat-cell l2"></span><span class="heat-cell l3"></span><span>Plus</span></div>';
+
+  // Métriques clés en dessous
+  const metrics=[
+    {k:'Jours actifs',v:totalActive,s:'sur 12 semaines',col:'var(--copper)'},
+    {k:'Chaleur',v:hotRate+'%',s:'chauds ou closés',col:'var(--gold)'},
+    {k:ws.streak>1?'Série en cours':'Cette semaine',v:ws.streak>1?ws.streak:ws.briefs,s:ws.streak>1?'débriefs d\'affilée':'briefs préparés',col:'var(--blue)'}
   ];
-  const scoreGlobal=Math.round(axes.reduce((a,x)=>a+x.v,0)/axes.length);
-  const grade=scoreGlobal>=70?'Redoutable':scoreGlobal>=50?'Solide':scoreGlobal>=30?'En progression':'En rodage';
-  const gradeCol=scoreGlobal>=70?'#2f6b3f':scoreGlobal>=50?'var(--copper-d)':scoreGlobal>=30?'var(--gold)':'var(--blue)';
+  if(winRate!=null)metrics.push({k:'Closing',v:winRate+'%',s:'sur '+closed+' conclus',col:'var(--green)'});
 
-  // Géométrie du radar
-  const cx=110,cy=104,R=78,N=axes.length;
-  const pt=(i,r)=>{const ang=-Math.PI/2+i*2*Math.PI/N;return [cx+Math.cos(ang)*r,cy+Math.sin(ang)*r];};
-  // Grilles concentriques
-  let grid='';
-  [0.25,0.5,0.75,1].forEach(f=>{
-    const pts=axes.map((_,i)=>pt(i,R*f).join(',')).join(' ');
-    grid+=`<polygon points="${pts}" fill="none" stroke="var(--line2)" stroke-width="1" opacity="${f===1?.6:.35}"/>`;
-  });
-  // Rayons
-  let spokes='';
-  axes.forEach((_,i)=>{const [x,y]=pt(i,R);spokes+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line2)" stroke-width="1" opacity=".4"/>`;});
-  // Polygone data
-  const dataPts=axes.map((a,i)=>pt(i,R*Math.max(0.04,a.v/100)).join(',')).join(' ');
-  // Points + labels
-  let dots='',labels='';
-  axes.forEach((a,i)=>{
-    const [dx,dy]=pt(i,R*Math.max(0.04,a.v/100));
-    dots+=`<circle cx="${dx}" cy="${dy}" r="3.5" fill="${a.col}"/>`;
-    const [lx,ly]=pt(i,R+18);
-    const anchor=Math.abs(lx-cx)<6?'middle':lx>cx?'start':'end';
-    labels+=`<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" class="radar-lbl">${a.k}</text><text x="${lx}" y="${ly+11}" text-anchor="${anchor}" dominant-baseline="middle" class="radar-val" fill="${a.col}">${a.v}</text>`;
-  });
-
-  let html=`<div class="radar-wrap">
-    <div class="radar-head"><div><div class="radar-grade" style="color:${gradeCol}">Profil ${grade}</div><div class="radar-sub">Ta signature, sur ${debriefed.length} débriefs</div></div><div class="radar-score" style="color:${gradeCol}">${scoreGlobal}<span>/100</span></div></div>
-    <svg class="radar-svg" viewBox="0 0 220 210">${grid}${spokes}<polygon class="radar-poly" points="${dataPts}" fill="var(--copper)" fill-opacity=".14" stroke="var(--copper)" stroke-width="2" stroke-linejoin="round"/>${dots}${labels}</svg>
-    <div class="radar-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg><span>${radarAdvice(axes)}</span></div>
+  let html=`<div class="heat-wrap">
+    <div class="heat-head"><div><div class="heat-t">Ton rythme de chasse</div><div class="heat-sub">Chaque carré, un jour. Plus c'est foncé, plus tu as préparé.</div></div></div>
+    ${heat}
+    <div class="heat-metrics">${metrics.map(m=>`<div class="heat-metric" style="--mc:${m.col}"><div class="hm-v">${m.v}</div><div class="hm-k">${m.k}</div><div class="hm-s">${m.s}</div></div>`).join('')}</div>
   </div>`;
   w.innerHTML=html;
-}
-function radarAdvice(axes){
-  const weakest=axes.slice().sort((a,b)=>a.v-b.v)[0];
-  const TIP={Chaleur:'Ta zone à travailler : pousse le chiffre et l\'urgence pour réchauffer tes rendez-vous.',Régularité:'Ta zone à travailler : prépare plus souvent pour lancer une vraie série.',Closing:'Ta zone à travailler : qualifie plus tôt pour transformer davantage.',Activité:'Ta zone à travailler : multiplie les rendez-vous pour nourrir ton pipeline.',Réseau:'Ta zone à travailler : varie tes interlocuteurs pour élargir ton terrain.'};
-  return TIP[weakest.k]||'Continue, ta signature se renforce à chaque débrief.';
 }
 // Nettoie un intitulé de poste pour l'affichage : libellé complet, jamais tronqué bizarrement
 function cleanPoste(p){
