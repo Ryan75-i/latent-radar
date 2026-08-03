@@ -212,38 +212,46 @@
   .fm-done{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line2);background:#fff;border-radius:9px;padding:10px 15px;font-size:12.5px;font-weight:600;color:var(--soft);cursor:pointer;font-family:inherit;transition:.14s;}
   .fm-done svg{width:15px;height:15px;}
   .fm-done:hover{border-color:var(--green);background:var(--greenbg);color:var(--green-d);}
-  /* Liste secondaire scrollable */
-  .fsec-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding:12px 16px 4px;}
-  .fsec{max-height:196px;overflow-y:auto;}
-  .fsec::-webkit-scrollbar{width:5px;}
-  .fsec::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
-  .fsec-row{display:flex;align-items:center;gap:11px;padding:0 16px;min-height:58px;border-bottom:1px solid var(--line3);transition:height .3s,opacity .3s,padding .3s,background .14s;overflow:hidden;}
-  .fsec-row:last-child{border-bottom:none;}
-  .fsec-row:hover{background:var(--wash);}
-  .fsec-ic{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-  .fsec-ic svg{width:15px;height:15px;}
-  .fsec-body{flex:1;min-width:0;cursor:pointer;}
-  .fsec-nm{font-size:12.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;}
-  .fsec-why{font-size:11px;color:var(--dim);margin-top:1px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .fsec-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-  .fsec-done{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--line2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--faint);transition:.14s;padding:0;opacity:0;}
-  .fsec-row:hover .fsec-done{opacity:1;}
-  .fsec-done:hover{border-color:var(--green);background:var(--greenbg);color:var(--green-d);}
-  .fsec-done svg{width:13px;height:13px;}
-  .fsec-row.checked{background:var(--greenbg);}
-  .fsec-row.checked .fsec-body{opacity:.5;text-decoration:line-through;}
-  .focus-act.sm{padding:6px 12px;font-size:11.5px;}
-  .focus-badge.sm{min-width:16px;height:16px;font-size:9.5px;}
+  /* Carrousel horizontal des actions secondaires */
+  .fsec-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px;}
+  .fsec-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .fsec-nav{display:flex;gap:5px;}
+  .fsn-btn{width:26px;height:26px;border-radius:7px;border:1px solid var(--line2);background:#fff;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.13s;padding:0;}
+  .fsn-btn:hover{border-color:var(--copper-l);color:var(--copper);background:var(--washc);}
+  .fsn-btn svg{width:14px;height:14px;}
+  .fcar{display:flex;gap:11px;overflow-x:auto;padding:2px 16px 16px;scroll-snap-type:x mandatory;scrollbar-width:none;}
+  .fcar::-webkit-scrollbar{display:none;}
+  .fcard{flex:0 0 210px;scroll-snap-align:start;position:relative;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--ac);border-radius:10px;padding:13px;display:flex;flex-direction:column;box-shadow:var(--sh);transition:width .3s,opacity .3s,margin .3s,padding .3s,transform .14s,box-shadow .14s;overflow:hidden;}
+  .fcard:hover{box-shadow:var(--shm);transform:translateY(-2px);}
+  .fcard.checked{background:var(--greenbg);border-color:var(--greenbd);}
+  .fc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+  .fcard-ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .fcard-ic svg{width:16px;height:16px;}
+  .fcard-done{width:26px;height:26px;border-radius:7px;border:1.5px solid var(--line2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--faint);transition:.14s;padding:0;}
+  .fcard-done:hover{border-color:var(--green);background:var(--greenbg);color:var(--green-d);}
+  .fcard-done svg{width:13px;height:13px;}
+  .fcard-nm{font-size:13px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:4px;}
+  .fcard-why{font-size:11px;color:var(--dim);line-height:1.4;margin-bottom:11px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .fcard-why b{color:var(--soft);font-weight:600;}
+  .fcard-act{border:none;border-radius:8px;padding:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:.14s;width:100%;}
+  .fcard-act.rel{background:var(--copper);color:#fff;}
+  .fcard-act.rel:hover{background:var(--copper-d);}
+  .fcard-act.deb{background:var(--bluebg);color:var(--blue);}
+  .fcard-act.deb:hover{background:var(--blue);color:#fff;}
+  .fcard-act.see{background:var(--wash);color:var(--soft);border:1px solid var(--line2);}
+  .fcard-act.see:hover{border-color:var(--copper-l);}
   /* Coach : conseil actionnable */
-  .obs-advice{display:flex;align-items:flex-start;gap:7px;margin-top:6px;padding:7px 10px;background:color-mix(in srgb,var(--oa) 7%,transparent);border-radius:8px;font-size:11.5px;color:var(--soft);line-height:1.4;}
-  .obs-advice svg{width:14px;height:14px;color:var(--oa);flex-shrink:0;margin-top:1px;}
-  .obs-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line3);transition:background .14s;}
-  .obs-row:last-child{border-bottom:none;}
-  .obs-row:hover{background:color-mix(in srgb,var(--oa) 4%,transparent);}
-  .obs-ic{width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--oa) 12%,transparent);color:var(--oa);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-  .obs-ic svg{width:17px;height:17px;}
-  .obs-t{font-size:13px;color:var(--soft);line-height:1.35;}
-  .obs-t b{color:var(--ink);font-weight:700;}
+  .coach-row{display:flex;gap:12px;padding:15px 16px;border-bottom:1px solid var(--line3);position:relative;transition:background .14s;}
+  .coach-row::before{content:"";position:absolute;left:0;top:15px;bottom:15px;width:3px;border-radius:0 2px 2px 0;background:var(--oa);opacity:.7;}
+  .coach-row:last-child{border-bottom:none;}
+  .coach-row:hover{background:color-mix(in srgb,var(--oa) 4%,transparent);}
+  .coach-ic{width:38px;height:38px;border-radius:11px;background:color-mix(in srgb,var(--oa) 12%,transparent);color:var(--oa);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .coach-ic svg{width:18px;height:18px;}
+  .coach-body{flex:1;min-width:0;}
+  .coach-t{font-size:13.5px;color:var(--soft);line-height:1.35;}
+  .coach-t b{color:var(--ink);font-weight:700;}
+  .coach-advice{font-size:12px;color:var(--oa);font-weight:600;line-height:1.4;margin-top:5px;padding-left:13px;position:relative;}
+  .coach-advice::before{content:"→";position:absolute;left:0;top:0;opacity:.7;}
   /* Pouls de la semaine dans la sidebar */
   .side-pouls{margin:0 2px 8px;}
   .sp-in{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.55);border:1px solid #E3D8C2;border-radius:9px;padding:9px 11px;}
@@ -2029,34 +2037,30 @@ function renderFocus(aDeb,aRel,cold){
   let html=`<div class="focus-count" id="focusCount"><span><b>${total}</b> action${total>1?'s':''} en attente</span>${doneCount>0?`<span class="fc-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M20 6L9 17l-5-5"/></svg>${doneCount} traitée${doneCount>1?'s':''} cette semaine</span>`:''}</div>`;
   // HÉRO : la mission du jour
   html+=`<div class="fmission" style="--ac:${hero.rc}"><div class="fm-art">${BIGART[hero.ic]||''}</div><div class="fm-tag">Ta priorité maintenant</div><div class="fm-nm">${esc(hero.nm)}${hero.count?`<span class="focus-badge">${hero.count}</span>`:''}</div><div class="fm-why">${hero.why}</div><div class="fm-acts">${hero.nocheck?'':'<button class="fm-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>C\'est fait</button>'}<button class="fm-act ${hero.ac}">${hero.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>`;
-  // Reste : liste secondaire scrollable
+  // Reste : carrousel horizontal de cartes
   if(rest.length){
-    html+=`<div class="fsec-lbl">Ensuite</div><div class="fsec">`+rest.map((it,i)=>`<div class="fsec-row" data-fi="${i+1}" style="--ac:${it.rc}"><span class="fsec-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span><div class="fsec-body"><div class="fsec-nm">${esc(trunc(it.nm,32))}${it.count?`<span class="focus-badge sm">${it.count}</span>`:''}</div><div class="fsec-why">${it.why}</div></div><div class="fsec-actions">${it.nocheck?'':'<button class="fsec-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}<button class="focus-act sm ${it.ac}">${it.act}</button></div></div>`).join('')+`</div>`;
+    html+=`<div class="fsec-head"><span class="fsec-lbl">Ensuite</span>${rest.length>2?`<div class="fsec-nav"><button class="fsn-btn" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="fsn-btn" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>`:''}</div><div class="fcar" id="fcar">`+rest.map((it,i)=>`<div class="fcard" data-fi="${i+1}" style="--ac:${it.rc}"><div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,26))}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}</button></div>`).join('')+`</div>`;
   }
   $('focusW').innerHTML=html;
   if($('focusAll'))$('focusAll').style.display='none';
   // Câblage héro
   const mission=$('focusW').querySelector('.fmission');
   if(mission){
-    mission.querySelector('.fm-why').style.cursor='default';
     const ma=mission.querySelector('.fm-act'); if(ma)ma.addEventListener('click',hero.fn);
     const md=mission.querySelector('.fm-done');
-    if(md)md.addEventListener('click',()=>{
-      mission.classList.add('done');
-      setTimeout(()=>{if(hero.done)hero.done();renderAll();},420);
+    if(md)md.addEventListener('click',()=>{mission.classList.add('done');setTimeout(()=>{if(hero.done)hero.done();renderAll();},420);});
+  }
+  // Carrousel : flèches + molette horizontale
+  const car=$('fcar');
+  if(car){
+    $('focusW').querySelectorAll('.fsn-btn').forEach(b=>b.addEventListener('click',()=>{car.scrollBy({left:parseInt(b.dataset.dir)*220,behavior:'smooth'});}));
+    car.querySelectorAll('.fcard').forEach((cd,i)=>{
+      const it=rest[i];
+      cd.querySelector('.fcard-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
+      const chk=cd.querySelector('.fcard-done');
+      if(chk)chk.addEventListener('click',e=>{e.stopPropagation();cd.classList.add('checked');setTimeout(()=>{cd.style.width=cd.offsetWidth+'px';requestAnimationFrame(()=>{cd.style.width='0';cd.style.opacity='0';cd.style.marginRight='0';cd.style.padding='0';});setTimeout(()=>{if(it.done)it.done();renderAll();},320);},200);});
     });
   }
-  // Câblage secondaires
-  $('focusW').querySelectorAll('.fsec-row').forEach((row,i)=>{
-    const it=rest[i];
-    row.querySelector('.fsec-body').addEventListener('click',it.fn);
-    const a=row.querySelector('.focus-act'); if(a)a.addEventListener('click',e=>{e.stopPropagation();it.fn();});
-    const chk=row.querySelector('.fsec-done');
-    if(chk)chk.addEventListener('click',e=>{
-      e.stopPropagation();row.classList.add('checked');
-      setTimeout(()=>{row.style.height=row.offsetHeight+'px';requestAnimationFrame(()=>{row.style.height='0';row.style.opacity='0';row.style.paddingTop='0';row.style.paddingBottom='0';row.style.marginTop='0';});setTimeout(()=>{if(it.done)it.done();renderAll();},320);},200);
-    });
-  });
 }
 
 // Intelligence : taux par interlocuteur, objections fréquentes
@@ -2109,7 +2113,7 @@ function renderIntel(){
     obs.push({ic:'pace',ac:'var(--blue)',t:`<b>${ws.briefs} brief${ws.briefs>1?'s':''}</b> cette semaine${ws.streak>1?`, série de ${ws.streak}`:''}`,advice:adv});
   }
   const OBSIC={user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',temp:'<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',pace:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>'};
-  html+=obs.map(o=>`<div class="obs-row" style="--oa:${o.ac}"><span class="obs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${OBSIC[o.ic]}</svg></span><div class="obs-body"><div class="obs-t">${o.t}</div><div class="obs-advice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg><span>${o.advice}</span></div></div></div>`).join('');
+  html+=obs.map(o=>`<div class="coach-row" style="--oa:${o.ac}"><span class="coach-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${OBSIC[o.ic]}</svg></span><div class="coach-body"><div class="coach-t">${o.t}</div><div class="coach-advice">${o.advice}</div></div></div>`).join('');
   html+='</div></div>';
 
   // Si assez de deals conclus : taux de réussite par interlocuteur, seulement le positif
