@@ -179,6 +179,34 @@
   .avt svg{width:14px;height:14px;}
   .avt.on{background:#fff;color:var(--copper-d);box-shadow:var(--sh);}
   .avt:hover:not(.on){color:var(--soft);}
+  /* ══ Bande cockpit : priorité + 4 KPI (lecture en F) ══ */
+  .cockpit-strip{display:grid;grid-template-columns:1.5fr 2fr;gap:14px;margin-bottom:16px;}
+  .ck-hero{position:relative;border-radius:var(--rl);padding:18px 20px;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;transition:transform .14s,box-shadow .14s;border:1px solid;}
+  .ck-hero:hover{transform:translateY(-2px);box-shadow:var(--shm);}
+  .ck-hero:hover .ckh-cta svg{transform:translateX(3px);}
+  .ck-blue{background:linear-gradient(140deg,#E8F0F6,#F4F8FB);border-color:#C6DCEA;}
+  .ck-copper{background:linear-gradient(140deg,#FCF0E4,#FBF6F0);border-color:#EBD6C2;}
+  .ck-gold{background:linear-gradient(140deg,#FBF3D8,#FDFAEF);border-color:#E7CE8C;}
+  .ck-green{background:linear-gradient(140deg,#E9F4EC,#F5FAF6);border-color:#CBE5D0;}
+  .ck-neutral{background:linear-gradient(140deg,var(--wash),var(--card));border-color:var(--line2);}
+  .ckh-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .ckh-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .ckh-dot.blue{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 18%,transparent);}
+  .ckh-dot.copper{background:var(--copper);box-shadow:0 0 0 4px color-mix(in srgb,var(--copper) 18%,transparent);}
+  .ckh-dot.gold{background:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 18%,transparent);}
+  .ckh-dot.green{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 18%,transparent);}
+  .ckh-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600;}
+  .ckh-t{font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.12;color:var(--ink);}
+  .ckh-d{font-size:13px;color:var(--soft);line-height:1.45;margin-top:6px;flex:1;}
+  .ckh-cta{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--copper-d);margin-top:14px;}
+  .ckh-cta svg{width:15px;height:15px;transition:transform .15s;}
+  .ck-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .ck-kpi{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:14px 14px 15px;cursor:pointer;display:flex;flex-direction:column;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;}
+  .ck-kpi:hover{transform:translateY(-2px);box-shadow:var(--shm);}
+  .ckk-k{font-size:11px;color:var(--dim);font-weight:600;line-height:1.2;}
+  .ckk-v{font-family:var(--serif);font-weight:700;font-size:26px;color:var(--kc);line-height:1;margin-top:auto;padding-top:12px;}
+  .ckk-h{font-size:10.5px;color:var(--faint);margin-top:4px;}
+  @media(max-width:900px){.cockpit-strip{grid-template-columns:1fr;}.ck-kpis{grid-template-columns:repeat(2,1fr);}}
   /* ══ Vue Affaires par priorité d'action ══ */
   .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
   .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12.5px;font-weight:600;color:var(--dim);padding:7px 14px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
@@ -1257,31 +1285,17 @@
 
   <section class="view on" id="v-dash">
     <div class="cockpit">
-      <div class="ck-head"><div><div class="eyebrow" id="dashEyebrow">Pilotage</div><h1 id="greet">Bonjour.</h1><div class="weekline" id="weekline"></div></div><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div>
-
-      <!-- Héros argent compact -->
-      <div class="money-hero card" id="moneyHero">
-        <div class="mh-left">
-          <div class="mh-topline">
-            <div class="mh-period" id="mhPeriod">
-              <button class="mhp on" data-per="month">Ce mois</button>
-              <button class="mhp" data-per="all">Depuis le début</button>
-            </div>
-          </div>
-          <div class="mh-k" id="mhKing">Signé</div>
-          <div class="mh-big" id="mhBig">—</div>
-          <div class="mh-move" id="mhMove"></div>
-          <div class="mh-spark" id="mhSpark"></div>
-        </div>
-        <div class="mh-right" id="mhRight"></div>
+      <div class="ck-head">
+        <div><div class="eyebrow" id="dashEyebrow">Pilotage</div><h1 id="greet">Bonjour.</h1></div>
+        <button class="btn" data-go2="nouveau">Préparer un rendez-vous</button>
       </div>
 
-      <!-- 3 KPI fins -->
-      <div class="kpi-grid" id="kpiGrid"></div>
+      <!-- Bande cockpit : l'essentiel en haut à gauche, lecture en F -->
+      <div class="cockpit-strip" id="cockpitStrip"></div>
 
-      <!-- 2 blocs de même hauteur : plan de bataille + intelligence -->
+      <!-- 2 blocs : plan de bataille + intelligence -->
       <div class="dash-cols">
-        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant.</span><div class="right"><button class="btn g sm" id="focusAll" style="display:none" data-go2="affaires">Voir tout</button></div></div><div class="cbd p0" id="focusW"></div></div>
+        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant.</span></div><div class="cbd p0" id="focusW"></div></div>
         <div class="card intel-card"><div class="chd"><span class="t">Ce que Faro sait de toi</span><span class="d">Tiré de tes rendez-vous.</span></div><div class="cbd" id="intelW"></div></div>
       </div>
     </div>
@@ -1828,56 +1842,57 @@ function dash(){
   const wins=deals.filter(d=>d.etape==='gagne');
   const losts=deals.filter(d=>d.etape==='perdu');
 
-  // Ligne d'accueil : un déclencheur d'action, pas un bilan
+  // ─── Bande cockpit : l'action prioritaire + les 4 chiffres clés (lecture en F) ───
   const ws=weekStats();
   const h=new Date().getHours();
-  const wl=$('weekline');
-  if(!briefs.length){
-    wl.innerHTML='<span>Prépare ton premier rendez-vous, Faro fait le reste.</span>';
-  } else {
-    // Priorité : ce qui appelle une action maintenant
-    if(aDeb.length>=1){
-      const oldest=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];
-      const n=days(oldest.created_at);
-      wl.innerHTML=`<span class="wl-act" data-wl="deb"><span class="wl-dot blue"></span>${aDeb.length===1?`Un rendez-vous attend son débrief${n>=3?`, depuis ${n} j`:''}`:`${aDeb.length} rendez-vous attendent leur débrief`}. <b>Capture pendant que c'est frais.</b></span>`;
-    } else if(aRel.length>=1){
-      wl.innerHTML=`<span class="wl-act" data-wl="rel"><span class="wl-dot copper"></span>${aRel.length===1?'Une relance':`${aRel.length} relances`} t'attend${aRel.length>1?'ent':''}. <b>Ne laisse pas l'élan retomber.</b></span>`;
-    } else if(coldGlobal(cold)){
-      wl.innerHTML=`<span class="wl-act" data-wl="cold"><span class="wl-dot gold"></span>Une affaire dort depuis un moment. <b>Un signe de vie, et il repart.</b></span>`;
-    } else {
-      const salut=h<12?'Belle journée pour avancer':h<18?'Bon moment pour préparer la suite':'Tout est à jour, beau travail';
-      wl.innerHTML=`<span><span class="wl-dot green"></span>${salut}.${ws.streak>1?` Série de <b>${ws.streak}</b> débriefs, tiens-la.`:''}</span>`;
-    }
-    const act=wl.querySelector('[data-wl]');
-    if(act){act.style.cursor='pointer';act.addEventListener('click',()=>{const w=act.dataset.wl;if(w==='deb'){const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}else go('affaires');});}
-  }
-
-  // ─── Héros argent ───
-  renderMoney();
-
-  // ─── KPI compacts : jamais un tiret ───
   const closed=wins.length+losts.length;
   const winRate=closed?Math.round(wins.length/closed*100):null;
-  const vel=velocity();
-  const valDeals=wins.concat(actifs).filter(d=>dealVal(d)>0);
-  const avgDeal=valDeals.length?Math.round(valDeals.reduce((a,d)=>a+dealVal(d),0)/valDeals.length):null;
-  const hasRealKpi=closed>0||vel||avgDeal;
-  let KPI;
-  if(hasRealKpi){
-    KPI=[
-      {k:'Taux de closing',go:'affaires',ic:'<path d="M20 6L9 17l-5-5"/>',v:winRate!=null?winRate+' %':'—',h:closed?`${wins.length}/${closed} affaires closes`:'Dès ta première affaire close'},
-      {k:'Vélocité',go:'affaires',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',v:vel?vel+' j':'—',h:vel?'Pour conclure':'Avec l\'historique'},
-      {k:'Panier moyen',go:'affaires',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/>',v:avgDeal?eur(avgDeal):'—',h:avgDeal?'Par deal':'Ajoute des montants'}
-    ];
+  const closingVal=deals.filter(d=>d.etape==='closing').reduce((a,d)=>a+dealVal(d),0);
+  const signedVal=wins.reduce((a,d)=>a+dealVal(d),0);
+  const pipeVal=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape)).reduce((a,d)=>a+dealVal(d),0);
+
+  // L'action prioritaire du moment (le "gros titre" en haut à gauche)
+  let hero;
+  if(!briefs.length){
+    hero={tone:'neutral',dot:'green',t:'Prépare ton premier rendez-vous',d:'Faro construit ta mémoire et ton pipeline à partir de là.',go:()=>go('nouveau')};
+  } else if(aDeb.length>=1){
+    const oldest=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];
+    const n=days(oldest.created_at);
+    hero={tone:'blue',dot:'blue',t:aDeb.length===1?'Un rendez-vous attend son débrief':`${aDeb.length} rendez-vous à débriefer`,d:`${n>=3?`Le plus ancien remonte à ${n} j. `:''}Capture pendant que c'est frais.`,go:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}};
+  } else if(aRel.length>=1){
+    hero={tone:'copper',dot:'copper',t:aRel.length===1?'Une relance t\'attend':`${aRel.length} relances t'attendent`,d:'Ne laisse pas l\'élan retomber.',go:()=>go('affaires')};
+  } else if(coldGlobal(cold)){
+    hero={tone:'gold',dot:'gold',t:'Une affaire dort',d:'Sans mouvement depuis un moment. Un signe de vie, et elle repart.',go:()=>go('affaires')};
   } else {
-    KPI=[
-      {k:'Briefs préparés',go:'affaires',ic:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>',v:briefs.length,h:briefs.length?'ta mémoire grandit':'prépare le premier'},
-      {k:'Affaires actives',go:'affaires',ic:'<path d="M3 6h18M7 12h10M10 18h4"/>',v:actifs.length,h:actifs.length?'dans ton pipeline':'aucune encore'},
-      {k:'Entreprises',go:'affaires',ic:'<path d="M4 21h16M7 21V6l5-3 5 3v15M10 9h4M10 13h4"/>',v:deals.length,h:deals.length?'suivies par Faro':'à venir'}
-    ];
+    const salut=h<12?'Belle journée pour avancer':h<18?'Bon moment pour préparer la suite':'Tout est à jour';
+    hero={tone:'green',dot:'green',t:salut,d:ws.streak>1?`Série de ${ws.streak} débriefs, tiens-la.`:'Beau travail, tu es à jour.',go:()=>go('nouveau')};
   }
-  $('kpiGrid').innerHTML=KPI.map(k=>`<div class="kpi" data-kgo="${k.go}"><div class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${k.ic}</svg></div><div class="kmid"><div class="kk">${k.k}</div><div class="kv">${k.v}</div><div class="kh">${k.h}</div></div></div>`).join('');
-  $('kpiGrid').querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
+
+  // Les 4 chiffres clés (max recommandé par le benchmark)
+  const KPIS=[
+    signedVal>0
+      ? {k:'Signé',v:eur(signedVal),h:`${wins.length} affaire${wins.length>1?'s':''} gagnée${wins.length>1?'s':''}`,col:'var(--green-d)',go:'affaires'}
+      : {k:'Pipeline',v:pipeVal>0?eur(pipeVal):'—',h:pipeVal>0?'en jeu':'ajoute des montants',col:'var(--copper-d)',go:'affaires'},
+    {k:'Affaires en cours',v:actifs.filter(dealEntered).length,h:'dans ton pipeline',col:'var(--copper)',go:'affaires'},
+    winRate!=null
+      ? {k:'Taux de closing',v:winRate+' %',h:`${wins.length}/${closed} closes`,col:'var(--green)',go:'affaires'}
+      : {k:'À portée',v:closingVal>0?eur(closingVal):'0',h:closingVal>0?'en closing':'aucune en closing',col:'var(--blue)',go:'affaires'},
+    {k:'Cette semaine',v:ws.briefs,h:ws.streak>1?`série de ${ws.streak}`:'briefs préparés',col:'var(--violet)',go:'rdv'}
+  ];
+
+  const strip=$('cockpitStrip');
+  if(strip){
+    strip.innerHTML=`
+      <div class="ck-hero ck-${hero.tone}" data-hero="1">
+        <div class="ckh-top"><span class="ckh-dot ${hero.dot}"></span><span class="ckh-eyebrow">Ta priorité</span></div>
+        <div class="ckh-t">${esc(hero.t)}</div>
+        <div class="ckh-d">${esc(hero.d)}</div>
+        <div class="ckh-cta">Y aller<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="ck-kpis">${KPIS.map(k=>`<div class="ck-kpi" data-kgo="${k.go}" style="--kc:${k.col}"><div class="ckk-k">${k.k}</div><div class="ckk-v">${k.v}</div><div class="ckk-h">${k.h}</div></div>`).join('')}</div>`;
+    strip.querySelector('[data-hero]').addEventListener('click',hero.go);
+    strip.querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
+  }
 
   // ─── Plan de bataille + intelligence ───
   renderFocus(aDeb,aRel,cold);
@@ -1888,10 +1903,6 @@ function dash(){
 // ─── L'argent en roi ───
 let moneyPeriod='month', chartDays=30, affView='action';
 function wireDashTabs(){
-  $('mhPeriod').querySelectorAll('.mhp').forEach(b=>b.addEventListener('click',()=>{
-    $('mhPeriod').querySelectorAll('.mhp').forEach(x=>x.classList.toggle('on',x===b));
-    moneyPeriod=b.dataset.per; renderMoney();
-  }));
   const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('affaires'));
   const spc=$('spClose'); if(spc)spc.addEventListener('click',closeStagePanel);
   const sov=$('stageOv'); if(sov)sov.addEventListener('click',e=>{if(e.target===sov)closeStagePanel();});
