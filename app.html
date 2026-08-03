@@ -240,18 +240,40 @@
   .fcard-act.deb:hover{background:var(--blue);color:#fff;}
   .fcard-act.see{background:var(--wash);color:var(--soft);border:1px solid var(--line2);}
   .fcard-act.see:hover{border-color:var(--copper-l);}
-  /* Coach : conseil actionnable */
-  .coach-row{display:flex;gap:12px;padding:15px 16px;border-bottom:1px solid var(--line3);position:relative;transition:background .14s;}
-  .coach-row::before{content:"";position:absolute;left:0;top:15px;bottom:15px;width:3px;border-radius:0 2px 2px 0;background:var(--oa);opacity:.7;}
-  .coach-row:last-child{border-bottom:none;}
-  .coach-row:hover{background:color-mix(in srgb,var(--oa) 4%,transparent);}
-  .coach-ic{width:38px;height:38px;border-radius:11px;background:color-mix(in srgb,var(--oa) 12%,transparent);color:var(--oa);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .coach-ic svg{width:18px;height:18px;}
-  .coach-body{flex:1;min-width:0;}
-  .coach-t{font-size:13.5px;color:var(--soft);line-height:1.35;}
-  .coach-t b{color:var(--ink);font-weight:700;}
-  .coach-advice{font-size:12px;color:var(--oa);font-weight:600;line-height:1.4;margin-top:5px;padding-left:13px;position:relative;}
-  .coach-advice::before{content:"→";position:absolute;left:0;top:0;opacity:.7;}
+  /* ═══ Scorecard signature ═══ */
+  .scorecard{display:flex;flex-direction:column;height:100%;}
+  .sc-hero{display:flex;align-items:center;gap:16px;padding:18px 18px 16px;border-bottom:1px solid var(--line3);background:linear-gradient(135deg,color-mix(in srgb,var(--copper) 5%,transparent),transparent 70%);}
+  .sc-ring{position:relative;width:78px;height:78px;flex-shrink:0;}
+  .sc-ring svg{width:100%;height:100%;}
+  .sc-ring-fill{animation:scdash 1.1s cubic-bezier(.3,.7,.3,1) both;}
+  @keyframes scdash{from{stroke-dasharray:0 238.7;}}
+  .sc-ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .sc-n{font-family:var(--serif);font-weight:700;font-size:26px;color:var(--ink);line-height:1;}
+  .sc-max{font-size:9px;color:var(--faint);margin-top:1px;}
+  .sc-grade{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.1;}
+  .sc-hero-d{font-size:11.5px;color:var(--dim);margin-top:4px;line-height:1.4;}
+  .sc-traits{flex:1;display:flex;flex-direction:column;}
+  .sc-trait{display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line3);position:relative;transition:background .14s;}
+  .sc-trait::before{content:"";position:absolute;left:0;top:13px;bottom:13px;width:3px;border-radius:0 2px 2px 0;background:var(--tc);opacity:.65;}
+  .sc-trait:hover{background:color-mix(in srgb,var(--tc) 4%,transparent);}
+  .sct-ic{width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--tc) 12%,transparent);color:var(--tc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .sct-ic svg{width:17px;height:17px;}
+  .sct-body{flex:1;min-width:0;}
+  .sct-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .sct-v{font-size:15px;font-weight:700;color:var(--ink);margin-top:2px;line-height:1.15;}
+  .sct-v span{font-size:12px;font-weight:500;color:var(--dim);}
+  .sct-tip{font-size:11.5px;color:var(--tc);font-weight:600;margin-top:3px;line-height:1.35;}
+  .sc-foot{padding:12px 18px;font-size:11px;color:var(--faint);text-align:center;line-height:1.45;}
+  .sc-foot b{color:var(--copper-d);cursor:pointer;font-weight:600;}
+  /* État apprentissage */
+  .scorecard-learn{display:flex;flex-direction:column;align-items:center;text-align:center;padding:32px 22px;}
+  .sl-ring{position:relative;width:80px;height:80px;margin-bottom:16px;}
+  .sl-ring svg{width:100%;height:100%;}
+  .sl-ring-n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:22px;color:var(--ink);}
+  .sl-ring-n em{font-size:12px;color:var(--faint);font-style:normal;}
+  .sl-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);}
+  .sl-d{font-size:12.5px;color:var(--dim);margin-top:7px;line-height:1.5;max-width:280px;}
+  .sl-d b{color:var(--copper-d);font-weight:600;}
   /* Pouls de la semaine dans la sidebar */
   .side-pouls{margin:0 2px 8px;}
   .sp-in{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.55);border:1px solid #E3D8C2;border-radius:9px;padding:9px 11px;}
@@ -2039,7 +2061,7 @@ function renderFocus(aDeb,aRel,cold){
   html+=`<div class="fmission" style="--ac:${hero.rc}"><div class="fm-art">${BIGART[hero.ic]||''}</div><div class="fm-tag">Ta priorité maintenant</div><div class="fm-nm">${esc(hero.nm)}${hero.count?`<span class="focus-badge">${hero.count}</span>`:''}</div><div class="fm-why">${hero.why}</div><div class="fm-acts">${hero.nocheck?'':'<button class="fm-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>C\'est fait</button>'}<button class="fm-act ${hero.ac}">${hero.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>`;
   // Reste : carrousel horizontal de cartes
   if(rest.length){
-    html+=`<div class="fsec-head"><span class="fsec-lbl">Ensuite</span>${rest.length>2?`<div class="fsec-nav"><button class="fsn-btn" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="fsn-btn" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>`:''}</div><div class="fcar" id="fcar">`+rest.map((it,i)=>`<div class="fcard" data-fi="${i+1}" style="--ac:${it.rc}"><div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,26))}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}</button></div>`).join('')+`</div>`;
+    html+=`<div class="fsec-head"><span class="fsec-lbl">Autres actions · ${rest.length}</span>${rest.length>2?`<div class="fsec-nav"><button class="fsn-btn" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="fsn-btn" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>`:''}</div><div class="fcar" id="fcar">`+rest.map((it,i)=>`<div class="fcard" data-fi="${i+1}" style="--ac:${it.rc}"><div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,26))}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}</button></div>`).join('')+`</div>`;
   }
   $('focusW').innerHTML=html;
   if($('focusAll'))$('focusAll').style.display='none';
@@ -2072,74 +2094,66 @@ function renderIntel(){
   const losts=deals.filter(d=>d.etape==='perdu');
   const closed=wins.length+losts.length;
 
-  // ÉTAT 1 : trop tôt, on explique ce que Faro va apprendre
+  // ÉTAT 1 : trop tôt
   if(debriefed.length<3){
     const reste=3-debriefed.length;
-    w.innerHTML=`<div class="intel-learn">
-      <div class="il-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
-      <div class="il-t">Faro apprend de chaque rendez-vous.</div>
-      <div class="il-d">Encore <b>${reste} débrief${reste>1?'s':''}</b> et tes premières tendances personnelles apparaîtront ici : tes interlocuteurs, ta tonalité, ton terrain de prédilection.</div>
+    const prog=Math.round((debriefed.length/3)*100);
+    w.innerHTML=`<div class="scorecard-learn">
+      <div class="sl-ring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="var(--line3)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="var(--copper)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${prog/100*214} 214" transform="rotate(-90 40 40)"/></svg><span class="sl-ring-n">${debriefed.length}<em>/3</em></span></div>
+      <div class="sl-t">Ton profil de vendeur se dessine.</div>
+      <div class="sl-d">Encore <b>${reste} débrief${reste>1?'s':''}</b> et Faro révèle tes forces : tes interlocuteurs de prédilection, ta signature, ta zone de progression.</div>
     </div>`;
     return;
   }
 
-  let html='';
-
-  // Toujours : observations neutres et vraies
-  html+='<div class="intel-block"><div class="ib-k">Ce que Faro observe</div><div class="obs-list">';
-  const obs=[];
-  // Interlocuteur : conseil, pas description
-  const posts={};
-  const postTemp={};
+  // ─── SCORECARD SIGNATURE ───
+  const ws=weekStats();
+  // Interlocuteur signature
+  const posts={}; const postTemp={};
   briefs.forEach(b=>{if(b.poste){const k=cleanPoste(b.poste);posts[k]=(posts[k]||0)+1;if(b.debrief){postTemp[k]=postTemp[k]||{c:0,hot:0};postTemp[k].c++;if(['close','chaud'].includes(b.debrief.temperature))postTemp[k].hot++;}}});
   const topPost=Object.entries(posts).sort((a,b)=>b[1]-a[1])[0];
-  if(topPost){
-    const pt=postTemp[topPost[0]];
-    const advice=pt&&pt.c>=2&&pt.hot/pt.c>=.5?`Elles marchent bien pour toi, continue de viser haut.`:`Ton terrain de prédilection, tu sais leur parler.`;
-    obs.push({ic:'user',ac:'var(--violet)',t:`Tu vises surtout des <b>${esc(topPost[0])}</b>`,advice});
-  }
-  // Tonalité : conseil
+  // Tonalité
   const temps={};
   debriefed.forEach(b=>{const t=b.debrief.temperature;temps[t]=(temps[t]||0)+1;});
-  const TLABEL={close:'plutôt closés',chaud:'plutôt chauds',tiede:'plutôt tièdes',mort:'souvent difficiles'};
-  const TCOL={close:'var(--green)',chaud:'var(--copper)',tiede:'var(--gold)',mort:'var(--red)'};
-  const TADVICE={close:'Tu transformes, capitalise sur ce qui marche.',chaud:'Belle dynamique, relance vite tant que c\'est chaud.',tiede:'Pousse plus fort sur le chiffre et l\'urgence pour les réchauffer.',mort:'Qualifie plus tôt pour ne pas t\'épuiser sur des impasses.'};
-  const topTemp=Object.entries(temps).sort((a,b)=>b[1]-a[1])[0];
-  if(topTemp)obs.push({ic:'temp',ac:TCOL[topTemp[0]]||'var(--copper)',t:`Tes rendez-vous ressortent <b>${TLABEL[topTemp[0]]||''}</b>`,advice:TADVICE[topTemp[0]]||''});
-  // Rythme : conseil
-  const ws=weekStats();
-  if(ws.briefs>0){
-    const adv=ws.streak>=3?'Ta régularité paie, ne casse pas la série.':ws.briefs>=3?'Bon rythme, garde la cadence.':'Prépare un rendez-vous de plus cette semaine pour lancer ta série.';
-    obs.push({ic:'pace',ac:'var(--blue)',t:`<b>${ws.briefs} brief${ws.briefs>1?'s':''}</b> cette semaine${ws.streak>1?`, série de ${ws.streak}`:''}`,advice:adv});
-  }
-  const OBSIC={user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',temp:'<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',pace:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>'};
-  html+=obs.map(o=>`<div class="coach-row" style="--oa:${o.ac}"><span class="coach-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${OBSIC[o.ic]}</svg></span><div class="coach-body"><div class="coach-t">${o.t}</div><div class="coach-advice">${o.advice}</div></div></div>`).join('');
-  html+='</div></div>';
+  const hotRate=debriefed.length?Math.round((debriefed.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length/debriefed.length)*100):0;
+  // Taux de closing
+  const winRate=closed?Math.round(wins.length/closed*100):null;
 
-  // Si assez de deals conclus : taux de réussite par interlocuteur, seulement le positif
-  if(closed>=5){
-    const byPost={};
-    briefs.forEach(b=>{
-      if(!b.poste)return;
-      const k=cleanPoste(b.poste);
-      const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
-      if(!d||!['gagne','perdu'].includes(d.etape))return;
-      byPost[k]=byPost[k]||{tot:0,win:0};
-      byPost[k].tot++; if(d.etape==='gagne')byPost[k].win++;
-    });
-    const ranked=Object.entries(byPost).filter(([k,v])=>v.tot>=2).sort((a,b)=>b[1].win/b[1].tot-a[1].win/a[1].tot);
-    if(ranked.length){
-      const best=ranked[0];
-      html+=`<div class="intel-block"><div class="ib-k">Ton terrain de prédilection</div><div class="intel-stat"><span class="is-v">${Math.round(best[1].win/best[1].tot*100)}%</span><span class="is-l">de réussite avec les <b>${esc(best[0])}</b></span></div><div class="intel-bar">`;
-      ranked.slice(0,3).forEach(([k,v])=>{const pct=Math.round(v.win/v.tot*100);html+=`<div class="ibar-row"><div class="ibar-top"><span class="ibl">${esc(k)}</span><span class="ibn">${v.win}/${v.tot}</span></div><div class="ibar-track"><i style="width:${Math.max(5,pct)}%;background:${pct>=50?'var(--green)':pct>=25?'var(--copper)':'var(--line2)'}"></i></div></div>`;});
-      html+='</div></div>';
-    }
-  }
+  // Score global : mélange chaleur + régularité + closing
+  let score=Math.round(hotRate*0.5 + Math.min(100,ws.streak*15)*0.2 + (winRate!=null?winRate:50)*0.3);
+  score=Math.max(12,Math.min(99,score));
+  const grade=score>=75?'Redoutable':score>=55?'Solide':score>=35?'En progression':'Débutant';
+  const gradeCol=score>=75?'var(--green)':score>=55?'var(--copper)':score>=35?'var(--gold)':'var(--blue)';
 
-  // Lien vers page future, discret
-  html+=`<div class="intel-lock">Ta banque d'objections et tes tendances complètes arrivent bientôt. <b data-soon="1">En savoir plus</b></div>`;
+  let html=`<div class="scorecard">`;
+  // En-tête : score signature
+  html+=`<div class="sc-hero">
+    <div class="sc-ring" style="--sc:${gradeCol}"><svg viewBox="0 0 90 90"><circle cx="45" cy="45" r="38" fill="none" stroke="var(--line3)" stroke-width="8"/><circle class="sc-ring-fill" cx="45" cy="45" r="38" fill="none" stroke="${gradeCol}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${score/100*238.7} 238.7" transform="rotate(-90 45 45)"/></svg><div class="sc-ring-c"><span class="sc-n">${score}</span><span class="sc-max">/100</span></div></div>
+    <div class="sc-hero-txt"><div class="sc-grade" style="color:${gradeCol}">Profil ${grade}</div><div class="sc-hero-d">Ta signature de vendeur, calculée sur tes ${debriefed.length} débriefs.</div></div>
+  </div>`;
+
+  // Traits caractéristiques en tuiles
+  html+=`<div class="sc-traits">`;
+  // Trait 1 : interlocuteur
+  if(topPost){
+    const pt=postTemp[topPost[0]];
+    const good=pt&&pt.c>=2&&pt.hot/pt.c>=.5;
+    html+=`<div class="sc-trait" style="--tc:var(--violet)"><div class="sct-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="sct-body"><div class="sct-k">Ton interlocuteur signature</div><div class="sct-v">${esc(topPost[0])}</div><div class="sct-tip">${good?'Tu les convertis bien, vise plus haut encore.':'Ton terrain, tu sais leur parler.'}</div></div></div>`;
+  }
+  // Trait 2 : chaleur
+  html+=`<div class="sc-trait" style="--tc:var(--copper)"><div class="sct-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></div><div class="sct-body"><div class="sct-k">Ta chaleur en rendez-vous</div><div class="sct-v">${hotRate}% <span>chauds ou closés</span></div><div class="sct-tip">${hotRate>=50?'Belle énergie, transforme-la vite en signatures.':'Pousse le chiffre et l\'urgence pour réchauffer.'}</div></div></div>`;
+  // Trait 3 : régularité
+  html+=`<div class="sc-trait" style="--tc:var(--blue)"><div class="sct-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div><div class="sct-body"><div class="sct-k">Ta régularité</div><div class="sct-v">${ws.briefs} <span>cette semaine${ws.streak>1?`, série ${ws.streak}`:''}</span></div><div class="sct-tip">${ws.streak>=3?'Ta constance paie, ne casse pas la série.':'La régularité fait la différence, garde le rythme.'}</div></div></div>`;
+  // Trait 4 : closing si assez de data
+  if(closed>=3&&winRate!=null){
+    html+=`<div class="sc-trait" style="--tc:var(--green)"><div class="sct-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><div class="sct-body"><div class="sct-k">Ton taux de closing</div><div class="sct-v">${winRate}% <span>sur ${closed} conclus</span></div><div class="sct-tip">${winRate>=50?'Tu transformes, capitalise sur ta méthode.':'Qualifie plus tôt pour concentrer ton énergie.'}</div></div></div>`;
+  }
+  html+=`</div>`;
+
+  html+=`<div class="sc-foot">Ta banque d'objections et ton évolution complète arrivent bientôt. <b data-soon="1">En savoir plus</b></div>`;
+  html+=`</div>`;
   w.innerHTML=html;
-  const soon=w.querySelector('[data-soon]'); if(soon)soon.addEventListener('click',()=>toast('Bientôt : ta banque d\'objections personnelle'));
+  const soon=w.querySelector('[data-soon]'); if(soon)soon.addEventListener('click',()=>toast('Bientôt : ton évolution mois par mois'));
 }
 // Nettoie un intitulé de poste pour l'affichage : libellé complet, jamais tronqué bizarrement
 function cleanPoste(p){
