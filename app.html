@@ -1061,9 +1061,12 @@
   .kpi .kv{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums;}
   .kpi .kh{font-size:10px;color:var(--faint);margin-top:1px;}
   /* Deux blocs même hauteur */
-  .dash-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start !important;}
-  .dash-cols>.card{display:flex;flex-direction:column;min-width:0;align-self:start !important;height:auto !important;}
-  .focus-card #focusW{display:block;}
+  .dash-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:stretch;}
+  .dash-cols>.card{display:flex;flex-direction:column;min-width:0;height:clamp(420px,52vh,520px);}
+  .dash-cols>.card>.cbd,.dash-cols>.card>#focusW{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;}
+  .focus-card #focusW{display:flex;flex-direction:column;min-height:0;}
+  .focus-card #focusW .fcar{flex:1;align-items:stretch;}
+  .focus-card #focusW .fcard{height:auto;}
   .focus-row{display:flex;align-items:center;gap:12px;padding:0 16px 0 0;min-height:70px;border-bottom:1px solid var(--line3);transition:height .3s ease,opacity .3s ease,padding .3s ease,background .14s;overflow:hidden;position:relative;}
   .focus-row:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 6%,transparent),transparent 60%);}
   .focus-bar{width:3px;align-self:stretch;background:var(--ac);opacity:.85;flex-shrink:0;margin-right:13px;}
