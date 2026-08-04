@@ -319,6 +319,23 @@
   .act-age.late{color:var(--red);font-weight:600;}
   .act-card .kebab{opacity:0;flex-shrink:0;}
   .act-card:hover .kebab{opacity:1;}
+  /* Bouton d'action prescrit */
+  .act-go{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;border:none;border-radius:9px;padding:9px 15px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.14s;}
+  .act-go svg{width:14px;height:14px;}
+  .act-go.rel{background:var(--copper);color:#fff;}
+  .act-go.rel:hover{background:var(--copper-d);}
+  .act-go.deb{background:var(--blue);color:#fff;}
+  .act-go.deb:hover{filter:brightness(1.12);}
+  /* Pastille de fraîcheur : neutre → bleu selon --chill */
+  .act-card-l{position:relative;}
+  .act-fresh{position:absolute;bottom:-3px;right:-3px;width:11px;height:11px;border-radius:50%;border:2px solid var(--card);background:color-mix(in srgb,var(--blue) calc(var(--chill,0)*80%),#D8D2C6);}
+  /* Signal de risque : chaude qui refroidit */
+  .act-risk{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--red);background:var(--redbg);border:1px solid var(--redbd);border-radius:5px;padding:2px 7px;animation:softpulse 2.4s ease-in-out infinite;}
+  /* Vient d'entrer (fraîchement débriefée) */
+  .act-card.fresh{border-color:var(--copper-l);animation:freshin .5s cubic-bezier(.2,.7,.2,1);}
+  @keyframes freshin{from{transform:translateX(-8px);opacity:0;}to{transform:none;opacity:1;}}
+  .act-new{position:absolute;top:-8px;left:14px;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--copper);border-radius:5px;padding:2px 8px;}
+  .act-card-act b{color:var(--red);font-weight:700;}
   .act-won{display:flex;align-items:center;gap:10px;background:var(--greenbg);border:1px solid var(--greenbd);border-radius:var(--rl);padding:14px 16px;font-size:13px;color:var(--green-d);margin-top:6px;}
   .act-won b{font-weight:700;}
   .act-won-ic{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -395,6 +412,17 @@
   .hr-open svg{width:13px;height:13px;}
   .hist-row .kebab,.rdv-todo-card .kebab{flex-shrink:0;}
   @media(max-width:720px){.rdv-todo-grid{grid-template-columns:1fr;}.hr-poste{display:none;}.rtc-cta{grid-template-columns:1fr;}}
+  /* Strate 3 : la leçon */
+  .sect.lesson{background:linear-gradient(140deg,var(--washc),var(--card));border-color:#EBD6C2;}
+  .sect.lesson .num.les{background:var(--copper);color:#fff;}
+  .les-line{font-size:13px;color:var(--soft);line-height:1.5;padding:7px 0;border-bottom:1px dashed #EBD6C2;}
+  .les-line:last-of-type{border-bottom:none;}
+  .les-foot{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--copper-d);margin-top:11px;padding-top:10px;border-top:1px solid #EBD6C2;}
+  /* Mémoire entrante dans le brief */
+  .sect.memory{background:linear-gradient(140deg,#E8F0F6,#F6FAFC);border-color:#C6DCEA;}
+  .sect.memory .num.mem{background:var(--blue);color:#fff;}
+  .mem-line{font-size:13px;color:var(--soft);line-height:1.5;padding:6px 0;border-bottom:1px dashed #C6DCEA;}
+  .mem-line:last-child{border-bottom:none;}
   /* Mission du jour : action héro */
   .fmission{position:relative;padding:20px 18px 18px;overflow:hidden;border-bottom:1px solid var(--line3);}
   .fmission::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 8%,transparent),transparent 65%);pointer-events:none;}
@@ -2543,13 +2571,26 @@ function renderActionView(){
       const temp=dealTemp(d);
       const n=days(d.updated_at);
       const st=stg(d.etape);
-      html+=`<div class="act-card" data-d="${d.id}" style="--sc:${sec.col}">
-        <div class="act-card-l">${logoHtml(d.entreprise,ed.logo,ed.site).replace('class="mono','class="act-logo mono')}</div>
+      // Fraîcheur : neutre → bleu à mesure que ça refroidit
+      const chill=Math.min(1,n/14);
+      // Signal de risque : chaude mais silencieuse
+      const risk=(temp==='chaud'||temp==='close')&&n>=7;
+      // Nouveauté : débriefée il y a moins d'une heure → vient d'entrer
+      const lastDeb=dealBriefs(d).filter(b=>b.debrief&&b.debrief.created_at).map(b=>new Date(b.debrief.created_at)).sort((a,b)=>b-a)[0];
+      const fresh=lastDeb&&(Date.now()-lastDeb)<3600000;
+      // Bouton d'action prescrit (jamais du texte passif)
+      const isDeb=sec.k==='debrief';
+      const btnLbl=isDeb?'Débriefer':sec.k==='relance'?'Relancer':sec.k==='dorment'?'Réveiller':'Avancer';
+      const btnCls=isDeb?'deb':'rel';
+      html+=`<div class="act-card ${fresh?'fresh':''}" data-d="${d.id}" style="--sc:${sec.col};--chill:${chill}">
+        ${fresh?'<span class="act-new">Vient d\'entrer</span>':''}
+        <div class="act-card-l">${logoHtml(d.entreprise,ed.logo,ed.site).replace('class="mono','class="act-logo mono')}<span class="act-fresh" title="${n} j sans mouvement"></span></div>
         <div class="act-card-m">
-          <div class="act-card-top"><span class="act-co">${esc(trunc(d.entreprise,28))}</span><span class="act-stage" style="color:${st.c};background:${st.bg};border-color:${st.bd}">${st.l}</span>${temp?`<span class="act-temp" style="background:${TC[temp]}" title="${TL[temp]}"></span>`:''}</div>
-          <div class="act-card-act">${na?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${na.ic}</svg><span>${na.txt}</span>`:'Fais avancer'}</div>
+          <div class="act-card-top"><span class="act-co">${esc(trunc(d.entreprise,28))}</span><span class="act-stage" style="color:${st.c};background:${st.bg};border-color:${st.bd}">${st.l}</span>${temp?`<span class="act-temp" style="background:${TC[temp]}" title="${TL[temp]}"></span>`:''}${risk?'<span class="act-risk">Refroidit</span>':''}</div>
+          <div class="act-card-act">${na?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${na.ic}</svg><span>${na.txt}</span>`:risk?`<span>Chaude mais silencieuse depuis <b>${n} j</b>. Un signe de vie avant qu'elle refroidisse.</span>`:'<span>Fais avancer vers la signature.</span>'}</div>
         </div>
         <div class="act-card-r">${mv?`<span class="act-money">${eur(mv)}</span>`:''}<span class="act-age ${n>=14?'late':n>=7?'warn':''}">${n===0?"aujourd'hui":n+' j'}</span></div>
+        <button class="act-go ${btnCls}" data-go="${sec.k}">${btnLbl}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <button class="kebab" data-kd="${d.id}"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
       </div>`;
     });
@@ -2563,8 +2604,17 @@ function renderActionView(){
 
   root.innerHTML=html;
   root.querySelectorAll('.act-card').forEach(c=>{
-    c.addEventListener('click',e=>{if(e.target.closest('.kebab'))return;const d=deals.find(x=>x.id===c.dataset.d);if(d)openFiche(d);});
+    const d=deals.find(x=>x.id===c.dataset.d); if(!d)return;
+    c.addEventListener('click',e=>{if(e.target.closest('.kebab')||e.target.closest('.act-go'))return;openFiche(d);});
     c.querySelector('.kebab').addEventListener('click',e=>{e.stopPropagation();openKebab(e.currentTarget,affMenu(c.dataset.d,e.currentTarget));});
+    const go=c.querySelector('.act-go');
+    if(go)go.addEventListener('click',e=>{
+      e.stopPropagation();
+      const kind=go.dataset.go;
+      if(kind==='debrief'){const b=dealBriefs(d).find(x=>!x.debrief&&x.statut==='a_relancer');if(b){current=b;openBrief(b);setTimeout(()=>{if(typeof askPass==='function')askPass();},200);return;}}
+      if(kind==='relance'){const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');return;}}
+      openFiche(d);
+    });
   });
 }
 
@@ -3424,6 +3474,23 @@ function openBrief(b){
 
   const ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ch=b.chiffre||{}, pg=b.pieges||[], ns=b.next_step||{};
   let html='';
+  // ─── Mémoire entrante : ce que les débriefs précédents ont appris sur ce client ───
+  if(!b.debrief){
+    const prevDebs=briefs.filter(x=>x.id!==b.id&&x.debrief&&(x.entreprise||'').toLowerCase()===(b.entreprise||'').toLowerCase()&&new Date(x.created_at)<new Date(b.created_at||Date.now()))
+      .sort((a,bb)=>new Date(bb.created_at)-new Date(a.created_at));
+    if(prevDebs.length){
+      const TLM={close:'closé',chaud:'chaud',tiede:'tiède',mort:'difficile'};
+      const memLines=[];
+      const last=prevDebs[0];
+      const lastDate=new Date(last.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+      if(last.debrief.temperature)memLines.push(`Dernier rendez-vous le ${lastDate} : ${TLM[last.debrief.temperature]||last.debrief.temperature}.`);
+      if(last.debrief.next_action)memLines.push(`Tu devais : ${last.debrief.next_action}.`);
+      prevDebs.slice(0,3).forEach(p=>{if(p.synthese_post&&p.synthese_post.observations)p.synthese_post.observations.slice(0,2).forEach(o=>{if(memLines.length<5&&!memLines.includes(o))memLines.push(o);});});
+      if(memLines.length){
+        html+=`<div class="sect memory reveal"><div class="secthd"><span class="num mem">◈</span><span class="tt">Ce que tu sais déjà de lui</span><span class="dd">${prevDebs.length} rendez-vous débriefé${prevDebs.length>1?'s':''} avec ce client. Ce brief en tient compte.</span></div><div class="sectbd">${memLines.map(l=>`<div class="mem-line">${esc(l)}</div>`).join('')}</div></div>`;
+      }
+    }
+  }
   if(b.synthese_post&&b.synthese_post.observations){
     html+=`<div class="sect synth"><div class="secthd"><span class="num">◆</span><span class="tt">Ce que Faro retient du rendez-vous</span></div><div class="sectbd">${b.synthese_post.observations.map(o=>`<div class="so">${esc(o)}</div>`).join('')}${b.synthese_post.relance_angle?`<div class="sa"><b>Angle de relance</b>${esc(b.synthese_post.relance_angle)}</div>`:''}</div></div>`;
   }
@@ -3525,6 +3592,19 @@ function renderDebriefDoc(b){
   // Notes libres
   if(libre.length){
     html+=`<div class="sect reveal"><div class="secthd"><span class="num">✎</span><span class="tt">Tes notes du rendez-vous</span></div><div class="sectbd">${libre.map(n=>`<div class="so">${esc(n.t)}</div>`).join('')}</div></div>`;
+  }
+  // Strate 3 : la leçon, tirée de l'écart, capitalisée
+  const lessons=[];
+  rows.forEach(r=>{
+    if(r.prevu&&r.vecu&&r.vecu.trim()&&r.prevu.trim().toLowerCase()!==r.vecu.trim().toLowerCase()){
+      lessons.push(`${r.k} : le terrain a donné autre chose que prévu. Intègre «${trunc(r.vecu,60)}» à ta préparation.`);
+    } else if(r.prevu&&(!r.vecu||!r.vecu.trim())){
+      lessons.push(`${r.k} : rien capté cette fois. Note-le en rendez-vous, c'est la matière de ta mémoire.`);
+    }
+  });
+  if(deb.temperature==='chaud'||deb.temperature==='close')lessons.push('Ton approche a chauffé ce client. Garde le même angle pour la relance.');
+  if(lessons.length){
+    html+=`<div class="sect reveal lesson"><div class="secthd"><span class="num les">↗</span><span class="tt">Pour être plus tranchant la prochaine fois</span></div><div class="sectbd">${lessons.slice(0,3).map(l=>`<div class="les-line">${esc(l)}</div>`).join('')}<div class="les-foot">Cette leçon est gardée dans la mémoire de ce client. Ton prochain brief en tiendra compte.</div></div></div>`;
   }
   // Prochaine action
   if(deb.next_action){
