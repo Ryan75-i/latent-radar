@@ -19,8 +19,8 @@
     --blue:#1E5F8A;--bluebg:#E4EEF5;--violet:#8B6BB1;--violetbg:#F0EAF6;--gold:#8a6508;--goldbg:#FBF3D2;
     --serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
     --r:7px;--rl:9px;
-    --sh:0 1px 2px rgba(30,25,18,.05),0 1px 1px rgba(30,25,18,.03);
-    --shm:0 4px 14px -6px rgba(40,32,20,.16);
+    --sh:0 1px 2px rgba(30,25,18,.04),0 2px 6px -2px rgba(30,25,18,.05),0 0 0 1px rgba(30,25,18,.015);
+    --shm:0 2px 4px rgba(30,25,18,.05),0 10px 24px -10px rgba(40,32,20,.18),0 0 0 1px rgba(30,25,18,.02);
     --shl:0 24px 60px -30px rgba(30,24,16,.4);
   }
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;}
@@ -419,6 +419,27 @@
   .hr-open svg{width:13px;height:13px;}
   .hist-row .kebab,.rdv-todo-card .kebab{flex-shrink:0;}
   @media(max-width:720px){.rdv-todo-grid{grid-template-columns:1fr;}.hr-poste{display:none;}.rtc-cta{grid-template-columns:1fr;}}
+  /* ══ Finitions globales (inspiration Stripe/Linear) ══ */
+  button{-webkit-tap-highlight-color:transparent;}
+  button:active:not(:disabled){transform:scale(.985);}
+  ::selection{background:color-mix(in srgb,var(--copper) 22%,transparent);}
+  *{scrollbar-width:thin;scrollbar-color:#D8D2C6 transparent;}
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-thumb{background:#D8D2C6;border-radius:10px;border:2px solid var(--bg);}
+  ::-webkit-scrollbar-thumb:hover{background:#C6BEAE;}
+  h1{letter-spacing:-.4px;}
+  .card{transition:box-shadow .18s cubic-bezier(.2,.6,.2,1),border-color .18s;}
+  img{user-select:none;}
+  .chip,.act-stage,.rf-tag,.hm-k{font-feature-settings:"tnum";}
+  .pk-v,.hm-v,.ckk-v,.act-money{font-variant-numeric:tabular-nums;}
+  /* Page Ton profil */
+  .toi-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px;}
+  .toi-post{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line3);}
+  .toi-post:last-child{border-bottom:none;}
+  .tp-k{font-size:13px;font-weight:700;color:var(--ink);width:180px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tp-bar{flex:1;height:9px;background:var(--wash);border-radius:20px;overflow:hidden;border:1px solid var(--line3);}
+  .tp-fill{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--copper),var(--copper-l));}
+  .tp-v{font-family:var(--mono);font-size:10.5px;color:var(--dim);flex-shrink:0;}
   /* Strate 3 : la leçon */
   .sect.lesson{background:linear-gradient(140deg,var(--washc),var(--card));border-color:#EBD6C2;}
   .sect.lesson .num.les{background:var(--copper);color:#fff;}
@@ -1357,6 +1378,7 @@
     <button data-go="rdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span class="lb">Rendez-vous</span><span class="cnt" id="cntRdv">0</span></button>
     <button data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Affaires</span><span class="cnt" id="cntDeals">0</span></button>
     <button data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h1M9 13h1M14 9h1M14 13h1M11 21v-4h2v4"/></svg><span class="lb">Entreprises</span><span class="cnt" id="cntEnt">0</span></button>
+    <button data-go="toi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span class="lb">Ton profil</span></button>
   </nav>
   <div class="ngroup">Configuration</div>
   <nav class="nav">
@@ -1455,6 +1477,11 @@
   <section class="view" id="v-entreprises">
     <div class="ptitle"><div><div class="eyebrow">Activité · Mémoire</div><h1>Entreprises</h1><div class="sub">Tes clients, avec toute leur histoire. Clique une entreprise pour ouvrir son dossier.</div></div></div>
     <div class="card ent-tablecard"><div class="ent-table" id="entW"></div></div>
+  </section>
+
+  <section class="view" id="v-toi">
+    <div class="ptitle"><div><div class="eyebrow">Pilotage · Mémoire de toi</div><h1>Ce que Faro sait de toi</h1><div class="sub">Ton profil de vendeur, tiré de tes rendez-vous. Il s'affine à chaque débrief.</div></div></div>
+    <div id="toiW"></div>
   </section>
 
   <!-- Panneau d'étape en grand -->
@@ -1819,7 +1846,7 @@ const briefTempChip=b=>{
 };
 
 /* ═══ Navigation ═══ */
-const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',affaires:'Affaires',entreprises:'Entreprises',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',affaires:'Affaires',entreprises:'Entreprises',toi:'Ton profil',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
@@ -1833,6 +1860,7 @@ function go(v){
   if(v==='nouveau')renderNvRecent();
   if(v==='rdv')renderRdvList();
   if(v==='entreprises')entList();
+  if(v==='toi')renderToi();
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
@@ -1942,20 +1970,6 @@ function countUp(el,target,fmt,dur=900){
     if(p<1)requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
-}
-function renderMhSpark(){
-  const el=$('mhSpark'); if(!el)return;
-  // Activité des 14 derniers jours : briefs créés + débriefs
-  const days14=[];
-  for(let i=13;i>=0;i--){
-    const d0=new Date(); d0.setHours(0,0,0,0); d0.setDate(d0.getDate()-i);
-    const d1=new Date(d0); d1.setDate(d1.getDate()+1);
-    const n=briefs.filter(b=>{const t=new Date(b.created_at);return t>=d0&&t<d1;}).length;
-    days14.push(n);
-  }
-  const max=Math.max(...days14,1);
-  if(days14.every(n=>n===0)){el.innerHTML='';return;}
-  el.innerHTML=`<div class="spark-lbl">Ton rythme, 14 jours</div><div class="spark-bars">${days14.map((n,i)=>`<i style="height:${Math.max(8,n/max*100)}%;${n?'':'opacity:.28;'}animation-delay:${i*35}ms" title="${n} brief${n>1?'s':''}"></i>`).join('')}</div>`;
 }
 // Une affaire n'entre dans le parcours Affaires qu'après son premier débrief
 function dealEntered(d){
@@ -2084,6 +2098,41 @@ function dash(){
   renderJourney(aDeb);
 }
 
+function renderToi(){
+  const w=$('toiW'); if(!w)return;
+  const debriefed=briefs.filter(b=>b.debrief);
+  const ws=weekStats();
+  const wins=deals.filter(d=>d.etape==='gagne'), losts=deals.filter(d=>d.etape==='perdu');
+  const closed=wins.length+losts.length;
+  const winRate=closed?Math.round(wins.length/closed*100):null;
+  const hotRate=debriefed.length?Math.round(debriefed.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length/debriefed.length*100):0;
+  if(debriefed.length<1){
+    w.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;text-align:center;"><div class="esvg">${ESVG.historique||''}</div><div class="empty">Débriefe tes premiers rendez-vous : ton profil se dessinera ici, et il s'affinera à chaque débrief.</div></div></div>`;
+    return;
+  }
+  // Rythme 12 semaines
+  const today=new Date(); today.setHours(0,0,0,0);
+  const dayCount={}; briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);dayCount[d.getTime()]=(dayCount[d.getTime()]||0)+1;});
+  const dow=(today.getDay()+6)%7; const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6);
+  let heat='<div class="jheat" style="max-width:640px;">'; let active=0;
+  for(let wk=11;wk>=0;wk--){heat+='<div class="jhcol">';for(let d=0;d<7;d++){const day=new Date(gridEnd);day.setDate(gridEnd.getDate()-(wk*7)+(d-6));const n=dayCount[day.getTime()]||0;if(n)active++;heat+=`<span class="jhcell l${day>today?'x':(n===0?0:n===1?1:n===2?2:3)}"></span>`;}heat+='</div>';}
+  heat+='</div>';
+  // Interlocuteurs qui te réussissent
+  const posts={};
+  debriefed.forEach(b=>{const k=cleanPoste(b.poste||'')||'Autre';posts[k]=posts[k]||{c:0,hot:0};posts[k].c++;if(['close','chaud'].includes(b.debrief.temperature))posts[k].hot++;});
+  const topPosts=Object.entries(posts).sort((a,b)=>b[1].c-a[1].c).slice(0,4);
+  const METRICS=[
+    {k:'Débriefs',v:debriefed.length,s:'capturés',col:'var(--blue)'},
+    {k:'Chaleur',v:hotRate+'%',s:'chauds ou closés',col:'var(--copper)'},
+    {k:winRate!=null?'Closing':'Série',v:winRate!=null?winRate+'%':ws.streak,s:winRate!=null?wins.length+' signée'+(wins.length>1?'s':''):'débriefs d\'affilée',col:'var(--green)'},
+    {k:'Jours actifs',v:active,s:'sur 12 semaines',col:'var(--gold)'}
+  ];
+  w.innerHTML=`
+    <div class="toi-metrics">${METRICS.map(m=>`<div class="heat-metric" style="--mc:${m.col}"><div class="hm-v">${m.v}</div><div class="hm-k">${m.k}</div><div class="hm-s">${m.s}</div></div>`).join('')}</div>
+    <div class="card" style="margin-bottom:14px;"><div class="chd"><span class="t">Ton rythme de chasse</span><span class="d">Chaque carré, un jour. Plus c'est foncé, plus tu as préparé.</span></div><div class="cbd">${heat}</div></div>
+    ${topPosts.length?`<div class="card"><div class="chd"><span class="t">Tes interlocuteurs</span><span class="d">Qui te réussit le mieux, d'après tes débriefs.</span></div><div class="cbd p0">${topPosts.map(([k,v])=>{const r=Math.round(v.hot/v.c*100);return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,34))}</span><span class="tp-bar"><span class="tp-fill" style="width:${Math.max(r,4)}%"></span></span><span class="tp-v">${r}% chauds · ${v.c} RDV</span></div>`;}).join('')}</div></div>`:''}
+  `;
+}
 function renderJourney(aDeb){
   const jc=$('journeyCard'); if(!jc)return;
   const ws=weekStats();
@@ -2148,98 +2197,7 @@ function prevMonthRange(){const d=new Date();const s=new Date(d.getFullYear(),d.
 function signedIn(from,to){
   return deals.filter(d=>d.etape==='gagne'&&d.updated_at&&new Date(d.updated_at).getTime()>=from&&(to?new Date(d.updated_at).getTime()<to:true));
 }
-function renderMoney(){
-  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
-  const wonAll=deals.filter(d=>d.etape==='gagne');
-  const totActif=actifs.reduce((a,d)=>a+dealVal(d),0);
-  const closing=actifs.filter(d=>d.etape==='closing');
-  const closingVal=closing.reduce((a,d)=>a+dealVal(d),0);
-  const hasWon=wonAll.length>0;
-  const hasAnyMontant=deals.some(d=>dealVal(d)>0);
-  const ws=weekStats();
 
-  let kingLabel, kingVal, moveHtml='', kingClass='';
-
-  if(!hasAnyMontant){
-    // AUCUN MONTANT : le héros bascule sur l'activité, vivant et fier, jamais un tiret
-    if(ws.briefs>0){
-      kingLabel='Cette semaine'; kingVal=ws.briefs+(ws.briefs>1?' briefs':' brief');
-      const parts=[];
-      if(ws.debriefs>0)parts.push(`${ws.debriefs} débriefé${ws.debriefs>1?'s':''}`);
-      if(actifs.length>0)parts.push(`${actifs.length} deal${actifs.length>1?'s':''} en cours`);
-      moveHtml=parts.length?`<span class="txt">${parts.join(' · ')}. Ajoute un montant au débrief pour suivre ton argent.</span>`:`<span class="txt">Ajoute un montant au débrief pour suivre ton argent.</span>`;
-    } else if(deals.length>0){
-      kingLabel='Ton pipeline'; kingVal=deals.length+(deals.length>1?' entreprises':' entreprise');
-      moveHtml=`<span class="txt">${actifs.length} affaire${actifs.length>1?'s':''} en cours. Prépare, débriefe, l'argent suivra.</span>`;
-    } else {
-      kingLabel='Bienvenue'; kingVal='Prêt';
-      moveHtml=`<span class="txt">Prépare ton premier rendez-vous, Faro s'occupe du reste.</span>`;
-    }
-    $('mhKing').textContent=kingLabel; $('mhMove').innerHTML=moveHtml;
-    const numMatch=String(kingVal).match(/^(\d+)(.*)$/);
-    if(numMatch)countUp($('mhBig'),parseInt(numMatch[1]),v=>v+numMatch[2]);
-    else $('mhBig').textContent=kingVal;
-    renderMhSpark();
-    renderMhRight(actifs,closing,closingVal,totActif,true);
-    return;
-  }
-
-  // AVEC MONTANTS : logique argent normale
-  if(moneyPeriod==='month'){
-    const mSigned=signedIn(monthStart()).reduce((a,d)=>a+dealVal(d),0);
-    const mCount=signedIn(monthStart()).length;
-    const [ps,pe]=prevMonthRange();
-    const prevSigned=signedIn(ps,pe).reduce((a,d)=>a+dealVal(d),0);
-    if(hasWon||mSigned>0){
-      kingLabel='Signé ce mois'; kingVal=mSigned?eur(mSigned):'0 €';
-      const diff=mSigned-prevSigned;
-      const moisPrec=new Date(new Date().setMonth(new Date().getMonth()-1)).toLocaleDateString('fr-FR',{month:'long'});
-      if(prevSigned>0||mSigned>0){
-        const cls=diff>0?'up':diff<0?'down':'flat';
-        const ico=diff>0?'<path d="M7 17L17 7M17 7H8M17 7v9"/>':diff<0?'<path d="M7 7l10 10M17 17H8M17 17V8"/>':'<path d="M5 12h14"/>';
-        moveHtml=`<span class="tag ${cls}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${diff>=0?'+':''}${eur(Math.abs(diff))||'0 €'}</span><span class="txt">contre ${moisPrec} · ${mCount} affaire${mCount>1?'s':''} signée${mCount>1?'s':''}</span>`;
-      } else moveHtml=`<span class="txt">Ta première signature du mois t'attend.</span>`;
-    } else {
-      kingLabel='En jeu'; kingVal=totActif?eur(totActif):'—';
-      moveHtml=`<span class="txt">${actifs.length} affaire${actifs.length>1?'s':''} en cours. Signe la première pour lancer le compteur.</span>`;
-    }
-  } else {
-    const allSigned=wonAll.reduce((a,d)=>a+dealVal(d),0);
-    if(hasWon){
-      kingLabel='Signé au total'; kingVal=allSigned?eur(allSigned):'0 €';
-      moveHtml=`<span class="txt">${wonAll.length} affaire${wonAll.length>1?'s':''} gagnée${wonAll.length>1?'s':''} depuis le début.</span>`;
-    } else {
-      kingLabel='En jeu'; kingVal=totActif?eur(totActif):'—';
-      moveHtml=`<span class="txt">${actifs.length} deal${actifs.length>1?'s':''} en cours.</span>`;
-    }
-  }
-  $('mhKing').textContent=kingLabel;
-  const rawEur=parseInt(String(kingVal).replace(/[^0-9]/g,''))||0;
-  if(rawEur>0&&String(kingVal).includes('€'))countUp($('mhBig'),rawEur,v=>eur(v));
-  else $('mhBig').textContent=kingVal;
-  renderMhSpark();
-  $('mhMove').innerHTML=moveHtml;
-  renderMhRight(actifs,closing,closingVal,totActif,false);
-}
-
-function renderMhRight(actifs,closing,closingVal,totActif,noMontant){
-  // Colonne droite : contexte, adapté selon qu'on a des montants ou non
-  let metrics;
-  if(noMontant){
-    const stale=actifs.filter(d=>days(d.updated_at)>=7).length;
-    metrics=[
-      {k:'Affaires en cours',dt:'var(--copper)',v:actifs.length||'0',h:actifs.length?'dans ton pipeline':'aucune pour l\'instant',go:'affaires'},
-      {k:'À portée de signature',dt:'var(--green)',v:closing.length||'0',h:closing.length?'en closing':'aucune en closing',go:'affaires'}
-    ];
-  } else {
-    metrics=[
-      {k:'En jeu',dt:'var(--copper)',v:totActif?eur(totActif):'—',h:`${actifs.length} affaire${actifs.length>1?'s':''} en cours`,go:'affaires'},
-      {k:'À portée de signature',dt:'var(--green)',v:closingVal?eur(closingVal):(closing.length?closing.length+' affaire'+(closing.length>1?'s':''):'—'),h:closing.length?`${closing.length} en closing`:'Aucune affaire en closing',go:'affaires'}
-    ];
-  }
-  $('mhRight').innerHTML=metrics.map(m=>`<div class="mh-metric" data-mgo="${m.go}"><div class="mm-k"><span class="dt" style="background:${m.dt}"></span>${m.k}</div><div class="mm-v">${m.v}</div><div class="mm-h">${m.h}</div></div>`).join('');
-  $('mhRight').querySelectorAll('[data-mgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.mgo)));
-}
 
 function velocity(){
   const w=deals.filter(d=>d.etape==='gagne'&&d.created_at&&d.updated_at);
@@ -2366,105 +2324,6 @@ function renderFocus(aDeb,aRel,cold){
 
 // Intelligence : taux par interlocuteur, objections fréquentes
 // Ce que Faro sait de toi : observations vraies dès le début, taux seulement si significatif
-function renderIntel(){
-  const w=$('intelW');
-  const debriefed=briefs.filter(b=>b.debrief);
-  const wins=deals.filter(d=>d.etape==='gagne');
-  const losts=deals.filter(d=>d.etape==='perdu');
-  const closed=wins.length+losts.length;
-
-  // ÉTAT 1 : trop tôt
-  if(debriefed.length<3){
-    const reste=3-debriefed.length;
-    const prog=Math.round((debriefed.length/3)*100);
-    w.innerHTML=`<div class="scorecard-learn">
-      <div class="sl-ring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="var(--line3)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="var(--copper)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${prog/100*214} 214" transform="rotate(-90 40 40)"/></svg><span class="sl-ring-n">${debriefed.length}<em>/3</em></span></div>
-      <div class="sl-t">Ton profil de vendeur se dessine.</div>
-      <div class="sl-d">Encore <b>${reste} débrief${reste>1?'s':''}</b> et Faro révèle tes forces : tes interlocuteurs de prédilection, ta signature, ta zone de progression.</div>
-    </div>`;
-    return;
-  }
-
-  // ─── CARTE DE CHALEUR D'ACTIVITÉ (façon GitHub) ───
-  const ws=weekStats();
-  const hotRate=debriefed.length?Math.round((debriefed.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length/debriefed.length)*100):0;
-  const winRate=closed?Math.round(wins.length/closed*100):null;
-
-  // 12 semaines x 7 jours d'activité (briefs créés par jour)
-  const WEEKS=8;
-  const today=new Date(); today.setHours(0,0,0,0);
-  // Aligner sur lundi : recule jusqu'au lundi de cette semaine
-  const dow=(today.getDay()+6)%7; // 0=lundi
-  const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6); // dimanche de la semaine courante
-  const cells=[];
-  let maxDay=1;
-  const dayCount={};
-  briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);const key=d.getTime();dayCount[key]=(dayCount[key]||0)+1;if(dayCount[key]>maxDay)maxDay=dayCount[key];});
-  let totalActive=0;
-  for(let w=WEEKS-1;w>=0;w--){
-    const col=[];
-    for(let d=0;d<7;d++){
-      const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(w*7)+(d-6));
-      const key=day.getTime();
-      const n=dayCount[key]||0;
-      if(n>0)totalActive++;
-      const future=day>today;
-      col.push({n,future,day});
-    }
-    cells.push(col);
-  }
-  const lvl=n=>n===0?0:n===1?1:n===2?2:3;
-  const MONTHS=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
-
-  // Étiquettes de mois : une par colonne quand le mois change
-  const monthLabels=cells.map((col,wi)=>{
-    const firstDay=col[0].day;
-    const prevMonth=wi>0?cells[wi-1][0].day.getMonth():-1;
-    return firstDay.getMonth()!==prevMonth?MONTHS[firstDay.getMonth()]:'';
-  });
-  const DAYS=['L','M','M','J','V','S','D'];
-
-  let heat='<div class="heat-block">';
-  // Ligne des mois
-  heat+='<div class="heat-months"><span class="heat-daycol"></span>'+monthLabels.map(m=>`<span class="heat-month">${m}</span>`).join('')+'</div>';
-  // Grille avec colonne d'initiales de jours
-  heat+='<div class="heat-body">';
-  heat+='<div class="heat-days">'+DAYS.map(d=>`<span>${d}</span>`).join('')+'</div>';
-  heat+='<div class="heat-cols">';
-  cells.forEach(col=>{
-    heat+='<div class="heat-col">';
-    col.forEach(c=>{
-      heat+=`<span class="heat-cell l${c.future?'x':lvl(c.n)}" title="${c.day.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})} · ${c.n} brief${c.n>1?'s':''}"></span>`;
-    });
-    heat+='</div>';
-  });
-  heat+='</div></div></div>';
-
-  // Légende
-  heat+='<div class="heat-legend"><span>Moins</span><span class="heat-cell l0"></span><span class="heat-cell l1"></span><span class="heat-cell l2"></span><span class="heat-cell l3"></span><span>Plus</span></div>';
-
-  // Phrase de synthèse claire
-  const totalDays=WEEKS*7;
-  const activeWeeks=cells.filter(col=>col.some(c=>c.n>0)).length;
-  const summary=totalActive===0
-    ? 'Prépare ton premier brief pour lancer ton rythme.'
-    : `Tu as préparé des briefs sur <b>${totalActive} jour${totalActive>1?'s':''}</b> ces 8 dernières semaines, actif <b>${activeWeeks} semaine${activeWeeks>1?'s':''}</b> sur ${WEEKS}.`;
-
-  // Métriques clés
-  const metrics=[
-    {k:'Jours actifs',v:totalActive,s:'ces 8 semaines',col:'var(--copper)'},
-    {k:'Chaleur',v:hotRate+'%',s:'chauds ou closés',col:'var(--gold)'},
-    {k:ws.streak>1?'Série en cours':'Cette semaine',v:ws.streak>1?ws.streak:ws.briefs,s:ws.streak>1?'débriefs d\'affilée':'briefs préparés',col:'var(--blue)'}
-  ];
-  if(winRate!=null)metrics.push({k:'Closing',v:winRate+'%',s:'sur '+closed+' conclus',col:'var(--green)'});
-
-  let html=`<div class="heat-wrap">
-    <div class="heat-head"><div class="heat-t">Ton rythme de chasse</div><div class="heat-summary">${summary}</div></div>
-    ${heat}
-    <div class="heat-metrics">${metrics.map(m=>`<div class="heat-metric" style="--mc:${m.col}"><div class="hm-v">${m.v}</div><div class="hm-k">${m.k}</div><div class="hm-s">${m.s}</div></div>`).join('')}</div>
-  </div>`;
-  w.innerHTML=html;
-}
 // Nettoie un intitulé de poste pour l'affichage : libellé complet, jamais tronqué bizarrement
 function cleanPoste(p){
   if(!p)return'';
@@ -4225,7 +4084,7 @@ function toggleCarnetDictation(){
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
-const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Rendez-vous',go:'rdv'},{t:'Entreprises',go:'entreprises'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
+const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Rendez-vous',go:'rdv'},{t:'Entreprises',go:'entreprises'},{t:'Ton profil',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
 function palOpenF(){$('pal').classList.add('on');$('palQ').value='';palRender('');setTimeout(()=>$('palQ').focus(),30);}
 function palClose(){$('pal').classList.remove('on');}
 $('palOpen').addEventListener('click',palOpenF);
