@@ -198,6 +198,13 @@
   .pc-ic svg{width:22px;height:22px;}
   .pc-t{font-size:15px;font-weight:700;color:var(--ink);align-self:end;}
   .pc-d{font-size:12px;color:var(--dim);line-height:1.4;}
+  .kbd-hint{font-family:var(--mono);font-size:9px;font-weight:700;color:rgba(255,255,255,.85);background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:2px 6px;margin-left:auto;}
+  /* Accessibilité : focus clavier visible et élégant */
+  :focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:6px;}
+  button:focus-visible,.pk:focus-visible,.act-card:focus-visible{outline:2px solid var(--copper);outline-offset:2px;}
+  /* Squelettes de chargement : jamais de carte blanche */
+  .skel{background:linear-gradient(90deg,var(--wash) 25%,#EFE9DD 50%,var(--wash) 75%);background-size:200% 100%;animation:skel 1.3s ease-in-out infinite;border-radius:7px;}
+  @keyframes skel{from{background-position:200% 0;}to{background-position:-200% 0;}}
   /* État d'accueil compte vierge */
   .dash-welcome{max-width:560px;margin:6vh auto 0;text-align:center;display:flex;flex-direction:column;align-items:center;}
   .dw-schema{display:flex;align-items:center;gap:14px;margin-bottom:28px;}
@@ -1340,7 +1347,7 @@
 <div class="shell">
 <aside class="side">
   <a class="logo" data-go="dash" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle><path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path><path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g><text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
-  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Nouveau brief</span></button>
+  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Préparer un rendez-vous</span><kbd class="kbd-hint">N</kbd></button>
   <div class="ngroup">Pilotage</div>
   <nav class="nav">
     <button class="on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Aujourd'hui</span></button>
@@ -1362,7 +1369,7 @@
 </aside>
 <main class="main">
   <div class="topbar">
-    <span class="crumb" id="crumb">Vue d'ensemble</span>
+    <span class="crumb" id="crumb">Aujourd'hui</span>
     <span class="tsp"></span>
     <button class="search" id="palOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span class="txt">Rechercher…</span><span class="k">⌘K</span></button>
     <span class="pill" id="pillTok">— jetons</span>
@@ -1378,8 +1385,8 @@
 
       <!-- Zone haute : compagnon + pouls -->
       <div class="dash-top">
-        <div class="companion" id="companion"></div>
-        <div class="pulse-kpis" id="pulseKpis"></div>
+        <div class="companion" id="companion"><div class="skel" style="width:40%;height:24px;"></div><div class="skel" style="width:85%;height:14px;margin-top:14px;"></div><div class="skel" style="width:60%;height:14px;margin-top:8px;"></div><div class="skel" style="width:160px;height:38px;margin-top:20px;border-radius:10px;"></div></div>
+        <div class="pulse-kpis" id="pulseKpis"><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div></div>
       </div>
 
       <!-- Zone basse : ce qu'il te reste (gauche) + ta journée (droite) -->
@@ -1391,7 +1398,7 @@
           </div>
           <div id="focusW"></div>
         </div>
-        <div class="card journey-card" id="journeyCard"></div>
+        <div class="card journey-card" id="journeyCard"><div class="skel" style="width:70px;height:10px;"></div><div class="skel" style="width:80%;height:18px;margin-top:10px;"></div><div class="skel" style="width:100%;height:10px;margin-top:14px;border-radius:20px;"></div></div>
       </div>
     </div>
   </section>
@@ -1812,7 +1819,7 @@ const briefTempChip=b=>{
 };
 
 /* ═══ Navigation ═══ */
-const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',affaires:'Affaires',entreprises:'Entreprises',fiche:'Entreprise',nouveau:'Nouveau brief',ctx:'Nouveau brief',offre:'Mon offre',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',affaires:'Affaires',entreprises:'Entreprises',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
@@ -1830,6 +1837,15 @@ function go(v){
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
 document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+// Raccourci : N pour préparer un rendez-vous, partout (hors saisie)
+document.addEventListener('keydown',e=>{
+  if(e.key!=='n'&&e.key!=='N')return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const t=e.target;
+  if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(document.querySelector('.debov.on,.passov.on,#briefDoc.on'))return;
+  e.preventDefault(); ent=null; const q=$('qEnt'); if(q)q.value=''; go('nouveau');
+});
 document.querySelectorAll('[data-go2]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go2)));
 $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouveau');});
 
@@ -4209,7 +4225,7 @@ function toggleCarnetDictation(){
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
-const palNav=[{t:"Vue d'ensemble",go:'dash'},{t:'Pipeline',go:'affaires'},{t:'Entreprises',go:'affaires'},{t:'Nouveau brief',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
+const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Rendez-vous',go:'rdv'},{t:'Entreprises',go:'entreprises'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
 function palOpenF(){$('pal').classList.add('on');$('palQ').value='';palRender('');setTimeout(()=>$('palQ').focus(),30);}
 function palClose(){$('pal').classList.remove('on');}
 $('palOpen').addEventListener('click',palOpenF);
