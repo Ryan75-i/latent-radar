@@ -198,34 +198,55 @@
   .pc-ic svg{width:22px;height:22px;}
   .pc-t{font-size:15px;font-weight:700;color:var(--ink);align-self:end;}
   .pc-d{font-size:12px;color:var(--dim);line-height:1.4;}
-  /* ══ Bande cockpit : priorité + 4 KPI (lecture en F) ══ */
-  .cockpit-strip{display:grid;grid-template-columns:1.5fr 2fr;gap:14px;margin-bottom:16px;}
-  .ck-hero{position:relative;border-radius:var(--rl);padding:18px 20px;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;transition:transform .14s,box-shadow .14s;border:1px solid;}
-  .ck-hero:hover{transform:translateY(-2px);box-shadow:var(--shm);}
-  .ck-hero:hover .ckh-cta svg{transform:translateX(3px);}
-  .ck-blue{background:linear-gradient(140deg,#E8F0F6,#F4F8FB);border-color:#C6DCEA;}
-  .ck-copper{background:linear-gradient(140deg,#FCF0E4,#FBF6F0);border-color:#EBD6C2;}
-  .ck-gold{background:linear-gradient(140deg,#FBF3D8,#FDFAEF);border-color:#E7CE8C;}
-  .ck-green{background:linear-gradient(140deg,#E9F4EC,#F5FAF6);border-color:#CBE5D0;}
-  .ck-neutral{background:linear-gradient(140deg,var(--wash),var(--card));border-color:var(--line2);}
-  .ckh-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-  .ckh-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-  .ckh-dot.blue{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 18%,transparent);}
-  .ckh-dot.copper{background:var(--copper);box-shadow:0 0 0 4px color-mix(in srgb,var(--copper) 18%,transparent);}
-  .ckh-dot.gold{background:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 18%,transparent);}
-  .ckh-dot.green{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 18%,transparent);}
-  .ckh-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600;}
-  .ckh-t{font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.12;color:var(--ink);}
-  .ckh-d{font-size:13px;color:var(--soft);line-height:1.45;margin-top:6px;flex:1;}
-  .ckh-cta{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--copper-d);margin-top:14px;}
-  .ckh-cta svg{width:15px;height:15px;transition:transform .15s;}
-  .ck-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-  .ck-kpi{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:14px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;}
-  .ck-kpi:hover{transform:translateY(-2px);box-shadow:var(--shm);}
-  .ckk-k{font-size:11px;color:var(--dim);font-weight:600;line-height:1.2;}
-  .ckk-v{font-family:var(--serif);font-weight:700;font-size:26px;color:var(--kc);line-height:1;margin-top:8px;}
-  .ckk-h{font-size:10.5px;color:var(--faint);margin-top:4px;}
-  @media(max-width:900px){.cockpit-strip{grid-template-columns:1fr;}.ck-kpis{grid-template-columns:repeat(2,1fr);}}
+  /* ══════ PAGE AUJOURD'HUI — schéma 10/10 ══════ */
+  .ck-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+  .ck-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;padding-top:6px;}
+  /* Zone haute : orientation */
+  .dash-top{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:14px;}
+  /* Carte compagnon */
+  .companion{position:relative;border-radius:var(--rl);padding:22px 24px;display:flex;flex-direction:column;border:1px solid;overflow:hidden;}
+  .companion.tone-blue{background:linear-gradient(140deg,#E8F0F6,#F6FAFC);border-color:#C6DCEA;}
+  .companion.tone-copper{background:linear-gradient(140deg,#FCF0E4,#FDF8F2);border-color:#EBD6C2;}
+  .companion.tone-green{background:linear-gradient(140deg,#E9F4EC,#F6FBF7);border-color:#CBE5D0;}
+  .companion.tone-neutral{background:linear-gradient(140deg,var(--wash),var(--card));border-color:var(--line2);}
+  .comp-greet{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);line-height:1.1;margin-bottom:12px;}
+  .comp-fil{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--soft);line-height:1.5;flex:1;}
+  .comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+  .comp-dot.blue{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
+  .comp-dot.copper{background:var(--copper);box-shadow:0 0 0 4px color-mix(in srgb,var(--copper) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
+  .comp-dot.green{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 16%,transparent);}
+  .comp-dot.neutral{background:var(--faint);}
+  @keyframes softpulse{0%,100%{box-shadow:0 0 0 4px color-mix(in srgb,currentColor 16%,transparent);}50%{box-shadow:0 0 0 7px color-mix(in srgb,currentColor 6%,transparent);}}
+  .comp-cta{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;margin-top:18px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;}
+  .comp-cta:hover{background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
+  .comp-cta svg{width:16px;height:16px;transition:transform .15s;}
+  .comp-cta:hover svg{transform:translateX(3px);}
+  /* Pouls + objectif */
+  .pulse-obj{display:flex;flex-direction:column;gap:14px;}
+  .pulse-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .pk{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:13px 10px;cursor:pointer;text-align:center;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;}
+  .pk:hover{transform:translateY(-2px);box-shadow:var(--shm);}
+  .pk-v{font-family:var(--serif);font-weight:700;font-size:21px;color:var(--kc);line-height:1;}
+  .pk-k{font-size:10.5px;color:var(--dim);margin-top:5px;font-weight:600;}
+  /* Objectif du jour */
+  .obj-card{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:16px 18px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sh);}
+  .obj-badge{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:700;}
+  .obj-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);line-height:1.2;margin:8px 0 12px;}
+  .obj-bar{height:10px;background:var(--wash);border-radius:20px;overflow:hidden;border:1px solid var(--line3);}
+  .obj-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--copper),var(--copper-l));transition:width .5s cubic-bezier(.3,.7,.3,1);}
+  .obj-fill.done{background:linear-gradient(90deg,var(--green),#6BB585);position:relative;}
+  .obj-fill.done::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 1.6s ease-in-out;}
+  @keyframes shine{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+  .obj-ratio{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px;text-align:right;font-weight:600;}
+  /* Plan de bataille pleine largeur */
+  .battle-card{padding:0;overflow:hidden;}
+  .battle-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px 13px;border-bottom:1px solid var(--line3);}
+  .bh-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);}
+  .bh-count{font-size:12px;color:var(--dim);margin-left:10px;}
+  .bh-done{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green-d);font-weight:600;}
+  .bh-done svg{width:14px;height:14px;}
+  @media(max-width:900px){.dash-top{grid-template-columns:1fr;}.pulse-kpis{grid-template-columns:repeat(4,1fr);}}
+  @media(max-width:600px){.pulse-kpis{grid-template-columns:repeat(2,1fr);}}
   /* ══ Vue Affaires par priorité d'action ══ */
   .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
   .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12.5px;font-weight:600;color:var(--dim);padding:7px 14px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
@@ -335,7 +356,7 @@
   .fsn-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--line2);background:#fff;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.13s;padding:0;}
   .fsn-btn:hover{border-color:var(--copper-l);color:var(--copper);background:var(--washc);}
   .fsn-btn svg{width:14px;height:14px;}
-  .fcar{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;padding:2px 18px 18px;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:stretch;}
+  .fcar{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;padding:16px 18px 18px;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:stretch;min-height:210px;}
   .fcar::-webkit-scrollbar{display:none;}
   .fcard{flex:0 0 232px;scroll-snap-align:start;position:relative;background:linear-gradient(145deg,color-mix(in srgb,var(--ac) 6%,var(--card)),var(--card) 60%);border:1px solid var(--line);border-top:2.5px solid var(--ac);border-radius:12px;padding:15px;display:flex;flex-direction:column;box-shadow:var(--sh);transition:width .3s,opacity .3s,margin .3s,padding .3s,border .3s,transform .14s,box-shadow .14s;overflow:hidden;}
   .fcard:hover{box-shadow:var(--shm);transform:translateY(-2px);}
@@ -1144,11 +1165,8 @@
   .mh-metric .mm-v{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--ink);line-height:1;margin-top:4px;font-variant-numeric:tabular-nums;}
   .mh-metric .mm-h{font-size:10.5px;color:var(--faint);margin-top:2px;}
   /* KPI fins */
-  /* Deux blocs même hauteur */
-  /* ══ Layout des deux cartes du bas : hauteur fixe, contenu qui remplit ══ */
-  .dash-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start;}
-  .dash-cols>.card{display:flex;flex-direction:column;min-width:0;}
-  #focusW{display:flex;flex-direction:column;}
+  /* Plan de bataille : carrousel pleine largeur */
+  #focusW{display:block;}
   .focus-count{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;font-size:11px;color:var(--dim);border-bottom:1px solid var(--line3);background:var(--wash);flex-shrink:0;}
   .focus-count b{color:var(--ink);font-weight:700;}
   .focus-count .fc-done{color:var(--green-d);font-weight:600;display:inline-flex;align-items:center;gap:5px;}
@@ -1205,8 +1223,6 @@
   .sv2{margin-top:6px;font-size:11px;} .sv2 b{color:var(--copper-d);font-weight:700;}
   .stat.alert .badge{position:absolute;top:10px;right:12px;width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px var(--redbg);}
   @media(max-width:960px){
-    .kpi-grid{grid-template-columns:1fr;} .dash-cols{grid-template-columns:1fr;}
-    .dash-cols{grid-template-columns:1fr;}
   }
   @media(max-width:960px){
     .shell{grid-template-columns:1fr;}
@@ -1261,17 +1277,26 @@
   <section class="view on" id="v-dash">
     <div class="cockpit">
       <div class="ck-head">
-        <div><div class="eyebrow" id="dashEyebrow">Pilotage</div><h1 id="greet">Bonjour.</h1></div>
-        <button class="btn" data-go2="nouveau">Préparer un rendez-vous</button>
+        <div class="eyebrow" id="dashEyebrow">Lundi</div>
+        <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
       </div>
 
-      <!-- Bande cockpit : l'essentiel en haut à gauche, lecture en F -->
-      <div class="cockpit-strip" id="cockpitStrip"></div>
+      <!-- Zone haute : orientation (compagnon + pouls/objectif) -->
+      <div class="dash-top">
+        <div class="companion" id="companion"></div>
+        <div class="pulse-obj">
+          <div class="pulse-kpis" id="pulseKpis"></div>
+          <div class="obj-card" id="objCard"></div>
+        </div>
+      </div>
 
-      <!-- 2 blocs : plan de bataille + intelligence -->
-      <div class="dash-cols">
-        <div class="card focus-card"><div class="chd"><span class="t">Ton plan de bataille</span><span class="d">Ce qui compte, maintenant.</span></div><div class="cbd p0" id="focusW"></div></div>
-        <div class="card intel-card"><div class="chd"><span class="t">Ce que Faro sait de toi</span><span class="d">Tiré de tes rendez-vous.</span></div><div class="cbd" id="intelW"></div></div>
+      <!-- Zone basse : action (plan de bataille pleine largeur) -->
+      <div class="card battle-card">
+        <div class="battle-head">
+          <div><span class="bh-t">Ton plan de bataille</span><span class="bh-count" id="battleCount"></span></div>
+          <span class="bh-done" id="battleDone"></span>
+        </div>
+        <div id="focusW"></div>
       </div>
     </div>
   </section>
@@ -1836,61 +1861,92 @@ function dash(){
   const wins=deals.filter(d=>d.etape==='gagne');
   const losts=deals.filter(d=>d.etape==='perdu');
 
-  // ─── Bande cockpit : l'action prioritaire + les 4 chiffres clés (lecture en F) ───
+  // ─── En-tête : date vivante ───
   const ws=weekStats();
   const h=new Date().getHours();
+  const jours=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const now=new Date();
+  const eb=$('dashEyebrow'); if(eb)eb.textContent=`${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]}`;
+
   const closed=wins.length+losts.length;
   const winRate=closed?Math.round(wins.length/closed*100):null;
   const closingVal=deals.filter(d=>d.etape==='closing').reduce((a,d)=>a+dealVal(d),0);
   const signedVal=wins.reduce((a,d)=>a+dealVal(d),0);
   const pipeVal=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape)).reduce((a,d)=>a+dealVal(d),0);
+  let prenom='';
+  try{prenom=(session&&session.user&&session.user.user_metadata&&session.user.user_metadata.prenom)||((session&&session.user&&session.user.email||'').split('@')[0].split('.')[0].replace(/^\w/,c=>c.toUpperCase()))||'';}catch(e){}
 
-  // L'action prioritaire du moment (le "gros titre" en haut à gauche)
-  let hero;
+  // ─── Carte compagnon : le fil du jour (Faro parle et oriente) ───
+  const salut=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
+  const hotDeals=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape)&&['chaud','close'].includes(dealTemp(d)));
+  let fil, tone, dot, cta, ctaFn;
   if(!briefs.length){
-    hero={tone:'neutral',dot:'green',t:'Prépare ton premier rendez-vous',d:'Faro construit ta mémoire et ton pipeline à partir de là.',go:()=>go('nouveau')};
-  } else if(aDeb.length>=1){
-    const oldest=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];
-    const n=days(oldest.created_at);
-    hero={tone:'blue',dot:'blue',t:aDeb.length===1?'Un rendez-vous attend son débrief':`${aDeb.length} rendez-vous à débriefer`,d:`${n>=3?`Le plus ancien remonte à ${n} j. `:''}Capture pendant que c'est frais.`,go:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}};
-  } else if(aRel.length>=1){
-    hero={tone:'copper',dot:'copper',t:aRel.length===1?'Une relance t\'attend':`${aRel.length} relances t'attendent`,d:'Ne laisse pas l\'élan retomber.',go:()=>go('affaires')};
-  } else if(coldGlobal(cold)){
-    hero={tone:'gold',dot:'gold',t:'Une affaire dort',d:'Sans mouvement depuis un moment. Un signe de vie, et elle repart.',go:()=>go('affaires')};
+    tone='neutral';dot='green';
+    fil='Prépare ton premier rendez-vous. Faro construit ta mémoire et ton pipeline à partir de là.';
+    cta='Préparer un rendez-vous';ctaFn=()=>go('nouveau');
   } else {
-    const salut=h<12?'Belle journée pour avancer':h<18?'Bon moment pour préparer la suite':'Tout est à jour';
-    hero={tone:'green',dot:'green',t:salut,d:ws.streak>1?`Série de ${ws.streak} débriefs, tiens-la.`:'Beau travail, tu es à jour.',go:()=>go('nouveau')};
+    const bits=[];
+    if(aDeb.length)bits.push(`${aDeb.length} rendez-vous à débriefer`);
+    if(hotDeals.length)bits.push(`${hotDeals.length} affaire${hotDeals.length>1?'s':''} chaude${hotDeals.length>1?'s':''}`);
+    if(coldGlobal(cold))bits.push('une affaire qui dort');
+    const dense=(aDeb.length+hotDeals.length)>=3;
+    tone=aDeb.length?'blue':hotDeals.length?'copper':'green';
+    dot=tone;
+    if(bits.length){
+      const liste=bits.length>1?bits.slice(0,-1).join(', ')+' et '+bits.slice(-1):bits[0];
+      const clot=aDeb.length?"Commence par capturer ce qui est frais.":hotDeals.length?"C'est le moment de pousser.":"Un signe de vie et ça repart.";
+      fil=`${dense?'Journée dense. ':''}${liste.charAt(0).toUpperCase()+liste.slice(1)}. ${clot}`;
+    } else {
+      fil=ws.streak>1?`Tout est à jour. Série de ${ws.streak} débriefs, tiens-la.`:'Tout est à jour. Beau travail, prépare la suite.';
+    }
+    cta='Attaquer ma journée';ctaFn=()=>{const f=$('focusW');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});};
+  }
+  const comp=$('companion');
+  if(comp){
+    comp.className='companion tone-'+tone;
+    comp.innerHTML=`<div class="comp-greet">${salut}${prenom?' '+esc(prenom):''}.</div>`
+      +`<div class="comp-fil"><span class="comp-dot ${dot}"></span><span>${fil}</span></div>`
+      +`<button class="comp-cta">${cta}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
+    comp.querySelector('.comp-cta').addEventListener('click',ctaFn);
   }
 
-  // Les 4 chiffres clés (max recommandé par le benchmark)
+  // ─── Pouls : 4 KPI en ligne ───
   const KPIS=[
     signedVal>0
-      ? {k:'Signé',v:eur(signedVal),h:`${wins.length} affaire${wins.length>1?'s':''} gagnée${wins.length>1?'s':''}`,col:'var(--green-d)',go:'affaires'}
-      : {k:'Pipeline',v:pipeVal>0?eur(pipeVal):'—',h:pipeVal>0?'en jeu':'ajoute des montants',col:'var(--copper-d)',go:'affaires'},
-    {k:'Affaires en cours',v:actifs.filter(dealEntered).length,h:'dans ton pipeline',col:'var(--copper)',go:'affaires'},
-    winRate!=null
-      ? {k:'Taux de closing',v:winRate+' %',h:`${wins.length}/${closed} closes`,col:'var(--green)',go:'affaires'}
-      : {k:'À portée',v:closingVal>0?eur(closingVal):'0',h:closingVal>0?'en closing':'aucune en closing',col:'var(--blue)',go:'affaires'},
-    {k:'Cette semaine',v:ws.briefs,h:ws.streak>1?`série de ${ws.streak}`:'briefs préparés',col:'var(--violet)',go:'rdv'}
+      ? {k:'Signé',v:eur(signedVal),col:'var(--green-d)',go:'affaires'}
+      : {k:'Pipeline',v:pipeVal>0?eur(pipeVal):actifs.filter(dealEntered).length,col:'var(--copper-d)',go:'affaires'},
+    {k:'En cours',v:actifs.filter(dealEntered).length,col:'var(--copper)',go:'affaires'},
+    winRate!=null?{k:'Closing',v:winRate+'%',col:'var(--green)',go:'affaires'}:{k:'À portée',v:closingVal>0?eur(closingVal):'0',col:'var(--blue)',go:'affaires'},
+    {k:'Semaine',v:ws.briefs,col:'var(--violet)',go:'rdv'}
   ];
-
-  const strip=$('cockpitStrip');
-  if(strip){
-    strip.innerHTML=`
-      <div class="ck-hero ck-${hero.tone}" data-hero="1">
-        <div class="ckh-top"><span class="ckh-dot ${hero.dot}"></span><span class="ckh-eyebrow">Ta priorité</span></div>
-        <div class="ckh-t">${esc(hero.t)}</div>
-        <div class="ckh-d">${esc(hero.d)}</div>
-        <div class="ckh-cta">Y aller<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-      </div>
-      <div class="ck-kpis">${KPIS.map(k=>`<div class="ck-kpi" data-kgo="${k.go}" style="--kc:${k.col}"><div class="ckk-k">${k.k}</div><div class="ckk-v">${k.v}</div><div class="ckk-h">${k.h}</div></div>`).join('')}</div>`;
-    strip.querySelector('[data-hero]').addEventListener('click',hero.go);
-    strip.querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
+  const pk=$('pulseKpis');
+  if(pk){
+    pk.innerHTML=KPIS.map(k=>`<div class="pk" data-kgo="${k.go}" style="--kc:${k.col}"><div class="pk-v">${k.v}</div><div class="pk-k">${k.k}</div></div>`).join('');
+    pk.querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
   }
 
-  // ─── Plan de bataille + intelligence ───
+  // ─── Objectif du jour + barre de progression ───
+  const today=new Date(); today.setHours(0,0,0,0);
+  const debToday=briefs.filter(b=>b.debrief&&b.debrief.created_at&&new Date(b.debrief.created_at)>=today).length;
+  const goal=Math.max(2,Math.min(5,aDeb.length||2));
+  const pct=Math.min(100,Math.round(debToday/goal*100));
+  const goalDone=debToday>=goal;
+  const oc=$('objCard');
+  if(oc){
+    oc.innerHTML=`<div class="obj-head"><span class="obj-badge">Objectif du jour</span></div>`
+      +`<div class="obj-t">${goalDone?'Objectif atteint. Tu assures.':`Débriefe ${goal} rendez-vous aujourd'hui`}</div>`
+      +`<div class="obj-bar"><div class="obj-fill ${goalDone?'done':''}" style="width:${Math.max(pct,4)}%"></div></div>`
+      +`<div class="obj-ratio">${debToday} / ${goal} ${goalDone?'✓':''}</div>`;
+  }
+
+  // ─── En-tête du plan de bataille ───
+  const totalActions=aDeb.length+aRel.length+(coldGlobal(cold)?1:0);
+  const bc=$('battleCount'); if(bc)bc.textContent=`${totalActions} action${totalActions>1?'s':''}`;
+  const bd=$('battleDone'); if(bd)bd.innerHTML=ws.debriefs>0?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${ws.debriefs} cette semaine`:'';
+
+  // ─── Plan de bataille ───
   renderFocus(aDeb,aRel,cold);
-  renderIntel();
 }
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
@@ -2129,18 +2185,13 @@ function renderFocus(aDeb,aRel,cold){
     arrow:'<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="3" opacity=".14"/><path d="M40 60h38M62 44l18 16-18 16" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     snow:'<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="3" opacity=".14"/><path d="M60 34v52M40 44l40 32M80 44L40 76" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>'
   };
-  // La priorité vit dans la bande cockpit : on ne redouble pas le groupe débriefs ni le deal froid
-  if(rows.length&&(rows[0].ic==='clock'||rows[0].ic==='snow'))rows.shift();
   if(!rows.length){
-    $('focusW').innerHTML=`<div class="focus-empty"><span class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="fe-t">Rien d'autre en attente.</div><div class="fe-d">Ta priorité est en haut. Traite-la, et la journée est belle.</div></div>`;
+    $('focusW').innerHTML=`<div class="focus-empty"><span class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="fe-t">Tout est à jour.</div><div class="fe-d">Aucune action en attente. Prépare ton prochain rendez-vous quand tu veux.</div></div>`;
     return;
   }
-  const doneCount=weekStats().debriefs;
-  let html=`<div class="focus-count" id="focusCount"><span><b>${rows.length}</b> autre${rows.length>1?'s':''} action${rows.length>1?'s':''}</span>${doneCount>0?`<span class="fc-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M20 6L9 17l-5-5"/></svg>${doneCount} traitée${doneCount>1?'s':''} cette semaine</span>`:''}</div>`;
-  html+=`<div class="fcar-head"><span class="fsec-lbl">Glisse pour tout voir</span>${rows.length>1?`<div class="fsec-nav"><button class="fsn-btn" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="fsn-btn" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>`:''}</div>`;
-  html+=`<div class="fcar" id="fcar">`;
+  let html=`<div class="fcar" id="fcar">`;
   html+=rows.map((it,i)=>{
-    const isP=false;
+    const isP=i===0;
     return `<div class="fcard ${isP?'prio':''}" data-fi="${i}" style="--ac:${it.rc}"><div class="fcard-art">${BIGART[it.ic]||''}</div><div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${isP?'<span class="fcard-prio-tag">Priorité</span>':''}${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,isP?40:26))}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>`;
   }).join('');
   html+=`</div>`;
