@@ -216,7 +216,7 @@
   .ck-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
   .ck-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;padding-top:6px;}
   /* Zone haute : orientation */
-  .dash-top{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:14px;}
+  .dash-top{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch;}
   /* Carte compagnon */
   .companion{position:relative;border-radius:var(--rl);padding:22px 24px;display:flex;flex-direction:column;border:1px solid;overflow:hidden;}
   .companion.tone-blue{background:linear-gradient(140deg,#E8F0F6,#F6FAFC);border-color:#C6DCEA;}
@@ -236,30 +236,57 @@
   .comp-cta svg{width:16px;height:16px;transition:transform .15s;}
   .comp-cta:hover svg{transform:translateX(3px);}
   /* Pouls + objectif */
-  .pulse-obj{display:flex;flex-direction:column;gap:14px;}
   .pulse-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-  .pk{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:13px 10px;cursor:pointer;text-align:center;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;}
+  .pk{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:16px 12px;cursor:pointer;text-align:center;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;display:flex;flex-direction:column;justify-content:center;}
   .pk:hover{transform:translateY(-2px);box-shadow:var(--shm);}
-  .pk-v{font-family:var(--serif);font-weight:700;font-size:21px;color:var(--kc);line-height:1;}
-  .pk-k{font-size:10.5px;color:var(--dim);margin-top:5px;font-weight:600;}
-  /* Objectif du jour */
-  .obj-card{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);padding:16px 18px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sh);}
+  .pk-v{font-family:var(--serif);font-weight:700;font-size:23px;color:var(--kc);line-height:1;}
+  .pk-k{font-size:11px;color:var(--dim);margin-top:6px;font-weight:600;}
+  /* Zone basse : deux colonnes, hauteur naturelle (jamais d'étirement) */
+  .dash-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start;}
+  .rest-card{padding:0;overflow:hidden;}
+  .battle-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px 13px;border-bottom:1px solid var(--line3);}
+  .bh-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);}
+  .bh-count{font-size:12px;color:var(--dim);margin-left:10px;}
+  .bh-done{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green-d);font-weight:600;}
+  .bh-done svg{width:14px;height:14px;}
+  /* Liste "ce qu'il te reste" */
+  .rest-list{display:flex;flex-direction:column;}
+  .rest-row{display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid var(--line3);border-left:3px solid var(--ac);transition:background .13s;}
+  .rest-row:last-child{border-bottom:none;}
+  .rest-row:hover{background:var(--wash);}
+  .rr-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .rr-ic svg{width:17px;height:17px;}
+  .rr-body{flex:1;min-width:0;}
+  .rr-nm{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .rr-why{font-size:12px;color:var(--dim);line-height:1.4;}
+  .rr-why b{color:var(--soft);font-weight:600;}
+  .rr-act{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;border:none;border-radius:9px;padding:9px 15px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.14s;}
+  .rr-act svg{width:14px;height:14px;}
+  .rr-act.rel{background:var(--copper);color:#fff;}
+  .rr-act.rel:hover{background:var(--copper-d);}
+  .rr-act.see{background:var(--wash);color:var(--soft);border:1px solid var(--line2);}
+  .rr-act.see:hover{border-color:var(--copper-l);color:var(--copper-d);}
+  /* Carte "Ta journée" */
+  .journey-card{padding:18px 20px;display:flex;flex-direction:column;}
+  .jc-head{margin-bottom:10px;}
   .obj-badge{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:700;}
-  .obj-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);line-height:1.2;margin:8px 0 12px;}
+  .jc-obj{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);line-height:1.2;margin-bottom:12px;}
   .obj-bar{height:10px;background:var(--wash);border-radius:20px;overflow:hidden;border:1px solid var(--line3);}
   .obj-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--copper),var(--copper-l));transition:width .5s cubic-bezier(.3,.7,.3,1);}
   .obj-fill.done{background:linear-gradient(90deg,var(--green),#6BB585);position:relative;}
   .obj-fill.done::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 1.6s ease-in-out;}
   @keyframes shine{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
   .obj-ratio{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px;text-align:right;font-weight:600;}
-  /* Plan de bataille pleine largeur */
-  .battle-card{padding:0;overflow:hidden;}
-  .battle-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px 13px;border-bottom:1px solid var(--line3);}
-  .bh-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);}
-  .bh-count{font-size:12px;color:var(--dim);margin-left:10px;}
-  .bh-done{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green-d);font-weight:600;}
-  .bh-done svg{width:14px;height:14px;}
-  @media(max-width:900px){.dash-top{grid-template-columns:1fr;}.pulse-kpis{grid-template-columns:repeat(4,1fr);}}
+  .jc-sep{height:1px;background:var(--line3);margin:16px 0 14px;}
+  .jc-rhythm-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+  .jheat{display:flex;gap:4px;}
+  .jhcol{display:flex;flex-direction:column;gap:4px;flex:1;}
+  .jhcell{width:100%;aspect-ratio:1;max-height:15px;border-radius:3px;background:#EFEAE0;}
+  .jhcell.l1{background:#E7C9A8;}
+  .jhcell.l2{background:#D89355;}
+  .jhcell.l3{background:var(--copper-d);}
+  .jhcell.lx{background:transparent;}
+  @media(max-width:900px){.dash-top{grid-template-columns:1fr;}.dash-bottom{grid-template-columns:1fr;}.pulse-kpis{grid-template-columns:repeat(4,1fr);}}
   @media(max-width:600px){.pulse-kpis{grid-template-columns:repeat(2,1fr);}}
   /* ══ Vue Affaires par priorité d'action ══ */
   .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
@@ -1295,22 +1322,22 @@
         <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
       </div>
 
-      <!-- Zone haute : orientation (compagnon + pouls/objectif) -->
+      <!-- Zone haute : compagnon + pouls -->
       <div class="dash-top">
         <div class="companion" id="companion"></div>
-        <div class="pulse-obj">
-          <div class="pulse-kpis" id="pulseKpis"></div>
-          <div class="obj-card" id="objCard"></div>
-        </div>
+        <div class="pulse-kpis" id="pulseKpis"></div>
       </div>
 
-      <!-- Zone basse : action (plan de bataille pleine largeur) -->
-      <div class="card battle-card">
-        <div class="battle-head">
-          <div><span class="bh-t">Ton plan de bataille</span><span class="bh-count" id="battleCount"></span></div>
-          <span class="bh-done" id="battleDone"></span>
+      <!-- Zone basse : ce qu'il te reste (gauche) + ta journée (droite) -->
+      <div class="dash-bottom">
+        <div class="card rest-card">
+          <div class="battle-head">
+            <div><span class="bh-t">Ce qu'il te reste</span><span class="bh-count" id="battleCount"></span></div>
+            <span class="bh-done" id="battleDone"></span>
+          </div>
+          <div id="focusW"></div>
         </div>
-        <div id="focusW"></div>
+        <div class="card journey-card" id="journeyCard"></div>
       </div>
     </div>
   </section>
@@ -1952,7 +1979,8 @@ function dash(){
     } else {
       fil=ws.streak>1?`Tout est à jour. Série de ${ws.streak} débriefs, tiens-la.`:'Tout est à jour. Beau travail, prépare la suite.';
     }
-    cta='Attaquer ma journée';ctaFn=()=>{const f=$('focusW');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});};
+    cta=aDeb.length?'Débriefer maintenant':hotDeals.length?'Voir mes affaires':'Préparer un rendez-vous';
+    ctaFn=aDeb.length?()=>{const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}:hotDeals.length?()=>go('affaires'):()=>go('nouveau');
   }
   const comp=$('companion');
   if(comp){
@@ -1978,27 +2006,54 @@ function dash(){
     pk.querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
   }
 
-  // ─── Objectif du jour + barre de progression ───
+  // ─── En-tête "Ce qu'il te reste" ───
+  const restCount=aRel.length+(coldGlobal(cold)?1:0);
+  const bc=$('battleCount'); if(bc)bc.textContent=restCount?`${restCount} action${restCount>1?'s':''}`:'';
+  const bd=$('battleDone'); if(bd)bd.innerHTML=ws.debriefs>0?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${ws.debriefs} cette semaine`:'';
+
+  // ─── Ce qu'il te reste : uniquement les relances/froids (la priorité est portée par le compagnon) ───
+  renderFocus(aDeb,aRel,cold);
+
+  // ─── Ta journée : objectif + progression + rythme ───
+  renderJourney(aDeb);
+}
+
+function renderJourney(aDeb){
+  const jc=$('journeyCard'); if(!jc)return;
+  const ws=weekStats();
   const today=new Date(); today.setHours(0,0,0,0);
   const debToday=briefs.filter(b=>b.debrief&&b.debrief.created_at&&new Date(b.debrief.created_at)>=today).length;
   const goal=Math.max(2,Math.min(5,aDeb.length||2));
   const pct=Math.min(100,Math.round(debToday/goal*100));
   const goalDone=debToday>=goal;
-  const oc=$('objCard');
-  if(oc){
-    oc.innerHTML=`<div class="obj-head"><span class="obj-badge">Objectif du jour</span></div>`
-      +`<div class="obj-t">${goalDone?'Objectif atteint. Tu assures.':`Débriefe ${goal} rendez-vous aujourd'hui`}</div>`
-      +`<div class="obj-bar"><div class="obj-fill ${goalDone?'done':''}" style="width:${Math.max(pct,4)}%"></div></div>`
-      +`<div class="obj-ratio">${debToday} / ${goal} ${goalDone?'✓':''}</div>`;
+
+  // Grille de chaleur compacte : 8 semaines
+  const WEEKS=8;
+  const dayCount={};
+  briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);dayCount[d.getTime()]=(dayCount[d.getTime()]||0)+1;});
+  const dow=(today.getDay()+6)%7;
+  const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6);
+  const cells=[];
+  for(let w=WEEKS-1;w>=0;w--){
+    const col=[];
+    for(let d=0;d<7;d++){
+      const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(w*7)+(d-6));
+      col.push({n:dayCount[day.getTime()]||0,future:day>today});
+    }
+    cells.push(col);
   }
+  const lvl=n=>n===0?0:n===1?1:n===2?2:3;
+  let heat='<div class="jheat">';
+  cells.forEach(col=>{heat+='<div class="jhcol">';col.forEach(c=>{heat+=`<span class="jhcell l${c.future?'x':lvl(c.n)}"></span>`;});heat+='</div>';});
+  heat+='</div>';
 
-  // ─── En-tête du plan de bataille ───
-  const totalActions=aDeb.length+aRel.length+(coldGlobal(cold)?1:0);
-  const bc=$('battleCount'); if(bc)bc.textContent=`${totalActions} action${totalActions>1?'s':''}`;
-  const bd=$('battleDone'); if(bd)bd.innerHTML=ws.debriefs>0?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${ws.debriefs} cette semaine`:'';
-
-  // ─── Plan de bataille ───
-  renderFocus(aDeb,aRel,cold);
+  jc.innerHTML=`<div class="jc-head"><span class="obj-badge">Ta journée</span></div>
+    <div class="jc-obj">${goalDone?'Objectif atteint. Tu assures.':`Débriefe ${goal} rendez-vous aujourd'hui`}</div>
+    <div class="obj-bar"><div class="obj-fill ${goalDone?'done':''}" style="width:${Math.max(pct,4)}%"></div></div>
+    <div class="obj-ratio">${debToday} / ${goal} ${goalDone?'✓':''}</div>
+    <div class="jc-sep"></div>
+    <div class="jc-rhythm-lbl">Ton rythme, 8 semaines</div>
+    ${heat}`;
 }
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
@@ -2173,22 +2228,8 @@ function chart30(days30){
 // Plan de bataille : décisions groupées, jamais répétitives, la raison mémorisée
 function renderFocus(aDeb,aRel,cold){
   const rows=[];
-  // 1) Débriefs groupés en une seule ligne si plusieurs
-  if(aDeb.length){
-    const sorted=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
-    const oldest=sorted[0];
-    const n=days(oldest.created_at);
-    if(aDeb.length===1){
-      rows.push({rc:'var(--blue)',ic:'clock',nm:oldest.entreprise,nocheck:true,
-        why:`Rendez-vous à débriefer${n>0?` depuis <b>${n} j</b>`:" <b>aujourd'hui</b>"}. Capture-le avant qu'il s'efface.`,
-        act:'Débriefer',ac:'deb',fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
-    } else {
-      rows.push({rc:'var(--blue)',ic:'clock',nm:`${aDeb.length} rendez-vous à débriefer`,nocheck:true,
-        why:`Le plus ancien remonte à <b>${n} j</b>. Commence par <b>${esc(oldest.entreprise)}</b>.`,
-        act:'Débriefer',ac:'deb',count:aDeb.length,fn:()=>{const x=briefs.find(y=>y.id===oldest.id);if(x)openBrief(x);}});
-    }
-  }
-  // 2) Relances : le sens, jamais le texte brut du mail. Max 3.
+  // La priorité (débriefs) est portée par le compagnon en haut. Ici : relances + froids seulement.
+  // 2) Relances : le sens, jamais le texte brut du mail. Max 4.
   const relSorted=aRel.slice().sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
   const TLBL={close:'closé',chaud:'chaud',tiede:'tiède',mort:'difficile'};
@@ -2238,27 +2279,23 @@ function renderFocus(aDeb,aRel,cold){
     snow:'<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="3" opacity=".14"/><path d="M60 34v52M40 44l40 32M80 44L40 76" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>'
   };
   if(!rows.length){
-    $('focusW').innerHTML=`<div class="focus-empty"><span class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="fe-t">Tout est à jour.</div><div class="fe-d">Aucune action en attente. Prépare ton prochain rendez-vous quand tu veux.</div></div>`;
+    $('focusW').innerHTML=`<div class="focus-empty"><span class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="fe-t">Rien à relancer.</div><div class="fe-d">Tes relances sont à jour. Ta priorité du jour est en haut.</div></div>`;
     return;
   }
-  let html=`<div class="fcar" id="fcar">`;
+  let html=`<div class="rest-list">`;
   html+=rows.map((it,i)=>{
-    const isP=i===0;
-    return `<div class="fcard ${isP?'prio':''}" data-fi="${i}" style="--ac:${it.rc}"><div class="fcard-art">${BIGART[it.ic]||''}</div><div class="fc-top"><span class="fcard-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>${isP?'<span class="fcard-prio-tag">Priorité</span>':''}${it.nocheck?'':'<button class="fcard-done" title="Fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></button>'}</div><div class="fcard-nm">${esc(trunc(it.nm,isP?40:26))}${it.count?`<span class="focus-badge">${it.count}</span>`:''}</div><div class="fcard-why">${it.why}</div><button class="fcard-act ${it.ac}">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>`;
+    return `<div class="rest-row" data-fi="${i}" style="--ac:${it.rc}">
+      <span class="rr-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>
+      <div class="rr-body"><div class="rr-nm">${esc(trunc(it.nm,34))}</div><div class="rr-why">${it.why}</div></div>
+      <button class="rr-act ${it.ac}">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>`;
   }).join('');
   html+=`</div>`;
   $('focusW').innerHTML=html;
-  if($('focusAll'))$('focusAll').style.display='none';
-  const car=$('fcar');
-  if(car){
-    $('focusW').querySelectorAll('.fsn-btn').forEach(b=>b.addEventListener('click',()=>{car.scrollBy({left:parseInt(b.dataset.dir)*280,behavior:'smooth'});}));
-    car.querySelectorAll('.fcard').forEach((cd,i)=>{
-      const it=rows[i];
-      cd.querySelector('.fcard-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
-      const chk=cd.querySelector('.fcard-done');
-      if(chk)chk.addEventListener('click',e=>{e.stopPropagation();cd.classList.add('checked');setTimeout(()=>{cd.style.width=cd.offsetWidth+'px';requestAnimationFrame(()=>{cd.style.width='0';cd.style.opacity='0';cd.style.marginRight='0';cd.style.padding='0';cd.style.borderWidth='0';});setTimeout(()=>{if(it.done)it.done();renderAll();},320);},200);});
-    });
-  }
+  $('focusW').querySelectorAll('.rest-row').forEach((row,i)=>{
+    const it=rows[i];
+    row.querySelector('.rr-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
+  });
 }
 
 // Intelligence : taux par interlocuteur, objections fréquentes
