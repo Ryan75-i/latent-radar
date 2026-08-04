@@ -1770,10 +1770,13 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   const h=new Date().getHours();
   const de=$('dashEyebrow');
   if(de){const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});de.textContent=today.charAt(0).toUpperCase()+today.slice(1);}
-  $('greet').textContent=pre?`${h<18?'Bonjour':'Bonsoir'} ${pre}.`:`${h<18?'Bonjour':'Bonsoir'}.`;
-  $('uname').textContent=name||u.email; $('sMail2').value=u.email||''; $('sName').value=set.full_name||meta||'';
-  if(photo){$('uav').style.background='none';$('uav').innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`;}
-  else{$('uav').style.background=grad(name);$('uav').textContent=ini(name);}
+  const gr=$('greet'); if(gr)gr.textContent=pre?`${h<18?'Bonjour':'Bonsoir'} ${pre}.`:`${h<18?'Bonjour':'Bonsoir'}.`;
+  const un=$('uname'); if(un)un.textContent=name||u.email;
+  const sm=$('sMail2'); if(sm)sm.value=u.email||'';
+  const sn=$('sName'); if(sn)sn.value=set.full_name||meta||'';
+  const av=$('uav');
+  if(photo){if(av){av.style.background='none';av.innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`;}}
+  else{if(av){av.style.background=grad(name);av.textContent=ini(name);}}
   $('sComp').value=set.company||'';$('sSite').value=set.site||'';$('sSec').value=set.secteur||'';
   $('sCible').value=set.cible||'';$('sOff').value=set.offre||'';$('sVal').value=set.contexte||'';$('sPr').value=set.preuves||'';
   try{const {data:p}=await sb.from('profiles').select('tokens_left,tokens_month,reset_at').eq('user_id',uid).single();
@@ -1803,7 +1806,7 @@ function renderAll(){
       sp.style.display='';
     } else sp.style.display='none';
   }
-  $('uT').textContent=briefs.length;
+  const uTel=$('uT'); if(uTel)uTel.textContent=briefs.length;
   dash(); boardRender($('board'),false); renderActionView(); renderPilot(); renderPipeFilters(); entList();
   if(currentDeal&&document.getElementById('v-fiche').classList.contains('on')) openFiche(deals.find(d=>d.id===currentDeal.id)||currentDeal,true);
 }
