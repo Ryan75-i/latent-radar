@@ -198,6 +198,20 @@
   .pc-ic svg{width:22px;height:22px;}
   .pc-t{font-size:15px;font-weight:700;color:var(--ink);align-self:end;}
   .pc-d{font-size:12px;color:var(--dim);line-height:1.4;}
+  /* État d'accueil compte vierge */
+  .dash-welcome{max-width:560px;margin:6vh auto 0;text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .dw-schema{display:flex;align-items:center;gap:14px;margin-bottom:28px;}
+  .dw-step{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .dw-badge{font-family:var(--serif);font-weight:600;font-size:14px;color:#fff;background:var(--copper);padding:5px 15px;border-radius:8px;}
+  .dw-badge.deb{background:var(--copper-d);}
+  .dw-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);}
+  .dw-arrow{width:40px;height:16px;color:var(--faint);}
+  .dw-t{font-family:var(--serif);font-weight:600;font-size:30px;color:var(--ink);line-height:1.1;margin-bottom:12px;}
+  .dw-d{font-size:15px;color:var(--soft);line-height:1.6;margin-bottom:26px;max-width:440px;}
+  .dw-cta{display:inline-flex;align-items:center;gap:9px;background:var(--copper);color:#fff;border:none;border-radius:12px;padding:15px 26px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;box-shadow:var(--sh);}
+  .dw-cta:hover{background:var(--copper-d);transform:translateY(-2px);box-shadow:var(--shm);}
+  .dw-cta svg{width:17px;height:17px;transition:transform .15s;}
+  .dw-cta:hover svg{transform:translateX(4px);}
   /* ══════ PAGE AUJOURD'HUI — schéma 10/10 ══════ */
   .ck-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
   .ck-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;padding-top:6px;}
@@ -1860,6 +1874,41 @@ function dash(){
   const cold=actifs.filter(d=>days(d.updated_at)>=7).sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   const wins=deals.filter(d=>d.etape==='gagne');
   const losts=deals.filter(d=>d.etape==='perdu');
+
+  // État d'accueil quand le compte est vierge : une seule invitation claire
+  const dashTop=document.querySelector('.dash-top');
+  const battleCard=document.querySelector('.battle-card');
+  if(!briefs.length && !deals.length){
+    if(dashTop)dashTop.style.display='none';
+    if(battleCard)battleCard.style.display='none';
+    let welcome=document.getElementById('dashWelcome');
+    if(!welcome){
+      welcome=document.createElement('div');
+      welcome.id='dashWelcome';
+      welcome.className='dash-welcome';
+      const ck=document.querySelector('#v-dash .cockpit');
+      if(ck)ck.appendChild(welcome);
+    }
+    welcome.style.display='';
+    welcome.innerHTML=`
+      <div class="dw-schema">
+        <div class="dw-step"><span class="dw-badge">Brief</span><span class="dw-lbl">tu prépares</span></div>
+        <svg class="dw-arrow" viewBox="0 0 40 16" fill="none"><path d="M2 8h32M30 3l6 5-6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="dw-step"><span class="dw-badge">RDV</span><span class="dw-lbl">tu vis</span></div>
+        <svg class="dw-arrow" viewBox="0 0 40 16" fill="none"><path d="M2 8h32M30 3l6 5-6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="dw-step"><span class="dw-badge deb">Débrief</span><span class="dw-lbl">tu apprends</span></div>
+      </div>
+      <div class="dw-t">Bienvenue sur Faro.</div>
+      <div class="dw-d">Prépare ton premier rendez-vous. Faro t'arme avant, capte pendant, et apprend après, pour te rendre plus tranchant à chaque fois.</div>
+      <button class="dw-cta" data-go2="nouveau">Préparer mon premier rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
+    welcome.querySelector('[data-go2]').addEventListener('click',()=>go('nouveau'));
+    const eb0=$('dashEyebrow');const now0=new Date();const jr=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];const mo=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];if(eb0)eb0.textContent=`${jr[now0.getDay()]} ${now0.getDate()} ${mo[now0.getMonth()]}`;
+    return;
+  }
+  // Sinon : cockpit normal
+  const dw=document.getElementById('dashWelcome'); if(dw)dw.style.display='none';
+  if(dashTop)dashTop.style.display='';
+  if(battleCard)battleCard.style.display='';
 
   // ─── En-tête : date vivante ───
   const ws=weekStats();
