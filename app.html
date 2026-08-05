@@ -319,6 +319,18 @@
   .np-item.on .cnt{color:var(--copper-d);}
   .np-head.on{background:var(--washc);color:var(--copper-d);}
   .np-head.on svg{color:var(--copper);}
+  /* État vide plein écran (page Brief / Après-match) */
+  .page-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px;min-height:50vh;}
+  .pe-ic{width:64px;height:64px;border-radius:20px;background:var(--wash);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--copper);margin-bottom:24px;}
+  .pe-ic svg{width:30px;height:30px;}
+  .pe-t{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);letter-spacing:-.3px;margin-bottom:10px;}
+  .pe-d{font-size:14px;color:var(--soft);line-height:1.55;max-width:400px;margin-bottom:24px;}
+  .pe-cta{display:inline-flex;align-items:center;gap:8px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;box-shadow:var(--sh);}
+  .pe-cta:hover{background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
+  .pe-cta .kbd-hint{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.85);margin-left:4px;}
+  /* Bandeau attente en mode "prêt" (cuivre au lieu de bleu) */
+  .rtc-wait.ready .rtc-wait-line{background:repeating-linear-gradient(90deg,var(--copper-l) 0 5px,transparent 5px 10px);}
+  .rtc-wait.ready .rtc-wait-txt{color:var(--copper-d);}
   /* Cascade d'entrée (réf Linear) */
   @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
   .view.on .dash-head{animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
@@ -1512,7 +1524,7 @@
   </section>
 
   <section class="view" id="v-rdv">
-    <div class="ptitle"><div><div class="eyebrow" id="rdvEyebrow">Activité · Terrain</div><h1 id="rdvH1">Rendez-vous</h1><div class="sub" id="rdvSub">Le brief avant, le débrief après.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div></div>
+    <div class="ptitle"><div><div class="eyebrow" id="rdvEyebrow">Activité · Terrain</div><h1 id="rdvH1">Rendez-vous</h1><div class="sub" id="rdvSub">Le brief avant, le débrief après.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn" id="rdvNewBtn" data-go2="nouveau">Nouveau brief</button></div></div>
 
     <div class="aff-tools">
       <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="rdvQ" placeholder="Chercher une entreprise, un interlocuteur…" autocomplete="off"/></div>
@@ -2814,27 +2826,33 @@ function rdvSearchMatch(b){
 function renderRdvList(){
   const todoEl=$('rdvTodo'), histEl=$('rdvHistory');
   if(!todoEl||!histEl)return;
-  // En-tête dynamique selon la vue
+  const isPrep=(rdvView==='prep');
+
+  // En-tête dynamique
   const eb=$('rdvEyebrow'), h1=$('rdvH1'), sub=$('rdvSub');
-  if(rdvView==='prep'){
+  if(isPrep){
     if(eb)eb.textContent='Activité · Avant';
     if(h1)h1.textContent='Brief';
-    if(sub)sub.textContent='Ce que Faro te prépare avant d\'y aller.';
+    if(sub)sub.textContent='Ce que Faro te prépare avant chaque rendez-vous.';
   } else {
     if(eb)eb.textContent='Activité · Après';
     if(h1)h1.textContent='Après-match';
     if(sub)sub.textContent='Ce que tu as vécu sur le terrain. Raconte, Faro capitalise.';
   }
-  // Câblages
+  // CTA + placeholder recherche adaptés
+  const nb=$('rdvNewBtn'); if(nb)nb.textContent=isPrep?'Nouveau brief':'Nouveau rendez-vous';
   const rq=$('rdvQ');
+  if(rq){rq.placeholder=isPrep?'Chercher un brief, une entreprise…':'Chercher un rendez-vous…';}
+
+  // Câblages (une seule fois)
   if(rq&&!rq.dataset.wired){rq.dataset.wired='1';rq.addEventListener('input',()=>{rdvQuery=rq.value.trim();renderRdvList();});}
   const rs=$('rdvSort');
   if(rs&&!rs.dataset.wired){rs.dataset.wired='1';rs.querySelectorAll('.pts').forEach(b=>b.addEventListener('click',()=>{rdvSort=b.dataset.sort;rs.querySelectorAll('.pts').forEach(x=>x.classList.toggle('on',x===b));renderRdvList();}));}
   const re=$('rdvExport');
   if(re&&!re.dataset.wired){re.dataset.wired='1';re.addEventListener('click',()=>exportRdvCsv());}
 
-  // Filtrer selon la vue : À préparer = briefs sans débrief ; Après-match = tous (à raconter + racontés)
-  const base=rdvView==='prep'?briefs.filter(b=>!b.debrief):briefs;
+  // Données selon la vue
+  const base=isPrep?briefs.filter(b=>!b.debrief):briefs;
   const all=base.filter(rdvSearchMatch);
   const TORD={close:0,chaud:1,tiede:2,mort:3};
   const sortFn=(a,b)=>{
@@ -2843,42 +2861,97 @@ function renderRdvList(){
     return new Date(b.created_at)-new Date(a.created_at);
   };
 
-  // ─── ZONE 1 : À TRAITER (non débriefés) ───
-  const todo=all.filter(b=>!b.debrief).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
-  if(todo.length){
-    const zoneT=rdvView==='prep'?'À briefer':'À raconter';
-    const zoneD=rdvView==='prep'?'Prépare-les avant que le rendez-vous arrive.':'Capture ce qui s\'est dit avant que ça s\'efface.';
-    todoEl.innerHTML=`<div class="rdv-zone-head"><span class="rzh-dot pulse"></span><span class="rzh-t">${zoneT}</span><span class="rzh-n">${todo.length}</span><span class="rzh-d">${zoneD}</span></div>
-      <div class="rdv-todo-grid">${todo.map(rdvTodoCard).join('')}</div>`;
-  } else {
-    todoEl.innerHTML=`<div class="rdv-alldone"><span class="rad-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="rad-t">Tout est débriefé.</div><div class="rad-d">Aucun rendez-vous en attente. Beau travail.</div></div></div>`;
-  }
+  if(isPrep){
+    // ═══ VUE BRIEF : 2 zones (À portée + Bibliothèque) ═══
+    // À portée : briefs préparés récents (≤14j) prêts pour un rendez-vous
+    const recent=all.filter(b=>days(b.created_at)<=14).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    // Bibliothèque : tous les briefs, groupés par mois
+    const library=all.slice().sort(sortFn);
 
-  // ─── ZONE 2 : HISTORIQUE (débriefés, groupés par mois) ───
-  const hist=all.filter(b=>!!b.debrief).sort(sortFn);
-  if(!hist.length){
-    histEl.innerHTML=todo.length?'':`<div style="padding:20px 0;"><div class="esvg">${ESVG.historique}</div><div class="empty">${rdvQuery?'Rien ne correspond.':'Tes rendez-vous débriefés s\'archiveront ici.'}</div></div>`;
-  } else {
-    // Grouper par mois
-    const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-    const groups={};
-    hist.forEach(b=>{const d=new Date(b.created_at);const key=`${d.getFullYear()}-${d.getMonth()}`;(groups[key]=groups[key]||{label:`${MOIS[d.getMonth()]} ${d.getFullYear()}`,items:[]}).items.push(b);});
-    const keys=Object.keys(groups).sort((a,b)=>{const[ya,ma]=a.split('-').map(Number),[yb,mb]=b.split('-').map(Number);return yb-ya||mb-ma;});
-    let html=`<div class="rdv-zone-head hist"><span class="rzh-t">Historique</span><span class="rzh-n">${hist.length}</span><span class="rzh-d">Tes rendez-vous passés, brief et débrief réunis.</span></div>`;
-    keys.forEach((k,idx)=>{
-      const g=groups[k];
-      const open=idx===0; // le mois le plus récent ouvert
-      html+=`<div class="hist-month ${open?'open':''}" data-month="${k}">
-        <button class="hm-head"><svg class="hm-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg><span class="hm-label">${g.label}</span><span class="hm-count">${g.items.length}</span></button>
-        <div class="hm-body">${g.items.map(rdvHistRow).join('')}</div>
+    // État vide : aucun brief du tout
+    if(!all.length){
+      todoEl.innerHTML=`<div class="page-empty">
+        <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/><path d="M9 14h6M9 18h4"/></svg></div>
+        <div class="pe-t">Aucun brief encore.</div>
+        <div class="pe-d">Prépare ton premier rendez-vous. Faro l'arme des données du marché et de la mémoire de ton client.</div>
+        <button class="pe-cta" data-go2="nouveau">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
       </div>`;
-    });
-    histEl.innerHTML=html;
-    histEl.querySelectorAll('.hm-head').forEach(h=>h.addEventListener('click',()=>h.closest('.hist-month').classList.toggle('open')));
+      histEl.innerHTML='';
+      const c=todoEl.querySelector('[data-go2]'); if(c)c.addEventListener('click',()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+      return;
+    }
+
+    // Zone 1 : À portée (cartes riches)
+    if(recent.length){
+      todoEl.innerHTML=`<div class="rdv-zone-head"><span class="rzh-dot pulse"></span><span class="rzh-t">À portée</span><span class="rzh-n">${recent.length}</span><span class="rzh-d">Tes briefs prêts, à relire avant d'y aller.</span></div>
+        <div class="rdv-todo-grid">${recent.map(briefReadyCard).join('')}</div>`;
+    } else {
+      todoEl.innerHTML='';
+    }
+
+    // Zone 2 : Bibliothèque (groupée par mois)
+    const older=library.filter(b=>days(b.created_at)>14);
+    if(older.length){
+      const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const groups={};
+      older.forEach(b=>{const d=new Date(b.created_at);const key=`${d.getFullYear()}-${d.getMonth()}`;(groups[key]=groups[key]||{label:`${MOIS[d.getMonth()]} ${d.getFullYear()}`,items:[]}).items.push(b);});
+      const keys=Object.keys(groups).sort((a,b)=>{const[ya,ma]=a.split('-').map(Number),[yb,mb]=b.split('-').map(Number);return yb-ya||mb-ma;});
+      let html=`<div class="rdv-zone-head hist"><span class="rzh-t">Bibliothèque</span><span class="rzh-n">${older.length}</span><span class="rzh-d">Tous tes briefs préparés, à rouvrir quand tu veux.</span></div>`;
+      keys.forEach((k,idx)=>{
+        const g=groups[k]; const open=idx===0;
+        html+=`<div class="hist-month ${open?'open':''}" data-month="${k}">
+          <button class="hm-head"><svg class="hm-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg><span class="hm-label">${g.label}</span><span class="hm-count">${g.items.length}</span></button>
+          <div class="hm-body">${g.items.map(briefLibraryRow).join('')}</div>
+        </div>`;
+      });
+      histEl.innerHTML=html;
+      histEl.querySelectorAll('.hm-head').forEach(h=>h.addEventListener('click',()=>h.closest('.hist-month').classList.toggle('open')));
+    } else {
+      histEl.innerHTML='';
+    }
+  } else {
+    // ═══ VUE APRÈS-MATCH : à traiter + historique (comportement existant) ═══
+    const todo=all.filter(b=>!b.debrief).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+    if(todo.length){
+      todoEl.innerHTML=`<div class="rdv-zone-head"><span class="rzh-dot pulse"></span><span class="rzh-t">À raconter</span><span class="rzh-n">${todo.length}</span><span class="rzh-d">Capture ce qui s'est dit avant que ça s'efface.</span></div>
+        <div class="rdv-todo-grid">${todo.map(rdvTodoCard).join('')}</div>`;
+    } else if(all.length){
+      todoEl.innerHTML=`<div class="rdv-alldone"><span class="rad-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="rad-t">Tout est raconté.</div><div class="rad-d">Aucun rendez-vous en attente. Beau travail.</div></div></div>`;
+    } else {
+      todoEl.innerHTML=`<div class="page-empty">
+        <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg></div>
+        <div class="pe-t">Aucun rendez-vous encore.</div>
+        <div class="pe-d">Une fois tes rendez-vous vécus, raconte-les à Faro. Il transforme tes notes en mémoire.</div>
+        <button class="pe-cta" data-go2="nouveau">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+      </div>`;
+      histEl.innerHTML='';
+      const c=todoEl.querySelector('[data-go2]'); if(c)c.addEventListener('click',()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+      return;
+    }
+
+    const hist=all.filter(b=>!!b.debrief).sort(sortFn);
+    if(!hist.length){
+      histEl.innerHTML='';
+    } else {
+      const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const groups={};
+      hist.forEach(b=>{const d=new Date(b.created_at);const key=`${d.getFullYear()}-${d.getMonth()}`;(groups[key]=groups[key]||{label:`${MOIS[d.getMonth()]} ${d.getFullYear()}`,items:[]}).items.push(b);});
+      const keys=Object.keys(groups).sort((a,b)=>{const[ya,ma]=a.split('-').map(Number),[yb,mb]=b.split('-').map(Number);return yb-ya||mb-ma;});
+      let html=`<div class="rdv-zone-head hist"><span class="rzh-t">Historique</span><span class="rzh-n">${hist.length}</span><span class="rzh-d">Tes rendez-vous passés, brief et débrief réunis.</span></div>`;
+      keys.forEach((k,idx)=>{
+        const g=groups[k]; const open=idx===0;
+        html+=`<div class="hist-month ${open?'open':''}" data-month="${k}">
+          <button class="hm-head"><svg class="hm-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg><span class="hm-label">${g.label}</span><span class="hm-count">${g.items.length}</span></button>
+          <div class="hm-body">${g.items.map(rdvHistRow).join('')}</div>
+        </div>`;
+      });
+      histEl.innerHTML=html;
+      histEl.querySelectorAll('.hm-head').forEach(h=>h.addEventListener('click',()=>h.closest('.hist-month').classList.toggle('open')));
+    }
   }
 
-  // Câblage interactions (todo + hist)
-  document.querySelectorAll('#rdvTodo .rdv-todo-card, #rdvHistory .hist-row').forEach(el=>{
+  // Câblage interactions communes
+  document.querySelectorAll('#rdvTodo .rdv-todo-card, #rdvTodo .brief-ready, #rdvHistory .hist-row, #rdvHistory .brief-lib-row').forEach(el=>{
     const id=el.dataset.b;
     el.querySelectorAll('[data-act]').forEach(btn=>btn.addEventListener('click',e=>{
       e.stopPropagation();
@@ -2891,12 +2964,50 @@ function renderRdvList(){
     }));
     const kb=el.querySelector('.kebab');
     if(kb)kb.addEventListener('click',e=>{e.stopPropagation();openKebab(e.currentTarget,rdvMenu(id));});
-    // Clic sur la carte todo (hors boutons) ouvre le brief
-    if(el.classList.contains('rdv-todo-card'))el.addEventListener('click',e=>{if(e.target.closest('button'))return;const b=briefs.find(x=>x.id===id);if(b)openBrief(b);});
+    if(el.classList.contains('rdv-todo-card')||el.classList.contains('brief-ready'))el.addEventListener('click',e=>{if(e.target.closest('button'))return;const b=briefs.find(x=>x.id===id);if(b)openBrief(b);});
   });
 }
 
-// Carte riche pour un rendez-vous à débriefer, avec les 2 CTA
+// ─── Carte "À portée" (Brief prêt à relire) ───
+function briefReadyCard(b){
+  const ed=b.entreprise_data||{};
+  const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
+  const poste=cleanPoste(b.poste||'');
+  const n=days(b.created_at);
+  const ageLabel=n===0?"préparé aujourd'hui":n===1?'préparé hier':`préparé il y a ${n} j`;
+  return `<div class="rdv-todo-card brief-ready" data-b="${b.id}">
+    <div class="rtc-top">
+      <div class="rtc-brief">
+        <span class="rf-tag brief">Brief prêt</span>
+        <div class="rtc-company">${logoHtml(b.entreprise,ed.logo,ed.site||b.site).replace('class="mono','class="rf-logo mono')}<div class="rf-co-txt"><div class="rf-co-n">${esc(trunc(b.entreprise,22))}</div><div class="rf-co-p">${esc(trunc(poste,24))||'Interlocuteur'}${d?` · ${stg(d.etape).l}`:''}</div></div></div>
+      </div>
+      <button class="kebab" title="Actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
+    </div>
+    <div class="rtc-wait ready"><span class="rtc-wait-line"></span><span class="rtc-wait-txt">${ageLabel}</span><span class="rtc-wait-line"></span></div>
+    <div class="rtc-cta">
+      <button class="rtc-btn cold" data-act="open"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h12v18H8zM4 7h4M4 12h4M4 17h4"/></svg>Relire</button>
+      <button class="rtc-btn live" data-act="live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9z"/></svg>J'y vais</button>
+    </div>
+  </div>`;
+}
+
+// ─── Ligne compacte bibliothèque de briefs ───
+function briefLibraryRow(b){
+  const ed=b.entreprise_data||{};
+  const poste=cleanPoste(b.poste||'');
+  const dateStr=new Date(b.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+  const debrief=!!b.debrief;
+  return `<div class="hist-row brief-lib-row" data-b="${b.id}">
+    <span class="hr-date">${dateStr}</span>
+    <span class="hr-connector ${debrief?'done':''}" title="${debrief?'Ce brief a été raconté':'Brief seul'}"><span class="hrc-b">B</span>${debrief?`<span class="hrc-line"></span><span class="hrc-dot"></span><span class="hrc-line"></span><span class="hrc-d">D</span>`:''}</span>
+    ${logoHtml(b.entreprise,ed.logo,ed.site||b.site).replace('class="mono','class="hr-logo mono')}
+    <div class="hr-body"><span class="hr-nm">${esc(trunc(b.entreprise,26))}</span><span class="hr-poste">${esc(trunc(poste,26))}</span></div>
+    <button class="hr-open" data-act="open">Rouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <button class="kebab" title="Actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
+  </div>`;
+}
+
+// Carte riche pour un rendez-vous à débriefer, avec les 2 CTAles 2 CTA
 function rdvTodoCard(b){
   const ed=b.entreprise_data||{};
   const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
