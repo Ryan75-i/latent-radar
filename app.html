@@ -235,82 +235,81 @@
   .dw-cta:hover{background:var(--copper-d);transform:translateY(-2px);box-shadow:var(--shm);}
   .dw-cta svg{width:17px;height:17px;transition:transform .15s;}
   .dw-cta:hover svg{transform:translateX(4px);}
-  /* ══════ PAGE AUJOURD'HUI — schéma 10/10 ══════ */
-  .ck-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
-  .ck-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;padding-top:6px;}
-  /* Zone haute : orientation */
-  .dash-top{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch;}
-  /* Carte compagnon */
-  .companion{position:relative;border-radius:var(--rl);padding:20px 24px;display:flex;flex-direction:column;border:1px solid;overflow:hidden;}
-  .companion.tone-blue{background:linear-gradient(140deg,#E8F0F6,#F6FAFC);border-color:#C6DCEA;}
-  .companion.tone-copper{background:linear-gradient(140deg,#FCF0E4,#FDF8F2);border-color:#EBD6C2;}
-  .companion.tone-green{background:linear-gradient(140deg,#E9F4EC,#F6FBF7);border-color:#CBE5D0;}
-  .companion.tone-neutral{background:linear-gradient(140deg,var(--wash),var(--card));border-color:var(--line2);}
-  .comp-greet{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);line-height:1.1;margin-bottom:12px;}
-  .comp-fil{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--soft);line-height:1.5;flex:1;}
-  .comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:6px;}
-  .comp-dot.blue{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
-  .comp-dot.copper{background:var(--copper);box-shadow:0 0 0 4px color-mix(in srgb,var(--copper) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
-  .comp-dot.green{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 16%,transparent);}
-  .comp-dot.neutral{background:var(--faint);}
-  @keyframes softpulse{0%,100%{box-shadow:0 0 0 4px color-mix(in srgb,currentColor 16%,transparent);}50%{box-shadow:0 0 0 7px color-mix(in srgb,currentColor 6%,transparent);}}
-  .comp-cta{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;margin-top:18px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;}
-  .comp-cta:hover{background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
-  .comp-cta svg{width:16px;height:16px;transition:transform .15s;}
-  .comp-cta:hover svg{transform:translateX(3px);}
-  /* Pouls + objectif */
-  .pulse-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-  .pk{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:16px 12px;cursor:pointer;text-align:center;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;display:flex;flex-direction:column;justify-content:center;}
-  .pk:hover{transform:translateY(-2px);box-shadow:var(--shm);}
-  .pk-v{font-family:var(--serif);font-weight:700;font-size:23px;color:var(--kc);line-height:1;}
-  .pk-k{font-size:11px;color:var(--dim);margin-top:6px;font-weight:600;}
-  /* Zone basse : deux colonnes, hauteur naturelle (jamais d'étirement) */
-  .dash-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;}
-  .rest-card{padding:0;overflow:hidden;}
-  .battle-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--line3);}
-  .bh-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);}
-  .bh-count{font-size:12px;color:var(--dim);margin-left:10px;}
-  .bh-done{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green-d);font-weight:600;}
-  .bh-done svg{width:14px;height:14px;}
-  /* Liste "ce qu'il te reste" */
-  .rest-list{display:flex;flex-direction:column;}
-  .rest-row{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line3);border-left:3px solid var(--ac);transition:background .13s;}
-  .rest-row:last-child{border-bottom:none;}
-  .rest-row:hover{background:var(--wash);}
-  .rr-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .rr-ic svg{width:17px;height:17px;}
-  .rr-body{flex:1;min-width:0;}
-  .rr-nm{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px;}
-  .rr-why{font-size:12px;color:var(--dim);line-height:1.4;}
-  .rr-why b{color:var(--soft);font-weight:600;}
-  .rr-act{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;border:none;border-radius:9px;padding:9px 15px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.14s;}
-  .rr-act svg{width:14px;height:14px;}
-  .rr-act.rel{background:var(--copper);color:#fff;}
-  .rr-act.rel:hover{background:var(--copper-d);}
-  .rr-act.see{background:var(--wash);color:var(--soft);border:1px solid var(--line2);}
-  .rr-act.see:hover{border-color:var(--copper-l);color:var(--copper-d);}
-  /* Carte "Ta journée" */
-  .journey-card{padding:20px;display:flex;flex-direction:column;}
-  .jc-head{margin-bottom:10px;}
-  .obj-badge{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:700;}
-  .jc-obj{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);line-height:1.2;margin-bottom:12px;}
-  .obj-bar{height:10px;background:var(--wash);border-radius:20px;overflow:hidden;border:1px solid var(--line3);}
-  .obj-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--copper),var(--copper-l));transition:width .5s cubic-bezier(.3,.7,.3,1);}
-  .obj-fill.done{background:linear-gradient(90deg,var(--green),#6BB585);position:relative;}
-  .obj-fill.done::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 1.6s ease-in-out;}
-  @keyframes shine{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
-  .obj-ratio{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px;text-align:right;font-weight:600;}
-  .jc-sep{height:1px;background:var(--line3);margin:16px 0 14px;}
-  .jc-rhythm-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
-  .jheat{display:flex;gap:4px;}
-  .jhcol{display:flex;flex-direction:column;gap:4px;flex:1;}
-  .jhcell{width:100%;aspect-ratio:1;max-height:15px;border-radius:3px;background:#EFEAE0;}
-  .jhcell.l1{background:#E7C9A8;}
-  .jhcell.l2{background:#D89355;}
-  .jhcell.l3{background:var(--copper-d);}
-  .jhcell.lx{background:transparent;}
-  @media(max-width:900px){.dash-top{grid-template-columns:1fr;}.dash-bottom{grid-template-columns:1fr;}.pulse-kpis{grid-template-columns:repeat(4,1fr);}}
-  @media(max-width:600px){.pulse-kpis{grid-template-columns:repeat(2,1fr);}}
+  /* ══════ PAGE AUJOURD'HUI — vue d'ensemble ══════ */
+  /* Ligne d'horizon : date · salut · CTA principal */
+  .dash-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;}
+  .dh-l{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+  .dh-l .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
+  .dh-greet{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink);letter-spacing:-.3px;}
+  /* Fil du jour : orientation en une phrase */
+  .dash-fil{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--soft);padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);margin-bottom:20px;}
+  .dash-fil .comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .dash-fil .comp-dot.blue{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
+  .dash-fil .comp-dot.copper{background:var(--copper);box-shadow:0 0 0 4px color-mix(in srgb,var(--copper) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
+  .dash-fil .comp-dot.green{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 16%,transparent);}
+  /* Vue d'ensemble : 4 cartes */
+  .dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  .ov-card{padding:20px;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),border-color .18s,transform .14s;}
+  .ov-card:hover{box-shadow:var(--shm);border-color:var(--copper-l);transform:translateY(-1px);}
+  .ov-head{margin-bottom:12px;}
+  .ov-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:700;}
+  .ov-body{flex:1;display:flex;flex-direction:column;gap:8px;min-height:100px;}
+  .ov-hero{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--ink);line-height:1.15;letter-spacing:-.2px;}
+  .ov-hero .ov-sub{font-family:var(--sans);font-weight:500;font-size:14px;color:var(--dim);letter-spacing:0;}
+  .ov-note{font-size:12.5px;color:var(--dim);}
+  .ov-note b{color:var(--soft);font-weight:600;}
+  .ov-last{font-size:12px;color:var(--faint);margin-top:auto;padding-top:6px;}
+  .ov-last b{color:var(--soft);font-weight:600;}
+  /* Mini-barres de distribution pipeline */
+  .ov-bars{display:flex;align-items:flex-end;gap:6px;height:36px;margin:4px 0;}
+  .ov-bar{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;}
+  .ov-bar-fill{width:100%;background:linear-gradient(180deg,var(--copper),var(--copper-l));border-radius:3px 3px 0 0;min-height:3px;transition:height .5s cubic-bezier(.3,.7,.3,1);}
+  .ov-bar-l{font-family:var(--mono);font-size:8.5px;color:var(--faint);margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+  /* Mini heatmap ryhtme */
+  .ov-heat{display:flex;gap:3px;margin-top:4px;}
+  .ov-hcol{display:flex;flex-direction:column;gap:3px;flex:1;}
+  /* CTA contour uniforme des cartes vue d'ensemble */
+  .ov-foot{margin-top:16px;padding-top:12px;border-top:1px solid var(--line3);}
+  .ov-cta{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line2);color:var(--copper-d);border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s;height:32px;}
+  .ov-cta:hover{border-color:var(--copper);background:var(--washc);}
+  .ov-cta svg{width:14px;height:14px;transition:transform .15s;}
+  .ov-cta:hover svg{transform:translateX(3px);}
+  .ov-cta.ghost{border-color:transparent;padding-right:8px;}
+  .ov-cta.ghost:hover{border-color:var(--line2);}
+  /* Ce qui bouge cette semaine */
+  .news-card{padding:0;overflow:hidden;}
+  .news-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--line3);}
+  .news-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.1px;}
+  .news-empty{padding:24px 20px;text-align:center;font-size:13px;color:var(--dim);}
+  .news-row{display:grid;grid-template-columns:24px minmax(140px,1.2fr) minmax(180px,2fr) auto;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line3);transition:background .13s;cursor:pointer;}
+  .news-row:last-child{border-bottom:none;}
+  .news-row:hover{background:var(--wash);}
+  .news-ic{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+  .news-ic.k-win{background:var(--green);}
+  .news-ic.k-risk{background:var(--gold);}
+  .news-ic.k-todo{background:var(--blue);}
+  .news-ic.k-sleep{background:var(--faint);}
+  .news-ic.k-move{background:var(--copper);}
+  .news-t2{font-size:14px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .news-d{font-size:12.5px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .news-act{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--copper-d);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:6px;transition:.13s;height:28px;}
+  .news-act:hover{background:var(--washc);}
+  .news-act svg{width:12px;height:12px;transition:transform .15s;}
+  .news-act:hover svg{transform:translateX(2px);}
+  .news-act.loading{pointer-events:none;opacity:.7;}
+  .news-act.loading svg{display:none;}
+  .news-act.loading::after{content:"";width:10px;height:10px;border:2px solid var(--line2);border-top-color:var(--copper);border-radius:50%;animation:spin .6s linear infinite;}
+  /* Cascade d'entrée (réf Linear) */
+  @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .view.on .dash-head{animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .dash-fil{animation:rise .35s cubic-bezier(.2,.7,.2,1) .05s both;}
+  .view.on .ov-card:nth-child(1){animation:rise .35s cubic-bezier(.2,.7,.2,1) .10s both;}
+  .view.on .ov-card:nth-child(2){animation:rise .35s cubic-bezier(.2,.7,.2,1) .14s both;}
+  .view.on .ov-card:nth-child(3){animation:rise .35s cubic-bezier(.2,.7,.2,1) .18s both;}
+  .view.on .ov-card:nth-child(4){animation:rise .35s cubic-bezier(.2,.7,.2,1) .22s both;}
+  .view.on .news-card{animation:rise .35s cubic-bezier(.2,.7,.2,1) .28s both;}
+  .view.on .dash-welcome{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  @media(max-width:900px){.dash-grid{grid-template-columns:1fr;}.dash-head{flex-direction:column;align-items:flex-start;}.news-row{grid-template-columns:22px 1fr auto;}.news-d{display:none;}}
   /* ══ Vue Affaires par priorité d'action ══ */
   .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
   .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12.5px;font-weight:600;color:var(--dim);padding:7px 14px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
@@ -1416,27 +1415,43 @@
 
   <section class="view on" id="v-dash">
     <div class="cockpit">
-      <div class="ck-head">
-        <div class="eyebrow" id="dashEyebrow">Lundi</div>
-        <button class="btn g" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
+      <!-- Ligne d'horizon : date · salut · CTA principal (seul cuivre plein) -->
+      <div class="dash-head">
+        <div class="dh-l"><span class="eyebrow" id="dashEyebrow">Mardi</span><span class="dh-greet" id="dashGreet">Bonjour.</span></div>
+        <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous<kbd class="kbd-hint">N</kbd></button>
       </div>
 
-      <!-- Zone haute : compagnon + pouls -->
-      <div class="dash-top">
-        <div class="companion" id="companion"><div class="skel" style="width:40%;height:24px;"></div><div class="skel" style="width:85%;height:14px;margin-top:14px;"></div><div class="skel" style="width:60%;height:14px;margin-top:8px;"></div><div class="skel" style="width:160px;height:38px;margin-top:20px;border-radius:10px;"></div></div>
-        <div class="pulse-kpis" id="pulseKpis"><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div><div class="pk"><div class="skel" style="width:36px;height:22px;margin:0 auto;"></div><div class="skel" style="width:50px;height:10px;margin:8px auto 0;"></div></div></div>
-      </div>
+      <!-- Fil du jour : une phrase, orientation -->
+      <div class="dash-fil" id="dashFil"><div class="skel" style="width:60%;height:14px;"></div></div>
 
-      <!-- Zone basse : ce qu'il te reste (gauche) + ta journée (droite) -->
-      <div class="dash-bottom">
-        <div class="card rest-card">
-          <div class="battle-head">
-            <div><span class="bh-t">Ce qu'il te reste</span><span class="bh-count" id="battleCount"></span></div>
-            <span class="bh-done" id="battleDone"></span>
-          </div>
-          <div id="focusW"></div>
+      <!-- Vue d'ensemble : 4 cartes, une par domaine -->
+      <div class="dash-grid">
+        <div class="card ov-card" data-ov="affaires">
+          <div class="ov-head"><span class="ov-lbl">Ton pipeline</span></div>
+          <div class="ov-body" id="ovPipeline"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
+          <div class="ov-foot"><button class="ov-cta" data-go="affaires">Voir mes affaires<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
         </div>
-        <div class="card journey-card" id="journeyCard"><div class="skel" style="width:70px;height:10px;"></div><div class="skel" style="width:80%;height:18px;margin-top:10px;"></div><div class="skel" style="width:100%;height:10px;margin-top:14px;border-radius:20px;"></div></div>
+        <div class="card ov-card" data-ov="rdv">
+          <div class="ov-head"><span class="ov-lbl">Ton terrain</span></div>
+          <div class="ov-body" id="ovTerrain"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
+          <div class="ov-foot"><button class="ov-cta" data-go="rdv">Voir mes rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+        </div>
+        <div class="card ov-card" data-ov="entreprises">
+          <div class="ov-head"><span class="ov-lbl">Ta mémoire</span></div>
+          <div class="ov-body" id="ovMemoire"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
+          <div class="ov-foot"><button class="ov-cta" data-go="entreprises">Voir mes clients<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+        </div>
+        <div class="card ov-card" data-ov="toi">
+          <div class="ov-head"><span class="ov-lbl">Ton rythme</span></div>
+          <div class="ov-body" id="ovRythme"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
+          <div class="ov-foot"><button class="ov-cta" data-go="toi">Voir mon profil<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+        </div>
+      </div>
+
+      <!-- Ce qui bouge cette semaine : fil d'actualité -->
+      <div class="card news-card">
+        <div class="news-head"><span class="news-t">Ce qui bouge cette semaine</span><button class="ov-cta ghost" id="newsAll">Tout voir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+        <div id="newsList"></div>
       </div>
     </div>
   </section>
@@ -2011,20 +2026,22 @@ function dash(){
   const cold=actifs.filter(d=>days(d.updated_at)>=7).sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   const wins=deals.filter(d=>d.etape==='gagne');
   const losts=deals.filter(d=>d.etape==='perdu');
+  const debriefed=briefs.filter(b=>!!b.debrief);
 
-  // État d'accueil quand le compte est vierge : une seule invitation claire
-  const dashTop=document.querySelector('.dash-top');
-  const battleCard=document.querySelector('.dash-bottom');
+  const dashTop=document.querySelector('.dash-fil');
+  const dashGrid=document.querySelector('.dash-grid');
+  const dashNews=document.querySelector('.news-card');
+
+  // ─── Cas vide : compte vierge → écran de bienvenue ───
   if(!briefs.length && !deals.length){
     if(dashTop)dashTop.style.display='none';
-    if(battleCard)battleCard.style.display='none';
+    if(dashGrid)dashGrid.style.display='none';
+    if(dashNews)dashNews.style.display='none';
     let welcome=document.getElementById('dashWelcome');
     if(!welcome){
       welcome=document.createElement('div');
-      welcome.id='dashWelcome';
-      welcome.className='dash-welcome';
-      const ck=document.querySelector('#v-dash .cockpit');
-      if(ck)ck.appendChild(welcome);
+      welcome.id='dashWelcome'; welcome.className='dash-welcome';
+      const ck=document.querySelector('#v-dash .cockpit'); if(ck)ck.appendChild(welcome);
     }
     welcome.style.display='';
     welcome.innerHTML=`
@@ -2039,90 +2056,151 @@ function dash(){
       <div class="dw-d">Prépare ton premier rendez-vous. Faro t'arme avant, capte pendant, et apprend après, pour te rendre plus tranchant à chaque fois.</div>
       <button class="dw-cta" data-go2="nouveau">Préparer mon premier rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
     welcome.querySelector('[data-go2]').addEventListener('click',()=>go('nouveau'));
-    const eb0=$('dashEyebrow');const now0=new Date();const jr=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];const mo=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];if(eb0)eb0.textContent=`${jr[now0.getDay()]} ${now0.getDate()} ${mo[now0.getMonth()]}`;
+    fillDashHead();
     return;
   }
-  // Sinon : cockpit normal
   const dw=document.getElementById('dashWelcome'); if(dw)dw.style.display='none';
   if(dashTop)dashTop.style.display='';
-  if(battleCard)battleCard.style.display='';
+  if(dashGrid)dashGrid.style.display='';
+  if(dashNews)dashNews.style.display='';
 
-  // ─── En-tête : date vivante ───
+  fillDashHead();
+
+  // ─── Fil du jour : Faro parle en une phrase ───
   const ws=weekStats();
-  const h=new Date().getHours();
+  const hotDeals=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape)&&['chaud','close'].includes(dealTemp(d)));
+  const bits=[];
+  if(aDeb.length)bits.push(`${aDeb.length} rendez-vous à raconter`);
+  if(hotDeals.length)bits.push(`${hotDeals.length} affaire${hotDeals.length>1?'s':''} chaude${hotDeals.length>1?'s':''}`);
+  if(coldGlobal(cold))bits.push('une affaire qui dort');
+  let fil, dot='green';
+  if(bits.length){
+    const liste=bits.length>1?bits.slice(0,-1).join(', ')+' et '+bits.slice(-1):bits[0];
+    const dense=(aDeb.length+hotDeals.length)>=3;
+    dot=aDeb.length?'blue':hotDeals.length?'copper':'green';
+    fil=`${dense?'Journée dense. ':''}${liste.charAt(0).toUpperCase()+liste.slice(1)}.`;
+  } else {
+    fil=ws.streak>1?`Tout est à jour. Série de ${ws.streak} débriefs, tiens-la.`:'Tout est à jour. Prépare la suite quand tu veux.';
+  }
+  const fEl=$('dashFil');
+  if(fEl)fEl.innerHTML=`<span class="comp-dot ${dot}"></span><span>${esc(fil)}</span>`;
+
+  // ─── Vue d'ensemble : 4 cartes ───
+  const pipeVal=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape)).reduce((a,d)=>a+dealVal(d),0);
+  const activesN=actifs.filter(dealEntered).length;
+  const STG={decouverte:'déc',contact:'con',rdv:'rdv',nego:'nég',closing:'clo'};
+  const dist={decouverte:0,contact:0,rdv:0,nego:0,closing:0};
+  actifs.filter(dealEntered).forEach(d=>{if(dist[d.etape]!==undefined)dist[d.etape]++;});
+  const maxD=Math.max(1,...Object.values(dist));
+  const distHtml=Object.entries(STG).map(([k,l])=>`<div class="ov-bar"><span class="ov-bar-fill" style="height:${Math.round((dist[k]/maxD)*100)}%"></span><span class="ov-bar-l">${l}</span></div>`).join('');
+  const ovP=$('ovPipeline');
+  if(ovP)ovP.innerHTML=`
+    <div class="ov-hero">${activesN} affaire${activesN>1?'s':''}${pipeVal>0?` <span class="ov-sub">· ${eur(pipeVal)}</span>`:''}</div>
+    <div class="ov-bars">${distHtml}</div>
+    <div class="ov-note">${hotDeals.length?`<b>${hotDeals.length} chaude${hotDeals.length>1?'s':''}</b>`:'Aucune chaude'}${coldGlobal(cold)?' · 1 qui dort':''}</div>`;
+
+  const lastDeb=debriefed.slice().sort((a,b)=>new Date(b.debrief.created_at||b.created_at)-new Date(a.debrief.created_at||a.created_at))[0];
+  const TL={close:'closé',chaud:'chaud',tiede:'tiède',mort:'difficile'};
+  const ovT=$('ovTerrain');
+  if(ovT)ovT.innerHTML=`
+    <div class="ov-hero">${aDeb.length} à raconter</div>
+    <div class="ov-note">${ws.debriefs} racontés cette semaine</div>
+    ${lastDeb?`<div class="ov-last">Dernier : <b>${esc(trunc(lastDeb.entreprise,22))}</b>, ${TL[lastDeb.debrief.temperature]||'—'}, il y a ${days(lastDeb.debrief.created_at||lastDeb.created_at)} j</div>`:'<div class="ov-last">Aucun rendez-vous raconté encore.</div>'}`;
+
+  const uniqEnt=new Set(briefs.map(b=>(b.entreprise||'').toLowerCase()).filter(Boolean));
+  const byEnt={};
+  debriefed.forEach(b=>{const k=(b.entreprise||'').toLowerCase();byEnt[k]=(byEnt[k]||0)+1;});
+  const topEnt=Object.entries(byEnt).sort((a,b)=>b[1]-a[1])[0];
+  const topName=topEnt?briefs.find(b=>(b.entreprise||'').toLowerCase()===topEnt[0])?.entreprise:'';
+  const ovM=$('ovMemoire');
+  if(ovM)ovM.innerHTML=`
+    <div class="ov-hero">${uniqEnt.size} client${uniqEnt.size>1?'s':''} suivi${uniqEnt.size>1?'s':''}</div>
+    <div class="ov-note">${debriefed.length} récit${debriefed.length>1?'s':''} capturé${debriefed.length>1?'s':''}</div>
+    ${topEnt?`<div class="ov-last">Le mieux connu : <b>${esc(trunc(topName||'',20))}</b>, ${topEnt[1]} récit${topEnt[1]>1?'s':''}</div>`:'<div class="ov-last">Débriefe pour bâtir ta mémoire.</div>'}`;
+
+  // Mini heatmap 3 semaines pour Ton rythme
+  const today=new Date(); today.setHours(0,0,0,0);
+  const dayCount={};
+  briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);dayCount[d.getTime()]=(dayCount[d.getTime()]||0)+1;});
+  const dow=(today.getDay()+6)%7;
+  const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6);
+  let heatMini='<div class="ov-heat">';
+  for(let wk=2;wk>=0;wk--){
+    heatMini+='<div class="ov-hcol">';
+    for(let d=0;d<7;d++){
+      const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(wk*7)+(d-6));
+      const n=dayCount[day.getTime()]||0;
+      const future=day>today;
+      const isToday=day.getTime()===today.getTime();
+      const lvl=n===0?0:n===1?1:n===2?2:3;
+      heatMini+=`<span class="jhcell l${future?'x':lvl}${isToday?' t':''}"${future?'':` title="${day.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}, ${n} brief${n>1?'s':''}"`}></span>`;
+    }
+    heatMini+='</div>';
+  }
+  heatMini+='</div>';
+  const ovR=$('ovRythme');
+  if(ovR)ovR.innerHTML=`
+    <div class="ov-hero">${ws.streak} jour${ws.streak>1?'s':''} de série</div>
+    <div class="ov-note">${ws.briefs} brief${ws.briefs>1?'s':''} cette semaine</div>
+    ${heatMini}`;
+
+  // ─── Fil d'actualité : ce qui bouge cette semaine ───
+  renderNews(aDeb,hotDeals,cold,wins);
+
+  // Câblage des cartes vue d'ensemble (toute la carte cliquable)
+  document.querySelectorAll('#v-dash .ov-card').forEach(c=>{
+    if(c.dataset.wired)return; c.dataset.wired='1';
+    c.addEventListener('click',e=>{if(e.target.closest('.ov-cta'))return;const d=c.dataset.ov;if(d)go(d);});
+  });
+  document.querySelectorAll('#v-dash .ov-cta[data-go]').forEach(b=>{
+    if(b.dataset.wired)return; b.dataset.wired='1';
+    b.addEventListener('click',e=>{e.stopPropagation();go(b.dataset.go);});
+  });
+  const na=$('newsAll'); if(na&&!na.dataset.wired){na.dataset.wired='1';na.addEventListener('click',()=>go('rdv'));}
+}
+
+function fillDashHead(){
   const jours=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
   const mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
   const now=new Date();
   const eb=$('dashEyebrow'); if(eb)eb.textContent=`${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]}`;
-
-  const closed=wins.length+losts.length;
-  const winRate=closed?Math.round(wins.length/closed*100):null;
-  const closingVal=deals.filter(d=>d.etape==='closing').reduce((a,d)=>a+dealVal(d),0);
-  const signedVal=wins.reduce((a,d)=>a+dealVal(d),0);
-  const pipeVal=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape)).reduce((a,d)=>a+dealVal(d),0);
+  const h=now.getHours();
   let prenom='';
   try{prenom=(session&&session.user&&session.user.user_metadata&&session.user.user_metadata.prenom)||((session&&session.user&&session.user.email||'').split('@')[0].split('.')[0].replace(/^\w/,c=>c.toUpperCase()))||'';}catch(e){}
-
-  // ─── Carte compagnon : le fil du jour (Faro parle et oriente) ───
   const salut=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
-  const hotDeals=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape)&&['chaud','close'].includes(dealTemp(d)));
-  let fil, tone, dot, cta, ctaFn;
-  if(!briefs.length){
-    tone='neutral';dot='green';
-    fil='Prépare ton premier rendez-vous. Faro construit ta mémoire et ton pipeline à partir de là.';
-    cta='Préparer un rendez-vous';ctaFn=()=>go('nouveau');
-  } else {
-    const bits=[];
-    if(aDeb.length)bits.push(`${aDeb.length} rendez-vous à raconter`);
-    if(hotDeals.length)bits.push(`${hotDeals.length} affaire${hotDeals.length>1?'s':''} chaude${hotDeals.length>1?'s':''}`);
-    if(coldGlobal(cold))bits.push('une affaire qui dort');
-    const dense=(aDeb.length+hotDeals.length)>=3;
-    tone=aDeb.length?'blue':hotDeals.length?'copper':'green';
-    dot=tone;
-    if(bits.length){
-      const liste=bits.length>1?bits.slice(0,-1).join(', ')+' et '+bits.slice(-1):bits[0];
-      const clot=aDeb.length?"Commence par capturer ce qui est frais.":hotDeals.length?"C'est le moment de pousser.":"Un signe de vie et ça repart.";
-      fil=`${dense?'Journée dense. ':''}${liste.charAt(0).toUpperCase()+liste.slice(1)}. ${clot}`;
-    } else {
-      fil=ws.streak>1?`Tout est à jour. Série de ${ws.streak} débriefs, tiens-la.`:'Tout est à jour. Beau travail, prépare la suite.';
-    }
-    cta=aDeb.length?'Raconter mon rendez-vous':hotDeals.length?'Voir mes affaires':'Préparer un rendez-vous';
-    ctaFn=aDeb.length?()=>{const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}:hotDeals.length?()=>go('affaires'):()=>go('nouveau');
+  const g=$('dashGreet'); if(g)g.textContent=`${salut}${prenom?' '+prenom:''}.`;
+}
+
+function renderNews(aDeb,hotDeals,cold,wins){
+  const el=$('newsList'); if(!el)return;
+  const items=[];
+  // Signés cette semaine
+  const weekAgo=Date.now()-7*86400000;
+  wins.forEach(d=>{if(d.updated_at&&new Date(d.updated_at).getTime()>weekAgo)items.push({k:'win',ic:'✓',t:d.entreprise,d:`signé${dealVal(d)?` · ${eur(dealVal(d))}`:''}`,act:'Voir',go:()=>openFiche(d)});});
+  // Chaudes silencieuses (risque)
+  hotDeals.filter(d=>days(d.updated_at)>=7).slice(0,2).forEach(d=>{items.push({k:'risk',ic:'⚠',t:d.entreprise,d:`chaud mais silencieux depuis ${days(d.updated_at)} j`,act:'Relancer',go:()=>openFiche(d)});});
+  // À raconter les plus anciens
+  aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,3).forEach(b=>{const n=days(b.created_at);items.push({k:'todo',ic:'○',t:b.entreprise,d:n===0?"vu aujourd'hui, à raconter":`vu il y a ${n} j, à raconter`,act:'Raconter',go:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof askPass==='function')askPass();},200);}});});
+  // Deals qui dorment
+  if(cold.length){const d=cold[0];items.push({k:'sleep',ic:'◐',t:d.entreprise,d:`silencieux depuis ${days(d.updated_at)} j`,act:'Réveiller',go:()=>openFiche(d)});}
+
+  if(!items.length){
+    el.innerHTML=`<div class="news-empty">Rien de nouveau cette semaine. Tout est calme.</div>`;
+    return;
   }
-  const comp=$('companion');
-  if(comp){
-    comp.className='companion tone-'+tone;
-    comp.innerHTML=`<div class="comp-greet">${salut}${prenom?' '+esc(prenom):''}.</div>`
-      +`<div class="comp-fil"><span class="comp-dot ${dot}"></span><span>${fil}</span></div>`
-      +`<button class="comp-cta">${cta}${aDeb.length?'<kbd class="kbd-hint">D</kbd>':''}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
-    comp.querySelector('.comp-cta').addEventListener('click',ctaFn);
-  }
-
-  // ─── Pouls : 4 KPI en ligne ───
-  const KPIS=[
-    signedVal>0
-      ? {k:'Signé',v:eur(signedVal),col:'var(--green-d)',go:'affaires'}
-      : {k:'Pipeline',v:pipeVal>0?eur(pipeVal):actifs.filter(dealEntered).length,col:'var(--copper-d)',go:'affaires'},
-    {k:'En cours',v:actifs.filter(dealEntered).length,col:'var(--copper)',go:'affaires'},
-    winRate!=null?{k:'Closing',v:winRate+'%',col:'var(--green)',go:'affaires'}:{k:'À portée',v:closingVal>0?eur(closingVal):'0',col:'var(--blue)',go:'affaires'},
-    {k:'Semaine',v:ws.briefs,col:'var(--violet)',go:'rdv'}
-  ];
-  const pk=$('pulseKpis');
-  if(pk){
-    pk.innerHTML=KPIS.map(k=>`<div class="pk" data-kgo="${k.go}" style="--kc:${k.col}"><div class="pk-v">${k.v}</div><div class="pk-k">${k.k}</div></div>`).join('');
-    pk.querySelectorAll('[data-kgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.kgo)));
-  }
-
-  // ─── En-tête "Ce qu'il te reste" ───
-  const restCount=aRel.length+(coldGlobal(cold)?1:0);
-  const bc=$('battleCount'); if(bc)bc.textContent=restCount?`${restCount} action${restCount>1?'s':''}`:'';
-  const bd=$('battleDone'); if(bd)bd.innerHTML=ws.debriefs>0?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${ws.debriefs} cette semaine`:'';
-
-  // ─── Ce qu'il te reste : uniquement les relances/froids (la priorité est portée par le compagnon) ───
-  renderFocus(aDeb,aRel,cold);
-
-  // ─── Ta journée : objectif + progression + rythme ───
-  renderJourney(aDeb);
+  el.innerHTML=items.slice(0,6).map((it,i)=>`
+    <div class="news-row" data-i="${i}">
+      <span class="news-ic k-${it.k}">${it.ic}</span>
+      <span class="news-t2">${esc(trunc(it.t,26))}</span>
+      <span class="news-d">${esc(it.d)}</span>
+      <button class="news-act">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>`).join('');
+  el.querySelectorAll('.news-row').forEach((row,i)=>{
+    const it=items[i];
+    const fn=e=>{e.stopPropagation();const b=row.querySelector('.news-act');if(b&&!b.classList.contains('loading')){b.classList.add('loading');setTimeout(()=>{b.classList.remove('loading');it.go();},250);}};
+    row.querySelector('.news-act').addEventListener('click',fn);
+    row.addEventListener('click',e=>{if(!e.target.closest('.news-act'))it.go();});
+  });
 }
 
 function renderToi(){
