@@ -299,6 +299,26 @@
   .news-act.loading{pointer-events:none;opacity:.7;}
   .news-act.loading svg{display:none;}
   .news-act.loading::after{content:"";width:10px;height:10px;border:2px solid var(--line2);border-top-color:var(--copper);border-radius:50%;animation:spin .6s linear infinite;}
+  /* Rendez-vous : parent + sous-catégories */
+  .nav-parent{display:flex;flex-direction:column;}
+  .np-head{display:flex;align-items:center;gap:10px;padding:8px 12px;background:none;border:none;color:var(--soft);font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;border-radius:8px;transition:background .13s,color .13s;width:100%;}
+  .np-head:hover{background:var(--wash);color:var(--ink);}
+  .np-head svg:first-of-type{width:16px;height:16px;flex-shrink:0;color:var(--dim);}
+  .np-head .lb{flex:1;text-align:left;}
+  .np-head .np-chevron{width:13px;height:13px;color:var(--faint);transition:transform .2s;}
+  .nav-parent.open .np-head .np-chevron{transform:rotate(90deg);}
+  .np-sub{display:none;flex-direction:column;gap:1px;margin:2px 0 4px 10px;padding-left:12px;border-left:1.5px solid var(--line3);}
+  .nav-parent.open .np-sub{display:flex;}
+  .np-item{display:flex;align-items:center;gap:8px;padding:7px 12px;background:none;border:none;color:var(--dim);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;border-radius:7px;transition:background .13s,color .13s;text-align:left;width:100%;}
+  .np-item:hover{background:var(--wash);color:var(--soft);}
+  .np-item.on{background:var(--washc);color:var(--copper-d);font-weight:600;}
+  .np-item .np-dot{width:5px;height:5px;border-radius:50%;background:var(--line);flex-shrink:0;transition:background .13s;}
+  .np-item.on .np-dot{background:var(--copper);}
+  .np-item .lb{flex:1;}
+  .np-item .cnt{font-size:10.5px;color:var(--faint);background:none;padding:0;}
+  .np-item.on .cnt{color:var(--copper-d);}
+  .np-head.on{background:var(--washc);color:var(--copper-d);}
+  .np-head.on svg{color:var(--copper);}
   /* Cascade d'entrée (réf Linear) */
   @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
   .view.on .dash-head{animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
@@ -1390,8 +1410,13 @@
   </nav>
   <div class="ngroup">Activité</div>
   <nav class="nav">
-    <button data-go="prep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/><path d="M9 14h6M9 18h4"/></svg><span class="lb">À préparer</span><span class="cnt" id="cntPrep">0</span></button>
-    <button data-go="match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg><span class="lb">Après-match</span><span class="cnt" id="cntMatch">0</span></button>
+    <div class="nav-parent" data-parent="rdv">
+      <button class="np-head" data-go="rdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span class="lb">Rendez-vous</span><svg class="np-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      <div class="np-sub">
+        <button data-go="prep" class="np-item"><span class="np-dot"></span><span class="lb">Brief</span><span class="cnt" id="cntPrep">0</span></button>
+        <button data-go="match" class="np-item"><span class="np-dot"></span><span class="lb">Après-match</span><span class="cnt" id="cntMatch">0</span></button>
+      </div>
+    </div>
     <button data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Affaires</span><span class="cnt" id="cntDeals">0</span></button>
     <button data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h1M9 13h1M14 9h1M14 13h1M11 21v-4h2v4"/></svg><span class="lb">Entreprises</span><span class="cnt" id="cntEnt">0</span></button>
     <button data-go="toi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span class="lb">Ton profil</span></button>
@@ -1419,7 +1444,7 @@
       <!-- Ligne d'horizon : date · salut · CTA principal (seul cuivre plein) -->
       <div class="dash-head">
         <div class="dh-l"><span class="eyebrow" id="dashEyebrow">Mardi</span><span class="dh-greet" id="dashGreet">Bonjour.</span></div>
-        <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous<kbd class="kbd-hint">N</kbd></button>
+        <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
       </div>
 
       <!-- Fil du jour : une phrase, orientation -->
@@ -1878,7 +1903,7 @@ const briefTempChip=b=>{
 };
 
 /* ═══ Navigation ═══ */
-const CRUMBS={dash:"Aujourd'hui",prep:'À préparer',match:'Après-match',affaires:'Affaires',entreprises:'Entreprises',toi:'Ton profil',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Après-match',affaires:'Affaires',entreprises:'Entreprises',toi:'Ton profil',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
@@ -1890,15 +1915,21 @@ function go(v){
   }
   if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
   if(v==='nouveau')renderNvRecent();
-  if(v==='prep'||v==='match'){
-    rdvView=v;
+  if(v==='rdv'||v==='prep'||v==='match'){
+    // Le parent 'rdv' pointe vers la sous-vue Brief par défaut
+    rdvView=(v==='match')?'match':'prep';
     document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-rdv'));
-    document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v));
-    $('crumb').textContent=CRUMBS[v]||'';
+    // Le parent Rendez-vous reste actif quand une sous-catégorie l'est
+    document.querySelectorAll('.side .nav button[data-go]').forEach(b=>{
+      const g=b.dataset.go;
+      b.classList.toggle('on', g===v || (g==='rdv' && (v==='prep'||v==='match')) );
+    });
+    const np=document.querySelector('.nav-parent[data-parent="rdv"]');
+    if(np)np.classList.add('open');
+    $('crumb').textContent=CRUMBS[rdvView==='prep'?'prep':'match']||'';
     renderRdvList();
     return;
   }
-  if(v==='rdv')renderRdvList();
   if(v==='entreprises')entList();
   if(v==='toi')renderToi();
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
@@ -2778,8 +2809,8 @@ function renderRdvList(){
   const eb=$('rdvEyebrow'), h1=$('rdvH1'), sub=$('rdvSub');
   if(rdvView==='prep'){
     if(eb)eb.textContent='Activité · Avant';
-    if(h1)h1.textContent='À préparer';
-    if(sub)sub.textContent='Les rendez-vous que Faro doit t\'armer avant que tu y ailles.';
+    if(h1)h1.textContent='Brief';
+    if(sub)sub.textContent='Ce que Faro te prépare avant d\'y aller.';
   } else {
     if(eb)eb.textContent='Activité · Après';
     if(h1)h1.textContent='Après-match';
@@ -2806,7 +2837,7 @@ function renderRdvList(){
   // ─── ZONE 1 : À TRAITER (non débriefés) ───
   const todo=all.filter(b=>!b.debrief).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
   if(todo.length){
-    const zoneT=rdvView==='prep'?'À préparer':'À raconter';
+    const zoneT=rdvView==='prep'?'À briefer':'À raconter';
     const zoneD=rdvView==='prep'?'Prépare-les avant que le rendez-vous arrive.':'Capture ce qui s\'est dit avant que ça s\'efface.';
     todoEl.innerHTML=`<div class="rdv-zone-head"><span class="rzh-dot pulse"></span><span class="rzh-t">${zoneT}</span><span class="rzh-n">${todo.length}</span><span class="rzh-d">${zoneD}</span></div>
       <div class="rdv-todo-grid">${todo.map(rdvTodoCard).join('')}</div>`;
