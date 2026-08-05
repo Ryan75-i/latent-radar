@@ -37,7 +37,7 @@
   .side{background:linear-gradient(180deg,#F3EDDF,#F0E9D8);border-right:1px solid #E7DFCD;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:18px 12px 14px;z-index:25;}
   .side .logo{padding:2px 10px 18px;}
   .side .logo svg{height:30px;display:block;}
-  .newbtn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:11px 12px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s;margin-bottom:16px;box-shadow:var(--sh);}
+  .newbtn{white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:11px 12px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s;margin-bottom:16px;box-shadow:var(--sh);}
   .newbtn:hover{background:var(--copper-d);}
   .newbtn svg{width:15px;height:15px;stroke-width:2.4;}
   .ngroup{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:14px 12px 6px;}
@@ -199,6 +199,22 @@
   .pc-t{font-size:15px;font-weight:700;color:var(--ink);align-self:end;}
   .pc-d{font-size:12px;color:var(--dim);line-height:1.4;}
   .kbd-hint{font-family:var(--mono);font-size:9px;font-weight:700;color:rgba(255,255,255,.85);background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:2px 6px;margin-left:auto;}
+  /* Cascade d'entrée : la page se construit (réf Linear) */
+  @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .view.on .companion{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .pulse-kpis{animation:rise .4s cubic-bezier(.2,.7,.2,1) .06s both;}
+  .view.on .rest-card{animation:rise .4s cubic-bezier(.2,.7,.2,1) .12s both;}
+  .view.on .journey-card{animation:rise .4s cubic-bezier(.2,.7,.2,1) .18s both;}
+  .view.on .dash-welcome{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  /* Clic jamais muet : micro-spinner sur Relancer */
+  .rr-act.loading{pointer-events:none;opacity:.75;}
+  .rr-act.loading svg{display:none;}
+  .rr-act.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  /* Anneau cuivre sur le jour actuel de la grille */
+  .jhcell.t{box-shadow:0 0 0 1.5px var(--copper);}
+  /* Hint D sur le CTA compagnon */
+  .comp-cta .kbd-hint{margin-left:2px;}
   /* Accessibilité : focus clavier visible et élégant */
   :focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:6px;}
   button:focus-visible,.pk:focus-visible,.act-card:focus-visible{outline:2px solid var(--copper);outline-offset:2px;}
@@ -223,9 +239,9 @@
   .ck-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
   .ck-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;padding-top:6px;}
   /* Zone haute : orientation */
-  .dash-top{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch;}
+  .dash-top{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch;}
   /* Carte compagnon */
-  .companion{position:relative;border-radius:var(--rl);padding:22px 24px;display:flex;flex-direction:column;border:1px solid;overflow:hidden;}
+  .companion{position:relative;border-radius:var(--rl);padding:20px 24px;display:flex;flex-direction:column;border:1px solid;overflow:hidden;}
   .companion.tone-blue{background:linear-gradient(140deg,#E8F0F6,#F6FAFC);border-color:#C6DCEA;}
   .companion.tone-copper{background:linear-gradient(140deg,#FCF0E4,#FDF8F2);border-color:#EBD6C2;}
   .companion.tone-green{background:linear-gradient(140deg,#E9F4EC,#F6FBF7);border-color:#CBE5D0;}
@@ -243,22 +259,22 @@
   .comp-cta svg{width:16px;height:16px;transition:transform .15s;}
   .comp-cta:hover svg{transform:translateX(3px);}
   /* Pouls + objectif */
-  .pulse-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .pulse-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
   .pk{background:var(--card);border:1px solid var(--line);border-top:2.5px solid var(--kc);border-radius:var(--rl);padding:16px 12px;cursor:pointer;text-align:center;box-shadow:var(--sh);transition:transform .14s,box-shadow .14s;display:flex;flex-direction:column;justify-content:center;}
   .pk:hover{transform:translateY(-2px);box-shadow:var(--shm);}
   .pk-v{font-family:var(--serif);font-weight:700;font-size:23px;color:var(--kc);line-height:1;}
   .pk-k{font-size:11px;color:var(--dim);margin-top:6px;font-weight:600;}
   /* Zone basse : deux colonnes, hauteur naturelle (jamais d'étirement) */
-  .dash-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start;}
+  .dash-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;}
   .rest-card{padding:0;overflow:hidden;}
-  .battle-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px 13px;border-bottom:1px solid var(--line3);}
+  .battle-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--line3);}
   .bh-t{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);}
   .bh-count{font-size:12px;color:var(--dim);margin-left:10px;}
   .bh-done{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green-d);font-weight:600;}
   .bh-done svg{width:14px;height:14px;}
   /* Liste "ce qu'il te reste" */
   .rest-list{display:flex;flex-direction:column;}
-  .rest-row{display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid var(--line3);border-left:3px solid var(--ac);transition:background .13s;}
+  .rest-row{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line3);border-left:3px solid var(--ac);transition:background .13s;}
   .rest-row:last-child{border-bottom:none;}
   .rest-row:hover{background:var(--wash);}
   .rr-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -274,7 +290,7 @@
   .rr-act.see{background:var(--wash);color:var(--soft);border:1px solid var(--line2);}
   .rr-act.see:hover{border-color:var(--copper-l);color:var(--copper-d);}
   /* Carte "Ta journée" */
-  .journey-card{padding:18px 20px;display:flex;flex-direction:column;}
+  .journey-card{padding:20px;display:flex;flex-direction:column;}
   .jc-head{margin-bottom:10px;}
   .obj-badge{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:700;}
   .jc-obj{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);line-height:1.2;margin-bottom:12px;}
@@ -1351,7 +1367,7 @@
     .shell{grid-template-columns:1fr;}
     .side{position:sticky;height:auto;flex-direction:row;align-items:center;gap:6px;padding:8px 12px;overflow-x:auto;}
     .side .logo{padding:0;} .side .logo svg{height:24px;} .ngroup{display:none;} .sp{display:none;}
-    .newbtn{margin:0;padding:8px 12px;} .newbtn span{display:none;}
+    .newbtn{white-space:nowrap;margin:0;padding:8px 12px;} .newbtn span{display:none;}
     .nav{flex-direction:row;gap:2px;} .nav button{padding:7px 9px;white-space:nowrap;} .nav button span.lb{display:none;} .nav .cnt{display:none;} .nav button.on::before{display:none;}
     .ucard{padding:2px;border:none;background:none;box-shadow:none;} .ucard .uinfo{display:none;}
     .topbar{padding:0 14px;} .search{min-width:0;flex:1;} .search span.txt{display:none;} .crumb{display:none;}
@@ -1368,7 +1384,7 @@
 <div class="shell">
 <aside class="side">
   <a class="logo" data-go="dash" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle><path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path><path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g><text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
-  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Préparer un rendez-vous</span><kbd class="kbd-hint">N</kbd></button>
+  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Préparer un RDV</span><kbd class="kbd-hint">N</kbd></button>
   <div class="ngroup">Pilotage</div>
   <nav class="nav">
     <button class="on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Aujourd'hui</span></button>
@@ -1402,7 +1418,7 @@
     <div class="cockpit">
       <div class="ck-head">
         <div class="eyebrow" id="dashEyebrow">Lundi</div>
-        <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
+        <button class="btn g" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
       </div>
 
       <!-- Zone haute : compagnon + pouls -->
@@ -1874,6 +1890,17 @@ document.addEventListener('keydown',e=>{
   if(document.querySelector('.debov.on,.passov.on,#briefDoc.on'))return;
   e.preventDefault(); ent=null; const q=$('qEnt'); if(q)q.value=''; go('nouveau');
 });
+// Raccourci : D pour raconter le premier rendez-vous en attente
+document.addEventListener('keydown',e=>{
+  if(e.key!=='d'&&e.key!=='D')return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const t=e.target;
+  if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(document.querySelector('.debov.on,.passov.on,#briefDoc.on'))return;
+  const aDeb=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer').sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+  if(!aDeb.length)return;
+  e.preventDefault(); const x=briefs.find(y=>y.id===aDeb[0].id); if(x)openBrief(x);
+});
 document.querySelectorAll('[data-go2]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go2)));
 $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouveau');});
 
@@ -2046,7 +2073,7 @@ function dash(){
     cta='Préparer un rendez-vous';ctaFn=()=>go('nouveau');
   } else {
     const bits=[];
-    if(aDeb.length)bits.push(`${aDeb.length} rendez-vous à débriefer`);
+    if(aDeb.length)bits.push(`${aDeb.length} rendez-vous à raconter`);
     if(hotDeals.length)bits.push(`${hotDeals.length} affaire${hotDeals.length>1?'s':''} chaude${hotDeals.length>1?'s':''}`);
     if(coldGlobal(cold))bits.push('une affaire qui dort');
     const dense=(aDeb.length+hotDeals.length)>=3;
@@ -2059,7 +2086,7 @@ function dash(){
     } else {
       fil=ws.streak>1?`Tout est à jour. Série de ${ws.streak} débriefs, tiens-la.`:'Tout est à jour. Beau travail, prépare la suite.';
     }
-    cta=aDeb.length?'Débriefer maintenant':hotDeals.length?'Voir mes affaires':'Préparer un rendez-vous';
+    cta=aDeb.length?'Raconter mon rendez-vous':hotDeals.length?'Voir mes affaires':'Préparer un rendez-vous';
     ctaFn=aDeb.length?()=>{const o=aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0];const x=briefs.find(y=>y.id===o.id);if(x)openBrief(x);}:hotDeals.length?()=>go('affaires'):()=>go('nouveau');
   }
   const comp=$('companion');
@@ -2067,7 +2094,7 @@ function dash(){
     comp.className='companion tone-'+tone;
     comp.innerHTML=`<div class="comp-greet">${salut}${prenom?' '+esc(prenom):''}.</div>`
       +`<div class="comp-fil"><span class="comp-dot ${dot}"></span><span>${fil}</span></div>`
-      +`<button class="comp-cta">${cta}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
+      +`<button class="comp-cta">${cta}${aDeb.length?'<kbd class="kbd-hint">D</kbd>':''}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
     comp.querySelector('.comp-cta').addEventListener('click',ctaFn);
   }
 
@@ -2153,22 +2180,24 @@ function renderJourney(aDeb){
     const col=[];
     for(let d=0;d<7;d++){
       const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(w*7)+(d-6));
-      col.push({n:dayCount[day.getTime()]||0,future:day>today});
+      col.push({n:dayCount[day.getTime()]||0,future:day>today,today:day.getTime()===today.getTime(),lbl:day.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})});
     }
     cells.push(col);
   }
   const lvl=n=>n===0?0:n===1?1:n===2?2:3;
   let heat='<div class="jheat">';
-  cells.forEach(col=>{heat+='<div class="jhcol">';col.forEach(c=>{heat+=`<span class="jhcell l${c.future?'x':lvl(c.n)}"></span>`;});heat+='</div>';});
+  cells.forEach(col=>{heat+='<div class="jhcol">';col.forEach(c=>{heat+=`<span class="jhcell l${c.future?'x':lvl(c.n)}${c.today?' t':''}"${c.future?'':` title="${c.lbl}, ${c.n} brief${c.n>1?'s':''}"`}></span>`;});heat+='</div>';});
   heat+='</div>';
 
   jc.innerHTML=`<div class="jc-head"><span class="obj-badge">Ta journée</span></div>
-    <div class="jc-obj">${goalDone?'Objectif atteint. Tu assures.':`Débriefe ${goal} rendez-vous aujourd'hui`}</div>
-    <div class="obj-bar"><div class="obj-fill ${goalDone?'done':''}" style="width:${Math.max(pct,4)}%"></div></div>
+    <div class="jc-obj">${goalDone?'Objectif atteint. Tu assures.':`Raconte ${goal} rendez-vous aujourd'hui`}</div>
+    <div class="obj-bar"><div class="obj-fill ${goalDone?'done':''}" style="width:0%"></div></div>
     <div class="obj-ratio">${debToday} / ${goal} ${goalDone?'✓':''}</div>
     <div class="jc-sep"></div>
     <div class="jc-rhythm-lbl">Ton rythme, 8 semaines</div>
     ${heat}`;
+  const fill=jc.querySelector('.obj-fill');
+  if(fill)requestAnimationFrame(()=>requestAnimationFrame(()=>{fill.style.width=Math.max(pct,4)+'%';}));
 }
 
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
@@ -2318,7 +2347,7 @@ function renderFocus(aDeb,aRel,cold){
   $('focusW').innerHTML=html;
   $('focusW').querySelectorAll('.rest-row').forEach((row,i)=>{
     const it=rows[i];
-    row.querySelector('.rr-act').addEventListener('click',e=>{e.stopPropagation();it.fn();});
+    row.querySelector('.rr-act').addEventListener('click',e=>{e.stopPropagation();const b=e.currentTarget;if(b.classList.contains('loading'))return;b.classList.add('loading');setTimeout(()=>{b.classList.remove('loading');it.fn();},300);});
   });
 }
 
