@@ -324,6 +324,17 @@
   /* Carte urgente : liseré gauche plus marqué, léger halo */
   .rdv-todo-card.urgent{box-shadow:var(--sh),0 0 0 1px color-mix(in srgb,var(--blue) 20%,transparent);}
   .rdv-todo-card.urgent .rtc-wait-txt{color:var(--blue);font-weight:700;}
+  /* Cascade d'entrée Affaires (réf Linear) */
+  .view.on #pipeHint{animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .pilot{animation:rise .35s cubic-bezier(.2,.7,.2,1) .05s both;}
+  .view.on .aff-viewtabs{animation:rise .35s cubic-bezier(.2,.7,.2,1) .10s both;}
+  .view.on .aff-tools{animation:rise .35s cubic-bezier(.2,.7,.2,1) .14s both;}
+  .view.on #affAction{animation:rise .35s cubic-bezier(.2,.7,.2,1) .18s both;}
+  .view.on #affBoardWrap{animation:rise .35s cubic-bezier(.2,.7,.2,1) .18s both;}
+  /* Micro-spinner sur act-go (clic jamais muet) */
+  .act-go.loading{pointer-events:none;opacity:.75;}
+  .act-go.loading svg{display:none;}
+  .act-go.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin-left:2px;}
   /* État vide plein écran (page Brief / Après-match) */
   .page-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px;min-height:50vh;}
   .pe-ic{width:64px;height:64px;border-radius:20px;background:var(--wash);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--copper);margin-bottom:24px;}
@@ -1500,7 +1511,7 @@
   </section>
 
   <section class="view" id="v-affaires">
-    <div class="ptitle"><div><div class="eyebrow">Activité · Pipeline</div><h1>Affaires</h1><div class="sub">Tes ventes, du premier contact à la signature. Chaque débrief fait entrer et avancer son affaire.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="affExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div></div>
+    <div class="ptitle"><div><div class="eyebrow">Activité · Pipeline</div><h1>Affaires</h1><div class="sub">Tes ventes, du premier contact à la signature. Chaque récit fait entrer et avancer son affaire.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="affExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn g" data-go2="nouveau">Nouveau brief</button></div></div>
     <div id="pipeHint"></div>
 
     <!-- Barre de pilotage -->
@@ -1932,7 +1943,7 @@ function go(v){
     const vt=$('affViewTabs');if(vt&&!vt.dataset.wired){vt.dataset.wired='1';vt.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{affView=b.dataset.view;vt.querySelectorAll('.avt').forEach(x=>x.classList.toggle('on',x===b));$('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';renderAll();}));}
     $('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';
   }
-  if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
+  if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, raconte-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
   if(v==='nouveau')renderNvRecent();
   if(v==='rdv'||v==='prep'||v==='match'){
     // Le parent 'rdv' pointe vers la sous-vue Brief par défaut
@@ -2548,7 +2559,7 @@ function dealNextAction(d){
   const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
   // Un RDV pas encore débriefé ?
   const undeb=bs.find(b=>!b.debrief&&b.statut==='a_relancer');
-  if(undeb){const dn=days(undeb.created_at);return {ic:ICO.clock,txt:`À débriefer${dn>=3?`, ${dn} j`:''}`,urg:dn>=3?'late':'due'};}
+  if(undeb){const dn=days(undeb.created_at);return {ic:ICO.clock,txt:`À raconter${dn>=3?`, ${dn} j`:''}`,urg:dn>=3?'late':'due'};}
   // Une note d'action claire
   const note=lb&&lb.debrief?lb.debrief.next_action:d.prochaine_action;
   if(note&&!looksLikeMail(note)&&note.length<=32){
@@ -2565,6 +2576,17 @@ function dealNextAction(d){
 // Vue par priorité d'action : les affaires regroupées par ce qu'elles demandent
 function renderActionView(){
   const root=$('affAction'); if(!root)return;
+  const enteredCheck=deals.filter(dealEntered);
+  if(!enteredCheck.length){
+    root.innerHTML=`<div class="page-empty">
+      <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg></div>
+      <div class="pe-t">Aucune affaire encore.</div>
+      <div class="pe-d">Prépare un rendez-vous et raconte-le. L'affaire naîtra ici, prête à avancer vers la signature.</div>
+      <button class="pe-cta" data-go2="nouveau">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+    </div>`;
+    const c=root.querySelector('[data-go2]'); if(c)c.addEventListener('click',()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+    return;
+  }
   const entered=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape));
   const wins=deals.filter(d=>d.etape==='gagne');
   // Recherche
@@ -2587,7 +2609,7 @@ function renderActionView(){
   });
 
   const SECTIONS=[
-    {k:'debrief',t:'À débriefer',d:'Capture ces rendez-vous avant qu\'ils s\'effacent.',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',col:'var(--blue)',bg:'var(--bluebg)'},
+    {k:'debrief',t:'À raconter',d:'Capture ces rendez-vous avant qu\'ils s\'effacent.',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',col:'var(--blue)',bg:'var(--bluebg)'},
     {k:'relance',t:'À relancer maintenant',d:'Chaud ou en attente depuis un moment. Ne les laisse pas refroidir.',ic:'<path d="M5 12h14M13 6l6 6-6 6"/>',col:'var(--copper)',bg:'var(--washc)'},
     {k:'avancer',t:'À faire avancer',d:'Le prochain pas pour les rapprocher de la signature.',ic:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',col:'var(--gold)',bg:'var(--goldbg)'},
     {k:'dorment',t:'Qui dorment',d:'Sans mouvement depuis deux semaines. À réveiller ou à clore.',ic:'<path d="M12 2v20M4 6l16 12M20 6L4 18"/>',col:'var(--dim)',bg:'var(--wash)'}
@@ -2598,7 +2620,7 @@ function renderActionView(){
 
   const anyDeal=pool.length>0;
   if(!anyDeal){
-    root.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Débriefe tes rendez-vous : chaque débrief fait entrer son affaire ici.':'Prépare un rendez-vous, débriefe-le, et l\'affaire entre ici toute seule.'}</div></div></div>`;
+    root.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Débriefe tes rendez-vous : chaque débrief fait entrer son affaire ici.':'Prépare un rendez-vous, raconte-le, et l\'affaire entre ici toute seule.'}</div></div></div>`;
     return;
   }
 
@@ -2660,10 +2682,15 @@ function renderActionView(){
     const go=c.querySelector('.act-go');
     if(go)go.addEventListener('click',e=>{
       e.stopPropagation();
+      if(go.classList.contains('loading'))return;
+      go.classList.add('loading');
       const kind=go.dataset.go;
-      if(kind==='debrief'){const b=dealBriefs(d).find(x=>!x.debrief&&x.statut==='a_relancer');if(b){current=b;openBrief(b);setTimeout(()=>{if(typeof askPass==='function')askPass();},200);return;}}
-      if(kind==='relance'){const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');return;}}
-      openFiche(d);
+      setTimeout(()=>{
+        go.classList.remove('loading');
+        if(kind==='debrief'){const b=dealBriefs(d).find(x=>!x.debrief&&x.statut==='a_relancer');if(b){current=b;openBrief(b);setTimeout(()=>{if(typeof askPass==='function')askPass();},200);return;}}
+        if(kind==='relance'){const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');return;}}
+        openFiche(d);
+      },250);
     });
   });
 }
@@ -2671,7 +2698,7 @@ function renderActionView(){
 function boardRender(root,mini){
   if(!root)return;
   const entered=deals.filter(dealEntered);
-  if(!entered.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Tes rendez-vous sont préparés. Débriefe-les : chaque débrief fait entrer son affaire dans le pipeline.':'Ton pipeline est vide. Prépare un rendez-vous, débriefe-le, et l\'affaire entre ici toute seule.'}</div></div>`;return;}
+  if(!entered.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Tes rendez-vous sont préparés. Débriefe-les : chaque débrief fait entrer son affaire dans le pipeline.':'Ton pipeline est vide. Prépare un rendez-vous, raconte-le, et l\'affaire entre ici toute seule.'}</div></div>`;return;}
   // Filtrage global (search + filtres), tri par colonne
   const q=pipeSearch.toLowerCase();
   const match=d=>{
@@ -3078,7 +3105,7 @@ function exportRdvCsv(subset){
   const TL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
   list.forEach(b=>{
     const d=b.deal_id?deals.find(x=>x.id===b.deal_id):null;
-    rows.push([b.entreprise||'',cleanPoste(b.poste||''),new Date(b.created_at).toLocaleDateString('fr-FR'),b.debrief?'Débriefé':'À débriefer',b.debrief?(TL[b.debrief.temperature]||''):'',b.debrief?(b.debrief.next_action||''):'',d?stg(d.etape).l:'']);
+    rows.push([b.entreprise||'',cleanPoste(b.poste||''),new Date(b.created_at).toLocaleDateString('fr-FR'),b.debrief?'Raconté':'À raconter',b.debrief?(TL[b.debrief.temperature]||''):'',b.debrief?(b.debrief.next_action||''):'',d?stg(d.etape).l:'']);
   });
   downloadCsv(rows,`faro-rendez-vous-${new Date().toISOString().slice(0,10)}.csv`);
   toast(`${list.length} rendez-vous exporté${list.length>1?'s':''}`);
