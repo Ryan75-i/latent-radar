@@ -1383,14 +1383,15 @@
 <div class="shell">
 <aside class="side">
   <a class="logo" data-go="dash" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle><path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path><path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g><text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
-  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Préparer un RDV</span><kbd class="kbd-hint">N</kbd></button>
+  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Préparer un RDV</span></button>
   <div class="ngroup">Pilotage</div>
   <nav class="nav">
     <button class="on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Aujourd'hui</span></button>
   </nav>
   <div class="ngroup">Activité</div>
   <nav class="nav">
-    <button data-go="rdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span class="lb">Rendez-vous</span><span class="cnt" id="cntRdv">0</span></button>
+    <button data-go="prep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/><path d="M9 14h6M9 18h4"/></svg><span class="lb">À préparer</span><span class="cnt" id="cntPrep">0</span></button>
+    <button data-go="match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg><span class="lb">Après-match</span><span class="cnt" id="cntMatch">0</span></button>
     <button data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Affaires</span><span class="cnt" id="cntDeals">0</span></button>
     <button data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h1M9 13h1M14 9h1M14 13h1M11 21v-4h2v4"/></svg><span class="lb">Entreprises</span><span class="cnt" id="cntEnt">0</span></button>
     <button data-go="toi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span class="lb">Ton profil</span></button>
@@ -1434,7 +1435,7 @@
         <div class="card ov-card" data-ov="rdv">
           <div class="ov-head"><span class="ov-lbl">Ton terrain</span></div>
           <div class="ov-body" id="ovTerrain"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
-          <div class="ov-foot"><button class="ov-cta" data-go="rdv">Voir mes rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+          <div class="ov-foot"><button class="ov-cta" data-go="match">Voir mes rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
         </div>
         <div class="card ov-card" data-ov="entreprises">
           <div class="ov-head"><span class="ov-lbl">Ta mémoire</span></div>
@@ -1486,7 +1487,7 @@
   </section>
 
   <section class="view" id="v-rdv">
-    <div class="ptitle"><div><div class="eyebrow">Activité · Terrain</div><h1>Rendez-vous</h1><div class="sub">Le brief avant, le débrief après. Débriefe pour capturer ce qui s'est dit.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div></div>
+    <div class="ptitle"><div><div class="eyebrow" id="rdvEyebrow">Activité · Terrain</div><h1 id="rdvH1">Rendez-vous</h1><div class="sub" id="rdvSub">Le brief avant, le débrief après.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn" data-go2="nouveau">Préparer un rendez-vous</button></div></div>
 
     <div class="aff-tools">
       <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="rdvQ" placeholder="Chercher une entreprise, un interlocuteur…" autocomplete="off"/></div>
@@ -1877,7 +1878,7 @@ const briefTempChip=b=>{
 };
 
 /* ═══ Navigation ═══ */
-const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',affaires:'Affaires',entreprises:'Entreprises',toi:'Ton profil',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",prep:'À préparer',match:'Après-match',affaires:'Affaires',entreprises:'Entreprises',toi:'Ton profil',fiche:'Entreprise',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
@@ -1889,6 +1890,14 @@ function go(v){
   }
   if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, débriefe-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
   if(v==='nouveau')renderNvRecent();
+  if(v==='prep'||v==='match'){
+    rdvView=v;
+    document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-rdv'));
+    document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v));
+    $('crumb').textContent=CRUMBS[v]||'';
+    renderRdvList();
+    return;
+  }
   if(v==='rdv')renderRdvList();
   if(v==='entreprises')entList();
   if(v==='toi')renderToi();
@@ -1956,7 +1965,9 @@ function tok(n){if(typeof n!=='number')return;const s=n+(n>1?' jetons':' jeton')
 function renderAll(){
   $('cntDeals').textContent=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape)).length;
   const ce=$('cntEnt'); if(ce)ce.textContent=deals.length;
-  const cr=$('cntRdv'); if(cr){const nd=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer').length;cr.textContent=nd||briefs.length;cr.classList.toggle('hot',nd>0);}
+  const nd=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer').length;
+  const cp=$('cntPrep'); if(cp){cp.textContent=nd; cp.classList.toggle('hot',nd>0);}
+  const cm=$('cntMatch'); if(cm){cm.textContent=briefs.length; cm.classList.toggle('hot',false);}
   // Pouls de la semaine dans la sidebar
   const sp=$('sidePouls');
   if(sp){
@@ -2156,7 +2167,7 @@ function dash(){
     if(b.dataset.wired)return; b.dataset.wired='1';
     b.addEventListener('click',e=>{e.stopPropagation();go(b.dataset.go);});
   });
-  const na=$('newsAll'); if(na&&!na.dataset.wired){na.dataset.wired='1';na.addEventListener('click',()=>go('rdv'));}
+  const na=$('newsAll'); if(na&&!na.dataset.wired){na.dataset.wired='1';na.addEventListener('click',()=>go('match'));}
 }
 
 function fillDashHead(){
@@ -2754,7 +2765,7 @@ async function acceptSugg(id){
 }
 
 /* ═══ Page Rendez-vous : tous les briefs et débriefs ═══ */
-let rdvFilter='tous', rdvSort='recent', rdvQuery='';
+let rdvView='match'; let rdvFilter='tous', rdvSort='recent', rdvQuery='';
 function rdvSearchMatch(b){
   if(!rdvQuery)return true;
   const q=rdvQuery.toLowerCase();
@@ -2763,6 +2774,17 @@ function rdvSearchMatch(b){
 function renderRdvList(){
   const todoEl=$('rdvTodo'), histEl=$('rdvHistory');
   if(!todoEl||!histEl)return;
+  // En-tête dynamique selon la vue
+  const eb=$('rdvEyebrow'), h1=$('rdvH1'), sub=$('rdvSub');
+  if(rdvView==='prep'){
+    if(eb)eb.textContent='Activité · Avant';
+    if(h1)h1.textContent='À préparer';
+    if(sub)sub.textContent='Les rendez-vous que Faro doit t\'armer avant que tu y ailles.';
+  } else {
+    if(eb)eb.textContent='Activité · Après';
+    if(h1)h1.textContent='Après-match';
+    if(sub)sub.textContent='Ce que tu as vécu sur le terrain. Raconte, Faro capitalise.';
+  }
   // Câblages
   const rq=$('rdvQ');
   if(rq&&!rq.dataset.wired){rq.dataset.wired='1';rq.addEventListener('input',()=>{rdvQuery=rq.value.trim();renderRdvList();});}
@@ -2771,7 +2793,9 @@ function renderRdvList(){
   const re=$('rdvExport');
   if(re&&!re.dataset.wired){re.dataset.wired='1';re.addEventListener('click',()=>exportRdvCsv());}
 
-  const all=briefs.filter(rdvSearchMatch);
+  // Filtrer selon la vue : À préparer = briefs sans débrief ; Après-match = tous (à raconter + racontés)
+  const base=rdvView==='prep'?briefs.filter(b=>!b.debrief):briefs;
+  const all=base.filter(rdvSearchMatch);
   const TORD={close:0,chaud:1,tiede:2,mort:3};
   const sortFn=(a,b)=>{
     if(rdvSort==='nom')return (a.entreprise||'').localeCompare(b.entreprise||'');
@@ -2782,7 +2806,9 @@ function renderRdvList(){
   // ─── ZONE 1 : À TRAITER (non débriefés) ───
   const todo=all.filter(b=>!b.debrief).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
   if(todo.length){
-    todoEl.innerHTML=`<div class="rdv-zone-head"><span class="rzh-dot pulse"></span><span class="rzh-t">À traiter</span><span class="rzh-n">${todo.length}</span><span class="rzh-d">Capture ce qui s'est dit avant que ça s'efface.</span></div>
+    const zoneT=rdvView==='prep'?'À préparer':'À raconter';
+    const zoneD=rdvView==='prep'?'Prépare-les avant que le rendez-vous arrive.':'Capture ce qui s\'est dit avant que ça s\'efface.';
+    todoEl.innerHTML=`<div class="rdv-zone-head"><span class="rzh-dot pulse"></span><span class="rzh-t">${zoneT}</span><span class="rzh-n">${todo.length}</span><span class="rzh-d">${zoneD}</span></div>
       <div class="rdv-todo-grid">${todo.map(rdvTodoCard).join('')}</div>`;
   } else {
     todoEl.innerHTML=`<div class="rdv-alldone"><span class="rad-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="rad-t">Tout est débriefé.</div><div class="rad-d">Aucun rendez-vous en attente. Beau travail.</div></div></div>`;
@@ -4191,7 +4217,7 @@ function toggleCarnetDictation(){
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
-const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Rendez-vous',go:'rdv'},{t:'Entreprises',go:'entreprises'},{t:'Ton profil',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
+const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'À préparer',go:'prep'},{t:'Après-match',go:'match'},{t:'Entreprises',go:'entreprises'},{t:'Ton profil',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
 function palOpenF(){$('pal').classList.add('on');$('palQ').value='';palRender('');setTimeout(()=>$('palQ').focus(),30);}
 function palClose(){$('pal').classList.remove('on');}
 $('palOpen').addEventListener('click',palOpenF);
