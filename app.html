@@ -1907,6 +1907,8 @@ const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Après-ma
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
+  // Le parent Rendez-vous n'est allumé QUE si on est sur une de ses sous-catégories
+  document.querySelectorAll('.side .nav [data-toggle="rdv"]').forEach(b=>b.classList.toggle('on', v==='prep'||v==='match'));
   $('crumb').textContent=CRUMBS[v]||'';
   if(v==='affaires'){
     const ae=$('affExport');if(ae&&!ae.dataset.wired){ae.dataset.wired='1';ae.addEventListener('click',()=>exportAffCsv());}
@@ -1938,8 +1940,9 @@ function go(v){
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
 document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
-// Parent "Rendez-vous" : le clic ne navigue pas, il déplie/replie les sous-catégories
-document.querySelectorAll('[data-toggle]').forEach(el=>el.addEventListener('click',()=>{
+// Parent "Rendez-vous" : le clic ne fait QUE déplier/replier. L'état "on" est géré par go() selon la vue active.
+document.querySelectorAll('[data-toggle]').forEach(el=>el.addEventListener('click',e=>{
+  e.preventDefault();
   const p=el.closest('.nav-parent'); if(p)p.classList.toggle('open');
 }));
 // Raccourci : N pour préparer un rendez-vous, partout (hors saisie)
