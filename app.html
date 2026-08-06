@@ -603,6 +603,22 @@
   .sect.foldable.fold .dd{display:none;}
   .sect.foldable.fold .acts{display:none;}
   .sect.foldable .secthd .acts{margin-left:0;}
+  /* Curseur d'écriture : le brief se rédige sous les yeux */
+  .cur{display:inline-block;width:2px;height:1em;background:var(--copper);margin-left:2px;vertical-align:-2px;animation:curbl .9s steps(1) infinite;}
+  @keyframes curbl{50%{opacity:0;}}
+  .skipw{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:9;border:1px solid var(--line2);background:var(--card);color:var(--soft);border-radius:10px;padding:9px 16px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:var(--shl);transition:.13s;}
+  .skipw:hover{border-color:var(--copper);color:var(--copper-d);}
+  /* ══ Ce que tu ramènes : le brief ne parle pas, il écoute aussi ══ */
+  .sect.harvest{background:linear-gradient(140deg,#E8F0F6,#F8FBFD);border-color:#C6DCEA;}
+  .sect.harvest .secthd{background:transparent;border-color:#D5E6F0;}
+  .sect.harvest .num{color:var(--blue);}
+  .hv{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed #C6DCEA;}
+  .hv:last-of-type{border-bottom:none;}
+  .hv-b{width:19px;height:19px;border-radius:50%;border:1.5px solid var(--blue);flex-shrink:0;margin-top:2px;opacity:.55;}
+  .hv-t{flex:1;min-width:0;}
+  .hv-q{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.4;}
+  .hv-w{font-size:11.5px;color:var(--dim);line-height:1.4;margin-top:2px;}
+  .hv-foot{margin-top:12px;padding-top:11px;border-top:1px solid #D5E6F0;font-size:11.5px;color:var(--blue);line-height:1.45;}
   .plan-all{margin-left:auto;border:none;background:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--copper-d);cursor:pointer;padding:4px 8px;border-radius:6px;transition:.13s;}
   .plan-all:hover{background:var(--washc);}
   /* Mémoire entrante dans le brief */
@@ -3889,7 +3905,41 @@ document.addEventListener('keydown',e=>{
 /* ═══ Génération ═══ */
 const note=(t,c)=>{const n=$('note');n.textContent=t;n.className='note on '+c;};
 const clr=()=>{$('note').className='note';};
-let cmpTimer=null;
+let cmpTimer=null, justWritten=false, typeTimers=[];
+// Le brief s'écrit sous les yeux, il ne surgit pas d'un bloc
+function typeIn(el,txt,speed,done){
+  if(!el)return; el.textContent=''; 
+  const cur=document.createElement('span'); cur.className='cur'; el.appendChild(cur);
+  let i=0;
+  const tick=()=>{
+    i++; el.textContent=txt.slice(0,i); el.appendChild(cur);
+    if(i<txt.length)typeTimers.push(setTimeout(tick,speed));
+    else{cur.remove(); if(done)done();}
+  };
+  typeTimers.push(setTimeout(tick,speed));
+}
+function stopTyping(){typeTimers.forEach(clearTimeout);typeTimers=[];}
+function composeReveal(){
+  const rows=[...document.querySelectorAll('#dMain .plan-lv')];
+  if(!rows.length)return;
+  const texts=rows.map(r=>r.textContent);
+  rows.forEach(r=>r.textContent='');
+  const skip=document.createElement('button');
+  skip.className='skipw'; skip.textContent='Tout afficher';
+  document.body.appendChild(skip);
+  const finish=()=>{
+    stopTyping();
+    rows.forEach((r,i)=>{r.textContent=texts[i];});
+    document.querySelectorAll('#dMain .sect').forEach(x=>x.classList.add('reveal'));
+    skip.remove();
+  };
+  skip.addEventListener('click',finish);
+  rows.forEach((r,i)=>{
+    typeTimers.push(setTimeout(()=>typeIn(r,texts[i],14,i===rows.length-1?()=>{
+      setTimeout(()=>{const b=document.querySelector('.skipw');if(b)b.remove();},400);
+    }:null),i*260));
+  });
+}
 // Plus d'écran d'attente : on atterrit sur le brief, il se remplit sous les yeux
 const CMP_SECTS=[['1','Ouverture'],['2','Questions'],['3','Objection probable'],['4','Le chiffre'],['5','Pièges'],['6','Prochaine étape']];
 function openComposing(){
@@ -3972,7 +4022,7 @@ $('gen').addEventListener('click',async()=>{
     clearInterval(cmpTimer);
     if(typeof o.tokens_left==='number')tok(o.tokens_left);
     if(o.deal){const i=deals.findIndex(d=>d.id===o.deal.id);if(i>=0)deals[i]=o.deal;else deals.unshift(o.deal);}
-    if(o.brief){briefs.unshift(o.brief);renderAll();openBrief(o.brief);}
+    if(o.brief){o.brief.objectif=goalSel||'qualifier';briefs.unshift(o.brief);renderAll();justWritten=true;openBrief(o.brief);}
     ent=null;$('qEnt').value='';
   }catch(e){closeComposing();note('Connexion impossible au serveur.','e');}
   finally{b.classList.remove('load');b.disabled=!posteSel;$('genL').textContent='Générer le brief';const kb2=b.querySelector('.kbd-hint');if(kb2)kb2.style.display='';}
@@ -4105,17 +4155,43 @@ function openBrief(b){
       copy:(ch.valeur||'')+' '+(ch.phrase||''),
       body:`<div class="fig"><b data-edit="ch-valeur">${esc(ch.valeur||'')}</b><span class="phr" data-edit="ch-phrase">${esc(ch.phrase||'')}</span></div>${citation(ch.source,ch.source_url)}${refbox('chiffre')}${anz('chiffre','Sa réaction au chiffre…')}`}
   ];
+  // Ce que tu ramènes : trois réponses à obtenir, qui nourriront le débrief
+  const HARVEST={
+    qualifier:[['Un budget existe-t-il pour ce sujet, et de quel ordre ?',"Sans budget identifié, il n'y a pas d'affaire, juste une conversation."],
+      ['Qui tranchera à la fin, et qui doit être convaincu avant ?',"Le décideur n'est presque jamais celui qui te reçoit."],
+      ["À quelle échéance ce sujet doit-il être réglé ?","Sans date, l'affaire dort et tu ne le sauras que trop tard."]],
+    rdv2:[["Qui d'autre doit être dans la pièce la prochaine fois ?","Un deuxième rendez-vous sans le décideur te fait perdre un mois."],
+      ['Sur quel sujet précis veut-il qu\'on revienne ?',"Une date sans sujet se déplace, une date avec sujet tient."],
+      ['Quelle date exactement, dans les dix jours ?',"Repartir sans date, c'est repartir sans rien."]],
+    chiffrer:[['Quel périmètre exact veut-il voir chiffré ?','Un devis hors périmètre se fait comparer et perdre.'],
+      ['De quelle enveloppe dispose-t-il réellement ?','Chiffrer à l\'aveugle, c\'est se disqualifier ou se brader.'],
+      ['Quand la décision sera-t-elle prise, et par qui ?','Une proposition sans date de décision reste sur un bureau.']],
+    signer:[['Que reste-t-il à lever avant de signer ?','Ce qui n\'est pas dit maintenant reviendra au moment de signer.'],
+      ['Qui appose la signature, et sous quel délai ?','Le signataire a souvent un circuit interne que personne ne t\'annonce.'],
+      ['Quelles conditions veut-il voir bouger ?','Mieux vaut la négociation en face que par mail trois semaines après.']]
+  };
+  const hv=HARVEST[b.objectif]||HARVEST.qualifier;
+  sections.push({key:'harvest',num:pg.length?6:5,t:'Ce que tu ramènes',d:'Les trois réponses à ne pas repartir sans.',
+    copy:hv.map(h=>h[0]).join('\n'),
+    body:hv.map(h=>`<div class="hv"><span class="hv-b"></span><span class="hv-t"><span class="hv-q">${esc(h[0])}</span><span class="hv-w">${esc(h[1])}</span></span></div>`).join('')
+      +`<div class="hv-foot">Ces trois réponses sont ce que ton récit confrontera. C'est ce qui rendra ton prochain brief plus tranchant.</div>`});
   if(pg.length)sections.push({key:'pieges',num:5,t:'Pièges',d:'Les erreurs à ne pas commettre avec ce profil.',copy:pg.join('\n'),
     body:pg.map(p=>`<div class="trap">${esc(p)}</div>`).join('')});
   sections.push({key:'next',num:pg.length?6:5,t:'Prochaine étape',d:'Ce que tu proposes en partant, avant de te lever.',ref:'next_step',
     copy:(ns&&ns.phrase)||ns||'',
     body:`<div class="nextv" data-edit="next">${esc((ns&&ns.phrase)||ns||'')}</div>${ns.delai_jours?`<div class="nextw">Relance prévue dans ${ns.delai_jours} jours</div>`:''}${refbox('next_step')}`});
   const prev=t=>{t=(t||'').toString().replace(/\s+/g,' ').trim();return t.length>78?t.slice(0,77)+'…':t;};
-  html+=sections.map((s,si)=>`<div class="sect foldable ${si===0?'':'fold'}" data-sec="${s.key}"><div class="secthd"><span class="num">${s.num}</span><span class="tt">${s.t}</span><span class="dd">${s.d}</span><span class="prev">${esc(prev(s.copy))}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg><div class="acts">${s.key!=='pieges'?`<button class="sbtn" data-editbtn="${s.key}">${penSvg}Modifier</button>`:''}${s.ref?`<button class="sbtn" data-refbtn="${s.ref}">${aiSvg}Reformuler</button>`:''}<button class="sbtn" data-copy="${esc(s.copy)}">${cpySvg}Copier</button></div></div><div class="sectbd">${s.body}</div></div>`).join('');
+  const order=['ouverture','questions','objection','chiffre','pieges','harvest','next'];
+  sections.sort((a,bb)=>order.indexOf(a.key)-order.indexOf(bb.key));
+  sections.forEach((x,i)=>{x.num=i+1;});
+  html+=sections.map((s,si)=>`<div class="sect foldable ${s.key==='harvest'?'harvest ':''}${si===0?'':'fold'}" data-sec="${s.key}"><div class="secthd"><span class="num">${s.num}</span><span class="tt">${s.t}</span><span class="dd">${s.d}</span><span class="prev">${esc(prev(s.copy))}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg><div class="acts">${s.key!=='pieges'?`<button class="sbtn" data-editbtn="${s.key}">${penSvg}Modifier</button>`:''}${s.ref?`<button class="sbtn" data-refbtn="${s.ref}">${aiSvg}Reformuler</button>`:''}<button class="sbtn" data-copy="${esc(s.copy)}">${cpySvg}Copier</button></div></div><div class="sectbd">${s.body}</div></div>`).join('');
   html+=`<div class="sect" id="libreCard"><div class="secthd"><span class="num">✎</span><span class="tt">Notes rapides</span><span class="dd">Ce que tu captes en vrac. Cmd+N.</span></div><div class="sectbd"><div id="libreList"></div><button class="btn g sm" id="libreAdd" style="margin-top:8px;">+ Une note</button></div></div>`;
   $('dMain').innerHTML=html;
   const sects=$('dMain').querySelectorAll('.sect');
-  sects.forEach((el,i)=>setTimeout(()=>el.classList.add('reveal'),100+i*160));
+  stopTyping();
+  const st=justWritten?260:60, gap=justWritten?190:120;
+  sects.forEach((el,i)=>setTimeout(()=>el.classList.add('reveal'),st+i*gap));
+  if(justWritten){justWritten=false;setTimeout(composeReveal,120);}
   if((ann.libre||[]).length)$('libreCard').classList.add('haslibre');
   (ann.libre||[]).forEach(nt=>addLibre(nt.t,nt.at,false));
   $('libreAdd').addEventListener('click',()=>addLibre('',null,true));
@@ -4541,6 +4617,7 @@ function rdvStop(){
 }
 function closeDoc(){
   if(rdvActive){rdvEndAsk();return;}
+  stopTyping(); const sk=document.querySelector('.skipw'); if(sk)sk.remove();
   document.body.classList.remove('brief-locked');
   const sw=$('dipSwitch'); if(sw)sw.style.display='none';
   $('dMain').style.display=''; $('dMainDeb').style.display='none';
