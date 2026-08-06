@@ -705,7 +705,35 @@
   .view.on .hero .sub{animation:rise .4s cubic-bezier(.2,.7,.2,1) .05s both;}
   .view.on .bsearch{animation:rise .4s cubic-bezier(.2,.7,.2,1) .1s both;}
   .view.on .nv-under{animation:rise .4s cubic-bezier(.2,.7,.2,1) .16s both;}
+  .view.on .nv-conste{animation:rise .5s cubic-bezier(.2,.7,.2,1) .22s both;}
   .view.on .nv-src{animation:rise .4s cubic-bezier(.2,.7,.2,1) .22s both;}
+  /* La liste de résultats passe devant tout, et le décor s'efface pendant la recherche */
+  .bsearch{z-index:40;}
+  .nv-under,.nv-conste,.nv-src,.nv-recent{position:relative;z-index:1;transition:opacity .2s cubic-bezier(.2,.7,.2,1);}
+  #v-nouveau:has(.aclist.on) .nv-under,
+  #v-nouveau:has(.aclist.on) .nv-conste,
+  #v-nouveau:has(.aclist.on) .nv-src,
+  #v-nouveau:has(.aclist.on) .nv-recent{opacity:0;pointer-events:none;}
+  /* ══ Constellation : le prospect au centre, les sources autour ══ */
+  .nv-conste{max-width:660px;margin:30px auto 0;padding-top:20px;border-top:1px solid var(--line3);}
+  .nv-conste svg{width:100%;height:auto;display:block;overflow:visible;}
+  .cn-link{stroke:var(--copper);stroke-width:1.1;opacity:.4;}
+  .cn-link.soon{stroke:var(--line2);stroke-dasharray:3 4;opacity:.9;}
+  .cn-dot{fill:var(--copper);}
+  .cn-dot.soon{fill:none;stroke:var(--line2);stroke-width:1.5;}
+  .cn-halo{fill:var(--copper);opacity:.13;}
+  .cn-lbl{font-family:var(--mono);font-size:10.5px;fill:var(--soft);letter-spacing:.02em;}
+  .cn-lbl.soon{fill:var(--faint);}
+  .cn-soon{font-family:var(--mono);font-size:8px;fill:var(--faint);letter-spacing:.1em;}
+  .cn-core{fill:#fff;stroke:var(--copper);stroke-width:1.6;}
+  .cn-core.empty{stroke:var(--line2);stroke-dasharray:4 4;}
+  .cn-core-t{font-family:var(--serif);font-weight:600;font-size:15px;fill:var(--ink);}
+  .cn-core-t.empty{fill:var(--faint);font-family:var(--mono);font-size:13px;}
+  .cn-cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:center;margin-top:14px;}
+  @keyframes cnbreathe{0%,100%{opacity:.13;transform:scale(1);}50%{opacity:.22;transform:scale(1.18);}}
+  .cn-halo{transform-origin:center;transform-box:fill-box;animation:cnbreathe 3.2s ease-in-out infinite;}
+  .nv-conste{display:none;}
+  @media(min-width:760px){.nv-conste{display:block;}.nv-src{display:none;}}
   @media(max-width:700px){.nv-src-grid{grid-template-columns:1fr;}}
   /* Section Rattaché à */
   .lk-row{display:flex;align-items:center;gap:9px;width:100%;border:none;background:none;padding:8px 6px;border-radius:8px;cursor:pointer;text-align:left;font-family:inherit;transition:.12s;}
@@ -956,6 +984,8 @@
   .aci .m{font-size:11px;color:var(--faint);margin-top:1px;}
   .aci .known{margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:6px;padding:2px 8px;white-space:nowrap;}
   .acs{padding:13px 15px;font-size:12.5px;color:var(--faint);}
+  .ac-note{padding:10px 14px;font-size:11.5px;color:var(--copper-d);background:var(--washc);border-bottom:1px solid var(--line3);line-height:1.4;}
+  .ac-siren{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--faint);background:var(--wash);border:1px solid var(--line3);border-radius:4px;padding:1px 6px;margin-top:4px;}
 
   /* ═══ Contexte ═══ */
   .ctxwrap{max-width:680px;margin:0 auto;}
@@ -1697,7 +1727,42 @@
       <!-- Reprendre un client existant -->
       <div class="nv-recent" id="nvRecent"></div>
 
-      <!-- Ce que Faro interroge : l'état réel, jamais une promesse -->
+      <!-- La constellation : le prospect au centre, les sources qui l'éclairent -->
+      <div class="nv-conste" id="nvConste">
+        <svg viewBox="0 0 660 300" role="img" aria-label="Les sources que Faro interroge autour du prospect">
+          <g>
+            <line class="cn-link" x1="330" y1="150" x2="330" y2="46"/>
+            <line class="cn-link" x1="330" y1="150" x2="136" y2="98"/>
+            <line class="cn-link" x1="330" y1="150" x2="136" y2="202"/>
+            <line class="cn-link soon" x1="330" y1="150" x2="524" y2="98"/>
+            <line class="cn-link soon" x1="330" y1="150" x2="524" y2="202"/>
+            <line class="cn-link soon" x1="330" y1="150" x2="330" y2="254"/>
+          </g>
+          <circle class="cn-halo" cx="330" cy="150" r="46"/>
+          <circle class="cn-core empty" id="cnCore" cx="330" cy="150" r="34"/>
+          <text class="cn-core-t empty" id="cnCoreT" x="330" y="155" text-anchor="middle">?</text>
+          <g>
+            <circle class="cn-dot" cx="330" cy="46" r="5"/>
+            <text class="cn-lbl" x="330" y="30" text-anchor="middle">Signaux du marché</text>
+            <circle class="cn-dot" cx="136" cy="98" r="5"/>
+            <text class="cn-lbl" x="122" y="102" text-anchor="end">Référentiel officiel</text>
+            <circle class="cn-dot" cx="136" cy="202" r="5"/>
+            <text class="cn-lbl" x="122" y="206" text-anchor="end">Ta mémoire client</text>
+            <circle class="cn-dot soon" cx="524" cy="98" r="5"/>
+            <text class="cn-lbl soon" x="538" y="95" text-anchor="start">Offres d'emploi</text>
+            <text class="cn-soon" x="538" y="109" text-anchor="start">BIENTÔT</text>
+            <circle class="cn-dot soon" cx="524" cy="202" r="5"/>
+            <text class="cn-lbl soon" x="538" y="199" text-anchor="start">Annonces légales</text>
+            <text class="cn-soon" x="538" y="213" text-anchor="start">BIENTÔT</text>
+            <circle class="cn-dot soon" cx="330" cy="254" r="5"/>
+            <text class="cn-lbl soon" x="330" y="274" text-anchor="middle">Son site web</text>
+            <text class="cn-soon" x="330" y="288" text-anchor="middle">BIENTÔT</text>
+          </g>
+        </svg>
+        <div class="cn-cap">Trois sources branchées, trois qui arrivent</div>
+      </div>
+
+      <!-- Repli mobile : les mêmes sources en liste -->
       <div class="nv-src">
         <div class="nv-src-t">Ce que Faro va interroger</div>
         <div class="nv-src-grid">
@@ -2039,7 +2104,7 @@ function go(v){
     $('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';
   }
   if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, raconte-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
-  if(v==='nouveau')renderNvRecent();
+  if(v==='nouveau'){renderNvRecent();if(typeof consteCore==='function')consteCore($('qEnt')?$('qEnt').value:'');}
   if(v==='rdv'||v==='prep'||v==='match'){
     // Le parent 'rdv' pointe vers la sous-vue Brief par défaut
     rdvView=(v==='match')?'match':'prep';
@@ -3395,20 +3460,55 @@ async function startFromDeal(d){
 
 /* ═══ Autocomplete ═══ */
 let acT=null, acIdx=-1, acData=[];
+const acNorm=t=>(t||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
+// Trie les resultats : ce que tu connais deja, puis la correspondance, puis la taille
+function rankAc(list,q){
+  const nq=acNorm(q);
+  const seen=new Set();
+  const uniq=list.filter(e=>{const k=e.siren||acNorm(e.nom)+'|'+acNorm(e.ville);if(seen.has(k))return false;seen.add(k);return true;});
+  const score=e=>{
+    const n=acNorm(e.nom); let sc=0;
+    if(findDeal(e))sc+=500;
+    if(n===nq)sc+=120; else if(n.startsWith(nq))sc+=70; else if(n.includes(nq))sc+=30;
+    const eff=parseInt(String(e.effectif||'').replace(/[^0-9]/g,''),10)||0;
+    sc+=Math.min(25,eff/40);
+    if(e.activite)sc+=6; if(e.ville)sc+=4; if(e.site)sc+=8; if(e.dirigeants&&e.dirigeants.length)sc+=4;
+    return sc;
+  };
+  return uniq.sort((a,b)=>score(b)-score(a)).slice(0,7);
+}
+// Le coeur de la constellation prend le nom qu'on tape
+function consteCore(txt){
+  const c=$('cnCore'), t=$('cnCoreT'); if(!c||!t)return;
+  const v=(txt||'').trim();
+  if(!v){c.classList.add('empty');t.classList.add('empty');t.textContent='?';return;}
+  c.classList.remove('empty');t.classList.remove('empty');
+  t.textContent=v.length>9?v.slice(0,8)+'…':v;
+}
 $('qEnt').addEventListener('input',()=>{
   const q=$('qEnt').value.trim(); clearTimeout(acT);
+  consteCore(q);
   if(q.length<2){$('acList').classList.remove('on');return;}
   $('acList').innerHTML='<div class="acs">Recherche…</div>'; $('acList').classList.add('on');
   acT=setTimeout(async()=>{
     try{
       const r=await fetch('/api/entreprise?q='+encodeURIComponent(q));
-      const j=await r.json(); acData=j.results||[]; acIdx=-1;
+      const j=await r.json(); acData=rankAc(j.results||[],q); acIdx=-1;
       if(!acData.length){$('acList').innerHTML='<div class="acs">Aucune entreprise trouvée dans le référentiel officiel.</div>'+manRow(q,true);wireMan(q);return;}
-      $('acList').innerHTML=acData.map((e,i)=>{
+      // Plusieurs homonymes : on montre ce qui les distingue, et on ne désigne aucun gagnant
+      const nameCount={};
+      acData.forEach(e=>{const k=acNorm(e.nom);nameCount[k]=(nameCount[k]||0)+1;});
+      const ambigu=Object.values(nameCount).some(n=>n>1);
+      const exact=acData.filter(e=>acNorm(e.nom)===acNorm(q)).length===1&&acNorm(acData[0].nom)===acNorm(q);
+      $('acList').innerHTML=(ambigu?'<div class="ac-note">Plusieurs entreprises portent ce nom. Repère-toi au secteur et à la ville.</div>':'')
+        +acData.map((e,i)=>{
         const known=findDeal(e);
-        const meta=[e.activite,e.ville,e.effectif].filter(Boolean).map(esc).join(' · ');
-        const best=i===0?'<span class="bestb">Meilleure correspondance</span>':'';
-        return `<div class="aci ${i===0?'best':''}" data-i="${i}">${logoHtml(e.nom,e.logo,e.site)}<div style="flex:1;min-width:0"><div class="n">${esc(e.nom)}</div><div class="m">${meta||'—'}</div></div>${known?`<span class="known">${stg(known.etape).l}</span>`:best}</div>`;
+        const bits=[e.activite,e.ville].filter(Boolean);
+        if(e.effectif)bits.push(e.effectif);
+        const meta=bits.map(esc).join(' · ');
+        const sir=(ambigu&&e.siren)?`<span class="ac-siren">SIREN ${esc(String(e.siren).slice(0,3))} ${esc(String(e.siren).slice(3,6))} ${esc(String(e.siren).slice(6))}</span>`:'';
+        const best=(i===0&&exact&&!ambigu)?'<span class="bestb">Correspondance exacte</span>':'';
+        return `<div class="aci ${i===0&&exact&&!ambigu?'best':''}" data-i="${i}">${logoHtml(e.nom,e.logo,e.site)}<div style="flex:1;min-width:0"><div class="n">${esc(e.nom)}</div><div class="m">${meta||'Pas de détail au référentiel'}</div>${sir}</div>${known?`<span class="known">${stg(known.etape).l}</span>`:best}</div>`;
       }).join('')+manRow(q,false);
       $('acList').querySelectorAll('.aci').forEach(el=>el.addEventListener('click',()=>pick(acData[+el.dataset.i])));
       wireMan(q);
