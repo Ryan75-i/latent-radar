@@ -631,6 +631,14 @@
     .cmp-f::after{display:none;}
     .cmp-core{margin:0 auto;}
   }
+  /* ══ Carnet détaché : une fenêtre flottante au-dessus de ta visio ══ */
+  body.carnet-out .carnet{display:none!important;}
+  body.carnet-out.rdv .docbody{grid-template-columns:250px 1fr;}
+  .carnet-out-note{display:none;}
+  body.carnet-out.rdv .carnet-out-note{display:flex;align-items:center;gap:11px;position:sticky;top:76px;background:var(--bluebg);border:1px solid #C6DCEA;border-radius:var(--rl);padding:14px 16px;font-size:12.5px;color:var(--blue);line-height:1.45;}
+  .carnet-out-note svg{width:18px;height:18px;flex-shrink:0;}
+  .carnet-out-note button{margin-left:auto;border:1px solid #C6DCEA;background:#fff;color:var(--blue);border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;}
+  .pipbody{margin:0;padding:0;background:var(--bg);}
   /* Curseur d'écriture : le brief se rédige sous les yeux */
   .cur{display:inline-block;width:2px;height:1em;background:var(--copper);margin-left:2px;vertical-align:-2px;animation:curbl .9s steps(1) infinite;}
   @keyframes curbl{50%{opacity:0;}}
@@ -1484,24 +1492,6 @@
   .presdots i{width:7px;height:7px;border-radius:50%;background:var(--line2);cursor:pointer;transition:.15s;}
   .presdots i.on{background:var(--copper);width:20px;border-radius:6px;}
 
-  /* ═══ Antisèche nuit ═══ */
-  #liveOv{position:fixed;inset:0;background:#14110D;color:#F6F0E6;z-index:100;display:none;flex-direction:column;}
-  #liveOv.on{display:flex;}
-  .lvbar{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-bottom:1px solid rgba(255,255,255,.09);flex-shrink:0;}
-  .lvbar .t{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper-l);}
-  .lvx{border:1px solid rgba(255,255,255,.16);background:transparent;color:#F6F0E6;border-radius:8px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;}
-  .lvcont{flex:1;overflow-y:auto;padding:36px 24px;max-width:680px;margin:0 auto;width:100%;display:flex;flex-direction:column;justify-content:center;}
-  .lvpanel{display:none;animation:up .35s ease;}
-  .lvpanel.on{display:block;}
-  .lvk{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-l);margin-bottom:16px;}
-  .lvv{font-family:var(--serif);font-size:24px;line-height:1.45;}
-  .lvv+.lvv{margin-top:12px;}
-  .lvq{font-size:20px;line-height:1.5;color:rgba(246,240,230,.87);padding-left:18px;border-left:2px solid var(--copper);margin-bottom:12px;}
-  .lvo{font-size:20px;font-style:italic;color:#E9A88F;margin-bottom:12px;}
-  .lvf b{font-family:var(--serif);font-size:50px;color:var(--copper-l);}
-  .lvseq{padding:15px 20px;border-top:1px solid rgba(255,255,255,.09);display:flex;gap:7px;justify-content:center;flex-wrap:wrap;flex-shrink:0;}
-  .lvseq button{border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(246,240,230,.6);border-radius:6px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;transition:.14s;}
-  .lvseq button.on{background:var(--copper);color:#fff;border-color:var(--copper);}
 
   /* ═══ Recap + palette + toast ═══ */
   .recapov{position:fixed;inset:0;background:rgba(30,25,18,.45);backdrop-filter:blur(5px);z-index:112;display:none;align-items:center;justify-content:center;padding:20px;}
@@ -2097,6 +2087,7 @@
     <div class="docmain" id="dMain"></div>
     <div class="docmain" id="dMainDeb" style="display:none;"></div>
     <!-- Carnet de débrief : compagnon en direct pendant le RDV -->
+    <div class="carnet-out-note" id="carnetOutNote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg><span>Ton carnet flotte dans sa fenêtre. Pose-la à côté de ta visio.</span><button id="carnetBackB">Rattacher</button></div>
     <aside class="carnet" id="carnet">
       <div class="carnet-head"><span class="dip-badge b2">2</span><div><div class="carnet-t">Ton débrief</div><div class="carnet-s" id="carnetS">Il s'écrit pendant que tu notes.</div></div><span class="carnet-live" id="carnetLive"></span></div>
       <div class="carnet-body">
@@ -2181,7 +2172,6 @@
   <div class="presdots" id="presDots"></div>
 </div>
 
-<div id="liveOv"><div class="lvbar"><span class="t" id="lvT">En rendez-vous</span><button class="lvx" id="lvX">Fermer</button></div><div class="lvcont" id="lvCont"></div><div class="lvseq" id="lvSeq"></div></div>
 
 <div class="recapov" id="recapOv"><div class="recapbox">
   <div class="rk" id="rTitle">Le mail de recap</div>
@@ -3598,7 +3588,7 @@ function openFiche(d,silent){
     try{await sb.from('deals').update({montant:d.montant,updated_at:d.updated_at}).eq('id',d.id);}catch(e){}
   };
   $('fNext').textContent=d.prochaine_action||'—';
-  const rows=[['Activité',ed.activite],['Effectif',ed.effectif],['Taille',ed.taille],['Créée en',ed.annee_creation],['Siège',ed.ville],['Dirigeant',ed.dirigeants&&ed.dirigeants[0]?ed.dirigeants[0].nom:null],['SIREN',d.siren]].filter(r=>r[1]);
+  const rows=[['Activité',ed.activite],['Effectif',ed.effectif],['Taille',ed.taille],['Créée en',ed.annee_creation],['Siège',ed.ville],['Représentant légal',ed.dirigeants&&ed.dirigeants[0]?ed.dirigeants[0].nom:null],['SIREN',d.siren]].filter(r=>r[1]);
   $('fData').innerHTML=rows.length?rows.map(r=>`<div class="kv"><span class="k">${r[0]}</span><span class="v">${esc(r[1])}</span></div>`).join(''):'<div class="empty">Pas de données officielles.</div>';
   const bs=dealBriefs(d);
   const lastDeb=bs.find(b=>b.debrief);
@@ -3999,7 +3989,7 @@ function openComposing(){
     ['Effectif',ent.effectif||ent.taille],
     ['Siège',ent.ville],
     ['Depuis',ent.annee_creation?String(ent.annee_creation):(ent.anciennete?ent.anciennete+' ans':null)],
-    ['Dirigeant',dir?dir.nom:null],
+    ['Représentant légal',dir?dir.nom:null],
     ['En face de toi',posteSel],
     ['Ta mémoire',nbRdv?nbRdv+' rendez-vous raconté'+(nbRdv>1?'s':''):null]
   ].filter(f=>f[1]).slice(0,6);
@@ -4124,7 +4114,7 @@ function openBrief(b){
   if(fav){lg.innerHTML=`<img src="${fav}" alt="" onerror="this.parentElement.innerHTML='${ini(n)}';this.parentElement.style.background='${grad(n)}';">`;lg.style.background='#fff';}
   else{lg.textContent=ini(n);lg.style.background=grad(n);}
   const dir=ed.dirigeants&&ed.dirigeants[0];
-  const rows=[['Interlocuteur',b.poste],['Effectif',ed.effectif],['Taille',ed.taille],['Ancienneté',ed.anciennete?ed.anciennete+' ans':null],['Dirigeant',dir?dir.nom:null],['Ton offre',trunc(b.offre||set.offre,40)],['Généré',rel(b.created_at||new Date().toISOString())]].filter(r=>r[1]);
+  const rows=[['Interlocuteur',b.poste],['Effectif',ed.effectif],['Taille',ed.taille],['Ancienneté',ed.anciennete?ed.anciennete+' ans':null],['Représentant légal',dir?dir.nom:null],['Ton offre',trunc(b.offre||set.offre,40)],['Généré',rel(b.created_at||new Date().toISOString())]].filter(r=>r[1]);
   $('dFields').innerHTML=rows.map(r=>`<div class="kv"><span class="k">${r[0]}</span><span class="v">${esc(r[1])}</span></div>`).join('');
   const score=Math.max(0,Math.min(100,(b.maturite_score??b.maturite)||0));
   $('dMat').textContent=score;
@@ -4560,22 +4550,23 @@ function coachEval(){
 /* ═══ Actions + RDV ═══ */
 function renderActions(){
   const a=$('docActions'); const b=current; if(!b)return;
-  if(rdvActive){a.innerHTML=`<button id="aNote">+ Note</button><button id="aLive">Antisèche</button><div class="divider"></div><button class="fin" id="aEnd">Terminer le RDV</button>`;}
-  else if(b.debrief){a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres modes"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau brief</button>`;}
+  if(rdvActive){a.innerHTML=`<button class="ghost" id="aPause">Suspendre</button><button id="aNote">+ Note</button>${pipOK()?`<button id="aPip">${pipWin?'Rattacher le carnet':'Détacher le carnet'}</button>`:''}<div class="divider"></div><button class="fin" id="aEnd">Terminer le rendez-vous</button>`;}
+  else if(b.debrief){a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau brief</button>`;}
   else{
     const has=Object.keys(ann).some(k=>k!=='libre'&&ann[k]&&(ann[k].note||ann[k].tag))||(ann.libre||[]).length;
     a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="divider"></div><button class="pri" id="aGo">${has?'Reprendre mon carnet':"J'y vais"}</button>`;
   }
   const w=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn);};
-  w('aLive',openLive); w('aCopy',copyAll); w('aStart',askPass); w('aEnd',rdvEndAsk);
+  w('aCopy',copyAll); w('aStart',askPass); w('aEnd',rdvEndAsk);
   w('aGo',()=>{if(current&&current.demo){toast('Ceci est un exemple. Prépare ton vrai rendez-vous pour y aller.');return;}rdvStart();});
   w('aPres',openPres); w('aRecap',openRecap);
   w('aMore',()=>openKebab($('aMore'),[
     {label:'Il est déjà passé, raconter',ic:'open',fn:()=>{if(current&&current.demo){toast('Ceci est un exemple.');return;}startColdDebrief();}},
-    {label:'Antisèche de rendez-vous',ic:'open',fn:openLive},
     {label:'Mode présentation',ic:'open',fn:openPres}
   ]));
   w('aNote',()=>{addLibre('',null,true);$('libreCard').scrollIntoView({behavior:'smooth',block:'center'});});
+  w('aPause',rdvSuspend);
+  w('aPip',()=>{pipWin?carnetBack():carnetDetach();});
   w('aNew',()=>{closeDoc();go('nouveau');});
 }
 // Bascule : le rendez-vous se fait-il maintenant (live) ou est-il déjà passé (à froid) ?
@@ -4674,12 +4665,60 @@ function renderDebMirror(){
   if(libre.length)html+=`<div class="dm-libre"><b>${libre.length} note${libre.length>1?'s':''} en vrac</b> capturée${libre.length>1?'s':''} pendant le RDV, gardée${libre.length>1?'s':''} dans l'affaire.</div>`;
   el.innerHTML=html;
 }
+// Une réunion se reporte : on peut sortir sans rien valider
+function rdvSuspend(){
+  syncCarnetNotes(); saveAnn(); carnetBack();
+  rdvStop(); renderActions(); applyBriefLock(current);
+  $('briefDoc').classList.remove('on');
+  toast('Rendez-vous suspendu. Tes notes sont gardées.');
+  renderAll();
+}
+// ══ Le carnet se détache dans une fenêtre qui flotte au-dessus de ta visio ══
+let pipWin=null, pipHost=null;
+const pipOK=()=>!!(window.documentPictureInPicture||window.open);
+async function carnetDetach(){
+  const carnet=$('carnet'); if(!carnet||pipWin)return;
+  const css=[...document.querySelectorAll('style')].map(x=>x.textContent).join('\n');
+  const fonts='<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">';
+  try{
+    if(window.documentPictureInPicture){
+      pipWin=await documentPictureInPicture.requestWindow({width:400,height:600});
+    } else {
+      pipWin=window.open('','faroCarnet','width=400,height=620,menubar=no,toolbar=no,location=no,status=no');
+      if(!pipWin)throw new Error('bloqué');
+      pipWin.document.write('<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Carnet · Faro</title></head><body></body></html>');
+      pipWin.document.close();
+    }
+  }catch(e){pipWin=null;toast('Ton navigateur a bloqué la fenêtre. Autorise les pop-ups.');return;}
+  const d=pipWin.document;
+  d.head.insertAdjacentHTML('beforeend',fonts+'<style>'+css+'</style>');
+  d.body.className='pipbody';
+  pipHost=carnet.parentNode;
+  d.body.appendChild(carnet);
+  carnet.style.cssText='display:flex;flex-direction:column;position:static;max-height:100vh;height:100vh;border:none;border-radius:0;box-shadow:none;animation:none;';
+  document.body.classList.add('carnet-out');
+  renderActions();
+  const back=()=>carnetBack();
+  pipWin.addEventListener('pagehide',back);
+  pipWin.addEventListener('beforeunload',back);
+  setTimeout(()=>{const n=d.getElementById('carnetNotes');if(n)n.focus();},250);
+}
+function carnetBack(){
+  if(!pipWin)return;
+  const carnet=(pipWin.document&&pipWin.document.getElementById('carnet'))||$('carnet');
+  if(carnet&&pipHost){carnet.style.cssText='';pipHost.appendChild(carnet);}
+  try{pipWin.close();}catch(e){}
+  pipWin=null; pipHost=null;
+  document.body.classList.remove('carnet-out');
+  renderActions();
+}
 function rdvStop(){
-  rdvActive=false; clearInterval(timerInt); document.body.classList.remove('rdv');
+  rdvActive=false; clearInterval(timerInt); document.body.classList.remove('rdv'); carnetBack();
   $('coach').classList.remove('on'); lastCoach='';
 }
 function closeDoc(){
-  if(rdvActive){rdvEndAsk();return;}
+  if(rdvActive){rdvSuspend();return;}
+  carnetBack();
   stopTyping(); const sk=document.querySelector('.skipw'); if(sk)sk.remove();
   document.body.classList.remove('brief-locked');
   const sw=$('dipSwitch'); if(sw)sw.style.display='none';
@@ -4776,6 +4815,7 @@ function setDebTemp(t,fromCarnet){
 if($('tempsLive'))$('tempsLive').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setDebTemp(b.dataset.t,true)));
 if($('carnetNotes')){let ct=null;$('carnetNotes').addEventListener('input',()=>{clearTimeout(ct);ct=setTimeout(syncCarnetNotes,600);});}
 if($('carnetFinish'))$('carnetFinish').addEventListener('click',()=>saveDebrief(false));
+if($('carnetBackB'))$('carnetBackB').addEventListener('click',carnetBack);
 if($('carnetMic'))$('carnetMic').addEventListener('click',()=>toggleCarnetDictation());
 const VERD={close:'Closé !',chaud:"Ça avance",tiede:'À réchauffer',mort:'Suivant.'};
 function showVerdict(t,deal,hasSyn){
@@ -4840,29 +4880,6 @@ $('presPrev').addEventListener('click',()=>presGo(presIdx-1));
 $('presNext').addEventListener('click',()=>presGo(presIdx+1));
 
 /* ═══ Antisèche nuit ═══ */
-const LIVE_S=['ouverture','questions','objection','chiffre','sortie'];
-const LIVE_L={ouverture:'Ouverture',questions:'Questions',objection:'Objection',chiffre:'Le chiffre',sortie:'Sortie'};
-function openLive(){
-  const b=current; if(!b)return;
-  $('lvT').textContent=b.entreprise||'En rendez-vous';
-  const ou=b.ouverture||{},qs=b.questions||[],ob=b.objection||{},ch=b.chiffre||{};
-  const ouH=[ou.accroche,ou.qui_nous_sommes,ou.pourquoi_vous].filter(Boolean).map(t=>`<div class="lvv">${esc(t)}</div>`).join('')||`<div class="lvv">${esc(typeof b.ouverture==='string'?b.ouverture:'')}</div>`;
-  const P={
-    ouverture:`<div class="lvpanel on" data-p="ouverture"><div class="lvk">Ouverture</div>${ouH}</div>`,
-    questions:`<div class="lvpanel" data-p="questions"><div class="lvk">Questions</div>${qs.map(q=>`<div class="lvq">${esc(typeof q==='string'?q:q.question)}</div>`).join('')}</div>`,
-    objection:`<div class="lvpanel" data-p="objection"><div class="lvk">Si on t'objecte</div><div class="lvo">${esc(ob.texte||'')}</div><div class="lvv">${esc(ob.riposte||'')}</div></div>`,
-    chiffre:`<div class="lvpanel" data-p="chiffre"><div class="lvk">Le chiffre</div><div class="lvv lvf"><b>${esc(ch.valeur||'')}</b> ${esc(ch.phrase||'')}</div></div>`,
-    sortie:`<div class="lvpanel" data-p="sortie"><div class="lvk">En partant</div><div class="lvv">${esc((b.next_step&&b.next_step.phrase)||b.next_step||'')}</div></div>`
-  };
-  $('lvCont').innerHTML=LIVE_S.map(s=>P[s]).join('');
-  $('lvSeq').innerHTML=LIVE_S.map((s,i)=>`<button class="${i===0?'on':''}" data-p="${s}">${LIVE_L[s]}</button>`).join('');
-  $('lvSeq').querySelectorAll('button').forEach(b2=>b2.addEventListener('click',()=>{
-    $('lvSeq').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b2));
-    $('lvCont').querySelectorAll('.lvpanel').forEach(p=>p.classList.toggle('on',p.dataset.p===b2.dataset.p));
-  }));
-  $('liveOv').classList.add('on');
-}
-$('lvX').addEventListener('click',()=>$('liveOv').classList.remove('on'));
 
 /* ═══ Mail de recap ═══ */
 let recapTab='bref', recapMode='recap';
@@ -4994,7 +5011,6 @@ document.addEventListener('keydown',e=>{
     if($('presOv').classList.contains('on')){$('presOv').classList.remove('on');return;}
     if($('verdOv').classList.contains('on')){$('verdOv').className='verd';$('briefDoc').classList.remove('on');go('dash');renderAll();return;}
     if($('debOv').classList.contains('on')){$('debOv').classList.remove('on');return;}
-    if($('liveOv').classList.contains('on')){$('liveOv').classList.remove('on');return;}
     if($('briefDoc').classList.contains('on')){closeDoc();return;}
   }
   if($('pal').classList.contains('on')){const its=$('palL').querySelectorAll('.pali');
