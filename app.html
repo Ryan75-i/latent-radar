@@ -682,14 +682,31 @@
   .nv-body{min-width:0;}
   .nv-n{font-size:12px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .nv-s{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--dim);margin-top:2px;}
-  .nv-steps{max-width:640px;margin:34px auto 0;padding-top:22px;border-top:1px solid var(--line3);}
-  .nv-steps-t{font-size:12px;color:var(--dim);text-align:center;margin-bottom:14px;}
-  .nv-steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-  .nv-step{display:flex;gap:10px;align-items:flex-start;}
-  .nv-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:7px;background:var(--washc);color:var(--copper-d);font-family:var(--serif);font-weight:700;font-size:12px;flex-shrink:0;}
-  .nv-step b{display:block;font-size:12px;color:var(--ink);}
-  .nv-step span{display:block;font-size:11px;color:var(--dim);line-height:1.4;margin-top:2px;}
-  @media(max-width:700px){.nv-steps-grid{grid-template-columns:1fr;}}
+  /* ══ Sources : ce que Faro interroge vraiment, et ce qui arrive ══ */
+  .nv-src{max-width:640px;margin:38px auto 0;padding-top:24px;border-top:1px solid var(--line3);text-align:left;}
+  .nv-src-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;}
+  .nv-src-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;}
+  .nv-s{display:flex;align-items:flex-start;gap:10px;}
+  .nv-s-dot{width:8px;height:8px;border-radius:50%;background:var(--copper);flex-shrink:0;margin-top:5px;}
+  .nv-s.soon .nv-s-dot{background:none;border:1.5px solid var(--line2);}
+  .nv-s-b{min-width:0;flex:1;}
+  .nv-s-n{font-size:12.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;}
+  .nv-s.soon .nv-s-n{color:var(--faint);font-weight:500;}
+  .nv-s-soon{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border:1px solid var(--line2);border-radius:4px;padding:1px 6px;}
+  .nv-s-d{font-size:11.5px;color:var(--dim);line-height:1.4;margin-top:1px;}
+  .nv-s.soon .nv-s-d{color:var(--faint);}
+  /* Sorties discrètes sous le champ */
+  .nv-under{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--faint);}
+  .nv-under button{border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;padding:4px 6px;border-radius:6px;transition:.13s;}
+  .nv-under button:hover{background:var(--washc);}
+  .bs-hint{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--line2);border-radius:5px;padding:2px 7px;background:var(--wash);pointer-events:none;transition:opacity .15s;}
+  .bsearch input:not(:placeholder-shown)~.bs-hint{opacity:0;}
+  .view.on .hero h1{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .hero .sub{animation:rise .4s cubic-bezier(.2,.7,.2,1) .05s both;}
+  .view.on .bsearch{animation:rise .4s cubic-bezier(.2,.7,.2,1) .1s both;}
+  .view.on .nv-under{animation:rise .4s cubic-bezier(.2,.7,.2,1) .16s both;}
+  .view.on .nv-src{animation:rise .4s cubic-bezier(.2,.7,.2,1) .22s both;}
+  @media(max-width:700px){.nv-src-grid{grid-template-columns:1fr;}}
   /* Section Rattaché à */
   .lk-row{display:flex;align-items:center;gap:9px;width:100%;border:none;background:none;padding:8px 6px;border-radius:8px;cursor:pointer;text-align:left;font-family:inherit;transition:.12s;}
   .lk-row:hover{background:var(--wash);}
@@ -921,14 +938,14 @@
   .ftabs .c{font-family:var(--mono);font-size:9.5px;opacity:.8;}
 
   /* ═══ Nouveau brief : recherche ═══ */
-  .hero{max-width:640px;margin:24px auto 0;text-align:center;}
-  .hero h1{font-family:var(--serif);font-weight:600;font-size:30px;letter-spacing:-.02em;margin-bottom:6px;}
+  .hero{max-width:640px;margin:12vh auto 0;text-align:center;padding-bottom:40px;}
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:34px;letter-spacing:-.6px;line-height:1.08;margin-bottom:8px;}
   .hero h1 em{font-style:italic;color:var(--copper);}
-  .hero .sub{font-size:13px;color:var(--dim);margin-bottom:22px;}
+  .hero .sub{font-size:14.5px;color:var(--dim);margin-bottom:26px;line-height:1.5;}
   .bsearch{position:relative;text-align:left;}
-  .bsearch input{width:100%;border:1.5px solid var(--line2);background:#fff;border-radius:12px;padding:15px 18px 15px 48px;font-size:15px;font-family:inherit;outline:none;transition:.15s;box-shadow:var(--shm);}
+  .bsearch input{width:100%;border:1.5px solid var(--line2);background:#fff;border-radius:12px;padding:17px 62px 17px 48px;font-size:16px;font-family:inherit;outline:none;transition:.15s cubic-bezier(.2,.7,.2,1);box-shadow:var(--shm);}
   .bsearch input:focus{border-color:var(--copper);box-shadow:0 0 0 4px rgba(201,106,46,.1);}
-  .bsearch>svg{position:absolute;left:18px;top:19px;width:17px;height:17px;color:var(--faint);stroke-width:2;}
+  .bsearch>svg{position:absolute;left:18px;top:21px;width:17px;height:17px;color:var(--faint);stroke-width:2;}
   .aclist{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line2);border-radius:12px;box-shadow:var(--shl);z-index:30;max-height:340px;overflow-y:auto;display:none;}
   .aclist.on{display:block;}
   .aci{display:flex;align-items:center;gap:11px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--line3);transition:.1s;}
@@ -1668,23 +1685,28 @@
   <section class="view" id="v-nouveau">
     <div class="hero">
       <h1>Qui vas-tu <em>rencontrer</em> ?</h1>
-      <div class="sub">Tape le nom, Faro cherche les données officielles et se souvient de vos échanges.</div>
+      <div class="sub">Tape son nom. Faro interroge les sources et se souvient de vos échanges.</div>
       <div class="bsearch">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
         <input id="qEnt" placeholder="Nom d'une entreprise française…" autocomplete="off"/>
+        <kbd class="bs-hint">↵</kbd>
         <div class="aclist" id="acList"></div>
       </div>
+      <div class="nv-under"><button id="nvManual">Créer une entreprise à la main</button><span>·</span><button id="nvDemo">Voir un brief exemple</button></div>
 
       <!-- Reprendre un client existant -->
       <div class="nv-recent" id="nvRecent"></div>
 
-      <!-- Ce que Faro prépare -->
-      <div class="nv-steps">
-        <div class="nv-steps-t">Pendant que tu choisis ton interlocuteur, Faro prépare :</div>
-        <div class="nv-steps-grid">
-          <div class="nv-step"><span class="nv-num">1</span><div><b>Les données officielles</b><span>Effectif, dirigeants, ancienneté, secteur.</span></div></div>
-          <div class="nv-step"><span class="nv-num">2</span><div><b>Les signaux du marché</b><span>Ce qui bouge dans son secteur, maintenant.</span></div></div>
-          <div class="nv-step"><span class="nv-num">3</span><div><b>Ton brief complet</b><span>Ouverture, questions, objections, chiffre d'attaque.</span></div></div>
+      <!-- Ce que Faro interroge : l'état réel, jamais une promesse -->
+      <div class="nv-src">
+        <div class="nv-src-t">Ce que Faro va interroger</div>
+        <div class="nv-src-grid">
+          <div class="nv-s"><span class="nv-s-dot"></span><div class="nv-s-b"><div class="nv-s-n">Référentiel officiel</div><div class="nv-s-d">Effectif, dirigeants, ancienneté, secteur.</div></div></div>
+          <div class="nv-s"><span class="nv-s-dot"></span><div class="nv-s-b"><div class="nv-s-n">Signaux du marché</div><div class="nv-s-d">Ce qui bouge dans son secteur, maintenant.</div></div></div>
+          <div class="nv-s"><span class="nv-s-dot"></span><div class="nv-s-b"><div class="nv-s-n">Ta mémoire client</div><div class="nv-s-d">Tout ce que tes récits précédents ont appris.</div></div></div>
+          <div class="nv-s soon"><span class="nv-s-dot"></span><div class="nv-s-b"><div class="nv-s-n">Offres d'emploi<span class="nv-s-soon">bientôt</span></div><div class="nv-s-d">Ce qu'il recrute trahit ce qu'il prépare.</div></div></div>
+          <div class="nv-s soon"><span class="nv-s-dot"></span><div class="nv-s-b"><div class="nv-s-n">Annonces légales<span class="nv-s-soon">bientôt</span></div><div class="nv-s-d">Changements de dirigeants, opérations en cours.</div></div></div>
+          <div class="nv-s soon"><span class="nv-s-dot"></span><div class="nv-s-b"><div class="nv-s-n">Son site web<span class="nv-s-soon">bientôt</span></div><div class="nv-s-d">Positionnement, clients affichés, actualités.</div></div></div>
         </div>
       </div>
     </div>
@@ -3438,6 +3460,17 @@ function wireMan(q){
   });
 }
 $('backTo1').addEventListener('click',()=>{ent=null;go('nouveau');});
+// Sorties sous le champ : création manuelle et brief exemple
+(function(){
+  const dm=$('nvDemo'); if(dm)dm.addEventListener('click',openDemoBrief);
+  const mn=$('nvManual');
+  if(mn)mn.addEventListener('click',()=>{
+    const q=$('qEnt'); const val=q?q.value.trim():'';
+    $('acList').innerHTML=manRow(val,true); $('acList').classList.add('on');
+    wireMan(val);
+    const r=$('manRow'); if(r)r.click();
+  });
+})();
 
 /* ═══ Contexte ═══ */
 function buildPList(){
