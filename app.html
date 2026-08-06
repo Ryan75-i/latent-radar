@@ -366,11 +366,27 @@
   .act-go.loading svg{display:none;}
   .act-go.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin-left:2px;}
   /* État vide plein écran (page Brief / Après-match) */
-  .page-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px;min-height:50vh;}
-  .pe-ic{width:64px;height:64px;border-radius:20px;background:var(--wash);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--copper);margin-bottom:24px;}
-  .pe-ic svg{width:30px;height:30px;}
-  .pe-t{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);letter-spacing:-.3px;margin-bottom:10px;}
-  .pe-d{font-size:14px;color:var(--soft);line-height:1.55;max-width:400px;margin-bottom:24px;}
+  .page-empty{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:16px 0 40px;}
+  .pe-ic{width:48px;height:48px;border-radius:14px;background:var(--wash);border:1px solid var(--line3);display:flex;align-items:center;justify-content:center;color:var(--copper);margin-bottom:20px;}
+  .pe-ic svg{width:24px;height:24px;}
+  .pe-t{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);letter-spacing:-.3px;margin-bottom:8px;}
+  .pe-d{font-size:14px;color:var(--dim);line-height:1.55;max-width:440px;margin-bottom:24px;}
+  .pe-acts{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .pe-alt{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--soft);border:1px solid var(--line2);border-radius:10px;padding:12px 16px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;transition:.15s cubic-bezier(.2,.7,.2,1);}
+  .pe-alt:hover{border-color:var(--copper);color:var(--copper-d);background:var(--washc);}
+  .pe-alt svg{width:14px;height:14px;}
+  .pe-cta.loading{pointer-events:none;opacity:.75;}
+  .pe-cta.loading .kbd-hint{display:none;}
+  .pe-cta.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
+  .view.on .page-empty .pe-ic{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .page-empty .pe-t{animation:rise .4s cubic-bezier(.2,.7,.2,1) .06s both;}
+  .view.on .page-empty .pe-d{animation:rise .4s cubic-bezier(.2,.7,.2,1) .1s both;}
+  .view.on .page-empty .pe-acts{animation:rise .4s cubic-bezier(.2,.7,.2,1) .14s both;}
+  /* Rien ne correspond a la recherche : sobre, jamais alarmant */
+  .pe-none{padding:34px 0 12px;font-size:13.5px;color:var(--dim);}
+  .pe-none b{color:var(--ink);font-weight:600;}
+  .pe-none button{margin-left:10px;border:1px solid var(--line2);background:#fff;color:var(--copper-d);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:.13s;}
+  .pe-none button:hover{border-color:var(--copper);background:var(--washc);}
   .pe-cta{display:inline-flex;align-items:center;gap:8px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;box-shadow:var(--sh);}
   .pe-cta:hover{background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
   .pe-cta .kbd-hint{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.85);margin-left:4px;}
@@ -539,10 +555,6 @@
   .les-line:last-of-type{border-bottom:none;}
   .les-foot{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--copper-d);margin-top:11px;padding-top:10px;border-top:1px solid #EBD6C2;}
   /* Mémoire entrante dans le brief */
-  .sect.memory{background:linear-gradient(140deg,#E8F0F6,#F6FAFC);border-color:#C6DCEA;}
-  .sect.memory .num.mem{background:var(--blue);color:#fff;}
-  .mem-line{font-size:13px;color:var(--soft);line-height:1.5;padding:6px 0;border-bottom:1px dashed #C6DCEA;}
-  .mem-line:last-child{border-bottom:none;}
   /* Mission du jour : action héro */
   .fmission{position:relative;padding:20px 18px 18px;overflow:hidden;border-bottom:1px solid var(--line3);}
   .fmission::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 8%,transparent),transparent 65%);pointer-events:none;}
@@ -1052,6 +1064,30 @@
   .covrow.ok{color:var(--ink);font-weight:600;}
   .covrow.ok .ck2{background:var(--green);border-color:var(--green);}
   .covrow.ok .ck2::after{content:"✓";color:#fff;font-size:9px;font-weight:700;}
+  /* ══ Bandeau mémoire : le différenciateur ouvre le document ══ */
+  .memo-band{grid-column:1/-1;display:flex;align-items:flex-start;gap:16px;background:linear-gradient(120deg,#E8F0F6,#F7FBFD);border:1px solid #C6DCEA;border-radius:var(--rl);padding:16px 20px;margin-bottom:4px;}
+  .memo-ic{width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .memo-ic svg{width:17px;height:17px;}
+  .memo-b{flex:1;min-width:0;}
+  .memo-k{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:8px;}
+  .memo-n{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--blue);background:rgba(30,95,138,.09);border-radius:20px;padding:2px 9px;}
+  .memo-lines{display:flex;flex-wrap:wrap;gap:6px 24px;}
+  .memo-l{font-size:13px;color:var(--soft);line-height:1.45;display:flex;gap:8px;align-items:flex-start;}
+  .memo-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--blue);opacity:.5;margin-top:7px;flex-shrink:0;}
+  .memo-l b{color:var(--ink);font-weight:600;}
+  .view.on .memo-band,.briefDoc.on .memo-band{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  /* Confiance : une ligne qui informe, jamais une jauge qui démoralise */
+  .conf-line{display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:11px;border-top:1px dashed var(--line3);font-size:11.5px;color:var(--dim);line-height:1.4;}
+  .conf-dots{display:flex;gap:3px;flex-shrink:0;}
+  .conf-dots i{width:6px;height:6px;border-radius:50%;background:var(--line2);}
+  .conf-dots i.on{background:var(--copper);}
+  .conf-line b{color:var(--soft);font-weight:600;}
+  /* Barre du bas : un seul cuivre, le reste passe en retrait */
+  .docactions .ghost{background:none;color:var(--dim);font-weight:500;}
+  .docactions .ghost:hover{background:var(--wash);color:var(--soft);}
+  .docactions .more-b{width:34px;padding:8px 0;justify-content:center;}
+  .docactions .more-b svg{width:16px;height:16px;}
+  .docactions .pri{padding:9px 18px;font-weight:700;}
   #covCard{display:none;}
   body.rdv #covCard{display:block;}
   .docmain{display:flex;flex-direction:column;gap:14px;min-width:0;}
@@ -1347,12 +1383,6 @@
   @keyframes micpulse{0%,100%{opacity:1;}50%{opacity:.35;}}
   .micbtn.rec .dot3{width:7px;height:7px;border-radius:50%;background:#fff;animation:micpulse 1s ease-in-out infinite;}
   .micst{font-size:10.5px;color:var(--dim);flex:1;}
-  .confline{display:flex;align-items:center;gap:10px;}
-  .confbar{flex:1;height:7px;border-radius:5px;background:var(--line3);overflow:hidden;}
-  .confbar i{display:block;height:100%;border-radius:5px;background:var(--copper);transition:width .8s cubic-bezier(.2,.7,.2,1);}
-  .confpct{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--copper);}
-  .confweak{margin-top:8px;font-size:11px;color:var(--dim);line-height:1.45;}
-  .confweak b{color:var(--gold);font-weight:600;}
   .relbtn{border:none;background:var(--washc);color:var(--copper-d);border:1px solid var(--copper-l);font-size:9.5px;font-weight:700;border-radius:6px;padding:3px 9px;cursor:pointer;}
   .relbtn:hover{background:var(--copper);color:#fff;}
 
@@ -1569,7 +1599,7 @@
   </section>
 
   <section class="view" id="v-rdv">
-    <div class="ptitle"><div><div class="eyebrow" id="rdvEyebrow">Activité · Terrain</div><h1 id="rdvH1">Rendez-vous</h1><div class="sub" id="rdvSub">Le brief avant, le débrief après.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn" id="rdvNewBtn" data-go2="nouveau">Nouveau brief</button></div></div>
+    <div class="ptitle"><div><div class="eyebrow" id="rdvEyebrow">Activité · Terrain</div><h1 id="rdvH1">Rendez-vous</h1><div class="sub" id="rdvSub">Le brief avant, le débrief après.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn g" id="rdvNewBtn" data-go2="nouveau">Nouveau brief</button></div></div>
 
     <div class="aff-tools">
       <div class="pt-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input id="rdvQ" placeholder="Chercher une entreprise, un interlocuteur…" autocomplete="off"/></div>
@@ -1764,6 +1794,7 @@
     <span class="chrono" id="chrono">00:00</span>
   </div>
   <div class="docbody">
+    <div class="memo-band" id="memoBand" style="display:none;"></div>
     <aside class="rail">
       <div class="card"><div class="cbd">
         <div class="compHd"><div class="mono" id="dLogo">N</div><div style="min-width:0;"><div class="n" id="dName">Entreprise</div><div class="s" id="dSecline"></div></div></div>
@@ -1775,8 +1806,8 @@
           <div><div class="lb" id="dLabel">Maturité</div><div class="vr" id="dVerdict"></div></div>
         </div>
         <div class="reasons" id="dReasons"></div>
+        <div class="conf-line" id="confLine"></div>
       </div></div>
-      <div class="card" id="confCard"><div class="chd"><span class="t">Confiance du brief</span></div><div class="cbd"><div class="confline"><span class="confpct" id="confPct">—</span><div class="confbar"><i id="confBar" style="width:0%"></i></div></div><div class="confweak" id="confWeak"></div></div></div>
       <div class="card" id="covCard"><div class="chd"><span class="t">Couverture du rendez-vous</span></div><div class="cbd" id="covList"></div></div>
       <div class="card" id="linkCard"><div class="chd"><span class="t">Rattaché à</span><span class="d">D'où vient ce rendez-vous.</span></div><div class="cbd" id="linkList"></div></div>
     </aside>
@@ -2324,6 +2355,7 @@ function openDemoBrief(){
   const fl=$('briefFil');
   if(fl)fl.innerHTML='<span class="fd-node fd-cur">Novaflux</span><span class="fd-sep">·</span><span class="demo-tag">Exemple</span>';
   const lc=$('linkCard'); if(lc)lc.style.display='none';
+  const mbd=$('memoBand'); if(mbd){mbd.style.display='none';mbd.innerHTML='';}
   const da=$('docActions');
   if(da){
     da.innerHTML='<button id="aDemoOut">Fermer l\'exemple</button><div class="divider"></div><button class="pri" id="aDemoGo">Préparer le mien</button>';
@@ -2676,9 +2708,12 @@ function renderActionView(){
       <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg></div>
       <div class="pe-t">Aucune affaire encore.</div>
       <div class="pe-d">Prépare un rendez-vous et raconte-le. L'affaire naîtra ici, prête à avancer vers la signature.</div>
-      <button class="pe-cta" data-go2="nouveau">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+      <div class="pe-acts">
+        <button class="pe-cta" id="peGoAff">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+        <button class="pe-alt" id="peDemoAff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/></svg>Voir un brief exemple</button>
+      </div>
     </div>`;
-    const c=root.querySelector('[data-go2]'); if(c)c.addEventListener('click',()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+    wireEmptyCta($('peGoAff'),$('peDemoAff'));
     return;
   }
   const entered=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape));
@@ -2949,6 +2984,15 @@ function rdvSearchMatch(b){
   const q=rdvQuery.toLowerCase();
   return ((b.entreprise||'')+' '+(b.poste||'')).toLowerCase().includes(q);
 }
+// Cablage commun des etats vides : micro-spinner puis navigation, jamais de clic muet
+function wireEmptyCta(cta,demo){
+  if(cta)cta.addEventListener('click',()=>{
+    if(cta.classList.contains('loading'))return;
+    cta.classList.add('loading');
+    setTimeout(()=>{cta.classList.remove('loading');ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');},250);
+  });
+  if(demo)demo.addEventListener('click',openDemoBrief);
+}
 function renderRdvList(){
   const todoEl=$('rdvTodo'), histEl=$('rdvHistory');
   if(!todoEl||!histEl)return;
@@ -2980,6 +3024,10 @@ function renderRdvList(){
   // Données selon la vue
   const base=isPrep?briefs.filter(b=>!b.debrief):briefs;
   const all=base.filter(rdvSearchMatch);
+  // Rien a piloter, rien a montrer : ni recherche, ni tri, ni export
+  const hasAny=base.length>0;
+  const tools=document.querySelector('#v-rdv .aff-tools'); if(tools)tools.style.display=hasAny?'':'none';
+  if(re)re.style.display=hasAny?'':'none';
   const TORD={close:0,chaud:1,tiede:2,mort:3};
   const sortFn=(a,b)=>{
     if(rdvSort==='nom')return (a.entreprise||'').localeCompare(b.entreprise||'');
@@ -2994,16 +3042,26 @@ function renderRdvList(){
     // Bibliothèque : tous les briefs, groupés par mois
     const library=all.slice().sort(sortFn);
 
+    // Recherche infructueuse : la liste existe, elle ne correspond pas
+    if(!all.length&&hasAny){
+      todoEl.innerHTML=`<div class="pe-none">Aucun brief ne correspond à <b>${esc(rdvQuery)}</b>.<button id="rdvClearQ">Effacer la recherche</button></div>`;
+      histEl.innerHTML='';
+      const cl=$('rdvClearQ'); if(cl)cl.addEventListener('click',()=>{rdvQuery='';const q=$('rdvQ');if(q)q.value='';renderRdvList();});
+      return;
+    }
     // État vide : aucun brief du tout
     if(!all.length){
       todoEl.innerHTML=`<div class="page-empty">
         <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/><path d="M9 14h6M9 18h4"/></svg></div>
         <div class="pe-t">Aucun brief encore.</div>
         <div class="pe-d">Prépare ton premier rendez-vous. Faro l'arme des données du marché et de la mémoire de ton client.</div>
-        <button class="pe-cta" data-go2="nouveau">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+        <div class="pe-acts">
+          <button class="pe-cta" id="peGoPrep">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+          <button class="pe-alt" id="peDemoPrep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/></svg>Voir un brief exemple</button>
+        </div>
       </div>`;
       histEl.innerHTML='';
-      const c=todoEl.querySelector('[data-go2]'); if(c)c.addEventListener('click',()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+      wireEmptyCta($('peGoPrep'),$('peDemoPrep'));
       return;
     }
 
@@ -3048,10 +3106,13 @@ function renderRdvList(){
         <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg></div>
         <div class="pe-t">Aucun rendez-vous encore.</div>
         <div class="pe-d">Une fois tes rendez-vous vécus, raconte-les à Faro. Il transforme tes notes en mémoire.</div>
-        <button class="pe-cta" data-go2="nouveau">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+        <div class="pe-acts">
+          <button class="pe-cta" id="peGoMatch">Nouveau brief<kbd class="kbd-hint">N</kbd></button>
+          <button class="pe-alt" id="peDemoMatch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/></svg>Voir un brief exemple</button>
+        </div>
       </div>`;
       histEl.innerHTML='';
-      const c=todoEl.querySelector('[data-go2]'); if(c)c.addEventListener('click',()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+      wireEmptyCta($('peGoMatch'),$('peDemoMatch'));
       return;
     }
 
@@ -3751,15 +3812,17 @@ function openBrief(b){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{$('dRing').style.strokeDashoffset=220-220*score/100;}));
   $('dReasons').innerHTML=(b.maturite_raisons||[]).map(r=>`<div class="rs">${esc(r)}</div>`).join('');
   const cf=confidence(b);
-  $('confPct').textContent=cf.pct+' %';
-  $('confBar').style.width='0%';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{$('confBar').style.width=cf.pct+'%';}));
-  $('confWeak').innerHTML=cf.weak?`<b>Point faible :</b> ${esc(cf.weak)}.`:'Toutes les sources sont au vert.';
+  const cl=$('confLine');
+  if(cl){
+    const dots=Array.from({length:cf.total},(_,i)=>`<i class="${i<cf.pass?'on':''}"></i>`).join('');
+    cl.innerHTML=`<span class="conf-dots">${dots}</span><span>Sourcé sur <b>${cf.pass} signaux sur ${cf.total}</b>${cf.weak?`, il manque ${esc(cf.weak)}`:', tout est au vert'}.</span>`;
+  }
   $('covList').innerHTML=COVER.map(c=>`<div class="covrow" id="cov_${c.k}"><span class="ck2"></span>${c.lbl}</div>`).join('');
 
   const ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ch=b.chiffre||{}, pg=b.pieges||[], ns=b.next_step||{};
   let html='';
-  // ─── Mémoire entrante : ce que les débriefs précédents ont appris sur ce client ───
+  // ─── Mémoire entrante : elle ouvre le document, elle n'est pas une section parmi d'autres ───
+  const mb=$('memoBand'); if(mb){mb.style.display='none';mb.innerHTML='';}
   if(!b.debrief){
     const prevDebs=briefs.filter(x=>x.id!==b.id&&x.debrief&&(x.entreprise||'').toLowerCase()===(b.entreprise||'').toLowerCase()&&new Date(x.created_at)<new Date(b.created_at||Date.now()))
       .sort((a,bb)=>new Date(bb.created_at)-new Date(a.created_at));
@@ -3771,8 +3834,13 @@ function openBrief(b){
       if(last.debrief.temperature)memLines.push(`Dernier rendez-vous le ${lastDate} : ${TLM[last.debrief.temperature]||last.debrief.temperature}.`);
       if(last.debrief.next_action)memLines.push(`Tu devais : ${last.debrief.next_action}.`);
       prevDebs.slice(0,3).forEach(p=>{if(p.synthese_post&&p.synthese_post.observations)p.synthese_post.observations.slice(0,2).forEach(o=>{if(memLines.length<5&&!memLines.includes(o))memLines.push(o);});});
-      if(memLines.length){
-        html+=`<div class="sect memory reveal"><div class="secthd"><span class="num mem">◈</span><span class="tt">Ce que tu sais déjà de lui</span><span class="dd">${prevDebs.length} rendez-vous débriefé${prevDebs.length>1?'s':''} avec ce client. Ce brief en tient compte.</span></div><div class="sectbd">${memLines.map(l=>`<div class="mem-line">${esc(l)}</div>`).join('')}</div></div>`;
+      if(memLines.length&&mb){
+        mb.innerHTML=`<span class="memo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg></span>
+          <div class="memo-b">
+            <div class="memo-k">Ce que tu sais déjà de lui<span class="memo-n">${prevDebs.length} rendez-vous raconté${prevDebs.length>1?'s':''}</span></div>
+            <div class="memo-lines">${memLines.slice(0,4).map(l=>`<div class="memo-l">${esc(l)}</div>`).join('')}</div>
+          </div>`;
+        mb.style.display='';
       }
     }
   }
@@ -3938,7 +4006,7 @@ function confidence(b){
   const pass=checks.filter(c=>c.ok).length;
   const pct=Math.round(40+60*pass/checks.length);
   const weak=checks.find(c=>!c.ok);
-  return {pct,weak:weak?weak.w:null};
+  return {pct,pass,total:checks.length,weak:weak?weak.w:null};
 }
 function wireDoc(){
   $('dMain').querySelectorAll('[data-copy]').forEach(el=>el.addEventListener('click',()=>navigator.clipboard.writeText(el.dataset.copy).then(()=>toast('Bloc copié'))));
@@ -4100,14 +4168,18 @@ function coachEval(){
 function renderActions(){
   const a=$('docActions'); const b=current; if(!b)return;
   if(rdvActive){a.innerHTML=`<button id="aNote">+ Note</button><button id="aLive">Antisèche</button><div class="divider"></div><button class="fin" id="aEnd">Terminer le RDV</button>`;}
-  else if(b.debrief){a.innerHTML=`<button id="aPres">Présentation</button><button id="aLive">Antisèche</button><button id="aCopy">Copier</button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau</button>`;}
+  else if(b.debrief){a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres modes"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau brief</button>`;}
   else{
     const has=Object.keys(ann).some(k=>k!=='libre'&&ann[k]&&(ann[k].note||ann[k].tag))||(ann.libre||[]).length;
-    a.innerHTML=`<button id="aPres">Présentation</button><button id="aLive">Antisèche</button><button id="aCopy">Copier</button><div class="divider"></div><button class="pri" id="aStart">${has?'Reprendre le débrief':'Débriefer ce rendez-vous'}</button>`;
+    a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres modes"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="divider"></div><button class="pri" id="aStart">${has?'Reprendre mon récit':'Raconter ce rendez-vous'}</button>`;
   }
   const w=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn);};
   w('aLive',openLive); w('aCopy',copyAll); w('aStart',askPass); w('aEnd',rdvEndAsk);
   w('aPres',openPres); w('aRecap',openRecap);
+  w('aMore',()=>openKebab($('aMore'),[
+    {label:'Mode présentation',ic:'open',fn:openPres},
+    {label:'Antisèche de rendez-vous',ic:'open',fn:openLive}
+  ]));
   w('aNote',()=>{addLibre('',null,true);$('libreCard').scrollIntoView({behavior:'smooth',block:'center'});});
   w('aNew',()=>{closeDoc();go('nouveau');});
 }
