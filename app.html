@@ -581,6 +581,30 @@
   .plan-l.warn .plan-lv{color:var(--soft);font-style:italic;}
   .plan-l.end .plan-lk{color:var(--copper-d);}
   @media(max-width:700px){.plan-l{grid-template-columns:1fr;gap:2px;}}
+  /* ══ Le brief se compose sous tes yeux : squelette puis contenu ══ */
+  .cmp-line{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:9;display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line2);border-radius:11px;padding:10px 18px;box-shadow:var(--shl);font-size:12.5px;color:var(--soft);}
+  .cmp-line .dots{display:flex;gap:4px;}
+  .cmp-line .dots i{width:5px;height:5px;border-radius:50%;background:var(--copper);animation:cmpd 1.2s ease-in-out infinite;}
+  .cmp-line .dots i:nth-child(2){animation-delay:.15s;}
+  .cmp-line .dots i:nth-child(3){animation-delay:.3s;}
+  @keyframes cmpd{0%,60%,100%{opacity:.25;}30%{opacity:1;}}
+  .cmp-line b{font-family:var(--mono);font-size:11px;color:var(--copper-d);font-weight:500;}
+  .sk-l{height:13px;border-radius:5px;background:linear-gradient(90deg,var(--wash) 25%,#EFE9DD 50%,var(--wash) 75%);background-size:200% 100%;animation:skel 1.3s ease-in-out infinite;margin:9px 0;}
+  .sect.pending .sectbd{padding:16px;}
+  .sect.pending .secthd{opacity:.5;}
+  /* ══ Sections repliées : tu ouvres ce que tu veux lire ══ */
+  .sect.foldable .secthd{cursor:pointer;}
+  .sect.foldable .secthd:hover .tt{color:var(--copper-d);}
+  .sect.foldable .chev{margin-left:auto;width:14px;height:14px;color:var(--faint);transition:transform .22s cubic-bezier(.2,.7,.2,1);flex-shrink:0;}
+  .sect.foldable.fold .chev{transform:rotate(-90deg);}
+  .sect.foldable.fold .sectbd{display:none;}
+  .sect.foldable .prev{display:none;}
+  .sect.foldable.fold .prev{display:block;flex:1;min-width:0;font-size:12.5px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic;}
+  .sect.foldable.fold .dd{display:none;}
+  .sect.foldable.fold .acts{display:none;}
+  .sect.foldable .secthd .acts{margin-left:0;}
+  .plan-all{margin-left:auto;border:none;background:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--copper-d);cursor:pointer;padding:4px 8px;border-radius:6px;transition:.13s;}
+  .plan-all:hover{background:var(--washc);}
   /* Mémoire entrante dans le brief */
   /* Mission du jour : action héro */
   .fmission{position:relative;padding:20px 18px 18px;overflow:hidden;border-bottom:1px solid var(--line3);}
@@ -1129,25 +1153,6 @@
   .note.w{background:var(--washc);border:1px solid var(--copper-l);color:var(--copper-d);}
 
   /* ═══ Récit génération ═══ */
-  .btelling{position:fixed;inset:0;background:rgba(247,243,234,.94);backdrop-filter:blur(6px);z-index:90;display:none;align-items:center;justify-content:center;padding:20px;}
-  .btelling.on{display:flex;animation:up .3s ease;}
-  .btbox{max-width:500px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shl);padding:30px 28px;}
-  @keyframes brea{0%,100%{opacity:1;}50%{opacity:.3;}}
-  .btbox .arcs{text-align:center;margin-bottom:20px;}
-  .btbox .arcs svg{height:50px;}
-  .btbox .arcs .dot{fill:var(--copper);}
-  .btbox .arcs .a1{stroke:var(--copper);animation:brea 1.8s ease-in-out infinite;}
-  .btbox .arcs .a2{stroke:var(--copper);opacity:.4;animation:brea 1.8s ease-in-out .3s infinite;}
-  .btline{display:flex;align-items:center;gap:11px;font-size:13px;color:var(--faint);transition:color .3s;opacity:.4;padding:7px 0;}
-  .btline.now{color:var(--ink);opacity:1;font-weight:500;}
-  .btline.done{color:var(--dim);opacity:1;}
-  .btline .ic{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line2);flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;transition:.3s;}
-  .btline.now .ic{border-color:var(--copper);}
-  .btline.now .ic::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px solid var(--washc);border-top-color:var(--copper);animation:sp .7s linear infinite;}
-  .btline.done .ic{background:var(--green);border-color:var(--green);}
-  .btline.done .ic::after{content:"✓";color:#fff;font-size:9px;font-weight:700;}
-  .btmini{margin-top:20px;font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);text-align:center;}
-  .btmini b{color:var(--copper-d);}
 
   /* ═══ BRIEF : document structuré ═══ */
   .briefDoc{display:none;position:fixed;inset:0;background:var(--bg);z-index:80;overflow-y:auto;}
@@ -1995,7 +2000,6 @@
 </main>
 </div>
 
-<div class="btelling" id="telling"><div class="btbox"><div class="arcs"><svg viewBox="0 0 100 60" fill="none"><circle class="dot" cx="30" cy="30" r="4"/><path class="a1" d="M42 22 A 12 12 0 0 1 42 38" stroke-width="3" stroke-linecap="round"/><path class="a2" d="M52 14 A 22 22 0 0 1 52 46" stroke-width="2.5" stroke-linecap="round"/></svg></div><div id="hstack"></div><div class="btmini"><b>FARO</b> travaille · <span id="tellDur">0</span> s</div></div></div>
 
 <div class="briefDoc" id="briefDoc">
   <div class="docbar">
@@ -2686,20 +2690,6 @@ function wireDashTabs(){
     boardRender($('board'),false);if(affView==='table')entList();
   }));
 }
-function monthStart(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),1).getTime();}
-function prevMonthRange(){const d=new Date();const s=new Date(d.getFullYear(),d.getMonth()-1,1).getTime();const e=new Date(d.getFullYear(),d.getMonth(),1).getTime();return [s,e];}
-function signedIn(from,to){
-  return deals.filter(d=>d.etape==='gagne'&&d.updated_at&&new Date(d.updated_at).getTime()>=from&&(to?new Date(d.updated_at).getTime()<to:true));
-}
-
-
-function velocity(){
-  const w=deals.filter(d=>d.etape==='gagne'&&d.created_at&&d.updated_at);
-  if(w.length<2)return null;
-  const tot=w.reduce((a,d)=>a+Math.max(0,(new Date(d.updated_at)-new Date(d.created_at))/864e5),0);
-  return Math.round(tot/w.length);
-}
-
 // Graphe 30 jours : briefs préparés vs débriefés, deux courbes
 // Plan de bataille : décisions triées par urgence, avec la raison mémorisée
 // Intelligence : taux par interlocuteur, objections fréquentes
@@ -3899,22 +3889,46 @@ document.addEventListener('keydown',e=>{
 /* ═══ Génération ═══ */
 const note=(t,c)=>{const n=$('note');n.textContent=t;n.className='note on '+c;};
 const clr=()=>{$('note').className='note';};
-let tellTimer=null, tellStart=0;
-function tellingStart(lines){
-  $('hstack').innerHTML=lines.map(l=>`<div class="btline"><span class="ic"></span>${esc(l)}</div>`).join('');
-  $('telling').classList.add('on');
-  const items=$('hstack').querySelectorAll('.btline');
-  items[0].classList.add('now'); let idx=0; tellStart=performance.now();
-  tellTimer=setInterval(()=>{
-    $('tellDur').textContent=Math.round((performance.now()-tellStart)/1000);
-    idx++; if(idx>=items.length)return;
-    items[idx-1].classList.replace('now','done'); items[idx].classList.add('now');
-  },1600);
+let cmpTimer=null;
+// Plus d'écran d'attente : on atterrit sur le brief, il se remplit sous les yeux
+const CMP_SECTS=[['1','Ouverture'],['2','Questions'],['3','Objection probable'],['4','Le chiffre'],['5','Pièges'],['6','Prochaine étape']];
+function openComposing(){
+  const n=ent.nom||'Prospect';
+  const fil=$('briefFil');
+  if(fil)fil.innerHTML=`<span class="fd-node fd-ent">${logoHtml(n,ent.logo,ent.site).replace('class="mono','class="fd-logo mono')}<span>${esc(trunc(n,26))}</span></span><span class="fd-sep">›</span><span class="fd-node fd-cur">Brief en cours</span>`;
+  // Le rail porte tout de suite ce que Faro sait déjà, sans rien demander à personne
+  $('dName').textContent=n;
+  $('dSecline').textContent=[ent.activite,ent.ville].filter(Boolean).join(' · ')||posteSel;
+  const lg=$('dLogo'), fav=ent.logo||favicon(ent.site);
+  if(fav){lg.innerHTML=`<img src="${fav}" alt="" onerror="this.parentElement.textContent='${ini(n)}';">`;lg.style.background='#fff';}
+  else{lg.textContent=ini(n);lg.style.background=grad(n);}
+  const dir=ent.dirigeants&&ent.dirigeants[0];
+  const rows=[['Interlocuteur',posteSel],['Effectif',ent.effectif],['Taille',ent.taille],['Ancienneté',ent.anciennete?ent.anciennete+' ans':null],['Dirigeant',dir?dir.nom:null],['Ton offre',trunc(set.offre,40)]].filter(r=>r[1]);
+  $('dFields').innerHTML=rows.map(r=>`<div class="kv"><span class="k">${r[0]}</span><span class="v">${esc(r[1])}</span></div>`).join('');
+  $('dMat').textContent='—'; $('dLabel').textContent='Lecture en cours'; $('dVerdict').textContent='';
+  $('dRing').style.strokeDashoffset=220;
+  $('dReasons').innerHTML='<div class="sk-l" style="width:90%"></div><div class="sk-l" style="width:70%"></div>';
+  const cl=$('confLine'); if(cl)cl.innerHTML='';
+  const mb=$('memoBand'); if(mb){mb.style.display='none';mb.innerHTML='';}
+  const lc=$('linkCard'); if(lc)lc.style.display='none';
+  // Le corps : le plan puis les six sections, en attente
+  $('dMain').innerHTML=`<div class="sect plan reveal"><div class="plan-hd"><span class="plan-k">Ton plan</span><span class="plan-d">Ce que tu retiens si tu ne lis rien d'autre.</span></div><div class="plan-bd">`
+    +['Ouvrir sur','Faire dire',"S'il bloque",'Repartir avec'].map(k=>`<div class="plan-l"><span class="plan-lk">${k}</span><span class="sk-l" style="width:${60+Math.random()*30|0}%"></span></div>`).join('')
+    +`</div></div>`
+    +CMP_SECTS.map(([num,t])=>`<div class="sect pending reveal"><div class="secthd"><span class="num">${num}</span><span class="tt">${t}</span></div><div class="sectbd"><div class="sk-l" style="width:92%"></div><div class="sk-l" style="width:78%"></div></div></div>`).join('');
+  $('dMainDeb').style.display='none'; $('dMain').style.display='';
+  const sw=$('dipSwitch'); if(sw)sw.style.display='none';
+  // Le pied dit ce qui se passe, sans mentir sur des étapes
+  const t0=performance.now();
+  $('docActions').outerHTML=`<div class="cmp-line" id="docActions"><span class="dots"><i></i><i></i><i></i></span><span>Faro compose ton brief</span><b id="cmpSec">0 s</b></div>`;
+  clearInterval(cmpTimer);
+  cmpTimer=setInterval(()=>{const e=$('cmpSec');if(e)e.textContent=Math.round((performance.now()-t0)/1000)+' s';},250);
+  $('briefDoc').classList.add('on'); $('briefDoc').scrollTop=0;
 }
-function tellingStop(ok){
-  clearInterval(tellTimer);
-  if(ok){$('hstack').querySelectorAll('.btline').forEach(el=>{el.classList.remove('now');el.classList.add('done');});setTimeout(()=>$('telling').classList.remove('on'),420);}
-  else $('telling').classList.remove('on');
+function closeComposing(){
+  clearInterval(cmpTimer);
+  const d=$('docActions'); if(d)d.outerHTML='<div class="docactions" id="docActions"></div>';
+  $('briefDoc').classList.remove('on');
 }
 $('gen').addEventListener('click',async()=>{
   clr();
@@ -3945,22 +3959,22 @@ $('gen').addEventListener('click',async()=>{
   if(ent.effectif||ent.taille)lines.push(`${ent.effectif||ent.taille}${ent.ville?`, à ${ent.ville}`:''}`);
   if(currentDeal)lines.push('Relecture de vos échanges précédents');
   lines.push(`Recherche de l'angle pour ${posteSel}`,'Sélection de la source du chiffre','Rédaction du brief, mot pour mot');
-  tellingStart(lines);
+  openComposing();
   try{
     const r=await fetch('/api/brief',{method:'POST',headers:await auth(),body:JSON.stringify(payload)});
     const o=await r.json();
     if(!r.ok){
-      tellingStop(false);
+      closeComposing();
       if(r.status===402){if(typeof o.tokens_left==='number')tok(o.tokens_left);const d=o.reset_at?new Date(o.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'lundi';note(`Tu as utilisé tes briefs de la semaine. Recharge le ${d}.`,'w');}
       else note(o.error||'Une erreur est survenue.','e');
       return;
     }
-    tellingStop(true);
+    clearInterval(cmpTimer);
     if(typeof o.tokens_left==='number')tok(o.tokens_left);
     if(o.deal){const i=deals.findIndex(d=>d.id===o.deal.id);if(i>=0)deals[i]=o.deal;else deals.unshift(o.deal);}
     if(o.brief){briefs.unshift(o.brief);renderAll();openBrief(o.brief);}
     ent=null;$('qEnt').value='';
-  }catch(e){tellingStop(false);note('Connexion impossible au serveur.','e');}
+  }catch(e){closeComposing();note('Connexion impossible au serveur.','e');}
   finally{b.classList.remove('load');b.disabled=!posteSel;$('genL').textContent='Générer le brief';const kb2=b.querySelector('.kbd-hint');if(kb2)kb2.style.display='';}
 });
 
@@ -3974,6 +3988,9 @@ const refbox=(sec,idx)=>`<div class="refbox" data-ref="${sec}${idx!=null?':'+idx
 
 function openBrief(b){
   current=b; ann=JSON.parse(JSON.stringify(b.annotations||{})); lastCoach='';
+  clearInterval(cmpTimer);
+  const _da=$('docActions'); if(_da&&_da.classList.contains('cmp-line'))_da.outerHTML='<div class="docactions" id="docActions"></div>';
+  const _lc=$('linkCard'); if(_lc)_lc.style.display='';
   const ed=b.entreprise_data||{}; const n=b.entreprise||'Prospect';
   const d=b.deal_id?deals.find(x=>x.id===b.deal_id):findDeal({nom:n,siren:ed.siren});
   const fil=$('briefFil');
@@ -4040,7 +4057,7 @@ function openBrief(b){
       {k:'Repartir avec',v:cut((ns&&ns.phrase)||(typeof ns==='string'?ns:''),86),c:'end'}
     ].filter(r=>r.v);
     if(rows.length>=3){
-      html+=`<div class="sect plan reveal"><div class="plan-hd"><span class="plan-k">Ton plan</span><span class="plan-d">Ce que tu retiens si tu ne lis rien d'autre.</span></div><div class="plan-bd">`
+      html+=`<div class="sect plan reveal"><div class="plan-hd"><span class="plan-k">Ton plan</span><span class="plan-d">Ce que tu retiens si tu ne lis rien d'autre.</span><button class="plan-all" id="planAll" type="button">Tout déplier</button></div><div class="plan-bd">`
         +rows.map(r=>`<div class="plan-l ${r.c}"><span class="plan-lk">${r.k}</span><span class="plan-lv">${esc(r.v)}</span></div>`).join('')
         +`</div></div>`;
     }
@@ -4093,7 +4110,8 @@ function openBrief(b){
   sections.push({key:'next',num:pg.length?6:5,t:'Prochaine étape',d:'Ce que tu proposes en partant, avant de te lever.',ref:'next_step',
     copy:(ns&&ns.phrase)||ns||'',
     body:`<div class="nextv" data-edit="next">${esc((ns&&ns.phrase)||ns||'')}</div>${ns.delai_jours?`<div class="nextw">Relance prévue dans ${ns.delai_jours} jours</div>`:''}${refbox('next_step')}`});
-  html+=sections.map(s=>`<div class="sect" data-sec="${s.key}"><div class="secthd"><span class="num">${s.num}</span><span class="tt">${s.t}</span><span class="dd">${s.d}</span><div class="acts">${s.key!=='pieges'?`<button class="sbtn" data-editbtn="${s.key}">${penSvg}Modifier</button>`:''}${s.ref?`<button class="sbtn" data-refbtn="${s.ref}">${aiSvg}Reformuler</button>`:''}<button class="sbtn" data-copy="${esc(s.copy)}">${cpySvg}Copier</button></div></div><div class="sectbd">${s.body}</div></div>`).join('');
+  const prev=t=>{t=(t||'').toString().replace(/\s+/g,' ').trim();return t.length>78?t.slice(0,77)+'…':t;};
+  html+=sections.map((s,si)=>`<div class="sect foldable ${si===0?'':'fold'}" data-sec="${s.key}"><div class="secthd"><span class="num">${s.num}</span><span class="tt">${s.t}</span><span class="dd">${s.d}</span><span class="prev">${esc(prev(s.copy))}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg><div class="acts">${s.key!=='pieges'?`<button class="sbtn" data-editbtn="${s.key}">${penSvg}Modifier</button>`:''}${s.ref?`<button class="sbtn" data-refbtn="${s.ref}">${aiSvg}Reformuler</button>`:''}<button class="sbtn" data-copy="${esc(s.copy)}">${cpySvg}Copier</button></div></div><div class="sectbd">${s.body}</div></div>`).join('');
   html+=`<div class="sect" id="libreCard"><div class="secthd"><span class="num">✎</span><span class="tt">Notes rapides</span><span class="dd">Ce que tu captes en vrac. Cmd+N.</span></div><div class="sectbd"><div id="libreList"></div><button class="btn g sm" id="libreAdd" style="margin-top:8px;">+ Une note</button></div></div>`;
   $('dMain').innerHTML=html;
   const sects=$('dMain').querySelectorAll('.sect');
@@ -4233,6 +4251,18 @@ function confidence(b){
   return {pct,pass,total:checks.length,weak:weak?weak.w:null};
 }
 function wireDoc(){
+  // Ouvrir ou refermer une section, sans gêner ses boutons d'action
+  $('dMain').querySelectorAll('.sect.foldable .secthd').forEach(h=>h.addEventListener('click',e=>{
+    if(e.target.closest('.acts')||e.target.closest('button'))return;
+    h.closest('.sect').classList.toggle('fold');
+  }));
+  const pa=$('planAll');
+  if(pa)pa.addEventListener('click',()=>{
+    const secs=$('dMain').querySelectorAll('.sect.foldable');
+    const anyFold=[...secs].some(x=>x.classList.contains('fold'));
+    secs.forEach(x=>x.classList.toggle('fold',!anyFold));
+    pa.textContent=anyFold?'Tout replier':'Tout déplier';
+  });
   $('dMain').querySelectorAll('[data-copy]').forEach(el=>el.addEventListener('click',()=>navigator.clipboard.writeText(el.dataset.copy).then(()=>toast('Bloc copié'))));
   $('dMain').querySelectorAll('[data-editbtn]').forEach(el=>el.addEventListener('click',()=>toggleEdit(el)));
   $('dMain').querySelectorAll('[data-refbtn]').forEach(el=>el.addEventListener('click',()=>{
