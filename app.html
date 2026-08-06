@@ -567,6 +567,20 @@
   .les-line{font-size:13px;color:var(--soft);line-height:1.5;padding:7px 0;border-bottom:1px dashed #EBD6C2;}
   .les-line:last-of-type{border-bottom:none;}
   .les-foot{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--copper-d);margin-top:11px;padding-top:10px;border-top:1px solid #EBD6C2;}
+  /* ══ Le plan : ce que tu dois retenir, avant le détail ══ */
+  .plan{background:var(--card);border:1px solid var(--line2);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;}
+  .plan-hd{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line3);background:var(--head);}
+  .plan-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
+  .plan-d{font-size:11.5px;color:var(--dim);}
+  .plan-bd{padding:6px 18px 14px;}
+  .plan-l{display:grid;grid-template-columns:104px 1fr;gap:16px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line3);}
+  .plan-l:last-child{border-bottom:none;}
+  .plan-lk{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .plan-lv{font-family:var(--serif);font-size:15.5px;line-height:1.4;color:var(--ink);}
+  .plan-l.warn .plan-lk{color:var(--red);}
+  .plan-l.warn .plan-lv{color:var(--soft);font-style:italic;}
+  .plan-l.end .plan-lk{color:var(--copper-d);}
+  @media(max-width:700px){.plan-l{grid-template-columns:1fr;gap:2px;}}
   /* Mémoire entrante dans le brief */
   /* Mission du jour : action héro */
   .fmission{position:relative;padding:20px 18px 18px;overflow:hidden;border-bottom:1px solid var(--line3);}
@@ -1178,9 +1192,11 @@
   .carnet-foot .btn{width:100%;justify-content:center;}
   .carnet #carnetMontant{background:#fff;}
   .rail{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;}
+  .kv{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:6px 0;border-bottom:1px dashed var(--line3);font-size:12.5px;line-height:1.4;}
   .kv:last-child{border-bottom:none;}
   .kv .k{color:var(--dim);}
-  .kv .v{font-weight:600;text-align:right;}
+  .kv .k{flex-shrink:0;}
+  .kv .v{font-weight:600;text-align:right;min-width:0;}
   .compHd{display:flex;align-items:center;gap:11px;}
   .compHd .mono{width:44px;height:44px;border-radius:10px;font-size:15px;}
   .compHd .n{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.1;}
@@ -3997,8 +4013,9 @@ function openBrief(b){
   $('dFields').innerHTML=rows.map(r=>`<div class="kv"><span class="k">${r[0]}</span><span class="v">${esc(r[1])}</span></div>`).join('');
   const score=Math.max(0,Math.min(100,(b.maturite_score??b.maturite)||0));
   $('dMat').textContent=score;
-  $('dLabel').textContent=b.maturite_label||'Maturité du marché';
-  $('dVerdict').textContent=b.maturite_verdict||'';
+  const clean=t=>(t||'').toString().trim().replace(/^[«"'\s]+|[»"'\s]+$/g,'');
+  $('dLabel').textContent=clean(b.maturite_label)||'Maturité du marché';
+  $('dVerdict').textContent=clean(b.maturite_verdict);
   $('dRing').style.strokeDashoffset=220;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{$('dRing').style.strokeDashoffset=220-220*score/100;}));
   $('dReasons').innerHTML=(b.maturite_raisons||[]).map(r=>`<div class="rs">${esc(r)}</div>`).join('');
@@ -4012,6 +4029,22 @@ function openBrief(b){
 
   const ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ch=b.chiffre||{}, pg=b.pieges||[], ns=b.next_step||{};
   let html='';
+  // ─── Le plan : quatre lignes, la substance du rendez-vous avant tout le détail ───
+  {
+    const cut=(t,n)=>{t=(t||'').toString().trim().replace(/^[«"']\s*|\s*[»"']$/g,'');return t.length>n?t.slice(0,n-1).replace(/[\s,;:]+$/,'')+'…':t;};
+    const q0=qs[0]?(typeof qs[0]==='string'?qs[0]:qs[0].question):'';
+    const rows=[
+      {k:'Ouvrir sur',v:cut(ou.accroche||(typeof b.ouverture==='string'?b.ouverture:''),86),c:''},
+      {k:'Faire dire',v:cut(q0,86),c:''},
+      {k:"S'il bloque",v:cut(ob.texte,86),c:'warn'},
+      {k:'Repartir avec',v:cut((ns&&ns.phrase)||(typeof ns==='string'?ns:''),86),c:'end'}
+    ].filter(r=>r.v);
+    if(rows.length>=3){
+      html+=`<div class="sect plan reveal"><div class="plan-hd"><span class="plan-k">Ton plan</span><span class="plan-d">Ce que tu retiens si tu ne lis rien d'autre.</span></div><div class="plan-bd">`
+        +rows.map(r=>`<div class="plan-l ${r.c}"><span class="plan-lk">${r.k}</span><span class="plan-lv">${esc(r.v)}</span></div>`).join('')
+        +`</div></div>`;
+    }
+  }
   // ─── Mémoire entrante : elle ouvre le document, elle n'est pas une section parmi d'autres ───
   const mb=$('memoBand'); if(mb){mb.style.display='none';mb.innerHTML='';}
   if(!b.debrief){
@@ -4362,14 +4395,16 @@ function renderActions(){
   else if(b.debrief){a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres modes"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau brief</button>`;}
   else{
     const has=Object.keys(ann).some(k=>k!=='libre'&&ann[k]&&(ann[k].note||ann[k].tag))||(ann.libre||[]).length;
-    a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres modes"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="divider"></div><button class="pri" id="aStart">${has?'Reprendre mon récit':'Raconter ce rendez-vous'}</button>`;
+    a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="divider"></div><button class="pri" id="aGo">${has?'Reprendre mon carnet':"J'y vais"}</button>`;
   }
   const w=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn);};
   w('aLive',openLive); w('aCopy',copyAll); w('aStart',askPass); w('aEnd',rdvEndAsk);
+  w('aGo',()=>{if(current&&current.demo){toast('Ceci est un exemple. Prépare ton vrai rendez-vous pour y aller.');return;}rdvStart();});
   w('aPres',openPres); w('aRecap',openRecap);
   w('aMore',()=>openKebab($('aMore'),[
-    {label:'Mode présentation',ic:'open',fn:openPres},
-    {label:'Antisèche de rendez-vous',ic:'open',fn:openLive}
+    {label:'Il est déjà passé, raconter',ic:'open',fn:()=>{if(current&&current.demo){toast('Ceci est un exemple.');return;}startColdDebrief();}},
+    {label:'Antisèche de rendez-vous',ic:'open',fn:openLive},
+    {label:'Mode présentation',ic:'open',fn:openPres}
   ]));
   w('aNote',()=>{addLibre('',null,true);$('libreCard').scrollIntoView({behavior:'smooth',block:'center'});});
   w('aNew',()=>{closeDoc();go('nouveau');});
