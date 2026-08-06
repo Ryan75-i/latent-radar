@@ -1001,17 +1001,64 @@
   .cx-k i{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;background:var(--wash);border:1px solid var(--line3);color:var(--copper-d);font-style:normal;font-size:9.5px;font-weight:700;}
   .cx-k.done i{background:var(--copper);border-color:var(--copper);color:#fff;}
   .cx-k em{font-style:normal;color:var(--faint);letter-spacing:0;text-transform:none;font-family:var(--sans);font-size:11.5px;}
-  /* Grille de postes : tout visible, un clic */
-  .cx-postes{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .cx-p{display:flex;align-items:flex-start;gap:10px;text-align:left;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:11px 12px;cursor:pointer;font-family:inherit;transition:border-color .15s cubic-bezier(.2,.7,.2,1),background .15s,transform .15s,box-shadow .15s;}
-  .cx-p:hover{border-color:var(--copper-l);transform:translateY(-1px);box-shadow:var(--sh);}
-  .cx-p svg{width:15px;height:15px;color:var(--faint);flex-shrink:0;margin-top:2px;stroke-width:1.9;transition:color .15s;}
+  /* Postes : dix lignes compactes, les plus probables en tête */
+  .cx-postes{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;}
+  .cx-p{display:flex;align-items:center;gap:10px;text-align:left;background:none;border:1px solid transparent;border-radius:var(--r);padding:8px 11px;cursor:pointer;font-family:inherit;min-width:0;transition:border-color .15s cubic-bezier(.2,.7,.2,1),background .15s;}
+  .cx-p:hover{background:var(--wash);border-color:var(--line3);}
+  .cx-p svg{width:15px;height:15px;color:var(--faint);flex-shrink:0;stroke-width:1.9;transition:color .15s;}
   .cx-p:hover svg,.cx-p.on svg{color:var(--copper);}
-  .cx-p-b{min-width:0;display:flex;flex-direction:column;}
-  .cx-p-n{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.25;}
-  .cx-p-d{font-size:11px;color:var(--dim);line-height:1.35;margin-top:1px;}
+  .cx-p-b{min-width:0;flex:1;display:flex;align-items:baseline;gap:8px;}
+  .cx-p-n{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap;}
+  .cx-p-d{font-size:11.5px;color:var(--faint);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
   .cx-p.on{border-color:var(--copper);background:var(--washc);}
   .cx-p.on .cx-p-n{color:var(--copper-d);}
+  .cx-p.on .cx-p-d{color:var(--copper-d);opacity:.75;}
+  .cx-p-often{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:4px;padding:1px 6px;flex-shrink:0;}
+  .cx-p.on .cx-p-often{background:#fff;}
+  /* Ce que le brief visera : la conséquence du choix, en direct */
+  .cx-aim{background:var(--card);border:1px solid var(--line2);border-radius:var(--rl);padding:18px;box-shadow:var(--sh);}
+  .cx-aim-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;}
+  .cx-aim-t{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.2px;line-height:1.15;margin-bottom:14px;}
+  .cx-aim-t.empty{font-family:var(--sans);font-weight:500;font-size:13.5px;color:var(--dim);line-height:1.5;margin-bottom:0;}
+  .cx-aim-l{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--soft);line-height:1.45;padding:7px 0;border-top:1px solid var(--line3);}
+  .cx-aim-l:first-of-type{border-top:none;padding-top:0;}
+  .cx-aim-n{font-family:var(--mono);font-size:9px;color:var(--copper-d);flex-shrink:0;margin-top:3px;}
+  .cx-aim-f{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);font-size:11.5px;color:var(--dim);line-height:1.45;}
+  .cx-aim-f b{color:var(--copper-d);font-weight:600;}
+  @keyframes aimin{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+  .cx-aim-l,.cx-aim-t{animation:aimin .28s cubic-bezier(.2,.7,.2,1) both;}
+  .cx-aim-l:nth-of-type(2){animation-delay:.05s;}
+  .cx-aim-l:nth-of-type(3){animation-delay:.1s;}
+  /* Révélation progressive : la page grandit à mesure que tu réponds */
+  .cx-step[data-step]{display:none;}
+  .cx-step[data-step].open{display:block;animation:rise .38s cubic-bezier(.2,.7,.2,1) both;}
+  .cx-sub{margin-bottom:16px;}
+  .cx-sub:last-child{margin-bottom:0;}
+  .cx-sub-k{font-size:11.5px;font-weight:600;color:var(--soft);margin-bottom:8px;}
+  .cx-sub-k em{font-style:normal;color:var(--faint);font-weight:400;}
+  /* Aller plus loin : le supplément, jamais imposé */
+  .cx-more{margin-top:18px;padding-top:16px;border-top:1px solid var(--line3);}
+  .cx-more-b{display:inline-flex;align-items:center;gap:8px;background:none;border:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;padding:4px 0;transition:.13s;}
+  .cx-more-b svg{width:13px;height:13px;transition:transform .2s cubic-bezier(.2,.7,.2,1);}
+  .cx-more.open .cx-more-b svg{transform:rotate(90deg);}
+  .cx-more-body{display:none;padding-top:14px;}
+  .cx-more.open .cx-more-body{display:block;animation:rise .3s cubic-bezier(.2,.7,.2,1) both;}
+  .cx-f{margin-bottom:12px;}
+  .cx-f:last-child{margin-bottom:0;}
+  .cx-f input{width:100%;border:1px solid var(--line2);border-radius:var(--r);padding:9px 12px;font-size:12.5px;font-family:inherit;color:var(--ink);background:#fff;outline:none;transition:.15s;}
+  .cx-f input:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  .cx-f input::placeholder{color:var(--faint);}
+  /* Jauge de profondeur : répondre paie, et ça se voit */
+  .cx-depth{background:var(--wash);border:1px solid var(--line3);border-radius:var(--rl);padding:14px 16px;}
+  .cx-depth-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;}
+  .cx-depth-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+  .cx-depth-v{font-family:var(--serif);font-weight:600;font-size:14px;color:var(--copper-d);}
+  .cx-depth-bar{display:flex;gap:3px;}
+  .cx-depth-bar i{flex:1;height:5px;border-radius:3px;background:var(--line2);transition:background .3s cubic-bezier(.2,.7,.2,1);}
+  .cx-depth-bar i.on{background:var(--copper);}
+  .cx-depth-bar i.full{background:var(--green);}
+  .cx-depth-d{font-size:11.5px;color:var(--dim);line-height:1.45;margin-top:9px;}
+  .cx-depth-d b{color:var(--soft);font-weight:600;}
   /* Type de rendez-vous : trois pastilles */
   .cx-rdv{display:flex;gap:8px;flex-wrap:wrap;}
   .cx-r{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:10px 14px;cursor:pointer;font-family:inherit;transition:.15s cubic-bezier(.2,.7,.2,1);min-width:150px;}
@@ -1028,7 +1075,6 @@
   /* Colonne droite : la constellation continue */
   .cx-side{position:sticky;top:76px;display:flex;flex-direction:column;gap:16px;}
   .cx-side-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
-  .cx-conste svg{width:100%;height:auto;display:block;overflow:visible;}
   .cx-mem{background:linear-gradient(120deg,#E8F0F6,#F7FBFD);border:1px solid #C6DCEA;border-radius:var(--rl);padding:14px 16px;}
   .cx-mem-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:9px;}
   .cx-mem-l{font-size:12.5px;color:var(--soft);line-height:1.45;padding:5px 0;display:flex;gap:8px;}
@@ -1047,8 +1093,7 @@
   .view.on .cx-side{animation:rise .4s cubic-bezier(.2,.7,.2,1) .12s both;}
   @media(max-width:940px){
     .cx-grid{grid-template-columns:1fr;gap:24px;}
-    .cx-side{position:static;order:-1;}
-    .cx-conste{display:none;}
+        .cx-side{position:static;order:-1;}
     .cx-postes{grid-template-columns:1fr;}
   }
   /* Dropdown interlocuteur */
@@ -1808,13 +1853,23 @@
             <div class="cx-k" id="cxK1"><i>1</i>Qui est en face de toi</div>
             <div class="cx-postes" id="pGrid"></div>
           </div>
-          <div class="cx-step">
-            <div class="cx-k" id="cxK2"><i>2</i>Où en est la relation<em id="rdvWhy"></em></div>
-            <div class="cx-rdv" id="rdvGrid"></div>
+          <div class="cx-step" data-step="2" id="cxStep2">
+            <div class="cx-k" id="cxK2"><i>2</i>Le rendez-vous</div>
+            <div class="cx-sub"><div class="cx-sub-k">Où en est la relation<em id="rdvWhy"></em></div><div class="cx-rdv" id="rdvGrid"></div></div>
+            <div class="cx-sub"><div class="cx-sub-k">Comment il est arrivé jusqu'à toi</div><div class="cx-rdv" id="declGrid"></div></div>
+            <div class="cx-sub"><div class="cx-sub-k">Qui sera dans la pièce <em>facultatif</em></div><div class="cx-rdv" id="roomGrid"></div></div>
           </div>
-          <div class="cx-step" style="margin-bottom:0;">
-            <div class="cx-k"><i>3</i>Ce que tu sais déjà<em>facultatif</em></div>
-            <textarea class="cx-ctx" id="fCtx" placeholder="Une intro par un contact commun, une actu récente, un blocage connu. Tout ce que tu sais rend la sortie plus tranchante."></textarea>
+          <div class="cx-step" data-step="3" id="cxStep3" style="margin-bottom:0;">
+            <div class="cx-k" id="cxK3"><i>3</i>Ce que tu veux en sortir</div>
+            <div class="cx-rdv" id="goalGrid"></div>
+            <div class="cx-more" id="cxMore">
+              <button class="cx-more-b" type="button" id="cxMoreB"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>Aller plus loin, pour un brief plus tranchant</button>
+              <div class="cx-more-body">
+                <div class="cx-f"><div class="cx-sub-k">Un concurrent déjà en place ?</div><input id="cxConc" placeholder="Le nom de la solution qu'il utilise aujourd'hui" autocomplete="off"/></div>
+                <div class="cx-f"><div class="cx-sub-k">Une échéance connue ?</div><input id="cxEch" placeholder="Fin de trimestre, renouvellement en mars, budget à consommer…" autocomplete="off"/></div>
+                <div class="cx-f"><div class="cx-sub-k">Ce que tu sais déjà</div><textarea class="cx-ctx" id="fCtx" placeholder="Une intro par un contact commun, une actu récente, un blocage connu. Tout ce que tu sais rend la sortie plus tranchante."></textarea></div>
+              </div>
+            </div>
           </div>
           <div class="cx-foot">
             <span class="msg">Ce brief coûte <b>1 jeton</b>. Il t'en reste <b id="left">—</b>.</span>
@@ -1823,7 +1878,8 @@
           <div class="note" id="note"></div>
         </div>
         <aside class="cx-side">
-          <div class="cx-conste" id="cxConste"></div>
+          <div class="cx-aim" id="cxAim"></div>
+          <div class="cx-depth" id="cxDepth"></div>
           <div id="histBand"></div>
           <div id="conseilBox"></div>
         </aside>
@@ -2057,7 +2113,7 @@ function showHint(container,key,html){
     try{const hs=Object.keys(hintsSeen);set.hints_seen=hs.join(',');sb.from('user_settings').update({hints_seen:set.hints_seen}).eq('user_id',uid).then(()=>{},()=>{});}catch(e){}
   });
 }
-let typeRdv='premier', posteSel='';
+let typeRdv='premier', posteSel='', declSel='', roomSel='', goalSel='';
 let rdvActive=false, rdvT0=0, timerInt=null, ann={}, saveT=null, coachT=null, lastCoach='', debTemp='';
 
 /* ═══ Config ═══ */
@@ -2071,17 +2127,36 @@ const STAGES=[
 ];
 const stg=k=>STAGES.find(s=>s.k===k)||STAGES[0];
 const stageChip=(k,extra)=>{const s=stg(k);return `<span class="chip ${extra||''}" style="color:${s.c};background:${s.bg};border-color:${s.bd}">${s.l}</span>`;};
+// w : ce que le brief visera pour ce poste, affiché en direct au clic
 const POSTES=[
-  {p:'Direction générale',d:'Vision, croissance, risque global',i:'<path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/>'},
-  {p:'Direction financière (DAF)',d:'ROI, coûts, risque chiffré',i:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'},
-  {p:"Direction des systèmes d'information (DSI)",d:'Sécurité, intégration, dette technique',i:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M2 20h20"/>'},
-  {p:'Direction des opérations',d:'Productivité, délais, fiabilité',i:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M2 12h4M18 12h4"/>'},
-  {p:'Direction commerciale',d:'Pipeline, conversion, vitesse',i:'<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>'},
-  {p:'Direction marketing',d:'Leads, image, mesure',i:'<path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/>'},
-  {p:'Direction des ressources humaines',d:'Rétention, conformité, climat social',i:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/>'},
-  {p:'Service achats',d:'Prix, conditions, comparaison',i:'<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/>'},
-  {p:'Responsable de service',d:'Simplicité, adoption terrain',i:'<path d="M20 6L9 17l-5-5"/>'},
-  {p:'Fondateur ou dirigeant',d:'Impact rapide, confiance, prix juste',i:'<path d="M18 8a6 6 0 0 1-7.7 5.7L4 20l1-5-2-2 5-1L14 5a6 6 0 0 1 4 3z"/>'}
+  {p:'Direction générale',w:['L\'angle croissance, jamais l\'angle outil','L\'objection « ce n\'est pas la priorité »','Le coût de ne rien faire, chiffré'],d:'Vision, croissance, risque global',i:'<path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/>'},
+  {p:'Direction financière (DAF)',w:['Le retour sur investissement et son délai','L\'objection budget, avec sa parade','Qui signe, et à quelle échéance'],d:'ROI, coûts, risque chiffré',i:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'},
+  {p:"Direction des systèmes d'information (DSI)",w:['L\'intégration à l\'existant et la sécurité','L\'objection dette technique','Ce que ça évite de maintenir'],d:'Sécurité, intégration, dette technique',i:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M2 20h20"/>'},
+  {p:'Direction des opérations',w:['Le temps gagné chaque semaine','L\'objection « on fait déjà comme ça »','L\'effet sur les délais et la fiabilité'],d:'Productivité, délais, fiabilité',i:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M2 12h4M18 12h4"/>'},
+  {p:'Direction commerciale',w:['L\'effet sur le pipeline et la vitesse','L\'objection « mon équipe n\'adoptera pas »','Le gain par commercial, mesuré'],d:'Pipeline, conversion, vitesse',i:'<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>'},
+  {p:'Direction marketing',w:['Les leads générés et leur mesure','L\'objection attribution','Ce qui se voit dès le premier mois'],d:'Leads, image, mesure',i:'<path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/>'},
+  {p:'Direction des ressources humaines',w:['La rétention et le climat social','L\'objection conformité','L\'adoption sans formation lourde'],d:'Rétention, conformité, climat social',i:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/>'},
+  {p:'Service achats',w:['Le prix situé face au marché','L\'objection mise en concurrence','Les conditions réellement négociables'],d:'Prix, conditions, comparaison',i:'<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/>'},
+  {p:'Responsable de service',w:['La simplicité au quotidien','L\'objection « on n\'a pas le temps »','L\'adoption terrain, sans friction'],d:'Simplicité, adoption terrain',i:'<path d="M20 6L9 17l-5-5"/>'},
+  {p:'Fondateur ou dirigeant',w:['L\'impact visible en trente jours','L\'objection prix','La confiance, preuves à l\'appui'],d:'Impact rapide, confiance, prix juste',i:'<path d="M18 8a6 6 0 0 1-7.7 5.7L4 20l1-5-2-2 5-1L14 5a6 6 0 0 1 4 3z"/>'}
+];
+const DECLS=[
+  {k:'froid',n:'Prospection froide',d:'Tu es allé le chercher.'},
+  {k:'reco',n:'Recommandation',d:'Quelqu\'un vous a mis en relation.'},
+  {k:'inbound',n:'Il est venu à toi',d:'Il a demandé le rendez-vous.'},
+  {k:'ao',n:'Appel d\'offres',d:'Cadre formel, concurrents en face.'},
+  {k:'event',n:'Salon ou événement',d:'Rencontré sur le terrain.'}
+];
+const ROOMS=[
+  {k:'seul',n:'Lui seul',d:'Il décide ou il rapporte.'},
+  {k:'equipe',n:'Avec son équipe',d:'Plusieurs métiers à convaincre.'},
+  {k:'comite',n:'Un comité',d:'Décision collective, un sceptique.'}
+];
+const GOALS=[
+  {k:'qualifier',n:'Qualifier',d:'Savoir si ça vaut le coup.'},
+  {k:'rdv2',n:'Un deuxième rendez-vous',d:'Enclencher la suite.'},
+  {k:'chiffrer',n:'Faire chiffrer',d:'Poser une proposition.'},
+  {k:'signer',n:'Signer',d:'Fermer maintenant.'}
 ];
 const RDVS=[
   {k:'premier',n:'Premier RDV',d:"Il ne connaît pas encore ton offre."},
@@ -3601,52 +3676,110 @@ function wireMan(q){
 })();
 
 /* ═══ Contexte ═══ */
-// Les dix postes visibles d'un coup : un clic, pas trois
+// Les postes que tu rencontres le plus remontent : ta mémoire sert aussi ici
+function posteOften(){
+  const c={};
+  briefs.forEach(b=>{if(b.poste)c[b.poste]=(c[b.poste]||0)+1;});
+  return Object.entries(c).filter(e=>e[1]>=2).sort((a,b)=>b[1]-a[1]).slice(0,3).map(e=>e[0]);
+}
 function buildPList(){
-  $('pGrid').innerHTML=POSTES.map((p,i)=>`<button class="cx-p" type="button" data-i="${i}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${p.i}</svg><span class="cx-p-b"><span class="cx-p-n">${esc(p.p)}</span><span class="cx-p-d">${esc(p.d)}</span></span></button>`).join('');
+  const often=posteOften();
+  const order=POSTES.map((p,i)=>({p,i})).sort((a,b)=>{
+    const oa=often.indexOf(a.p.p), ob=often.indexOf(b.p.p);
+    if(oa>=0&&ob>=0)return oa-ob;
+    if(oa>=0)return -1; if(ob>=0)return 1;
+    return a.i-b.i;
+  });
+  $('pGrid').innerHTML=order.map(({p,i})=>`<button class="cx-p" type="button" data-i="${i}" title="${esc(p.d)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${p.i}</svg><span class="cx-p-b"><span class="cx-p-n">${esc(p.p)}</span><span class="cx-p-d">${esc(p.d)}</span></span>${often.includes(p.p)?'<span class="cx-p-often">souvent</span>':''}</button>`).join('');
   $('pGrid').querySelectorAll('.cx-p').forEach(el=>el.addEventListener('click',()=>{
     posteSel=POSTES[+el.dataset.i].p;
     $('pGrid').querySelectorAll('.cx-p').forEach(x=>x.classList.toggle('on',x===el));
+    cxAim(); cxProgress();
+  }));
+}
+// L'objectif de sortie réécrit le pied du panneau : la prochaine étape en dépend
+function cxAimGoal(){
+  const f=$('cxAimF'); if(!f)return;
+  const G={qualifier:'Ton objectif : qualifier. La prochaine étape proposée sera une question, pas un engagement.',
+    rdv2:'Ton objectif : un deuxième rendez-vous. Faro fermera sur une date précise.',
+    chiffrer:'Ton objectif : faire chiffrer. Faro ira chercher le périmètre et le budget.',
+    signer:'Ton objectif : signer. Faro montera la pression sur le coût d\'attendre.'};
+  const R={premier:'Il ne te connaît pas : Faro ouvrira sur son monde, pas sur ton offre.',relance:'Un échange a eu lieu : Faro repartira de ce qui a été dit.',negociation:'Le sujet est le prix : Faro armera la défense de ta valeur.'};
+  f.textContent=(goalSel&&G[goalSel])||R[typeRdv]||'';
+}
+// Le choix a une conséquence visible : le brief annonce ce qu'il visera
+function cxAim(){
+  const el=$('cxAim'); if(!el)return;
+  const p=POSTES.find(x=>x.p===posteSel);
+  if(!p){
+    el.innerHTML=`<div class="cx-aim-k">Ce que ton brief visera</div><div class="cx-aim-t empty">Choisis l'interlocuteur en face de toi. Faro t'annonce aussitôt l'angle qu'il prendra, l'objection qu'il anticipera et le chiffre qu'il ira chercher.</div>`;
+    return;
+  }
+  const R={premier:'Il ne te connaît pas : Faro ouvrira sur son monde, pas sur ton offre.',relance:'Un échange a eu lieu : Faro repartira de ce qui a été dit.',negociation:'Le sujet est le prix : Faro armera la défense de ta valeur.'};
+  el.innerHTML=`<div class="cx-aim-k">Ce que ton brief visera</div>
+    <div class="cx-aim-t">${esc(p.p)}</div>
+    ${(p.w||[]).map((l,i)=>`<div class="cx-aim-l"><span class="cx-aim-n">0${i+1}</span><span>${esc(l)}</span></div>`).join('')}
+    <div class="cx-aim-f" id="cxAimF">${R[typeRdv]||''}</div>`;
+  cxAimGoal();
+}
+// Un seul moteur pour toutes les séries de pastilles
+function chipGrid(elId,list,getSel,setSel){
+  const el=$(elId); if(!el)return;
+  el.innerHTML=list.map(o=>`<button class="cx-r" type="button" data-v="${o.k}"><span class="cx-r-n">${o.n}</span><span class="cx-r-d">${o.d}</span></button>`).join('');
+  el.querySelectorAll('.cx-r').forEach(c=>c.addEventListener('click',()=>{
+    const was=getSel()===c.dataset.v;
+    el.querySelectorAll('.cx-r').forEach(x=>x.classList.remove('on'));
+    if(was){setSel('');}else{c.classList.add('on');setSel(c.dataset.v);}
+    if(elId==='goalGrid'&&typeof cxAimGoal==='function')cxAimGoal();
     cxProgress();
   }));
 }
+function chipSet(elId,val){
+  const el=$(elId); if(!el)return;
+  el.querySelectorAll('.cx-r').forEach(x=>x.classList.toggle('on',x.dataset.v===val));
+}
 function buildRdv(){
+  chipGrid('declGrid',DECLS,()=>declSel,v=>{declSel=v;});
+  chipGrid('roomGrid',ROOMS,()=>roomSel,v=>{roomSel=v;});
+  chipGrid('goalGrid',GOALS,()=>goalSel,v=>{goalSel=v;});
+  const mb=$('cxMoreB');
+  if(mb)mb.addEventListener('click',()=>$('cxMore').classList.toggle('open'));
+  ['cxConc','cxEch','fCtx'].forEach(id=>{const e=$(id);if(e)e.addEventListener('input',cxProgress);});
   $('rdvGrid').innerHTML=RDVS.map(r=>`<button class="cx-r" type="button" data-v="${r.k}"><span class="cx-r-n">${r.n}</span><span class="cx-r-d">${r.d}</span></button>`).join('');
   $('rdvGrid').querySelectorAll('.cx-r').forEach(c=>c.addEventListener('click',()=>{
-    $('rdvGrid').querySelectorAll('.cx-r').forEach(x=>x.classList.toggle('on',x===c));typeRdv=c.dataset.v;cxProgress();
+    $('rdvGrid').querySelectorAll('.cx-r').forEach(x=>x.classList.toggle('on',x===c));typeRdv=c.dataset.v;
+    const f=$('cxAimF');
+    if(f){const R={premier:'Il ne te connaît pas : Faro ouvrira sur son monde, pas sur ton offre.',relance:'Un échange a eu lieu : Faro repartira de ce qui a été dit.',negociation:'Le sujet est le prix : Faro armera la défense de ta valeur.'};f.textContent=R[typeRdv]||'';}
+    cxProgress();
   }));
 }
-// Les etapes s'allument, le bouton s'active quand tout est pose
+// La page grandit à mesure que tu réponds, et la profondeur se voit
 function cxProgress(){
-  const k1=$('cxK1'), k2=$('cxK2'), g=$('gen');
+  const g=$('gen');
+  const t=id=>{const e=$(id);return e?e.value.trim():'';};
+  // Révélation : l'étape 2 apparaît avec le poste, l'étape 3 dès qu'on touche l'étape 2
+  const s2=$('cxStep2'), s3=$('cxStep3');
+  if(s2)s2.classList.toggle('open',!!posteSel);
+  if(s3)s3.classList.toggle('open',!!posteSel&&(!!declSel||!!roomSel));
+  // Étapes accomplies
+  const k1=$('cxK1'), k2=$('cxK2'), k3=$('cxK3');
   if(k1)k1.classList.toggle('done',!!posteSel);
-  if(k2)k2.classList.toggle('done',!!typeRdv);
-  if(g)g.disabled=!posteSel;
-}
-// La constellation suit sur la colonne de droite, entreprise au centre
-function cxConste(nom){
-  const el=$('cxConste'); if(!el)return;
-  const ini2=esc(ini(nom||'?'));
-  el.innerHTML=`<div class="cx-side-k" style="margin-bottom:12px;">Ce que Faro va interroger</div>
-  <svg viewBox="0 0 320 220" role="img" aria-label="Sources interrogées pour ${esc(nom||'')}">
-    <g>
-      <line class="cn-link" x1="160" y1="110" x2="160" y2="36"/>
-      <line class="cn-link" x1="160" y1="110" x2="58" y2="78"/>
-      <line class="cn-link" x1="160" y1="110" x2="58" y2="146"/>
-      <line class="cn-link soon" x1="160" y1="110" x2="262" y2="78"/>
-      <line class="cn-link soon" x1="160" y1="110" x2="262" y2="146"/>
-      <line class="cn-link soon" x1="160" y1="110" x2="160" y2="186"/>
-    </g>
-    <circle class="cn-halo" cx="160" cy="110" r="36"/>
-    <circle class="cn-core" cx="160" cy="110" r="26"/>
-    <text class="cn-core-t" x="160" y="116" text-anchor="middle">${ini2}</text>
-    <circle class="cn-dot" cx="160" cy="36" r="4.5"/><text class="cn-lbl" x="160" y="22" text-anchor="middle">Signaux du marché</text>
-    <circle class="cn-dot" cx="58" cy="78" r="4.5"/><text class="cn-lbl" x="48" y="82" text-anchor="end">Référentiel</text>
-    <circle class="cn-dot" cx="58" cy="146" r="4.5"/><text class="cn-lbl" x="48" y="150" text-anchor="end">Ta mémoire</text>
-    <circle class="cn-dot soon" cx="262" cy="78" r="4.5"/><text class="cn-lbl soon" x="272" y="82" text-anchor="start">Recrutements</text>
-    <circle class="cn-dot soon" cx="262" cy="146" r="4.5"/><text class="cn-lbl soon" x="272" y="150" text-anchor="start">Annonces</text>
-    <circle class="cn-dot soon" cx="160" cy="186" r="4.5"/><text class="cn-lbl soon" x="160" y="202" text-anchor="middle">Son site web</text>
-  </svg>`;
+  if(k2)k2.classList.toggle('done',!!typeRdv&&!!declSel);
+  if(k3)k3.classList.toggle('done',!!goalSel);
+  // Profondeur : huit signaux, chacun creuse le brief
+  const sig=[!!posteSel,!!typeRdv,!!declSel,!!goalSel,!!roomSel,!!t('cxConc'),!!t('cxEch'),!!t('fCtx')];
+  const n=sig.filter(Boolean).length;
+  const d=$('cxDepth');
+  if(d){
+    const full=n>=7;
+    const LBL=['Vide','Sommaire','Sommaire','Correct','Correct','Solide','Solide','Tranchant','Chirurgical'];
+    const NEXT=[['un interlocuteur',!posteSel],['le déclencheur',!declSel],['ton objectif de sortie',!goalSel],['qui sera dans la pièce',!roomSel],['le concurrent en place',!t('cxConc')],['une échéance',!t('cxEch')],['ce que tu sais déjà',!t('fCtx')]];
+    const miss=NEXT.filter(x=>x[1]).map(x=>x[0]);
+    d.innerHTML=`<div class="cx-depth-h"><span class="cx-depth-k">Profondeur du brief</span><span class="cx-depth-v">${LBL[n]}</span></div>
+      <div class="cx-depth-bar">${Array.from({length:8},(_,i)=>`<i class="${i<n?(full?'full':'on'):''}"></i>`).join('')}</div>
+      <div class="cx-depth-d">${full?'Faro a tout ce qu\'il lui faut. Ce brief sera chirurgical.':(miss.length?`Ajoute <b>${esc(miss[0])}</b> et Faro creusera davantage.`:'')}</div>`;
+  }
+  if(g)g.disabled=!posteSel||!goalSel;
 }
 function suggestRdv(){
   let k='premier', why='Première rencontre avec cette entreprise.';
@@ -3671,7 +3804,6 @@ function lockedRender(){
   const badge=ent.saisie_manuelle?'<span class="manbadge">Saisie manuelle</span>':'';
   $('lockedCard').innerHTML=`${logoHtml(ent.nom,ent.logo,ent.site)}<div class="cx-co-b"><div class="cx-co-n">${esc(ent.nom)}</div><div class="cx-co-m">${meta||(ent.saisie_manuelle?'Créée à la main, sans données officielles.':'Chargement des données officielles…')} ${badge}</div></div><button class="btn g sm" id="btnChange">Changer d'entreprise</button>`;
   $('btnChange').addEventListener('click',()=>{ent=null;go('nouveau');});
-  cxConste(ent.nom);
 }
 function openCtx(){
   currentDeal=findDeal(ent)||null;
@@ -3693,14 +3825,18 @@ function openCtx(){
         :`<div class="cx-mem-l">Un brief existe déjà, Faro reprendra le contexte connu.</div>`)
       +`<div class="cx-mem-l" style="opacity:.75">${esc(head)}</div></div>`;
   }
-  // Remise à zéro des choix
-  posteSel='';
+  // Remise à zéro du parcours
+  posteSel=''; declSel=''; roomSel=''; goalSel='';
+  ['declGrid','roomGrid','goalGrid'].forEach(id=>chipSet(id,''));
+  ['cxConc','cxEch'].forEach(id=>{const e=$(id);if(e)e.value='';});
+  const cm=$('cxMore'); if(cm)cm.classList.remove('open');
   const pg=$('pGrid'); if(pg)pg.querySelectorAll('.cx-p').forEach(x=>x.classList.remove('on'));
   if(currentDeal&&currentDeal.interlocuteur){
     const i=POSTES.findIndex(p=>p.p===currentDeal.interlocuteur);
     if(i>=0&&pg){const el=pg.querySelectorAll('.cx-p')[i]; if(el)el.click();}
   }
   suggestRdv();
+  cxAim();
   $('fCtx').value='';
   cxProgress();
   go('ctx');
@@ -3743,7 +3879,17 @@ $('gen').addEventListener('click',async()=>{
     const s=b.synthese_post&&b.synthese_post.observations?b.synthese_post.observations.join(' '):'';
     return `RDV du ${new Date(b.created_at).toLocaleDateString('fr-FR')} (${b.debrief.temperature}) : ${b.debrief.next_action||''} ${s}`;
   }).join('\n'):'';
-  const ctxTxt=[$('fCtx').value.trim(),histo?('HISTORIQUE DES RDV PRÉCÉDENTS :\n'+histo):''].filter(Boolean).join('\n');
+  // Le parcours enrichit le contexte envoyé au modèle
+  const lbl=(list,k)=>{const o=list.find(x=>x.k===k);return o?o.n+' ('+o.d.replace(/\.$/,'')+')':'';};
+  const deep=[];
+  if(declSel)deep.push('COMMENT LE RENDEZ-VOUS EST NÉ : '+lbl(DECLS,declSel));
+  if(goalSel)deep.push('OBJECTIF DE SORTIE DU COMMERCIAL : '+lbl(GOALS,goalSel)+". Oriente tout le brief, et surtout la prochaine étape, vers cet objectif précis.");
+  if(roomSel)deep.push('QUI SERA DANS LA PIÈCE : '+lbl(ROOMS,roomSel));
+  const conc=($('cxConc')&&$('cxConc').value.trim())||'';
+  if(conc)deep.push('CONCURRENT DÉJÀ EN PLACE : '+conc+". Construis la riposte en tenant compte de cette solution existante, sans la dénigrer frontalement.");
+  const ech=($('cxEch')&&$('cxEch').value.trim())||'';
+  if(ech)deep.push('ÉCHÉANCE CONNUE : '+ech+'. Sers-t\'en pour créer une urgence légitime.');
+  const ctxTxt=[$('fCtx').value.trim(),deep.join('\n'),histo?('HISTORIQUE DES RDV PRÉCÉDENTS :\n'+histo):''].filter(Boolean).join('\n');
   const payload={entreprise:ent.nom,entreprise_data:ent,site:ent.site||null,poste:posteSel,interlocuteur_nom:dirNom,type_rdv:typeRdv,offre:set.offre,valeur:set.contexte||'',company:set.company||'',preuves:set.preuves||'',cible:set.cible||'',contexte:ctxTxt};
   const b=$('gen'); b.classList.add('load'); b.disabled=true; $('genL').textContent='Faro compose…';
   const kb=b.querySelector('.kbd-hint'); if(kb)kb.style.display='none';
