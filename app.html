@@ -987,49 +987,71 @@
   .ac-note{padding:10px 14px;font-size:11.5px;color:var(--copper-d);background:var(--washc);border-bottom:1px solid var(--line3);line-height:1.4;}
   .ac-siren{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--faint);background:var(--wash);border:1px solid var(--line3);border-radius:4px;padding:1px 6px;margin-top:4px;}
 
-  /* ═══ Contexte ═══ */
-  .ctxwrap{max-width:680px;margin:0 auto;}
-  .locked{display:flex;align-items:center;gap:13px;padding:13px 16px;}
-  .locked .mono{width:42px;height:42px;border-radius:9px;font-size:14px;}
-  .locked .n{font-family:var(--serif);font-weight:600;font-size:18px;line-height:1.1;}
-  .locked .m{font-size:11px;color:var(--dim);margin-top:2px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
-  .locked .change{margin-left:auto;}
-  .histband{display:flex;align-items:center;gap:9px;background:var(--bluebg);border:1px solid #C6DAE6;border-radius:9px;padding:9px 13px;font-size:12px;color:var(--blue);margin:0 16px 14px;}
-  .histband svg{width:14px;height:14px;flex-shrink:0;stroke-width:2;}
-  .histband b{font-weight:700;}
+  /* ═══ Contexte : un écran, deux décisions, zéro dropdown ═══ */
+  .ctxwrap{max-width:1060px;margin:0 auto;}
+  /* Ligne d'entreprise, pas une carte */
+  .cx-co{display:flex;align-items:center;gap:14px;padding-bottom:16px;margin-bottom:20px;border-bottom:1px solid var(--line);}
+  .cx-co .mono{width:44px;height:44px;border-radius:11px;font-size:15px;flex-shrink:0;}
+  .cx-co-b{flex:1;min-width:0;}
+  .cx-co-n{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.3px;line-height:1.1;}
+  .cx-co-m{font-size:12.5px;color:var(--dim);margin-top:3px;}
+  .cx-grid{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start;}
+  .cx-step{margin-bottom:26px;}
+  .cx-k{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;}
+  .cx-k i{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;background:var(--wash);border:1px solid var(--line3);color:var(--copper-d);font-style:normal;font-size:9.5px;font-weight:700;}
+  .cx-k.done i{background:var(--copper);border-color:var(--copper);color:#fff;}
+  .cx-k em{font-style:normal;color:var(--faint);letter-spacing:0;text-transform:none;font-family:var(--sans);font-size:11.5px;}
+  /* Grille de postes : tout visible, un clic */
+  .cx-postes{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .cx-p{display:flex;align-items:flex-start;gap:10px;text-align:left;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:11px 12px;cursor:pointer;font-family:inherit;transition:border-color .15s cubic-bezier(.2,.7,.2,1),background .15s,transform .15s,box-shadow .15s;}
+  .cx-p:hover{border-color:var(--copper-l);transform:translateY(-1px);box-shadow:var(--sh);}
+  .cx-p svg{width:15px;height:15px;color:var(--faint);flex-shrink:0;margin-top:2px;stroke-width:1.9;transition:color .15s;}
+  .cx-p:hover svg,.cx-p.on svg{color:var(--copper);}
+  .cx-p-b{min-width:0;display:flex;flex-direction:column;}
+  .cx-p-n{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.25;}
+  .cx-p-d{font-size:11px;color:var(--dim);line-height:1.35;margin-top:1px;}
+  .cx-p.on{border-color:var(--copper);background:var(--washc);}
+  .cx-p.on .cx-p-n{color:var(--copper-d);}
+  /* Type de rendez-vous : trois pastilles */
+  .cx-rdv{display:flex;gap:8px;flex-wrap:wrap;}
+  .cx-r{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:10px 14px;cursor:pointer;font-family:inherit;transition:.15s cubic-bezier(.2,.7,.2,1);min-width:150px;}
+  .cx-r:hover{border-color:var(--copper-l);}
+  .cx-r.on{border-color:var(--copper);background:var(--washc);}
+  .cx-r-n{font-size:12.5px;font-weight:600;color:var(--ink);}
+  .cx-r.on .cx-r-n{color:var(--copper-d);}
+  .cx-r-d{font-size:11px;color:var(--dim);line-height:1.3;}
+  .cx-r-reco{position:absolute;top:-7px;right:9px;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;background:var(--copper);color:#fff;border-radius:5px;padding:2px 7px;}
+  /* Zone de contexte libre */
+  .cx-ctx{width:100%;border:1px solid var(--line2);border-radius:var(--r);padding:11px 13px;font-size:13px;font-family:inherit;line-height:1.5;color:var(--ink);background:#fff;outline:none;min-height:74px;resize:vertical;transition:.15s;}
+  .cx-ctx:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  .cx-ctx::placeholder{color:var(--faint);}
+  /* Colonne droite : la constellation continue */
+  .cx-side{position:sticky;top:76px;display:flex;flex-direction:column;gap:16px;}
+  .cx-side-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+  .cx-conste svg{width:100%;height:auto;display:block;overflow:visible;}
+  .cx-mem{background:linear-gradient(120deg,#E8F0F6,#F7FBFD);border:1px solid #C6DCEA;border-radius:var(--rl);padding:14px 16px;}
+  .cx-mem-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:9px;}
+  .cx-mem-l{font-size:12.5px;color:var(--soft);line-height:1.45;padding:5px 0;display:flex;gap:8px;}
+  .cx-mem-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--blue);opacity:.5;margin-top:7px;flex-shrink:0;}
+  /* Pied : un seul cuivre, le jeton en clair */
+  .cx-foot{display:flex;align-items:center;gap:16px;margin-top:8px;padding-top:20px;border-top:1px solid var(--line);}
+  .cx-foot .msg{flex:1;font-size:12.5px;color:var(--dim);}
+  .cx-foot .msg b{color:var(--ink);font-weight:600;}
+  .cx-gen{display:inline-flex;align-items:center;gap:9px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:13px 22px;font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:var(--sh);transition:background .15s cubic-bezier(.2,.7,.2,1),transform .15s,box-shadow .15s,opacity .15s;}
+  .cx-gen:hover:not(:disabled){background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
+  .cx-gen:disabled{opacity:.45;cursor:not-allowed;}
+  .cx-gen .kbd-hint{margin-left:2px;}
+  .cx-gen.load .spin{display:inline-block;}
+  .view.on .cx-co{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .cx-main{animation:rise .4s cubic-bezier(.2,.7,.2,1) .06s both;}
+  .view.on .cx-side{animation:rise .4s cubic-bezier(.2,.7,.2,1) .12s both;}
+  @media(max-width:940px){
+    .cx-grid{grid-template-columns:1fr;gap:24px;}
+    .cx-side{position:static;order:-1;}
+    .cx-conste{display:none;}
+    .cx-postes{grid-template-columns:1fr;}
+  }
   /* Dropdown interlocuteur */
-  .drop{position:relative;}
-  .dropbtn{width:100%;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line2);background:#fff;border-radius:9px;padding:10px 12px;font-size:13px;cursor:pointer;text-align:left;transition:.15s;}
-  .dropbtn:hover{border-color:var(--copper-l);}
-  .dropbtn.sel{border-color:var(--copper);}
-  .dropbtn .ph{color:var(--faint);}
-  .dropbtn .val{font-weight:600;}
-  .dropbtn .vd{font-size:11px;color:var(--dim);font-weight:400;}
-  .dropbtn svg.car{margin-left:auto;width:13px;height:13px;color:var(--faint);stroke-width:2.4;transition:transform .18s;}
-  .drop.open .dropbtn svg.car{transform:rotate(180deg);}
-  .droplist{position:absolute;left:0;right:0;top:calc(100% + 5px);background:#fff;border:1px solid var(--line2);border-radius:11px;box-shadow:var(--shl);z-index:28;max-height:300px;overflow-y:auto;display:none;}
-  .drop.open .droplist{display:block;animation:up .16s ease;}
-  .dropi{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--line3);transition:.1s;}
-  .dropi:last-child{border-bottom:none;}
-  .dropi:hover{background:var(--wash);}
-  .dropi.on{background:var(--washc);}
-  .dropi svg{width:15px;height:15px;color:var(--copper);flex-shrink:0;stroke-width:2;margin-top:2px;}
-  .dropi .p{font-size:12.5px;font-weight:600;}
-  .dropi .d{font-size:10.5px;color:var(--dim);margin-top:1px;}
-  .rdvrow{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
-  .rdvc{border:1.5px solid var(--line2);background:#fff;border-radius:10px;padding:11px 12px;cursor:pointer;transition:.15s;text-align:left;position:relative;}
-  .rdvc:hover{border-color:var(--copper-l);}
-  .rdvc.on{border-color:var(--copper);background:var(--washc);}
-  .rdvc .n{font-size:12.5px;font-weight:700;}
-  .rdvc .d{font-size:10.5px;color:var(--dim);margin-top:2px;line-height:1.35;}
-  .rdvc .reco{position:absolute;top:-8px;right:8px;font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;background:var(--copper);color:#fff;border-radius:6px;padding:2px 7px;}
-  .conseil{background:linear-gradient(135deg,#FCF3E9,#F8EADB);border:1px solid #F0DCC5;border-radius:10px;padding:12px 14px;}
-  .conseil .ck{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:7px;display:flex;align-items:center;gap:6px;}
-  .conseil .cl{font-size:12.5px;color:var(--soft);padding:3px 0;line-height:1.45;display:flex;gap:8px;align-items:flex-start;}
-  .conseil .cl::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper);margin-top:7px;flex-shrink:0;}
-  .bfoot{display:flex;align-items:center;gap:14px;margin-top:16px;}
-  .bfoot .msg{flex:1;font-size:12px;color:var(--dim);}
-  .bfoot .msg b{color:var(--ink);}
   .note{margin-top:12px;font-size:12px;border-radius:9px;padding:10px 13px;display:none;line-height:1.5;}
   .note.on{display:block;}
   .note.e{background:var(--redbg);border:1px solid var(--redbd);color:var(--red);}
@@ -1538,7 +1560,7 @@
     .ucard{padding:2px;border:none;background:none;box-shadow:none;} .ucard .uinfo{display:none;}
     .topbar{padding:0 14px;} .search{min-width:0;flex:1;} .search span.txt{display:none;} .crumb{display:none;}
     .page{padding:16px 14px;}
-    .stats{grid-template-columns:1fr 1fr;} .g2{grid-template-columns:1fr;} .rdvrow{grid-template-columns:1fr;}
+    .stats{grid-template-columns:1fr 1fr;} .g2{grid-template-columns:1fr;}
     .board{grid-template-columns:repeat(6,minmax(150px,1fr));font-size:12px;}
     .docbody{grid-template-columns:1fr;padding:14px 14px 130px;} .rail{position:static;}
     .prescont{padding:16px 14px;} .presnav{display:none;}
@@ -1779,26 +1801,33 @@
 
   <section class="view" id="v-ctx">
     <div class="ctxwrap">
-      <div class="card" style="margin-bottom:14px;"><div class="locked" id="lockedCard"></div><div id="histBand"></div></div>
-      <div class="card" style="margin-bottom:14px;"><div class="chd"><span class="t">Le rendez-vous</span><span class="d">Deux choix, le reste est déduit.</span></div><div class="cbd">
-        <div class="fg"><label>Ton interlocuteur</label>
-          <div class="drop" id="pDrop">
-            <button class="dropbtn" id="pBtn" type="button"><span class="ph" id="pVal">Choisis le poste en face de toi</span><svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
-            <div class="droplist" id="pList"></div>
+      <div class="cx-co" id="lockedCard"></div>
+      <div class="cx-grid">
+        <div class="cx-main">
+          <div class="cx-step">
+            <div class="cx-k" id="cxK1"><i>1</i>Qui est en face de toi</div>
+            <div class="cx-postes" id="pGrid"></div>
           </div>
+          <div class="cx-step">
+            <div class="cx-k" id="cxK2"><i>2</i>Où en est la relation<em id="rdvWhy"></em></div>
+            <div class="cx-rdv" id="rdvGrid"></div>
+          </div>
+          <div class="cx-step" style="margin-bottom:0;">
+            <div class="cx-k"><i>3</i>Ce que tu sais déjà<em>facultatif</em></div>
+            <textarea class="cx-ctx" id="fCtx" placeholder="Une intro par un contact commun, une actu récente, un blocage connu. Tout ce que tu sais rend la sortie plus tranchante."></textarea>
+          </div>
+          <div class="cx-foot">
+            <span class="msg">Ce brief coûte <b>1 jeton</b>. Il t'en reste <b id="left">—</b>.</span>
+            <button class="cx-gen" id="gen" disabled><span class="spin"></span><span id="genL">Générer le brief</span><kbd class="kbd-hint">⌘↵</kbd></button>
+          </div>
+          <div class="note" id="note"></div>
         </div>
-        <div class="fg"><label>Type de rendez-vous <span id="rdvWhy"></span></label><div class="rdvrow" id="rdvGrid"></div></div>
-      </div></div>
-      <div class="card" style="margin-bottom:14px;"><div class="chd"><span class="t">Conseil de Faro</span></div><div class="cbd">
-        <div class="conseil" id="conseilBox" style="margin-bottom:12px;"></div>
-        <div class="fg" style="margin-bottom:0;"><textarea class="fld" id="fCtx" placeholder="Une intro par un contact commun, une actu, un blocage connu… Tout ce que tu sais nourrit la sortie."></textarea></div>
-      </div></div>
-      <div class="bfoot">
-        <button class="btn g" id="backTo1">Changer d'entreprise</button>
-        <span class="msg">1 jeton · <b id="left">—</b> restants</span>
-        <button class="btn lg" id="gen"><span class="spin"></span><span id="genL">Générer le brief</span></button>
+        <aside class="cx-side">
+          <div class="cx-conste" id="cxConste"></div>
+          <div id="histBand"></div>
+          <div id="conseilBox"></div>
+        </aside>
       </div>
-      <div class="note" id="note"></div>
     </div>
   </section>
 
@@ -3559,7 +3588,6 @@ function wireMan(q){
     $('mNom').addEventListener('keydown',e=>{if(e.key==='Enter')$('mGo').click();});
   });
 }
-$('backTo1').addEventListener('click',()=>{ent=null;go('nouveau');});
 // Sorties sous le champ : création manuelle et brief exemple
 (function(){
   const dm=$('nvDemo'); if(dm)dm.addEventListener('click',openDemoBrief);
@@ -3573,23 +3601,52 @@ $('backTo1').addEventListener('click',()=>{ent=null;go('nouveau');});
 })();
 
 /* ═══ Contexte ═══ */
+// Les dix postes visibles d'un coup : un clic, pas trois
 function buildPList(){
-  $('pList').innerHTML=POSTES.map((p,i)=>`<div class="dropi" data-i="${i}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${p.i}</svg><div><div class="p">${esc(p.p)}</div><div class="d">${esc(p.d)}</div></div></div>`).join('');
-  $('pList').querySelectorAll('.dropi').forEach(el=>el.addEventListener('click',()=>{
-    const p=POSTES[+el.dataset.i]; posteSel=p.p;
-    $('pList').querySelectorAll('.dropi').forEach(x=>x.classList.toggle('on',x===el));
-    $('pVal').outerHTML=`<span id="pVal"><span class="val">${esc(p.p)}</span><span class="vd"> · ${esc(p.d)}</span></span>`;
-    $('pBtn').classList.add('sel');
-    $('pDrop').classList.remove('open');
+  $('pGrid').innerHTML=POSTES.map((p,i)=>`<button class="cx-p" type="button" data-i="${i}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${p.i}</svg><span class="cx-p-b"><span class="cx-p-n">${esc(p.p)}</span><span class="cx-p-d">${esc(p.d)}</span></span></button>`).join('');
+  $('pGrid').querySelectorAll('.cx-p').forEach(el=>el.addEventListener('click',()=>{
+    posteSel=POSTES[+el.dataset.i].p;
+    $('pGrid').querySelectorAll('.cx-p').forEach(x=>x.classList.toggle('on',x===el));
+    cxProgress();
   }));
-  $('pBtn').addEventListener('click',e=>{e.stopPropagation();$('pDrop').classList.toggle('open');});
-  document.addEventListener('click',e=>{if(!e.target.closest('.drop'))$('pDrop').classList.remove('open');});
 }
 function buildRdv(){
-  $('rdvGrid').innerHTML=RDVS.map(r=>`<div class="rdvc" data-v="${r.k}"><div class="n">${r.n}</div><div class="d">${r.d}</div></div>`).join('');
-  $('rdvGrid').querySelectorAll('.rdvc').forEach(c=>c.addEventListener('click',()=>{
-    $('rdvGrid').querySelectorAll('.rdvc').forEach(x=>x.classList.toggle('on',x===c));typeRdv=c.dataset.v;
+  $('rdvGrid').innerHTML=RDVS.map(r=>`<button class="cx-r" type="button" data-v="${r.k}"><span class="cx-r-n">${r.n}</span><span class="cx-r-d">${r.d}</span></button>`).join('');
+  $('rdvGrid').querySelectorAll('.cx-r').forEach(c=>c.addEventListener('click',()=>{
+    $('rdvGrid').querySelectorAll('.cx-r').forEach(x=>x.classList.toggle('on',x===c));typeRdv=c.dataset.v;cxProgress();
   }));
+}
+// Les etapes s'allument, le bouton s'active quand tout est pose
+function cxProgress(){
+  const k1=$('cxK1'), k2=$('cxK2'), g=$('gen');
+  if(k1)k1.classList.toggle('done',!!posteSel);
+  if(k2)k2.classList.toggle('done',!!typeRdv);
+  if(g)g.disabled=!posteSel;
+}
+// La constellation suit sur la colonne de droite, entreprise au centre
+function cxConste(nom){
+  const el=$('cxConste'); if(!el)return;
+  const ini2=esc(ini(nom||'?'));
+  el.innerHTML=`<div class="cx-side-k" style="margin-bottom:12px;">Ce que Faro va interroger</div>
+  <svg viewBox="0 0 320 220" role="img" aria-label="Sources interrogées pour ${esc(nom||'')}">
+    <g>
+      <line class="cn-link" x1="160" y1="110" x2="160" y2="36"/>
+      <line class="cn-link" x1="160" y1="110" x2="58" y2="78"/>
+      <line class="cn-link" x1="160" y1="110" x2="58" y2="146"/>
+      <line class="cn-link soon" x1="160" y1="110" x2="262" y2="78"/>
+      <line class="cn-link soon" x1="160" y1="110" x2="262" y2="146"/>
+      <line class="cn-link soon" x1="160" y1="110" x2="160" y2="186"/>
+    </g>
+    <circle class="cn-halo" cx="160" cy="110" r="36"/>
+    <circle class="cn-core" cx="160" cy="110" r="26"/>
+    <text class="cn-core-t" x="160" y="116" text-anchor="middle">${ini2}</text>
+    <circle class="cn-dot" cx="160" cy="36" r="4.5"/><text class="cn-lbl" x="160" y="22" text-anchor="middle">Signaux du marché</text>
+    <circle class="cn-dot" cx="58" cy="78" r="4.5"/><text class="cn-lbl" x="48" y="82" text-anchor="end">Référentiel</text>
+    <circle class="cn-dot" cx="58" cy="146" r="4.5"/><text class="cn-lbl" x="48" y="150" text-anchor="end">Ta mémoire</text>
+    <circle class="cn-dot soon" cx="262" cy="78" r="4.5"/><text class="cn-lbl soon" x="272" y="82" text-anchor="start">Recrutements</text>
+    <circle class="cn-dot soon" cx="262" cy="146" r="4.5"/><text class="cn-lbl soon" x="272" y="150" text-anchor="start">Annonces</text>
+    <circle class="cn-dot soon" cx="160" cy="186" r="4.5"/><text class="cn-lbl soon" x="160" y="202" text-anchor="middle">Son site web</text>
+  </svg>`;
 }
 function suggestRdv(){
   let k='premier', why='Première rencontre avec cette entreprise.';
@@ -3601,52 +3658,59 @@ function suggestRdv(){
     else {k='relance';why='Un échange est déjà en cours.';}
   }
   typeRdv=k;
-  $('rdvGrid').querySelectorAll('.rdvc').forEach(c=>{
+  $('rdvGrid').querySelectorAll('.cx-r').forEach(c=>{
     c.classList.toggle('on',c.dataset.v===k);
-    const old=c.querySelector('.reco'); if(old)old.remove();
-    if(c.dataset.v===k&&currentDeal)c.insertAdjacentHTML('afterbegin','<span class="reco">Proposé</span>');
+    const old=c.querySelector('.cx-r-reco'); if(old)old.remove();
+    if(c.dataset.v===k&&currentDeal)c.insertAdjacentHTML('afterbegin','<span class="cx-r-reco">Proposé</span>');
   });
-  $('rdvWhy').textContent='· '+why;
+  $('rdvWhy').textContent=why;
+  cxProgress();
 }
 function lockedRender(){
   const meta=[ent.activite,ent.taille||ent.effectif,ent.ville,ent.annee_creation?'depuis '+ent.annee_creation:null].filter(Boolean).map(esc).join(' · ');
   const badge=ent.saisie_manuelle?'<span class="manbadge">Saisie manuelle</span>':'';
-  $('lockedCard').innerHTML=`${logoHtml(ent.nom,ent.logo,ent.site)}<div style="flex:1;min-width:0"><div class="n">${esc(ent.nom)}</div><div class="m">${meta||(ent.saisie_manuelle?'Créée à la main, sans données officielles.':'Chargement des données officielles…')} ${badge}</div></div><button class="btn g sm change" id="btnChange">Changer</button>`;
+  $('lockedCard').innerHTML=`${logoHtml(ent.nom,ent.logo,ent.site)}<div class="cx-co-b"><div class="cx-co-n">${esc(ent.nom)}</div><div class="cx-co-m">${meta||(ent.saisie_manuelle?'Créée à la main, sans données officielles.':'Chargement des données officielles…')} ${badge}</div></div><button class="btn g sm" id="btnChange">Changer d'entreprise</button>`;
   $('btnChange').addEventListener('click',()=>{ent=null;go('nouveau');});
+  cxConste(ent.nom);
 }
 function openCtx(){
   currentDeal=findDeal(ent)||null;
   lockedRender();
-  if(currentDeal){
-    const bs=dealBriefs(currentDeal);
-    const last=bs[0];
-    $('histBand').innerHTML=`<div class="histband"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span>Tu connais cette entreprise : <b>${bs.length} brief${bs.length>1?'s':''}</b>${last?', dernier '+rel(last.created_at):''} · affaire en <b>${stg(currentDeal.etape).l}</b>.</span></div>`;
-  } else $('histBand').innerHTML='';
-  // Conseil de Faro
-  let lines=[];
+  // La mémoire ne s'affiche que s'il y en a une. Sinon rien, jamais de remplissage.
+  const hb=$('histBand'), cb=$('conseilBox');
+  if(hb)hb.innerHTML='';
+  if(cb)cb.innerHTML='';
   if(currentDeal){
     const bs=dealBriefs(currentDeal);
     const last=bs.find(b=>b.debrief)||bs[0];
-    if(last&&last.debrief&&last.debrief.next_action)lines.push(`Tu avais convenu : ${esc(last.debrief.next_action)}. Ouvre là-dessus.`);
-    if(last&&last.synthese_post&&last.synthese_post.observations)last.synthese_post.observations.slice(0,2).forEach(o=>lines.push(esc(o)));
-    if(last&&last.debrief&&last.debrief.phrase)lines.push(`Tu avais noté : ${esc(last.debrief.phrase)}`);
-    if(!lines.length)lines.push('Un brief existe déjà. Faro reprendra le contexte connu.');
-  } else {
-    lines.push('Première rencontre : plus tu m\'en dis, plus la sortie est chirurgicale.');
-    lines.push('Une intro commune, une actu récente, un blocage connu : tout compte.');
+    const lines=[];
+    if(last&&last.debrief&&last.debrief.next_action)lines.push(`Tu devais : ${last.debrief.next_action}. Ouvre là-dessus.`);
+    if(last&&last.synthese_post&&last.synthese_post.observations)last.synthese_post.observations.slice(0,2).forEach(o=>lines.push(o));
+    if(last&&last.debrief&&last.debrief.phrase)lines.push(`Tu avais noté : ${last.debrief.phrase}`);
+    const head=`${bs.length} rendez-vous${bs.length>1?'':''} · affaire en ${stg(currentDeal.etape).l}`;
+    if(cb)cb.innerHTML=`<div class="cx-mem"><div class="cx-mem-k">Ce que tu sais déjà de lui</div>`
+      +(lines.length?lines.slice(0,3).map(l=>`<div class="cx-mem-l">${esc(l)}</div>`).join('')
+        :`<div class="cx-mem-l">Un brief existe déjà, Faro reprendra le contexte connu.</div>`)
+      +`<div class="cx-mem-l" style="opacity:.75">${esc(head)}</div></div>`;
   }
-  $('conseilBox').innerHTML=`<div class="ck">Ce que Faro sait déjà</div>`+lines.map(l=>`<div class="cl">${l}</div>`).join('');
-  posteSel=''; $('pBtn').classList.remove('sel');
-  const pv=$('pVal'); pv.outerHTML='<span class="ph" id="pVal">Choisis le poste en face de toi</span>';
-  $('pList').querySelectorAll('.dropi').forEach(x=>x.classList.remove('on'));
+  // Remise à zéro des choix
+  posteSel='';
+  const pg=$('pGrid'); if(pg)pg.querySelectorAll('.cx-p').forEach(x=>x.classList.remove('on'));
   if(currentDeal&&currentDeal.interlocuteur){
     const i=POSTES.findIndex(p=>p.p===currentDeal.interlocuteur);
-    if(i>=0){const el=$('pList').querySelectorAll('.dropi')[i]; if(el)el.click();}
+    if(i>=0&&pg){const el=pg.querySelectorAll('.cx-p')[i]; if(el)el.click();}
   }
   suggestRdv();
   $('fCtx').value='';
+  cxProgress();
   go('ctx');
 }
+// Cmd+Entrée génère depuis n'importe où sur la page contexte
+document.addEventListener('keydown',e=>{
+  if(!(e.metaKey||e.ctrlKey)||e.key!=='Enter')return;
+  const v=$('v-ctx'); if(!v||!v.classList.contains('on'))return;
+  const g=$('gen'); if(g&&!g.disabled){e.preventDefault();g.click();}
+});
 
 /* ═══ Génération ═══ */
 const note=(t,c)=>{const n=$('note');n.textContent=t;n.className='note on '+c;};
@@ -3682,6 +3746,7 @@ $('gen').addEventListener('click',async()=>{
   const ctxTxt=[$('fCtx').value.trim(),histo?('HISTORIQUE DES RDV PRÉCÉDENTS :\n'+histo):''].filter(Boolean).join('\n');
   const payload={entreprise:ent.nom,entreprise_data:ent,site:ent.site||null,poste:posteSel,interlocuteur_nom:dirNom,type_rdv:typeRdv,offre:set.offre,valeur:set.contexte||'',company:set.company||'',preuves:set.preuves||'',cible:set.cible||'',contexte:ctxTxt};
   const b=$('gen'); b.classList.add('load'); b.disabled=true; $('genL').textContent='Faro compose…';
+  const kb=b.querySelector('.kbd-hint'); if(kb)kb.style.display='none';
   const lines=[`Lecture de la fiche INSEE de ${ent.nom}`];
   if(ent.effectif||ent.taille)lines.push(`${ent.effectif||ent.taille}${ent.ville?`, à ${ent.ville}`:''}`);
   if(currentDeal)lines.push('Relecture de vos échanges précédents');
@@ -3702,7 +3767,7 @@ $('gen').addEventListener('click',async()=>{
     if(o.brief){briefs.unshift(o.brief);renderAll();openBrief(o.brief);}
     ent=null;$('qEnt').value='';
   }catch(e){tellingStop(false);note('Connexion impossible au serveur.','e');}
-  finally{b.classList.remove('load');b.disabled=false;$('genL').textContent='Générer le brief';}
+  finally{b.classList.remove('load');b.disabled=!posteSel;$('genL').textContent='Générer le brief';const kb2=b.querySelector('.kbd-hint');if(kb2)kb2.style.display='';}
 });
 
 /* ═══ Le brief document ═══ */
