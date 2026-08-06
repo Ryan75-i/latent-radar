@@ -997,19 +997,31 @@
   .cx-co-m{font-size:12.5px;color:var(--dim);margin-top:3px;}
   .cx-grid{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start;}
   .cx-step{margin-bottom:26px;}
-  .cx-k{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;}
-  .cx-k i{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;background:var(--wash);border:1px solid var(--line3);color:var(--copper-d);font-style:normal;font-size:9.5px;font-weight:700;}
+  .cx-k{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;padding:0;cursor:default;}
+  .cx-k i{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;background:var(--wash);border:1px solid var(--line3);color:var(--copper-d);font-style:normal;font-size:9.5px;font-weight:700;flex-shrink:0;transition:.15s cubic-bezier(.2,.7,.2,1);}
   .cx-k.done i{background:var(--copper);border-color:var(--copper);color:#fff;}
-  .cx-k em{font-style:normal;color:var(--faint);letter-spacing:0;text-transform:none;font-family:var(--sans);font-size:11.5px;}
+  .cx-k em{font-style:normal;color:var(--faint);letter-spacing:0;text-transform:none;font-family:var(--sans);font-size:11.5px;margin-left:6px;}
+  /* Étape repliée : la réponse en clair, et de quoi revenir dessus */
+  .cx-step.fold{margin-bottom:10px;}
+  .cx-step.fold .cx-body{display:none;}
+  .cx-step.fold .cx-k{cursor:pointer;padding:9px 12px;margin-bottom:0;border:1px solid var(--line3);border-radius:var(--r);background:var(--wash);transition:border-color .15s cubic-bezier(.2,.7,.2,1),background .15s;}
+  .cx-step.fold .cx-k:hover{border-color:var(--copper-l);background:var(--washc);}
+  .cx-k-v{display:none;}
+  .cx-step.fold .cx-k-v{display:block;flex:1;min-width:0;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .cx-step.fold .cx-k-t{display:none;}
+  .cx-k-edit{display:none;}
+  .cx-step.fold .cx-k-edit{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--copper-d);flex-shrink:0;}
+  .cx-step.fold .cx-k-edit svg{width:12px;height:12px;}
+  .cx-body{animation:rise .3s cubic-bezier(.2,.7,.2,1) both;}
   /* Postes : dix lignes compactes, les plus probables en tête */
   .cx-postes{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;}
-  .cx-p{display:flex;align-items:center;gap:10px;text-align:left;background:none;border:1px solid transparent;border-radius:var(--r);padding:8px 11px;cursor:pointer;font-family:inherit;min-width:0;transition:border-color .15s cubic-bezier(.2,.7,.2,1),background .15s;}
+  .cx-p{display:flex;align-items:flex-start;gap:10px;text-align:left;background:none;border:1px solid transparent;border-radius:var(--r);padding:8px 11px;cursor:pointer;font-family:inherit;min-width:0;transition:border-color .15s cubic-bezier(.2,.7,.2,1),background .15s;}
   .cx-p:hover{background:var(--wash);border-color:var(--line3);}
-  .cx-p svg{width:15px;height:15px;color:var(--faint);flex-shrink:0;stroke-width:1.9;transition:color .15s;}
+  .cx-p svg{width:15px;height:15px;color:var(--faint);flex-shrink:0;stroke-width:1.9;margin-top:2px;transition:color .15s;}
   .cx-p:hover svg,.cx-p.on svg{color:var(--copper);}
-  .cx-p-b{min-width:0;flex:1;display:flex;align-items:baseline;gap:8px;}
-  .cx-p-n{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap;}
-  .cx-p-d{font-size:11.5px;color:var(--faint);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+  .cx-p-b{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px;}
+  .cx-p-n{font-size:13px;font-weight:600;color:var(--ink);line-height:1.25;}
+  .cx-p-d{font-size:11.5px;color:var(--faint);line-height:1.3;}
   .cx-p.on{border-color:var(--copper);background:var(--washc);}
   .cx-p.on .cx-p-n{color:var(--copper-d);}
   .cx-p.on .cx-p-d{color:var(--copper-d);opacity:.75;}
@@ -1849,22 +1861,24 @@
       <div class="cx-co" id="lockedCard"></div>
       <div class="cx-grid">
         <div class="cx-main">
-          <div class="cx-step">
-            <div class="cx-k" id="cxK1"><i>1</i>Qui est en face de toi</div>
-            <div class="cx-postes" id="pGrid"></div>
+          <div class="cx-step" id="cxStep1">
+            <button class="cx-k" type="button" id="cxK1"><i>1</i><span class="cx-k-t">Qui est en face de toi</span><span class="cx-k-v" id="cxV1"></span><span class="cx-k-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Modifier</span></button>
+            <div class="cx-body"><div class="cx-postes" id="pGrid"></div></div>
           </div>
           <div class="cx-step" data-step="2" id="cxStep2">
-            <div class="cx-k" id="cxK2"><i>2</i>Le rendez-vous</div>
-            <div class="cx-sub"><div class="cx-sub-k">Où en est la relation<em id="rdvWhy"></em></div><div class="cx-rdv" id="rdvGrid"></div></div>
-            <div class="cx-sub"><div class="cx-sub-k">Comment il est arrivé jusqu'à toi</div><div class="cx-rdv" id="declGrid"></div></div>
-            <div class="cx-sub"><div class="cx-sub-k">Qui sera dans la pièce <em>facultatif</em></div><div class="cx-rdv" id="roomGrid"></div></div>
+            <button class="cx-k" type="button" id="cxK2"><i>2</i><span class="cx-k-t">Le rendez-vous</span><span class="cx-k-v" id="cxV2"></span><span class="cx-k-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Modifier</span></button>
+            <div class="cx-body">
+              <div class="cx-sub"><div class="cx-sub-k">Où en est la relation<em id="rdvWhy"></em></div><div class="cx-rdv" id="rdvGrid"></div></div>
+              <div class="cx-sub"><div class="cx-sub-k">Comment il est arrivé jusqu'à toi</div><div class="cx-rdv" id="declGrid"></div></div>
+            </div>
           </div>
           <div class="cx-step" data-step="3" id="cxStep3" style="margin-bottom:0;">
-            <div class="cx-k" id="cxK3"><i>3</i>Ce que tu veux en sortir</div>
-            <div class="cx-rdv" id="goalGrid"></div>
+            <button class="cx-k" type="button" id="cxK3"><i>3</i><span class="cx-k-t">Ce que tu veux en sortir</span><span class="cx-k-v" id="cxV3"></span><span class="cx-k-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Modifier</span></button>
+            <div class="cx-body"><div class="cx-rdv" id="goalGrid"></div></div>
             <div class="cx-more" id="cxMore">
               <button class="cx-more-b" type="button" id="cxMoreB"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>Aller plus loin, pour un brief plus tranchant</button>
               <div class="cx-more-body">
+                <div class="cx-f"><div class="cx-sub-k">Qui sera dans la pièce ?</div><div class="cx-rdv" id="roomGrid"></div></div>
                 <div class="cx-f"><div class="cx-sub-k">Un concurrent déjà en place ?</div><input id="cxConc" placeholder="Le nom de la solution qu'il utilise aujourd'hui" autocomplete="off"/></div>
                 <div class="cx-f"><div class="cx-sub-k">Une échéance connue ?</div><input id="cxEch" placeholder="Fin de trimestre, renouvellement en mars, budget à consommer…" autocomplete="off"/></div>
                 <div class="cx-f"><div class="cx-sub-k">Ce que tu sais déjà</div><textarea class="cx-ctx" id="fCtx" placeholder="Une intro par un contact commun, une actu récente, un blocage connu. Tout ce que tu sais rend la sortie plus tranchante."></textarea></div>
@@ -3694,8 +3708,12 @@ function buildPList(){
   $('pGrid').querySelectorAll('.cx-p').forEach(el=>el.addEventListener('click',()=>{
     posteSel=POSTES[+el.dataset.i].p;
     $('pGrid').querySelectorAll('.cx-p').forEach(x=>x.classList.toggle('on',x===el));
-    cxAim(); cxProgress();
+    cxOpen=2; cxAim(); cxProgress();
   }));
+  // Revenir sur une étape repliée
+  [['cxK1',1],['cxK2',2],['cxK3',3]].forEach(([id,n])=>{
+    const b=$(id); if(b)b.addEventListener('click',()=>{const st=b.closest('.cx-step');if(st&&st.classList.contains('fold'))cxGoto(n);});
+  });
 }
 // L'objectif de sortie réécrit le pied du panneau : la prochaine étape en dépend
 function cxAimGoal(){
@@ -3731,6 +3749,9 @@ function chipGrid(elId,list,getSel,setSel){
     el.querySelectorAll('.cx-r').forEach(x=>x.classList.remove('on'));
     if(was){setSel('');}else{c.classList.add('on');setSel(c.dataset.v);}
     if(elId==='goalGrid'&&typeof cxAimGoal==='function')cxAimGoal();
+    // Le déclencheur clôt l'étape 2, l'objectif clôt l'étape 3
+    if(elId==='declGrid'&&declSel)cxOpen=3;
+    else if(elId==='goalGrid'&&goalSel)cxOpen=0;
     cxProgress();
   }));
 }
@@ -3753,14 +3774,25 @@ function buildRdv(){
     cxProgress();
   }));
 }
-// La page grandit à mesure que tu réponds, et la profondeur se voit
+// Une seule étape ouverte à la fois : les précédentes se replient sur leur réponse
+let cxOpen=1;
+function cxGoto(n){cxOpen=n;cxProgress();}
+function cxLabel(list,k){const o=list.find(x=>x.k===k);return o?o.n:'';}
+// La page avance à mesure que tu réponds, et la profondeur se voit
 function cxProgress(){
   const g=$('gen');
   const t=id=>{const e=$(id);return e?e.value.trim():'';};
   // Révélation : l'étape 2 apparaît avec le poste, l'étape 3 dès qu'on touche l'étape 2
-  const s2=$('cxStep2'), s3=$('cxStep3');
+  const s1=$('cxStep1'), s2=$('cxStep2'), s3=$('cxStep3');
   if(s2)s2.classList.toggle('open',!!posteSel);
-  if(s3)s3.classList.toggle('open',!!posteSel&&(!!declSel||!!roomSel));
+  if(s3)s3.classList.toggle('open',!!posteSel&&!!declSel);
+  // Repli : une étape répondue et non ouverte se résume à sa réponse
+  if(s1)s1.classList.toggle('fold',!!posteSel&&cxOpen!==1);
+  if(s2)s2.classList.toggle('fold',!!declSel&&cxOpen!==2);
+  if(s3)s3.classList.toggle('fold',!!goalSel&&cxOpen!==3);
+  const v1=$('cxV1'); if(v1)v1.textContent=posteSel||'';
+  const v2=$('cxV2'); if(v2)v2.textContent=[cxLabel(RDVS.map(r=>({k:r.k,n:r.n})),typeRdv),cxLabel(DECLS,declSel)].filter(Boolean).join(' · ');
+  const v3=$('cxV3'); if(v3)v3.textContent=cxLabel(GOALS,goalSel);
   // Étapes accomplies
   const k1=$('cxK1'), k2=$('cxK2'), k3=$('cxK3');
   if(k1)k1.classList.toggle('done',!!posteSel);
@@ -3826,7 +3858,7 @@ function openCtx(){
       +`<div class="cx-mem-l" style="opacity:.75">${esc(head)}</div></div>`;
   }
   // Remise à zéro du parcours
-  posteSel=''; declSel=''; roomSel=''; goalSel='';
+  posteSel=''; declSel=''; roomSel=''; goalSel=''; cxOpen=1;
   ['declGrid','roomGrid','goalGrid'].forEach(id=>chipSet(id,''));
   ['cxConc','cxEch'].forEach(id=>{const e=$(id);if(e)e.value='';});
   const cm=$('cxMore'); if(cm)cm.classList.remove('open');
