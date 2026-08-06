@@ -374,6 +374,9 @@
   .view.on .aff-tools{animation:rise .35s cubic-bezier(.2,.7,.2,1) .14s both;}
   .view.on #affAction{animation:rise .35s cubic-bezier(.2,.7,.2,1) .18s both;}
   .view.on #affBoardWrap{animation:rise .35s cubic-bezier(.2,.7,.2,1) .18s both;}
+  .dc-do.loading{pointer-events:none;opacity:.7;}
+  .dc-do.loading svg{display:none;}
+  .dc-do.loading::before{content:"";width:11px;height:11px;border:2px solid var(--line2);border-top-color:var(--copper);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;}
   /* Micro-spinner sur act-go (clic jamais muet) */
   .act-go.loading{pointer-events:none;opacity:.75;}
   .act-go.loading svg{display:none;}
@@ -1037,7 +1040,7 @@
   .hint .hi-x:hover{color:var(--soft);background:rgba(0,0,0,.04);}
   .hint .hi-x svg{width:14px;height:14px;stroke-width:2;}
   /* Pipeline board */
-  .board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding-bottom:2px;}
+  .board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding-bottom:2px;}
   .col-see{margin:2px 8px 8px;border:1px solid var(--line2);background:#fff;color:var(--copper-d);border-radius:7px;padding:7px;font-size:11px;font-weight:600;cursor:pointer;transition:.13s;text-align:center;}
   .col-see:hover{background:var(--washc);border-color:var(--copper-l);}
   /* Panneau d'étape en grand */
@@ -1115,20 +1118,50 @@
     .pilot{grid-template-columns:1fr 1fr;}
     .funnel-bars{overflow-x:auto;}
   }
-  .col{background:var(--wash);border:1px solid var(--line);border-radius:var(--rl);height:calc(100vh - 340px);min-height:360px;max-height:560px;display:flex;flex-direction:column;overflow:hidden;}
-  .colhd{padding:9px 12px;border-bottom:1px solid var(--line3);display:flex;align-items:center;gap:7px;flex-shrink:0;}
-  .colhd .dt2{width:8px;height:8px;border-radius:3px;}
-  .colhd .t{font-size:11px;font-weight:700;}
-  .colhd .c{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--dim);}
-  .colbd{padding:8px;display:flex;flex-direction:column;gap:7px;flex:1;overflow-y:auto;}
-  .col-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint);text-align:center;padding:14px 10px;line-height:1.5;font-style:italic;}
+  .col{position:relative;background:var(--wash);border:1px solid var(--line);border-radius:var(--rl);height:calc(100vh - 330px);min-height:380px;max-height:620px;display:flex;flex-direction:column;overflow:hidden;transition:background .15s,outline-color .15s;}
+  .col::before{content:"";position:absolute;left:0;right:0;top:0;height:2.5px;background:var(--cc);}
+  .colhd{padding:13px 13px 10px;display:flex;flex-direction:column;gap:1px;flex-shrink:0;}
+  .colhd .ct{display:flex;align-items:center;gap:8px;}
+  .colhd .dt2{display:none;}
+  .colhd .t{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--cc);}
+  .colhd .c{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:20px;min-width:20px;height:19px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px;}
+  .colhd .cv{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.2;}
+  .colhd .cv.none{color:var(--faint);font-family:var(--mono);font-size:11px;font-weight:400;}
+  .colbd{padding:4px 9px 10px;display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto;}
+  .col-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint);text-align:center;padding:14px 10px;line-height:1.5;}
   .colbd::-webkit-scrollbar{width:5px;} .colbd::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
-  .dcard{background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.14s;box-shadow:var(--sh);}
+  .dcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 12px;cursor:grab;transition:box-shadow .16s cubic-bezier(.2,.7,.2,1),transform .16s cubic-bezier(.2,.7,.2,1),border-color .16s;box-shadow:var(--sh);}
   .dcard:hover{transform:translateY(-2px);box-shadow:var(--shm);border-color:var(--line2);}
-  .dcard .top{display:flex;align-items:center;gap:8px;}
-  .dcard .mono{width:24px;height:24px;border-radius:6px;font-size:9px;}
-  .dcard .n{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
-  .dcard .m{font-size:10px;color:var(--faint);margin-top:5px;display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+  .dcard .top{display:flex;align-items:center;gap:9px;}
+  .dcard .mono{width:28px;height:28px;border-radius:7px;font-size:10px;}
+  .dcard .n{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;letter-spacing:-.01em;}
+  .dcard .m{font-size:11px;color:var(--faint);margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  /* Le montant en évidence, la température en pastille */
+  .dc-money{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--ink);background:none;padding:0;border-radius:0;font-variant-numeric:tabular-nums;}
+  .dc-money.none{font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--faint);}
+  .dc-foot{display:flex;align-items:baseline;gap:9px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line3);}
+  .dc-temp{width:8px;height:8px;border-radius:50%;flex-shrink:0;align-self:center;}
+  .dc-age{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint);}
+  .dc-age.warn{color:var(--gold);} .dc-age.late{color:var(--red);font-weight:500;}
+  /* La prescription : un bouton, jamais du texte passif */
+  .dc-do{display:flex;align-items:center;gap:7px;width:100%;margin-top:9px;border:1px solid var(--line2);background:var(--wash);border-radius:8px;padding:7px 9px;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--soft);cursor:pointer;text-align:left;transition:.14s cubic-bezier(.2,.7,.2,1);}
+  .dc-do svg{width:13px;height:13px;flex-shrink:0;color:var(--dc,var(--copper));}
+  .dc-do span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dc-do:hover{border-color:var(--dc,var(--copper));background:#fff;color:var(--ink);}
+  .dc-do.late{border-color:var(--redbd);background:var(--redbg);color:var(--red);--dc:var(--red);}
+  .dc-do.warn{border-color:#E7CE8C;background:var(--goldbg);color:var(--gold);--dc:var(--gold);}
+  .dc-do.due{border-color:#C6DCEA;background:var(--bluebg);color:var(--blue);--dc:var(--blue);}
+  /* Glisser une carte : la colonne d'accueil se signale */
+  .col.dropok{background:var(--washc);outline:2px dashed var(--copper-l);outline-offset:-3px;}
+  .dcard.dragging{opacity:.4;cursor:grabbing;}
+  /* Les affaires closes descendent en pied de page */
+  .board-closed{display:flex;align-items:center;gap:14px;margin-top:12px;padding:12px 16px;border:1px solid var(--line);border-radius:var(--rl);background:var(--card);box-shadow:var(--sh);flex-wrap:wrap;}
+  .bc-k{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);}
+  .bc-b{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:.13s;}
+  .bc-b:hover{border-color:var(--copper);background:var(--washc);}
+  .bc-b i{width:8px;height:8px;border-radius:50%;font-style:normal;}
+  .bc-b.win i{background:var(--green);} .bc-b.lost i{background:var(--red);}
+  .bc-b b{font-family:var(--serif);font-weight:700;font-size:14px;}
   .sugg{margin-top:7px;background:var(--washc);border:1px dashed var(--copper-l);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--copper-d);display:flex;align-items:center;gap:6px;}
   .sugg button{margin-left:auto;border:none;background:var(--copper);color:#fff;font-size:9.5px;font-weight:700;border-radius:5px;padding:2.5px 8px;cursor:pointer;}
 
@@ -1863,8 +1896,8 @@
 
     <!-- Bascule de vue -->
     <div class="aff-viewtabs" id="affViewTabs">
-      <button class="avt on" data-view="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>Par priorité</button>
-      <button class="avt" data-view="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="16" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg>Par étape</button>
+      <button class="avt" data-view="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>Par priorité</button>
+      <button class="avt on" data-view="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="16" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg>Par étape</button>
     </div>
 
     <!-- Outils -->
@@ -2381,6 +2414,7 @@ function go(v){
     const ae=$('affExport');if(ae&&!ae.dataset.wired){ae.dataset.wired='1';ae.addEventListener('click',()=>exportAffCsv());}
     const vt=$('affViewTabs');if(vt&&!vt.dataset.wired){vt.dataset.wired='1';vt.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{affView=b.dataset.view;vt.querySelectorAll('.avt').forEach(x=>x.classList.toggle('on',x===b));$('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';renderAll();}));}
     $('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';
+    const bc0=$('boardClosed'); if(bc0)bc0.style.display=affView==='board'?'':'none';
   }
   if(v==='affaires')showHint('pipeHint','aff1','<b>Tes affaires se gèrent toutes seules.</b> Prépare un rendez-vous, raconte-le, et l\'affaire se crée, se range dans la bonne colonne et avance.');
   if(v==='nouveau'){renderNvRecent();if(typeof consteCore==='function')consteCore($('qEnt')?$('qEnt').value:'');}
@@ -2490,6 +2524,7 @@ function renderAll(){
     } else sp.style.display='none';
   }
   const uTel=$('uT'); if(uTel)uTel.textContent=briefs.length;
+  const bcOld=$('boardClosed'); if(bcOld)bcOld.remove();
   dash(); boardRender($('board'),false); renderActionView(); renderPilot(); renderPipeFilters(); entList();
   if(currentDeal&&document.getElementById('v-fiche').classList.contains('on')) openFiche(deals.find(d=>d.id===currentDeal.id)||currentDeal,true);
 }
@@ -2812,7 +2847,7 @@ function renderToi(){
 }
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
 // ─── L'argent en roi ───
-let moneyPeriod='month', chartDays=30, affView='action';
+let moneyPeriod='month', chartDays=30, affView='board';
 function wireDashTabs(){
   const fa=$('focusAll'); if(fa)fa.addEventListener('click',()=>go('affaires'));
   const spc=$('spClose'); if(spc)spc.addEventListener('click',closeStagePanel);
@@ -2999,7 +3034,7 @@ function renderActionView(){
 
   // Section gagnées, repliée en bas, célébration
   if(wins.length){
-    html+=`<div class="act-won"><span class="act-won-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><b>${wins.length} affaire${wins.length>1?'s':''} gagnée${wins.length>1?'s':''}</b>${(()=>{const v=wins.reduce((a,d)=>a+dealVal(d),0);return v?` · ${eur(v)} signés`:'';})()}. Beau travail.</div>`;
+    html+=`<div class="act-won"><span class="act-won-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><b>${wins.length} affaire${wins.length>1?'s':''} gagnée${wins.length>1?'s':''}</b>${(()=>{const v=wins.reduce((a,d)=>a+dealVal(d),0);return v?`, ${eur(v)} signés`:'';})()}. Beau travail.</div>`;
   }
 
   root.innerHTML=html;
@@ -3026,8 +3061,7 @@ function renderActionView(){
 function boardRender(root,mini){
   if(!root)return;
   const entered=deals.filter(dealEntered);
-  if(!entered.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Tes rendez-vous sont préparés. Débriefe-les : chaque débrief fait entrer son affaire dans le pipeline.':'Ton pipeline est vide. Prépare un rendez-vous, raconte-le, et l\'affaire entre ici toute seule.'}</div></div>`;return;}
-  // Filtrage global (search + filtres), tri par colonne
+  if(!entered.length){root.innerHTML=`<div style="grid-column:1/-1;"><div class="esvg big">${ESVG.pipeline}</div><div class="empty">${deals.length?'Tes rendez-vous sont préparés. Raconte-les : chaque récit fait entrer son affaire dans le pipeline.':'Ton pipeline est vide. Prépare un rendez-vous, raconte-le, et l\'affaire entre ici toute seule.'}</div></div>`;return;}
   const q=pipeSearch.toLowerCase();
   const match=d=>{
     if(q&&!((d.entreprise||'')+' '+(d.interlocuteur||'')+' '+(d.tags||[]).join(' ')).toLowerCase().includes(q))return false;
@@ -3035,43 +3069,76 @@ function boardRender(root,mini){
     if(pipeFilters.stale&&!dealStale(d))return false;
     return true;
   };
+  // Dans une colonne, ce qui presse remonte : c'est ce que tu dois voir en premier
+  const URG={late:0,warn:1,due:2,ok:3};
   const sortFn=(a,b)=>{
     if(pipeSort==='montant')return dealVal(b)-dealVal(a);
     if(pipeSort==='age')return new Date(a.updated_at)-new Date(b.updated_at);
+    const na=dealNextAction(a), nb=dealNextAction(b);
+    const ua=na?URG[na.urg]??3:4, ub=nb?URG[nb.urg]??3:4;
+    if(ua!==ub)return ua-ub;
     return new Date(b.updated_at)-new Date(a.updated_at);
   };
-  root.innerHTML=STAGES.map(s=>{
-    const all=entered.filter(d=>d.etape===s.k);
+  const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
+  const TL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
+  const COLHELP={contact:'Les affaires entrent ici après leur premier récit.',decouverte:'Après un premier rendez-vous raconté.',negociation:'Quand on parle conditions.',closing:'À portée de signature.',gagne:'Tes victoires s\'empilent ici.'};
+  const OPEN=STAGES.filter(x=>x.k!=='perdu');
+  root.innerHTML=OPEN.map(st=>{
+    const all=entered.filter(d=>d.etape===st.k);
     const filtered=all.filter(match).sort(sortFn);
-    const CAP=6;
+    const CAP=8;
     const ds=filtered.slice(0,CAP);
     const val=all.reduce((a,d)=>a+dealVal(d),0);
     const cards=ds.map(d=>{
+      const mv=dealVal(d), temp=dealTemp(d), n=days(d.updated_at);
+      const na=dealNextAction(d);
+      const active=!['gagne','perdu'].includes(d.etape);
       const tags=(d.tags||[]).slice(0,2).map(t=>`<span class="tagc">${esc(t)}</span>`).join('');
       const sugg=d.etape_suggeree?`<div class="sugg"><span>Faro propose : ${stg(d.etape_suggeree).l}</span><button data-acc="${d.id}">OK</button></div>`:'';
-      const mv=dealVal(d);
-      const temp=dealTemp(d);
-      const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
-      const n=days(d.updated_at);
-      const active=!['gagne','perdu'].includes(d.etape);
-      const alClass=active&&n>=14?'cold-al':active&&n>=7?'warm-al':'';
-      // Carte d'action : la prochaine action et son urgence
-      const na=dealNextAction(d);
-      const actLine=na?`<div class="dc-act ${na.urg}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${na.ic}</svg><span>${na.txt}</span></div>`:'';
-      const foot=(mv||temp)?`<div class="dc-foot">${mv?`<span class="dc-money">${eur(mv)}</span>`:''}${temp?`<span class="dc-temp" style="background:${TC[temp]}" title="Dernier RDV : ${temp}"></span><span class="dc-temp-l">${({close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'})[temp]}</span>`:''}</div>`:'';
-      return `<div class="dcard ${alClass}" data-d="${d.id}" draggable="true"><span class="dc-alert"></span><div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span><button class="kebab" data-kd="${d.id}"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button></div><div class="m">${d.interlocuteur?esc(trunc(cleanPoste(d.interlocuteur),24)):rel(d.updated_at)}</div>${foot}${actLine}${sugg}</div>`;
+      return `<div class="dcard" data-d="${d.id}" draggable="true">
+        <div class="top">${dealLogo(d)}<span class="n">${esc(d.entreprise)}</span><button class="kebab" data-kd="${d.id}"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button></div>
+        ${d.interlocuteur||tags?`<div class="m">${d.interlocuteur?esc(trunc(cleanPoste(d.interlocuteur),22)):''}${tags}</div>`:''}
+        <div class="dc-foot">${temp?`<span class="dc-temp" style="background:${TC[temp]}" title="Dernier rendez-vous : ${TL[temp]}"></span>`:''}<span class="dc-money ${mv?'':'none'}">${mv?eur(mv):'montant à poser'}</span>${active?`<span class="dc-age ${n>=14?'late':n>=7?'warn':''}">${n===0?"aujourd'hui":n+' j'}</span>`:''}</div>
+        ${na&&active?`<button class="dc-do ${na.urg}" data-do="${d.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${na.ic}</svg><span>${na.txt}</span></button>`:''}
+        ${sugg}</div>`;
     }).join('');
-    const hiddenFilter=all.length-filtered.length;
+    const hidden=all.length-filtered.length;
     const overflow=filtered.length-ds.length;
-    const seeBtn=overflow>0?`<button class="col-see" data-see="${s.k}">Voir les ${overflow} autre${overflow>1?'s':''}</button>`:'';
-    const COLHELP={contact:'Les affaires entrent ici après leur premier débrief.',decouverte:'Après un premier rendez-vous débriefé.',negociation:'Quand on parle conditions.',closing:'À portée de signature.',gagne:'Tes victoires s\'empilent ici.',perdu:'On note, on apprend, on passe.'};
-    const emptyMsg=hiddenFilter>0?hiddenFilter+' masqué'+(hiddenFilter>1?'s':''):(COLHELP[s.k]||'');
-    return `<div class="col" data-st="${s.k}"><div class="colhd"><span class="dt2" style="background:${s.c}"></span><span class="t">${s.l}</span><span class="c">${all.length}</span></div>${val?`<div class="col-val">${eur(val)} en jeu</div>`:''}<div class="colbd">${cards||`<div class="col-empty">${emptyMsg}</div>`}</div>${seeBtn}</div>`;
+    const seeBtn=overflow>0?`<button class="col-see" data-see="${st.k}">Voir les ${overflow} autre${overflow>1?'s':''}</button>`:'';
+    const emptyMsg=hidden>0?hidden+' masqué'+(hidden>1?'s':''):(COLHELP[st.k]||'');
+    return `<div class="col" data-st="${st.k}" style="--cc:${st.c}">
+      <div class="colhd"><div class="ct"><span class="t">${st.l}</span><span class="c">${all.length}</span></div><div class="cv ${val?'':'none'}">${val?eur(val):'—'}</div></div>
+      <div class="colbd">${cards||`<div class="col-empty">${emptyMsg}</div>`}</div>${seeBtn}</div>`;
   }).join('');
-  root.querySelectorAll('.dcard').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('.kebab'))return;const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
+  // Les affaires closes ne méritent pas une colonne, elles méritent une ligne
+  const lost=entered.filter(d=>d.etape==='perdu');
+  if(lost.length){
+    root.insertAdjacentHTML('afterend',`<div class="board-closed" id="boardClosed"><span class="bc-k">Closes</span><button class="bc-b lost" data-see="perdu"><i></i><b>${lost.length}</b> perdue${lost.length>1?'s':''}</button><span style="font-size:12px;color:var(--faint);">On note, on apprend, on passe.</span></div>`);
+  }
+  const bc=$('boardClosed');
+  if(bc)bc.querySelectorAll('[data-see]').forEach(el=>el.addEventListener('click',()=>openStagePanel(el.dataset.see)));
+  root.querySelectorAll('.dcard').forEach(el=>el.addEventListener('click',e=>{
+    if(e.target.closest('.kebab')||e.target.closest('.dc-do')||e.target.closest('.sugg'))return;
+    const d=deals.find(x=>x.id===el.dataset.d); if(d)openFiche(d);
+  }));
   root.querySelectorAll('[data-kd]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();openKebab(e.currentTarget,affMenu(el.dataset.kd,e.currentTarget));}));
   root.querySelectorAll('[data-acc]').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();acceptSugg(el.dataset.acc);}));
   root.querySelectorAll('[data-see]').forEach(el=>el.addEventListener('click',ev=>{ev.stopPropagation();openStagePanel(el.dataset.see);}));
+  // La prescription est cliquable : elle fait, elle ne dit pas
+  root.querySelectorAll('[data-do]').forEach(el=>el.addEventListener('click',ev=>{
+    ev.stopPropagation();
+    const d=deals.find(x=>x.id===el.dataset.do); if(!d)return;
+    if(el.classList.contains('loading'))return;
+    el.classList.add('loading');
+    setTimeout(()=>{
+      el.classList.remove('loading');
+      const und=dealBriefs(d).find(x=>!x.debrief&&x.statut==='a_relancer');
+      if(und){current=und;openBrief(und);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},200);return;}
+      const lb=dealBriefs(d).find(x=>x.debrief);
+      if(lb){current=lb;openRecap('relance');return;}
+      openFiche(d);
+    },250);
+  }));
   root.querySelectorAll('.dcard[draggable]').forEach(el=>{
     el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',el.dataset.d);e.dataTransfer.effectAllowed='move';el.classList.add('dragging');});
     el.addEventListener('dragend',()=>el.classList.remove('dragging'));
@@ -3085,7 +3152,7 @@ function boardRender(root,mini){
       const d=deals.find(x=>x.id===id);
       if(!d||d.etape===st)return;
       d.etape=st;d.etape_suggeree=null;d.updated_at=new Date().toISOString();
-      renderAll();toast('Affaire déplacée en '+stg(st).l);
+      renderAll();toast(`${d.entreprise} passe en ${stg(st).l}`);
       try{await sb.from('deals').update({etape:st,etape_suggeree:null,updated_at:d.updated_at}).eq('id',id);}catch(err){}
     });
   });
@@ -3119,16 +3186,17 @@ function closeStagePanel(){$('stageOv').classList.remove('on');}
 // Barre de pilotage
 function renderPilot(){
   const el=$('pilotBar'); if(!el)return;
-  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
+  // Même filtre que la sidebar : une affaire n'existe qu'après son premier récit
+  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
   const totVal=actifs.reduce((a,d)=>a+dealVal(d),0);
-  const closing=deals.filter(d=>d.etape==='closing');
+  const closing=deals.filter(d=>dealEntered(d)&&d.etape==='closing');
   const closeVal=closing.reduce((a,d)=>a+dealVal(d),0);
   const stale=actifs.filter(dealStale).length;
   const wins=deals.filter(d=>d.etape==='gagne');
   const cells=[
-    {k:'Valeur du pipeline',v:totVal?eur(totVal):'—',h:`${actifs.length} affaire${actifs.length>1?'s':''} en cours`,c:'var(--copper)'},
+    {k:'Valeur du pipeline',v:totVal?eur(totVal):(actifs.length?'—':'0'),h:totVal?`${actifs.length} affaire${actifs.length>1?'s':''} en cours`:(actifs.length?`${actifs.length} affaire${actifs.length>1?'s':''}, montant non renseigné`:'Aucune affaire en cours'),c:'var(--copper)'},
     {k:'À portée de signature',v:closeVal?eur(closeVal):(closing.length||'—'),h:closing.length?`${closing.length} en closing`:'Aucune en closing',c:'var(--green)'},
-    {k:'Affaires gagnées',v:wins.length||'—',h:wins.length?eur(wins.reduce((a,d)=>a+dealVal(d),0))+' signés':'Pas encore',c:'#2f6b3f'},
+    {k:'Affaires gagnées',v:wins.length||'—',h:wins.length?((v=>v?eur(v)+' signés':'montant non renseigné')(wins.reduce((a,d)=>a+dealVal(d),0))):'Pas encore',c:'#2f6b3f'},
     {k:'À surveiller',v:stale||'0',h:stale?'sans mouvement 7 j+':'tout avance',c:stale?'var(--gold)':'var(--line2)'}
   ];
   el.innerHTML=cells.map(c=>`<div class="pilot-cell" style="--pc:${c.c}"><div class="pk">${c.k}</div><div class="pv">${c.v}</div><div class="ph">${c.h}</div></div>`).join('');
