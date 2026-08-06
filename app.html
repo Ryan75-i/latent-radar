@@ -665,6 +665,61 @@
   .carnet-out-note svg{width:18px;height:18px;flex-shrink:0;}
   .carnet-out-note button{margin-left:auto;border:1px solid #C6DCEA;background:#fff;color:var(--blue);border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;}
   .pipbody{margin:0;padding:0;background:var(--bg);}
+  /* ══ Raconter : une question, tu parles, Faro lit ══ */
+  .rec{position:fixed;inset:0;background:var(--bg);z-index:107;display:none;flex-direction:column;overflow-y:auto;}
+  .rec.on{display:flex;}
+  .rec-in{max-width:640px;width:100%;margin:auto;padding:40px 26px 32px;}
+  .rec-k{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);margin-bottom:18px;}
+  .rec-k i{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;background:var(--copper);color:#fff;font-style:normal;font-family:var(--serif);font-weight:700;font-size:12px;}
+  .rec-q{font-family:var(--serif);font-weight:600;font-size:31px;line-height:1.1;letter-spacing:-.6px;color:var(--ink);margin-bottom:8px;}
+  .rec-sub{font-size:14px;color:var(--dim);margin-bottom:22px;line-height:1.5;}
+  .rec-txt{width:100%;min-height:210px;border:1.5px solid var(--line2);border-radius:var(--rl);background:var(--card);padding:18px 20px;font-family:var(--serif);font-size:17px;line-height:1.55;color:var(--ink);outline:none;resize:vertical;transition:.15s;box-shadow:var(--sh);}
+  .rec-txt:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  .rec-txt::placeholder{color:var(--faint);font-family:var(--sans);font-size:15px;}
+  .rec-tools{display:flex;align-items:center;gap:14px;margin-top:14px;}
+  .rec-hint{font-size:12.5px;color:var(--faint);flex:1;}
+  .rec-foot{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);}
+  .rec-foot .sp{flex:1;}
+  .rec-go{display:inline-flex;align-items:center;gap:9px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:13px 22px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:var(--sh);transition:.15s cubic-bezier(.2,.7,.2,1);}
+  .rec-go:hover:not(:disabled){background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
+  .rec-go:disabled{opacity:.4;cursor:not-allowed;}
+  .rec-go .spin{display:none;} .rec-go.load .spin{display:inline-block;}
+  .rec-lnk{border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--dim);cursor:pointer;padding:5px 0;transition:.13s;}
+  .rec-lnk:hover{color:var(--copper-d);}
+  /* Ce que Faro a compris : tu confirmes, tu ne remplis pas */
+  .rec-read{display:none;}
+  .rec.s2 .rec-read{display:block;animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .rec.s2 .rec-txt,.rec.s2 .rec-tools{display:none;}
+  .rec-said{background:var(--card);border:1px solid var(--line);border-left:2px solid var(--copper-l);border-radius:var(--rl);padding:14px 16px;font-family:var(--serif);font-size:14.5px;line-height:1.5;color:var(--soft);max-height:150px;overflow-y:auto;margin-bottom:22px;}
+  .rec-lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+  .rec-temps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+  .rec-tp{border:1.5px solid var(--line2);background:var(--card);border-radius:var(--r);padding:11px 8px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--dim);cursor:pointer;transition:.14s cubic-bezier(.2,.7,.2,1);}
+  .rec-tp:hover{border-color:var(--copper-l);}
+  .rec-tp.on[data-t="close"]{border-color:var(--green);background:var(--greenbg);color:var(--green-d);}
+  .rec-tp.on[data-t="chaud"]{border-color:var(--copper);background:var(--washc);color:var(--copper-d);}
+  .rec-tp.on[data-t="tiede"]{border-color:#D9B54A;background:var(--goldbg);color:var(--gold);}
+  .rec-tp.on[data-t="mort"]{border-color:var(--red);background:var(--redbg);color:var(--red);}
+  .rec-guess{font-size:12px;color:var(--copper-d);margin:-12px 0 18px;}
+  .rec-f{margin-bottom:18px;}
+  .rec-f input{width:100%;border:1.5px solid var(--line2);border-radius:var(--r);padding:11px 14px;font-family:inherit;font-size:14px;color:var(--ink);background:var(--card);outline:none;transition:.15s;}
+  .rec-f input:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  /* La révélation : Faro écrit sous tes yeux */
+  .rec-rev{display:none;}
+  .rec.s3 .rec-rev{display:block;}
+  .rec.s3 .rec-txt,.rec.s3 .rec-tools,.rec.s3 .rec-read,.rec.s3 .rec-foot{display:none;}
+  .rev-b{padding:16px 0;border-top:1px solid var(--line);opacity:0;transform:translateY(6px);transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1);}
+  .rev-b.show{opacity:1;transform:none;}
+  .rev-k{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;}
+  .rev-l{font-size:15px;color:var(--soft);line-height:1.55;padding:5px 0;display:flex;gap:10px;}
+  .rev-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper);opacity:.55;margin-top:9px;flex-shrink:0;}
+  .rev-verdict{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.2;letter-spacing:-.4px;color:var(--ink);}
+  .rev-mem{display:flex;gap:11px;align-items:flex-start;background:linear-gradient(120deg,#E8F0F6,#F8FBFD);border:1px solid #C6DCEA;border-radius:var(--rl);padding:14px 16px;font-size:13.5px;color:var(--blue);line-height:1.45;}
+  .rev-mem svg{width:17px;height:17px;flex-shrink:0;margin-top:1px;}
+  .rev-mem b{font-weight:700;}
+  .rec.s3 .rec-acts{display:flex;align-items:center;gap:16px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);opacity:0;transition:.4s;}
+  .rec.s3 .rec-acts.show{opacity:1;}
+  .rec-acts{display:none;}
+  @media(max-width:640px){.rec-q{font-size:25px;}.rec-in{padding:28px 20px;}.rec-temps{grid-template-columns:1fr 1fr;}}
   /* ══ Mémoriser : trois minutes avant, dans le couloir, une main ══ */
   .mem{position:fixed;inset:0;background:var(--bg);z-index:109;display:none;flex-direction:column;padding:0;}
   .mem.on{display:flex;}
@@ -1462,47 +1517,10 @@
   .refbox input{flex:1;}
 
   /* ═══ Débrief ═══ */
-  .debov{position:fixed;inset:0;background:rgba(30,25,18,.45);backdrop-filter:blur(5px);z-index:105;display:none;align-items:center;justify-content:center;padding:20px;}
-  .debov.on{display:flex;}
-  .debbox{max-width:500px;width:100%;background:var(--card);border:1px solid var(--line2);border-radius:16px;box-shadow:var(--shl);padding:26px;animation:up .28s cubic-bezier(.2,.7,.2,1);}
   /* Diptyque brief (1) / débrief (2) : identité jumelle */
   .dip-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;font-family:var(--serif);font-weight:700;font-size:14px;color:#fff;flex-shrink:0;}
   .dip-badge.b1{background:var(--copper);}
   .dip-badge.b2{background:var(--copper-d);}
-  .dip-head{display:flex;align-items:center;gap:13px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--line);}
-  .dip-head .dip-badge{width:38px;height:38px;border-radius:10px;font-size:20px;}
-  .dip-head.deb .dip-badge{box-shadow:0 3px 10px -3px rgba(169,83,30,.5);}
-  .dip-txt .dip-t{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.1;}
-  .dip-txt .dip-s{font-size:12px;color:var(--dim);margin-top:2px;}
-  .deb-mirror{background:linear-gradient(135deg,#FCF6EF,#FBF3E9);border:1px solid #F0E2D0;border-radius:var(--rl);padding:12px 14px;margin-bottom:18px;}
-  .deb-mirror:empty{display:none;}
-  .dm-head{display:flex;align-items:center;gap:8px;font-size:10px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--copper-d);margin-bottom:10px;}
-  .dm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .dm-col-h{font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding-bottom:5px;}
-  .dm-col-h.prevu{color:var(--faint);}
-  .dm-col-h.vecu{color:var(--copper-d);}
-  .dm-cell{font-size:11.5px;color:var(--soft);padding:6px 0;border-top:1px solid rgba(201,106,46,.12);line-height:1.35;}
-  .dm-cell .dm-lbl{display:block;font-size:9px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:2px;}
-  .dm-cell.v{color:var(--ink);font-weight:500;}
-  .dm-cell i{color:var(--faint);font-style:italic;}
-  .dm-libre{margin-top:10px;padding-top:9px;border-top:1px dashed rgba(201,106,46,.2);font-size:11px;color:var(--dim);}
-  .dm-libre b{color:var(--copper-d);font-weight:600;}
-  .dm-row{display:flex;gap:10px;padding:5px 0;border-top:1px solid rgba(201,106,46,.12);font-size:12px;}
-  .dm-row:first-of-type{border-top:none;}
-  .dm-k{color:var(--dim);flex-shrink:0;min-width:130px;font-weight:600;}
-  .dm-v{color:var(--soft);min-width:0;}
-  .debbox .dk{font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:3px;}
-  .debbox .dd{font-size:12px;color:var(--dim);margin-bottom:18px;}
-  .debbox .dq{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin:15px 0 8px;}
-  .debbox .dq span{text-transform:none;letter-spacing:0;color:var(--faint);}
-  .temps{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-  .temps button{border:1.5px solid var(--line2);background:#fff;border-radius:10px;padding:12px 10px;cursor:pointer;transition:.15s;font-size:13px;font-weight:700;color:var(--soft);}
-  .temps button:hover{transform:translateY(-1px);}
-  .temps button.on[data-t="close"]{border-color:var(--green);background:var(--greenbg);color:var(--green-d);}
-  .temps button.on[data-t="chaud"]{border-color:var(--copper);background:var(--washc);color:var(--copper-d);}
-  .temps button.on[data-t="tiede"]{border-color:#D9B54A;background:var(--goldbg);color:var(--gold);}
-  .temps button.on[data-t="mort"]{border-color:var(--red);background:var(--redbg);color:var(--red);}
-  .debfoot{display:flex;justify-content:space-between;gap:10px;margin-top:22px;}
 
   /* ═══ Cinématique de fin ═══ */
   .verd{position:fixed;inset:0;background:var(--bg);z-index:108;display:none;align-items:center;justify-content:center;padding:24px;}
@@ -1641,14 +1659,12 @@
   .manbadge{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);background:var(--wash);border:1px dashed var(--line2);border-radius:6px;padding:2px 8px;}
   .frise{padding:14px 16px 6px;border-bottom:1px solid var(--line3);}
   .frise svg{width:100%;height:56px;display:block;}
-  .microw{display:flex;align-items:center;gap:10px;margin-top:8px;}
   .micbtn{border:1.5px solid var(--line2);background:#fff;color:var(--soft);border-radius:9px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;}
   .micbtn:hover{border-color:var(--copper-l);color:var(--copper-d);}
   .micbtn.rec{background:var(--copper);border-color:var(--copper);color:#fff;}
   .micbtn svg{width:14px;height:14px;stroke-width:2;}
   @keyframes micpulse{0%,100%{opacity:1;}50%{opacity:.35;}}
   .micbtn.rec .dot3{width:7px;height:7px;border-radius:50%;background:#fff;animation:micpulse 1s ease-in-out infinite;}
-  .micst{font-size:10.5px;color:var(--dim);flex:1;}
   .relbtn{border:none;background:var(--washc);color:var(--copper-d);border:1px solid var(--copper-l);font-size:9.5px;font-weight:700;border-radius:6px;padding:3px 9px;cursor:pointer;}
   .relbtn:hover{background:var(--copper);color:#fff;}
 
@@ -2200,21 +2216,20 @@
   </div>
 </div></div>
 
-<div class="debov" id="debOv"><div class="debbox">
-  <div class="dip-head deb"><span class="dip-badge b2">2</span><div class="dip-txt"><div class="dip-t">Le débrief</div><div class="dip-s">Après le rendez-vous. Le tome 2 de ton brief.</div></div></div>
-  <div class="deb-mirror" id="debMirror"></div>
-  <div class="dq">Température de l'affaire</div>
-  <div class="temps" id="temps"><button data-t="close">Closé, c'est signé</button><button data-t="chaud">Chaud, ça avance</button><button data-t="tiede">Tiède, à recontacter</button><button data-t="mort">Mort, on passe</button></div>
-  <div id="debMontantWrap" style="display:none;">
-    <div class="dq" id="debMontantQ">Quel est l'enjeu de cette affaire ? <span>· en euros</span></div>
-    <input class="fld" id="debMontant" type="number" min="0" step="500" placeholder="Ex : 15000"/>
+<div class="rec" id="recOv"><div class="rec-in">
+  <div class="rec-k"><i>2</i><span id="recStep">Après le rendez-vous</span></div>
+  <div class="rec-q" id="recQ">Alors, comment ça s'est passé ?</div>
+  <div class="rec-sub" id="recSub">Raconte en vrac, comme tu le dirais à un collègue. Soixante secondes suffisent.</div>
+  <textarea class="rec-txt" id="recTxt" placeholder="Il m'a reçu vingt minutes, il a tout de suite parlé de son ERP. Son vrai sujet c'est la paie, pas le suivi des heures. Il veut que j'en reparle avec sa DAF…"></textarea>
+  <div class="rec-tools"><button class="micbtn" id="recMic" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg><span id="recMicL">Dicter</span></button><span class="rec-hint" id="recHint">Parle, Faro écrit. Tu peux corriger après.</span></div>
+  <div class="rec-read" id="recRead"></div>
+  <div class="rec-rev" id="recRev"></div>
+  <div class="rec-foot" id="recFoot">
+    <button class="rec-lnk" id="recBack">Revenir au brief</button>
+    <span class="sp"></span>
+    <button class="rec-go" id="recGo" disabled><span class="spin"></span><span id="recGoL">C'est dit</span></button>
   </div>
-  <div class="dq">Prochaine action</div>
-  <input class="fld" id="debNext" placeholder="Ce que tu fais ensuite…"/>
-  <div class="dq">Une phrase à retenir <span>· facultatif</span></div>
-  <textarea class="fld" id="debPhrase" placeholder="Ce que tu veux garder de ce rendez-vous…"></textarea>
-  <div class="microw"><button class="micbtn" id="micBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg><span id="micL">Dicter</span></button><span class="micst" id="micSt">Raconte ton RDV en marchant, Faro écrit.</span></div>
-  <div class="debfoot"><button class="btn g" id="debCancel">Revenir au brief</button><button class="btn" id="debSave"><span class="spin"></span><span>Valider</span></button></div>
+  <div class="rec-acts" id="recActs"></div>
 </div></div>
 
 <div class="mem" id="memOv">
@@ -4677,17 +4692,131 @@ function askPass(){
   const pcold=$('passCold'); if(pcold)pcold.addEventListener('click',()=>{close();startColdDebrief();});
 })();
 // Débrief à froid : le rendez-vous est passé, on raconte via la modale débrief
-function startColdDebrief(){
-  if(!current)return;
-  renderDebMirror();
-  // Pré-remplir si des notes existent déjà
-  debTemp=null;
-  document.querySelectorAll('#temps button').forEach(x=>x.classList.remove('on'));
-  const dn=$('debNext'); if(dn)dn.value='';
-  const dp=$('debPhrase'); if(dp)dp.value='';
-  $('debOv').classList.add('on');
-  setTimeout(()=>{const t=$('temps');if(t)t.scrollIntoView({behavior:'smooth',block:'center'});},100);
+// ══ Raconter : une question, ton récit, ce que Faro en comprend ══
+let recStory='', recNext='', recFromLive=false;
+const TEMP_RX=[
+  ['close',/(sign[ée]|signature|bon de commande|on y va|c'est bon|valid[ée]|accord|ok pour|contrat)/i],
+  ['mort',/(pas int[ée]ress|refus|on arr[êe]te|non merci|ferm[ée] la porte|d[ée]finitivement non|perdu|pas pour nous)/i],
+  ['chaud',/(int[ée]ress|motiv|enthousiast|veut|demande un devis|proposition|rappelle|avance|chaud|s[ée]duit|convaincu|il est partant)/i]
+];
+function guessTemp(t){
+  const x=(t||'').toLowerCase();
+  for(const [k,rx] of TEMP_RX)if(rx.test(x))return k;
+  return 'tiede';
 }
+function guessNext(t){
+  const ph=(t||'').split(/[.!?\n]/).map(x=>x.trim()).filter(Boolean);
+  const rx=/(je (dois|vais|lui)|envoyer|envoie|relancer|relance|rappeler|rappelle|recontacter|devis|proposition|chiffrage|revoir|point avec|caler|cale)/i;
+  const hit=ph.find(x=>rx.test(x));
+  return hit?(hit.length>90?hit.slice(0,89)+'…':hit):'';
+}
+function openRaconter(fromLive){
+  if(!current)return;
+  if(current.demo){toast('Ceci est un exemple.');return;}
+  recFromLive=!!fromLive; recStory=''; debTemp='';
+  const ov=$('recOv'); ov.className='rec on';
+  $('recQ').textContent=`Alors, comment ça s'est passé avec ${current.entreprise||'ce client'} ?`;
+  $('recSub').textContent='Raconte en vrac, comme tu le dirais à un collègue. Soixante secondes suffisent.';
+  $('recGoL').textContent="C'est dit";
+  $('recActs').innerHTML=''; $('recActs').classList.remove('show');
+  $('recRev').innerHTML='';
+  // Depuis le live, les notes existent déjà : on saute la question
+  let seed='';
+  if(fromLive){
+    const c=$('carnetNotes'); seed=c?c.value.trim():'';
+    (ann.libre||[]).forEach(n=>{if(n.t&&n.t.trim()&&!seed.includes(n.t.trim()))seed+=(seed?'\n':'')+n.t.trim();});
+  }
+  $('recTxt').value=seed;
+  $('recGo').disabled=seed.length<12;
+  if(seed.length>=12){recStory=seed;recRead();}
+  else setTimeout(()=>$('recTxt').focus(),200);
+}
+// Étape 2 : Faro montre ce qu'il a compris, tu confirmes
+function recRead(){
+  const ov=$('recOv'); ov.className='rec on s2';
+  $('recStep').textContent='Ce que Faro a compris';
+  $('recQ').textContent='Deux choses à confirmer.';
+  $('recSub').textContent="Corrige si Faro s'est trompé, puis valide.";
+  const t=guessTemp(recStory), nx=guessNext(recStory);
+  debTemp=t; recNext=nx;
+  const TL=[['close','Closé'],['chaud','Chaud'],['tiede','Tiède'],['mort','Difficile']];
+  const GN={close:'ça sent la signature',chaud:'ça avance',tiede:'à recontacter',mort:'ça ne se fera pas'};
+  $('recRead').innerHTML=`<div class="rec-lab">Ton récit</div><div class="rec-said">${esc(recStory)}</div>
+    <div class="rec-lab">La température de l'affaire</div>
+    <div class="rec-temps">${TL.map(([k,l])=>`<button class="rec-tp ${k===t?'on':''}" data-t="${k}">${l}</button>`).join('')}</div>
+    <div class="rec-guess">Faro a lu <b>${GN[t]}</b>. Change si tu n'es pas d'accord.</div>
+    <div class="rec-lab">La prochaine action</div>
+    <div class="rec-f"><input id="recNextI" placeholder="Ce que tu fais ensuite…" value="${esc(nx)}"/></div>`;
+  $('recRead').querySelectorAll('.rec-tp').forEach(b=>b.addEventListener('click',()=>{
+    $('recRead').querySelectorAll('.rec-tp').forEach(x=>x.classList.toggle('on',x===b));
+    debTemp=b.dataset.t; setDebTemp(b.dataset.t,false);
+    const g=$('recRead').querySelector('.rec-guess'); if(g)g.style.display='none';
+  }));
+  setDebTemp(t,false);
+  $('recGoL').textContent='Valider mon récit';
+  $('recGo').disabled=false;
+}
+// Étape 3 : Faro écrit ce qu'il retient
+function recReveal(syn,deal){
+  const ov=$('recOv'); ov.className='rec on s3';
+  $('recStep').textContent='Ce que Faro retient';
+  const nom=current.entreprise||'ce client';
+  const VERDS={close:'Signé. Tu tiens quelque chose.',chaud:'Client chaud. Ne laisse pas refroidir.',tiede:'Tiède. Il faudra une vraie raison de revenir.',mort:'Ça ne se fera pas. On note, on passe.'};
+  const obs=(syn&&syn.observations)||[];
+  const nRecits=briefs.filter(x=>x.debrief&&(x.entreprise||'').toLowerCase()===nom.toLowerCase()).length;
+  $('recQ').textContent='';
+  let h='';
+  h+=`<div class="rev-b" data-i="0"><div class="rev-verdict">${esc(VERDS[debTemp]||'Rendez-vous enregistré.')}</div></div>`;
+  if(obs.length)h+=`<div class="rev-b" data-i="1"><div class="rev-k">Ce que Faro retient</div>${obs.slice(0,4).map(o=>`<div class="rev-l">${esc(o)}</div>`).join('')}</div>`;
+  if(syn&&syn.relance_angle)h+=`<div class="rev-b" data-i="2"><div class="rev-k">Ton angle de relance</div><div class="rev-l">${esc(syn.relance_angle)}</div></div>`;
+  h+=`<div class="rev-b" data-i="3"><div class="rev-mem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg><span>Mémoire <b>${esc(nom)}</b> enrichie. ${nRecits>1?`Elle compte ${nRecits} récits : ton prochain brief partira de là.`:'Ton prochain brief partira de ce que tu viens de raconter.'}</span></div></div>`;
+  $('recRev').innerHTML=h;
+  const bl=$('recRev').querySelectorAll('.rev-b');
+  bl.forEach((el,i)=>setTimeout(()=>el.classList.add('show'),260+i*380));
+  const acts=$('recActs');
+  acts.innerHTML=`<button class="rec-go" id="recDeal">Voir l'affaire</button><button class="rec-lnk" id="recRecap">Mail de recap</button><button class="rec-lnk" id="recHome">Accueil</button>`;
+  setTimeout(()=>acts.classList.add('show'),260+bl.length*380+120);
+  const close=()=>{$('recOv').className='rec';$('briefDoc').classList.remove('on');};
+  $('recDeal').addEventListener('click',()=>{close();const d=deal?deals.find(x=>x.id===deal.id):null;if(d)openFiche(d);else go('affaires');renderAll();});
+  $('recRecap').addEventListener('click',()=>{close();openRecap();renderAll();});
+  $('recHome').addEventListener('click',()=>{close();go('dash');renderAll();});
+}
+(function(){
+  const txt=$('recTxt'), go=$('recGo');
+  if(txt)txt.addEventListener('input',()=>{go.disabled=txt.value.trim().length<12;});
+  const bk=$('recBack');
+  if(bk)bk.addEventListener('click',()=>{$('recOv').className='rec';});
+  if(go)go.addEventListener('click',()=>{
+    const ov=$('recOv');
+    if(!ov.classList.contains('s2')){recStory=txt.value.trim();if(recStory.length<12)return;recRead();return;}
+    const ni=$('recNextI'); recNext=ni?ni.value.trim():'';
+    saveDebrief('recit');
+  });
+  const mic=$('recMic');
+  if(mic)mic.addEventListener('click',()=>toggleRecDictation());
+})();
+// Dictée du récit
+let rrec=null, rrecOn=false;
+function toggleRecDictation(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const btn=$('recMic'), lbl=$('recMicL'), ta=$('recTxt');
+  if(!SR){toast('Dictée non disponible sur ce navigateur');return;}
+  if(rrecOn){rrecOn=false;try{rrec.stop();}catch(e){}btn.classList.remove('rec');lbl.textContent='Dicter';return;}
+  rrec=new SR(); rrec.lang='fr-FR'; rrec.continuous=true; rrec.interimResults=true;
+  let base=ta.value.trim();
+  rrec.onresult=e=>{
+    let fin='',inter='';
+    for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=t;else inter+=t;}
+    if(fin)base=(base+' '+fin).trim();
+    ta.value=(base+(inter?' '+inter:'')).trim();
+    $('recGo').disabled=ta.value.trim().length<12;
+  };
+  rrec.onerror=()=>{rrecOn=false;btn.classList.remove('rec');lbl.textContent='Dicter';};
+  rrec.onend=()=>{if(rrecOn)try{rrec.start();}catch(e){}};
+  try{rrec.start();}catch(e){}
+  rrecOn=true;btn.classList.add('rec');lbl.textContent="J'écoute…";
+}
+function startColdDebrief(){ openRaconter(false); }
 
 function rdvStart(){
   rdvActive=true; rdvT0=Date.now(); document.body.classList.add('rdv');
@@ -4734,38 +4863,15 @@ function syncCarnetNotes(){
   scheduleSave();coachSoon();coverUpdate();
 }
 function rdvEndAsk(){
-  // Le carnet a déjà tout capté : on valide directement
-  syncCarnetNotes();
-  if(!debTemp){
-    // Pas de température posée, on la demande dans le carnet
-    coachShow('Pose la température dans ton carnet avant de valider.');
-    const t=$('tempsLive'); if(t){t.scrollIntoView({behavior:'smooth',block:'center'});t.classList.add('flash');setTimeout(()=>t.classList.remove('flash'),1200);}
+  // Le carnet a tout capté : Faro relit et te montre ce qu'il en fait
+  syncCarnetNotes(); carnetBack();
+  const c=$('carnetNotes'); const has=(c&&c.value.trim().length>=12)||(ann.libre||[]).some(n=>n.t&&n.t.trim().length>=12);
+  if(!has){
+    coachShow('Note deux lignes dans ton carnet, Faro a besoin de matière.');
+    if(c){c.focus();c.scrollIntoView({behavior:'smooth',block:'center'});}
     return;
   }
-  saveDebrief();
-}
-// Le miroir : ce que le brief prévoyait, face à ce que tu as capté en direct
-function renderDebMirror(){
-  const b=current; const el=$('debMirror'); if(!el||!b){if(el)el.innerHTML='';return;}
-  const rows=[];
-  const ou=b.ouverture||{};
-  const acc=ou.accroche||(typeof b.ouverture==='string'?b.ouverture:'');
-  if(acc||((ann.ouverture||{}).note))rows.push({k:'Ouverture',prevu:acc,vecu:(ann.ouverture||{}).note});
-  const ob=b.objection||{};
-  if(ob.texte||((ann.objection||{}).note))rows.push({k:'Objection',prevu:ob.texte,vecu:(ann.objection||{}).note});
-  const ch=b.chiffre||{};
-  if(ch.valeur||((ann.chiffre||{}).note))rows.push({k:'Le chiffre',prevu:ch.valeur,vecu:(ann.chiffre||{}).note});
-  const ns=b.next_step||{};
-  const nextTxt=(ns&&ns.phrase)||(typeof ns==='string'?ns:'');
-  if(nextTxt)rows.push({k:'Étape visée',prevu:nextTxt,vecu:null});
-  // Notes vrac captées en direct
-  const libre=(ann.libre||[]).filter(n=>n.t&&n.t.trim());
-  if(!rows.length&&!libre.length){el.innerHTML='';return;}
-  let html=`<div class="dm-head"><span class="dip-badge b1" style="width:18px;height:18px;font-size:11px;border-radius:5px;">1</span>Ton brief face à ton terrain</div>`;
-  html+=`<div class="dm-grid"><div class="dm-col-h prevu">Prévu</div><div class="dm-col-h vecu">Capté en direct</div></div>`;
-  html+=rows.map(r=>`<div class="dm-grid"><div class="dm-cell"><span class="dm-lbl">${r.k}</span>${r.prevu?esc(trunc(r.prevu,60)):'<i>—</i>'}</div><div class="dm-cell v">${r.vecu?esc(trunc(r.vecu,60)):'<i>rien noté</i>'}</div></div>`).join('');
-  if(libre.length)html+=`<div class="dm-libre"><b>${libre.length} note${libre.length>1?'s':''} en vrac</b> capturée${libre.length>1?'s':''} pendant le RDV, gardée${libre.length>1?'s':''} dans l'affaire.</div>`;
-  el.innerHTML=html;
+  openRaconter(true);
 }
 // Une réunion se reporte : on peut sortir sans rien valider
 function rdvSuspend(){
@@ -4840,17 +4946,21 @@ function copyAll(){
 }
 
 /* ═══ Débrief + cinématique ═══ */
-$('temps').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setDebTemp(b.dataset.t,false)));
-$('debCancel').addEventListener('click',()=>$('debOv').classList.remove('on'));
 
 // Sauvegarde du débrief : lit le carnet en priorité, le modal en fallback
 async function saveDebrief(fromModal){
   if(!debTemp){toast('Choisis une température');return;}
   syncCarnetNotes();
-  const nextVal=fromModal?$('debNext').value.trim():($('carnetNext')?$('carnetNext').value.trim():'');
-  const phraseVal=fromModal?$('debPhrase').value.trim():'';
-  const montantEl=fromModal?$('debMontant'):$('carnetMontant');
-  const finBtn=fromModal?$('debSave'):$('carnetFinish');
+  const viaRecit=fromModal==='recit';
+  const nextVal=viaRecit?recNext:($('carnetNext')?$('carnetNext').value.trim():'');
+  const phraseVal=viaRecit?recStory:'';
+  const montantEl=$('carnetMontant');
+  const finBtn=viaRecit?$('recGo'):$('carnetFinish');
+  // Le récit brut rejoint les notes : c'est la matière du débrief
+  if(viaRecit&&recStory){
+    ann.libre=(ann.libre||[]).filter(n=>n.src!=='recit');
+    ann.libre.push({t:recStory,at:new Date().toISOString(),src:'recit'});
+  }
   if(finBtn){finBtn.classList.add('load');finBtn.disabled=true;}
   collectLibre();
   const deb={temperature:debTemp,next_action:nextVal,phrase:phraseVal};
@@ -4867,13 +4977,12 @@ async function saveDebrief(fromModal){
       const di=deals.findIndex(d=>d.id===targetDeal.id);if(di>=0)deals[di].montant=mv;
       try{await sb.from('deals').update({montant:mv}).eq('id',targetDeal.id);}catch(e){}
     }
-    if($('debMontant'))$('debMontant').value='';
     if($('carnetMontant'))$('carnetMontant').value='';
-    if($('debMontantWrap'))$('debMontantWrap').style.display='none';
     if($('carnetMontantWrap'))$('carnetMontantWrap').style.display='none';
     const i=briefs.findIndex(x=>x.id===current.id); if(i>=0)briefs[i]=current;
-    rdvStop(); $('debOv').classList.remove('on');
+    rdvStop();
     const savedDeal=o.deal||(current.deal_id?deals.find(x=>x.id===current.deal_id):null);
+    if(viaRecit){ renderAll(); recReveal(o.synthese,savedDeal); return; }
     if(debTemp==='close'){
       // La signature mérite la célébration
       showVerdict(debTemp,savedDeal||null,!!o.synthese);
@@ -4897,21 +5006,20 @@ async function saveDebrief(fromModal){
   }catch(e){toast('Sauvegarde impossible, réessaie');}
   finally{if(finBtn){finBtn.classList.remove('load');finBtn.disabled=false;}}
 }
-$('debSave').addEventListener('click',()=>saveDebrief(true));
 
 // ─── Carnet compagnon : câblage ───
 function setDebTemp(t,fromCarnet){
   debTemp=t;
   // Sync les deux jeux de boutons
   const sync=(id)=>{const el=$(id);if(el)el.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));};
-  sync('temps'); sync('tempsLive');
+  sync('tempsLive');
   const show=t==='close'||t==='chaud';
   const q=t==='close'?'Montant signé ? <span>· en euros</span>':'L\'enjeu <span>· en euros</span>';
   if($('carnetMontantWrap')){$('carnetMontantWrap').style.display=show?'':'none';if(show&&$('carnetMontantQ'))$('carnetMontantQ').innerHTML=q;}
-  if($('debMontantWrap')){$('debMontantWrap').style.display=show?'':'none';}
+
   if(show){
     const d=current&&current.deal_id?deals.find(x=>x.id===current.deal_id):null;
-    if(d&&d.montant){if($('carnetMontant')&&!$('carnetMontant').value)$('carnetMontant').value=d.montant;if($('debMontant')&&!$('debMontant').value)$('debMontant').value=d.montant;}
+    if(d&&d.montant&&$('carnetMontant')&&!$('carnetMontant').value)$('carnetMontant').value=d.montant;
   }
 }
 if($('tempsLive'))$('tempsLive').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setDebTemp(b.dataset.t,true)));
@@ -5020,42 +5128,6 @@ $('rMail').addEventListener('click',()=>{
 });
 
 
-/* ═══ Dictée vocale du débrief ═══ */
-let recog=null, recOn=false;
-(function(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  const btn=$('micBtn');
-  if(!SR){btn.style.display='none';$('micSt').textContent='La dictée vocale n\'est pas disponible sur ce navigateur.';return;}
-  recog=new SR(); recog.lang='fr-FR'; recog.continuous=true; recog.interimResults=true;
-  let base='';
-  recog.onresult=e=>{
-    let fin='',inter='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const t=e.results[i][0].transcript;
-      if(e.results[i].isFinal)fin+=t; else inter+=t;
-    }
-    if(fin){base=(base+' '+fin).trim();}
-    $('debPhrase').value=(base+(inter?' '+inter:'')).trim();
-  };
-  recog.onerror=()=>{stopRec();$('micSt').textContent='Micro indisponible. Vérifie les autorisations.';};
-  recog.onend=()=>{if(recOn)try{recog.start();}catch(e){}};
-  function startRec(){
-    base=$('debPhrase').value.trim();
-    try{recog.start();}catch(e){}
-    recOn=true;btn.classList.add('rec');
-    btn.innerHTML='<span class="dot3"></span><span id="micL">J\'écoute…</span>';
-    $('micSt').textContent='Parle naturellement. Retape sur le bouton pour arrêter.';
-  }
-  function stopRec(){
-    recOn=false;try{recog.stop();}catch(e){}
-    btn.classList.remove('rec');
-    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg><span id="micL">Dicter</span>';
-    $('micSt').textContent='Raconte ton RDV en marchant, Faro écrit.';
-  }
-  btn.addEventListener('click',()=>recOn?stopRec():startRec());
-  $('debCancel').addEventListener('click',()=>{if(recOn)stopRec();});
-  $('debSave').addEventListener('click',()=>{if(recOn)stopRec();});
-})();
 
 // Dictée du carnet : écrit dans les notes en direct
 let crec=null, crecOn=false;
@@ -5111,7 +5183,7 @@ document.addEventListener('keydown',e=>{
     if($('recapOv').classList.contains('on')){$('recapOv').classList.remove('on');return;}
     if($('presOv').classList.contains('on')){$('presOv').classList.remove('on');return;}
     if($('verdOv').classList.contains('on')){$('verdOv').className='verd';$('briefDoc').classList.remove('on');go('dash');renderAll();return;}
-    if($('debOv').classList.contains('on')){$('debOv').classList.remove('on');return;}
+    if($('recOv').classList.contains('on')&&!$('recOv').classList.contains('s3')){$('recOv').className='rec';return;}
     if($('briefDoc').classList.contains('on')){closeDoc();return;}
   }
   if($('pal').classList.contains('on')){const its=$('palL').querySelectorAll('.pali');
