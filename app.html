@@ -639,6 +639,33 @@
   .carnet-out-note svg{width:18px;height:18px;flex-shrink:0;}
   .carnet-out-note button{margin-left:auto;border:1px solid #C6DCEA;background:#fff;color:var(--blue);border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;}
   .pipbody{margin:0;padding:0;background:var(--bg);}
+  /* ══ Mémoriser : trois minutes avant, dans le couloir, une main ══ */
+  .mem{position:fixed;inset:0;background:var(--bg);z-index:109;display:none;flex-direction:column;padding:0;}
+  .mem.on{display:flex;}
+  .mem-bar{display:flex;align-items:center;gap:12px;padding:16px 22px;flex-shrink:0;}
+  .mem-who{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .mem-x{border:1px solid var(--line2);background:var(--card);color:var(--soft);border-radius:9px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.13s;}
+  .mem-x:hover{border-color:var(--copper);color:var(--copper-d);}
+  .mem-x svg{width:16px;height:16px;stroke-width:2.2;}
+  .mem-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 26px 20px;max-width:640px;width:100%;margin:0 auto;overflow-y:auto;}
+  .mem-row{padding:16px 0;border-top:1px solid var(--line);}
+  .mem-row:first-child{border-top:none;}
+  .mem-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);margin-bottom:7px;}
+  .mem-v{font-family:var(--serif);font-weight:500;font-size:23px;line-height:1.3;color:var(--ink);letter-spacing:-.3px;}
+  .mem.quiz .mem-v{color:transparent;background:var(--wash);border-radius:7px;cursor:pointer;user-select:none;position:relative;min-height:32px;}
+  .mem.quiz .mem-v::after{content:"Toucher pour révéler";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(--sans);font-size:12px;font-weight:500;color:var(--faint);letter-spacing:0;}
+  .mem.quiz .mem-v.shown{color:var(--ink);background:none;cursor:default;}
+  .mem.quiz .mem-v.shown::after{display:none;}
+  .mem-hv{margin-top:22px;padding-top:18px;border-top:2px solid var(--line2);}
+  .mem-hv-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+  .mem-hv-l{display:flex;gap:11px;align-items:baseline;font-size:15px;color:var(--soft);line-height:1.45;padding:6px 0;}
+  .mem-hv-l::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);opacity:.5;flex-shrink:0;}
+  .mem-foot{display:flex;align-items:center;gap:14px;padding:16px 26px 22px;max-width:640px;width:100%;margin:0 auto;flex-shrink:0;border-top:1px solid var(--line3);}
+  .mem-quiz{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--soft);border-radius:10px;padding:11px 18px;font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s cubic-bezier(.2,.7,.2,1);}
+  .mem-quiz:hover{border-color:var(--copper);color:var(--copper-d);background:var(--washc);}
+  .mem-quiz.on{background:var(--copper);border-color:var(--copper);color:#fff;}
+  .mem-hint{font-size:12.5px;color:var(--faint);flex:1;}
+  @media(max-width:640px){.mem-v{font-size:20px;}.mem-body{padding:0 20px 16px;}.mem-foot{padding:14px 20px 20px;}}
   /* Curseur d'écriture : le brief se rédige sous les yeux */
   .cur{display:inline-block;width:2px;height:1em;background:var(--copper);margin-left:2px;vertical-align:-2px;animation:curbl .9s steps(1) infinite;}
   @keyframes curbl{50%{opacity:0;}}
@@ -1442,28 +1469,27 @@
   .debfoot{display:flex;justify-content:space-between;gap:10px;margin-top:22px;}
 
   /* ═══ Cinématique de fin ═══ */
-  .verd{position:fixed;inset:0;background:var(--bg);z-index:108;display:none;align-items:center;justify-content:center;padding:20px;}
+  .verd{position:fixed;inset:0;background:var(--bg);z-index:108;display:none;align-items:center;justify-content:center;padding:24px;}
   .verd.on{display:flex;}
-  .verd .in{text-align:center;max-width:460px;width:100%;}
-  @keyframes stampin{from{transform:rotate(-4deg) scale(1.6);opacity:0;}to{transform:rotate(-4deg) scale(1);opacity:1;}}
-  .verd-streak{display:flex;align-items:center;gap:9px;justify-content:center;margin-top:20px;padding:10px 18px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.28);border-radius:10px;font-size:13px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);max-width:400px;margin-left:auto;margin-right:auto;animation:fadein .5s ease .3s both;}
-  .dcard.just-ranged{animation:ranged 2.4s ease;}
-  @keyframes ranged{0%{box-shadow:0 0 0 3px var(--copper-l);background:var(--cream2);}70%{box-shadow:0 0 0 3px var(--copper-l);background:var(--cream2);}100%{box-shadow:none;background:#fff;}}
-  .verd-streak svg{width:17px;height:17px;flex-shrink:0;opacity:.9;}
-  .verd-streak b{font-weight:700;}
-  .verd .stamp{display:inline-block;font-family:var(--serif);font-weight:700;font-size:clamp(30px,6vw,48px);letter-spacing:.02em;text-transform:uppercase;padding:12px 30px;border:4px solid currentColor;border-radius:10px;transform:rotate(-4deg);animation:stampin .35s cubic-bezier(.2,.7,.2,1);}
-  .verd.close .stamp{color:var(--green-d);}
-  .verd.chaud .stamp{color:var(--copper-d);}
-  .verd.tiede .stamp{color:var(--gold);}
-  .verd.mort .stamp{color:var(--dim);border-width:2.5px;transform:rotate(-1.5deg);}
-  .verd .steps{margin:26px auto 0;max-width:360px;text-align:left;display:flex;flex-direction:column;gap:8px;}
-  .vline{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--soft);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 13px;opacity:0;transform:translateY(8px);transition:.4s;}
+  .verd .in{max-width:460px;width:100%;text-align:left;}
+  .verd-mark{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:26px;animation:vmark .45s cubic-bezier(.2,.7,.2,1) both;}
+  .verd-mark svg{width:18px;height:18px;stroke-width:2.6;}
+  @keyframes vmark{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:none;}}
+  .verd-t{font-family:var(--serif);font-weight:600;font-size:40px;letter-spacing:-.8px;line-height:1.05;color:var(--green-d);animation:rise .45s cubic-bezier(.2,.7,.2,1) .08s both;}
+  .verd.chaud .verd-t{color:var(--copper-d);} .verd.tiede .verd-t{color:var(--gold);} .verd.mort .verd-t{color:var(--dim);}
+  .verd-s{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--soft);letter-spacing:-.3px;line-height:1.2;margin-top:6px;animation:rise .45s cubic-bezier(.2,.7,.2,1) .14s both;}
+  .verd .steps{margin:30px 0 0;display:flex;flex-direction:column;}
+  .vline{display:flex;align-items:baseline;gap:12px;font-size:14px;color:var(--soft);line-height:1.5;padding:11px 0;border-top:1px solid var(--line);opacity:0;transform:translateY(5px);transition:opacity .4s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.2,.7,.2,1);}
+  .vline:last-child{border-bottom:1px solid var(--line);}
   .vline.show{opacity:1;transform:none;}
-  .vline .ok2{width:17px;height:17px;border-radius:50%;background:var(--green);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .vline .sg{width:17px;height:17px;border-radius:50%;background:var(--washc);border:1.5px solid var(--copper);flex-shrink:0;}
-  .vline button{margin-left:auto;border:none;background:var(--copper);color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:3px 10px;cursor:pointer;}
-  .verd .acts{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:26px;opacity:0;transition:.4s;}
+  .vline .vk{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);width:64px;flex-shrink:0;}
+  .vline b{color:var(--ink);font-weight:600;}
+  .vline button{margin-left:auto;border:1px solid var(--line2);background:#fff;color:var(--copper-d);font-size:11.5px;font-weight:600;font-family:inherit;border-radius:7px;padding:4px 11px;cursor:pointer;flex-shrink:0;transition:.13s;}
+  .vline button:hover{border-color:var(--copper);background:var(--washc);}
+  .verd .acts{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px;opacity:0;transition:.4s;}
   .verd .acts.show{opacity:1;}
+  .verd .acts .lnk{border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--dim);cursor:pointer;padding:4px 0;transition:.13s;}
+  .verd .acts .lnk:hover{color:var(--copper-d);}
 
   /* ═══ Présentation client ═══ */
   .pres{position:fixed;inset:0;background:#FFFDF8;z-index:102;display:none;flex-direction:column;}
@@ -2154,15 +2180,21 @@
   <div class="debfoot"><button class="btn g" id="debCancel">Revenir au brief</button><button class="btn" id="debSave"><span class="spin"></span><span>Valider</span></button></div>
 </div></div>
 
+<div class="mem" id="memOv">
+  <div class="mem-bar"><span class="mem-who" id="memWho"></span><button class="mem-x" id="memX" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+  <div class="mem-body" id="memBody"></div>
+  <div class="mem-foot"><button class="mem-quiz" id="memQuiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Me tester</button><span class="mem-hint" id="memHint">Relis-les une fois avant d'entrer.</span></div>
+</div>
+
 <div class="verd" id="verdOv"><div class="in">
-  <div class="esvg big" id="verdArt"></div>
-  <div class="stamp" id="verdStamp">Closé</div>
-  <div class="verd-streak" id="verdStreak"></div>
+  <div class="verd-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <div class="verd-t" id="verdStamp">Closé.</div>
+  <div class="verd-s" id="verdSub"></div>
   <div class="steps" id="verdSteps"></div>
   <div class="acts" id="verdActs">
     <button class="btn" id="verdDeal">Voir l'affaire</button>
-    <button class="btn g" id="verdRecap">Mail de recap</button>
-    <button class="btn g" id="verdHome">Accueil</button>
+    <button class="lnk" id="verdRecap">Mail de recap</button>
+    <button class="lnk" id="verdHome">Accueil</button>
   </div>
 </div></div>
 
@@ -3944,6 +3976,51 @@ document.addEventListener('keydown',e=>{
 const note=(t,c)=>{const n=$('note');n.textContent=t;n.className='note on '+c;};
 const clr=()=>{$('note').className='note';};
 let cmpTimer=null, justWritten=false, typeTimers=[];
+// ══ Mémoriser : le plan et la récolte, en grand, sans scroll ══
+function openMem(){
+  const b=current; if(!b)return;
+  const ou=b.ouverture||{}, qs=b.questions||[], ob=b.objection||{}, ns=b.next_step||{};
+  const cut=(t,n)=>{t=(t||'').toString().trim().replace(/^[«"']\s*|\s*[»"']$/g,'');return t.length>n?t.slice(0,n-1).replace(/[\s,;:]+$/,'')+'…':t;};
+  const q0=qs[0]?(typeof qs[0]==='string'?qs[0]:qs[0].question):'';
+  const rows=[
+    ['Ouvrir sur',cut(ou.accroche||(typeof b.ouverture==='string'?b.ouverture:''),70)],
+    ['Faire dire',cut(q0,70)],
+    ["S'il bloque",cut(ob.texte,70)],
+    ['Repartir avec',cut((ns&&ns.phrase)||(typeof ns==='string'?ns:''),70)]
+  ].filter(r=>r[1]);
+  $('memWho').textContent=[b.entreprise,cleanPoste(b.poste||'')].filter(Boolean).join(' · ');
+  const hv=(b._hv||[]).map(h=>h[0]);
+  $('memBody').innerHTML=rows.map(r=>`<div class="mem-row"><div class="mem-k">${r[0]}</div><div class="mem-v">${esc(r[1])}</div></div>`).join('')
+    +(hv.length?`<div class="mem-hv"><div class="mem-hv-k">Ne pars pas sans</div>${hv.map(h=>`<div class="mem-hv-l">${esc(h)}</div>`).join('')}</div>`:'');
+  $('memOv').classList.remove('quiz');
+  $('memQuiz').classList.remove('on');
+  $('memHint').textContent="Relis-les une fois avant d'entrer.";
+  $('memOv').classList.add('on');
+}
+(function(){
+  const x=$('memX'); if(x)x.addEventListener('click',()=>$('memOv').classList.remove('on'));
+  const q=$('memQuiz');
+  if(q)q.addEventListener('click',()=>{
+    const ov=$('memOv'); const on=ov.classList.toggle('quiz');
+    q.classList.toggle('on',on);
+    ov.querySelectorAll('.mem-v').forEach(v=>v.classList.remove('shown'));
+    $('memHint').textContent=on?'Retrouve chaque ligne, puis touche pour vérifier.':"Relis-les une fois avant d'entrer.";
+  });
+  const bd=$('memBody');
+  if(bd)bd.addEventListener('click',e=>{
+    const v=e.target.closest('.mem-v');
+    if(v&&$('memOv').classList.contains('quiz'))v.classList.add('shown');
+  });
+})();
+// Raccourci M : mémoriser le brief ouvert
+document.addEventListener('keydown',e=>{
+  if(e.key!=='m'&&e.key!=='M')return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const t=e.target;
+  if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(!$('briefDoc').classList.contains('on')||!current)return;
+  e.preventDefault(); openMem();
+});
 // Le brief s'écrit sous les yeux, il ne surgit pas d'un bloc
 function typeIn(el,txt,speed,done){
   if(!el)return; el.textContent=''; 
@@ -4217,6 +4294,7 @@ function openBrief(b){
       ['Quelles conditions veut-il voir bouger ?','Mieux vaut la négociation en face que par mail trois semaines après.']]
   };
   const hv=HARVEST[b.objectif]||HARVEST.qualifier;
+  b._hv=hv;
   sections.push({key:'harvest',num:pg.length?6:5,t:'Ce que tu ramènes',d:'Les trois réponses à ne pas repartir sans.',
     copy:hv.map(h=>h[0]).join('\n'),
     body:hv.map(h=>`<div class="hv"><span class="hv-b"></span><span class="hv-t"><span class="hv-q">${esc(h[0])}</span><span class="hv-w">${esc(h[1])}</span></span></div>`).join('')
@@ -4554,14 +4632,16 @@ function renderActions(){
   else if(b.debrief){a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><button id="aRecap">Mail de recap</button><div class="divider"></div><button class="pri" id="aNew">Nouveau brief</button>`;}
   else{
     const has=Object.keys(ann).some(k=>k!=='libre'&&ann[k]&&(ann[k].note||ann[k].tag))||(ann.libre||[]).length;
-    a.innerHTML=`<button class="ghost" id="aCopy">Copier</button><button class="ghost more-b" id="aMore" title="Autres options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="divider"></div><button class="pri" id="aGo">${has?'Reprendre mon carnet':"J'y vais"}</button>`;
+    a.innerHTML=`<button id="aMem">Mémoriser<kbd class="kbd-hint" style="background:var(--wash);border-color:var(--line2);color:var(--faint);">M</kbd></button><button class="ghost more-b" id="aMore" title="Autres options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="divider"></div><button class="pri" id="aGo">${has?'Reprendre mon carnet':"J'y vais"}</button>`;
   }
   const w=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn);};
   w('aCopy',copyAll); w('aStart',askPass); w('aEnd',rdvEndAsk);
   w('aGo',()=>{if(current&&current.demo){toast('Ceci est un exemple. Prépare ton vrai rendez-vous pour y aller.');return;}rdvStart();});
   w('aPres',openPres); w('aRecap',openRecap);
+  w('aMem',openMem);
   w('aMore',()=>openKebab($('aMore'),[
     {label:'Il est déjà passé, raconter',ic:'open',fn:()=>{if(current&&current.demo){toast('Ceci est un exemple.');return;}startColdDebrief();}},
+    {label:'Copier le brief',ic:'export',fn:copyAll},
     {label:'Mode présentation',ic:'open',fn:openPres}
   ]));
   w('aNote',()=>{addLibre('',null,true);$('libreCard').scrollIntoView({behavior:'smooth',block:'center'});});
@@ -4817,35 +4897,33 @@ if($('carnetNotes')){let ct=null;$('carnetNotes').addEventListener('input',()=>{
 if($('carnetFinish'))$('carnetFinish').addEventListener('click',()=>saveDebrief(false));
 if($('carnetBackB'))$('carnetBackB').addEventListener('click',carnetBack);
 if($('carnetMic'))$('carnetMic').addEventListener('click',()=>toggleCarnetDictation());
-const VERD={close:'Closé !',chaud:"Ça avance",tiede:'À réchauffer',mort:'Suivant.'};
+const VERD={close:'Closé.',chaud:'Ça avance.',tiede:'À réchauffer.',mort:'Suivant.'};
 function showVerdict(t,deal,hasSyn){
   $('verdOv').className='verd on '+t;
-  $('verdArt').innerHTML=t==='close'?ESVG.victoire:(t==='mort'?ESVG.perdu:'');
-  $('verdStamp').textContent=VERD[t]||'Terminé';
-  // Renfort d'habitude : la série de débriefs
+  $('verdStamp').textContent=VERD[t]||'Terminé.';
+  // Le sous-titre dit de quoi on parle, en clair
+  const nom=(current&&current.entreprise)||(deal&&deal.entreprise)||'';
+  const mv=deal?dealVal(deal):0;
+  $('verdSub').textContent=[nom,mv?eur(mv):''].filter(Boolean).join(', ')+'.';
+  // Trois lignes de fait, sans carte ni coche
   const ws=weekStats();
-  const vs=$('verdStreak');
-  if(vs){
-    if(ws.streak>=2){
-      vs.style.display='';
-      vs.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg><span><b>${ws.streak} débriefs d'affilée.</b> Tu construis ta mémoire, continue.</span>`;
-    } else if(ws.debriefs>=1){
-      vs.style.display='';
-      vs.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Chaque débrief rend Faro plus précis pour toi.</span>`;
-    } else vs.style.display='none';
-  }
+  const nRecits=nom?briefs.filter(b=>b.debrief&&(b.entreprise||'').toLowerCase()===nom.toLowerCase()).length:0;
   const lines=[];
-  lines.push(`<div class="vline"><span class="ok2">✓</span>${hasSyn?'Synthèse du rendez-vous enregistrée':'Débrief enregistré'}</div>`);
-  if(deal&&(t==='close'||t==='mort'))lines.push(`<div class="vline"><span class="ok2">✓</span>Deal marqué ${stg(deal.etape).l}</div>`);
-  else if(deal&&deal.etape_suggeree)lines.push(`<div class="vline"><span class="sg"></span>Faro propose : passer en ${stg(deal.etape_suggeree).l}<button id="vAcc">Accepter</button></div>`);
-  if(t!=='mort')lines.push(`<div class="vline"><span class="ok2">✓</span>Le mail de recap est prêt à rédiger</div>`);
-  else lines.push(`<div class="vline"><span class="ok2">✓</span>Tout est noté, ça servira au suivant</div>`);
-  $('verdSteps').innerHTML=lines.join('');
+  if(deal)lines.push({k:"L'affaire",v:`passe en <b>${stg(deal.etape).l}</b>`,
+    sug:deal.etape_suggeree?`Faro propose <b>${stg(deal.etape_suggeree).l}</b>`:null});
+  if(nRecits)lines.push({k:'Ta mémoire',v:`${nom} compte désormais <b>${nRecits} récit${nRecits>1?'s':''}</b>. Ton prochain brief sera plus tranchant.`});
+  if(ws.streak>=2)lines.push({k:'Ta série',v:`<b>${ws.streak} récits d'affilée</b>. Tiens-la.`});
+  if(t!=='mort')lines.push({k:'Ensuite',v:'Le mail de recap est prêt à rédiger.'});
+  else lines.push({k:'Ensuite',v:"Tout est noté. Ça servira au prochain."});
+  $('verdSteps').innerHTML=lines.map(l=>l.sug
+    ? `<div class="vline"><span class="vk">${l.k}</span><span>${l.sug}</span><button id="vAcc">Accepter</button></div>`
+    : `<div class="vline"><span class="vk">${l.k}</span><span>${l.v}</span></div>`).join('');
   $('verdActs').classList.remove('show');
   const vls=$('verdSteps').querySelectorAll('.vline');
-  vls.forEach((el,i)=>setTimeout(()=>el.classList.add('show'),420+i*380));
-  setTimeout(()=>$('verdActs').classList.add('show'),420+vls.length*380+200);
-  const va=$('vAcc'); if(va)va.addEventListener('click',()=>{acceptSugg(deal.id);va.closest('.vline').innerHTML='<span class="ok2">✓</span>Affaire passée en '+stg(deal.etape_suggeree?deal.etape_suggeree:deal.etape).l;});
+  vls.forEach((el,i)=>setTimeout(()=>el.classList.add('show'),320+i*130));
+  setTimeout(()=>$('verdActs').classList.add('show'),320+vls.length*130+120);
+  const va=$('vAcc');
+  if(va)va.addEventListener('click',()=>{const nv=deal.etape_suggeree;acceptSugg(deal.id);va.closest('.vline').innerHTML=`<span class="vk">L'affaire</span><span>passe en <b>${stg(nv).l}</b></span>`;});
   $('verdDeal').onclick=()=>{$('verdOv').className='verd';$('briefDoc').classList.remove('on');const d=deal?deals.find(x=>x.id===deal.id):null;if(d)openFiche(d);else go('dash');};
   $('verdHome').onclick=()=>{$('verdOv').className='verd';$('briefDoc').classList.remove('on');go('dash');renderAll();};
   $('verdRecap').onclick=()=>{$('verdOv').className='verd';openRecap();};
@@ -5006,6 +5084,7 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowLeft'){presGo(presIdx-1);return;}
   }
   if(e.key==='Escape'){
+    if($('memOv').classList.contains('on')){$('memOv').classList.remove('on');return;}
     if($('pal').classList.contains('on')){palClose();return;}
     if($('recapOv').classList.contains('on')){$('recapOv').classList.remove('on');return;}
     if($('presOv').classList.contains('on')){$('presOv').classList.remove('on');return;}
