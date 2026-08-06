@@ -211,7 +211,20 @@
   .rr-act.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
   /* Anneau cuivre sur le jour actuel de la grille */
+  /* ══ Grille de chaleur : un carré par jour, 4 niveaux ══ */
+  .jheat{display:flex;gap:4px;}
+  .jhcol{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
+  .jhcell{display:block;width:100%;aspect-ratio:1;max-width:16px;border-radius:3px;background:#EFEAE0;transition:background .2s cubic-bezier(.2,.7,.2,1);}
+  .jhcell.l0{background:#EFEAE0;}
+  .jhcell.l1{background:#E7C9A8;}
+  .jhcell.l2{background:#D89355;}
+  .jhcell.l3{background:var(--copper-d);}
+  .jhcell.lx{background:transparent;}
   .jhcell.t{box-shadow:0 0 0 1.5px var(--copper);}
+  /* Version compacte dans la carte Ton rythme */
+  .ov-heat .jhcell{max-width:12px;border-radius:2.5px;}
+  .jheat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:12px;font-family:var(--mono);font-size:9.5px;color:var(--faint);}
+  .jheat-legend .jhcell{width:11px;max-width:11px;height:11px;aspect-ratio:auto;}
   /* Hint D sur le CTA compagnon */
   .comp-cta .kbd-hint{margin-left:2px;}
   /* Accessibilité : focus clavier visible et élégant */
@@ -2141,19 +2154,6 @@ function renderNvRecent(){
   }).join('')}</div>`;
   el.querySelectorAll('[data-nvd]').forEach(b=>b.addEventListener('click',()=>{const d=deals.find(x=>x.id===b.dataset.nvd);if(d)startFromDeal(d);}));
 }
-// ─── WOW : chiffres vivants + pouls graphique ───
-function countUp(el,target,fmt,dur=900){
-  if(!el)return;
-  if(reduce||!target||target<=0){el.textContent=fmt(target||0);return;}
-  const t0=performance.now();
-  const ease=x=>1-Math.pow(1-x,3);
-  function frame(now){
-    const p=Math.min(1,(now-t0)/dur);
-    el.textContent=fmt(Math.round(target*ease(p)));
-    if(p<1)requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
 // Une affaire n'entre dans le parcours Affaires qu'après son premier débrief
 function dealEntered(d){
   if(['gagne','perdu'].includes(d.etape))return true;
@@ -2427,6 +2427,7 @@ function renderToi(){
   let heat='<div class="jheat" style="max-width:640px;">'; let active=0;
   for(let wk=11;wk>=0;wk--){heat+='<div class="jhcol">';for(let d=0;d<7;d++){const day=new Date(gridEnd);day.setDate(gridEnd.getDate()-(wk*7)+(d-6));const n=dayCount[day.getTime()]||0;if(n)active++;heat+=`<span class="jhcell l${day>today?'x':(n===0?0:n===1?1:n===2?2:3)}"></span>`;}heat+='</div>';}
   heat+='</div>';
+  heat+='<div class="jheat-legend"><span>Moins</span><span class="jhcell l0"></span><span class="jhcell l1"></span><span class="jhcell l2"></span><span class="jhcell l3"></span><span>Plus</span></div>';
   // Interlocuteurs qui te réussissent
   const posts={};
   debriefed.forEach(b=>{const k=cleanPoste(b.poste||'')||'Autre';posts[k]=posts[k]||{c:0,hot:0};posts[k].c++;if(['close','chaud'].includes(b.debrief.temperature))posts[k].hot++;});
@@ -2443,46 +2444,6 @@ function renderToi(){
     ${topPosts.length?`<div class="card"><div class="chd"><span class="t">Tes interlocuteurs</span><span class="d">Qui te réussit le mieux, d'après tes débriefs.</span></div><div class="cbd p0">${topPosts.map(([k,v])=>{const r=Math.round(v.hot/v.c*100);return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,34))}</span><span class="tp-bar"><span class="tp-fill" style="width:${Math.max(r,4)}%"></span></span><span class="tp-v">${r}% chauds · ${v.c} RDV</span></div>`;}).join('')}</div></div>`:''}
   `;
 }
-function renderJourney(aDeb){
-  const jc=$('journeyCard'); if(!jc)return;
-  const ws=weekStats();
-  const today=new Date(); today.setHours(0,0,0,0);
-  const debToday=briefs.filter(b=>b.debrief&&b.debrief.created_at&&new Date(b.debrief.created_at)>=today).length;
-  const goal=Math.max(2,Math.min(5,aDeb.length||2));
-  const pct=Math.min(100,Math.round(debToday/goal*100));
-  const goalDone=debToday>=goal;
-
-  // Grille de chaleur compacte : 8 semaines
-  const WEEKS=8;
-  const dayCount={};
-  briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);dayCount[d.getTime()]=(dayCount[d.getTime()]||0)+1;});
-  const dow=(today.getDay()+6)%7;
-  const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6);
-  const cells=[];
-  for(let w=WEEKS-1;w>=0;w--){
-    const col=[];
-    for(let d=0;d<7;d++){
-      const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(w*7)+(d-6));
-      col.push({n:dayCount[day.getTime()]||0,future:day>today,today:day.getTime()===today.getTime(),lbl:day.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})});
-    }
-    cells.push(col);
-  }
-  const lvl=n=>n===0?0:n===1?1:n===2?2:3;
-  let heat='<div class="jheat">';
-  cells.forEach(col=>{heat+='<div class="jhcol">';col.forEach(c=>{heat+=`<span class="jhcell l${c.future?'x':lvl(c.n)}${c.today?' t':''}"${c.future?'':` title="${c.lbl}, ${c.n} brief${c.n>1?'s':''}"`}></span>`;});heat+='</div>';});
-  heat+='</div>';
-
-  jc.innerHTML=`<div class="jc-head"><span class="obj-badge">Ta journée</span></div>
-    <div class="jc-obj">${goalDone?'Objectif atteint. Tu assures.':`Raconte ${goal} rendez-vous aujourd'hui`}</div>
-    <div class="obj-bar"><div class="obj-fill ${goalDone?'done':''}" style="width:0%"></div></div>
-    <div class="obj-ratio">${debToday} / ${goal} ${goalDone?'✓':''}</div>
-    <div class="jc-sep"></div>
-    <div class="jc-rhythm-lbl">Ton rythme, 8 semaines</div>
-    ${heat}`;
-  const fill=jc.querySelector('.obj-fill');
-  if(fill)requestAnimationFrame(()=>requestAnimationFrame(()=>{fill.style.width=Math.max(pct,4)+'%';}));
-}
-
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
 // ─── L'argent en roi ───
 let moneyPeriod='month', chartDays=30, affView='action';
@@ -2519,121 +2480,7 @@ function velocity(){
 }
 
 // Graphe 30 jours : briefs préparés vs débriefés, deux courbes
-// Graphe hebdomadaire : barres par semaine, briefs vs débriefés, lisible et honnête
-function chart30(days30){
-  days30=days30||30;
-  const weeks=Math.round(days30/7);
-  const now=new Date(); now.setHours(23,59,59,999);
-  const bkt=Array.from({length:weeks},()=>({b:0,d:0,label:''}));
-  // borne de chaque semaine (la plus récente à droite)
-  for(let w=0;w<weeks;w++){
-    const end=new Date(now); end.setDate(end.getDate()-7*(weeks-1-w));
-    const start=new Date(end); start.setDate(start.getDate()-6);
-    bkt[w].start=start.getTime(); bkt[w].end=end.getTime()+1;
-    bkt[w].label=start.toLocaleDateString('fr-FR',{day:'numeric',month:'short'}).replace('.','');
-  }
-  briefs.forEach(x=>{
-    const t=new Date(x.created_at).getTime();
-    const wb=bkt.find(w=>t>=w.start&&t<w.end); if(wb)wb.b++;
-    if(x.debrief){const td=new Date(x.updated_at||x.created_at).getTime();const wd=bkt.find(w=>td>=w.start&&td<w.end);if(wd)wd.d++;}
-  });
-  const hasData=bkt.some(x=>x.b||x.d);
-  if(!hasData)return '<div class="chart-empty">Ton activité s\'affichera ici, semaine après semaine.</div>';
-  const max=Math.max(2,...bkt.map(x=>Math.max(x.b,x.d)));
-  const W=560,H=150,padL=4,padR=4,padT=10,padB=26;
-  const plotW=W-padL-padR, plotH=H-padT-padB;
-  const slot=plotW/weeks;
-  const bw=Math.min(18,slot*0.28);
-  const gap=4;
-  let grid='';
-  for(let g=0;g<=2;g++){const yy=padT+plotH*g/2;const val=Math.round(max*(1-g/2));grid+=`<line x1="${padL}" y1="${yy.toFixed(1)}" x2="${W-padR}" y2="${yy.toFixed(1)}" stroke="#F0EADB" stroke-width="1"/><text x="${padL}" y="${(yy-3).toFixed(1)}" font-size="8" fill="#C9BFA9" font-family="DM Mono,monospace">${val}</text>`;}
-  let bars='';
-  bkt.forEach((wk,i)=>{
-    const cx=padL+slot*i+slot/2;
-    const hb=(wk.b/max)*plotH, hd=(wk.d/max)*plotH;
-    const x1=cx-bw-gap/2, x2=cx+gap/2;
-    const baseY=padT+plotH;
-    if(wk.b>0)bars+=`<rect x="${x1.toFixed(1)}" y="${(baseY-hb).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(2,hb).toFixed(1)}" rx="3" fill="#C96A2E"><title>Semaine du ${wk.label} : ${wk.b} brief${wk.b>1?'s':''}</title></rect>`;
-    if(wk.d>0)bars+=`<rect x="${x2.toFixed(1)}" y="${(baseY-hd).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(2,hd).toFixed(1)}" rx="3" fill="#4F9D69"><title>Semaine du ${wk.label} : ${wk.d} débriefé${wk.d>1?'s':''}</title></rect>`;
-    bars+=`<text x="${cx.toFixed(1)}" y="${H-8}" font-size="8.5" fill="#A69C8B" font-family="DM Mono,monospace" text-anchor="middle">${wk.label}</text>`;
-  });
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">${grid}${bars}</svg>`;
-}
-
 // Plan de bataille : décisions triées par urgence, avec la raison mémorisée
-// Plan de bataille : décisions groupées, jamais répétitives, la raison mémorisée
-function renderFocus(aDeb,aRel,cold){
-  const rows=[];
-  // La priorité (débriefs) est portée par le compagnon en haut. Ici : relances + froids seulement.
-  // 2) Relances : le sens, jamais le texte brut du mail. Max 4.
-  const relSorted=aRel.slice().sort((a,b)=>days(b.updated_at)-days(a.updated_at));
-  const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
-  const TLBL={close:'closé',chaud:'chaud',tiede:'tiède',mort:'difficile'};
-  relSorted.slice(0,3).forEach(d=>{
-    const lb=dealBriefs(d).find(x=>x.debrief);
-    const n=days(d.updated_at);
-    const temp=lb&&lb.debrief?lb.debrief.temperature:null;
-    const note=lb&&lb.debrief?lb.debrief.next_action:d.prochaine_action;
-    let why;
-    // Priorité 1 : une note d'action claire et courte
-    if(note&&!looksLikeMail(note)&&note.length<=48){
-      why=`Tu devais <b>${esc(note.toLowerCase())}</b>${n>=7?` · ${n} j déjà`:''}.`;
-    } else {
-      // Sinon, du concret : temps, étape, température
-      const bits=[];
-      bits.push(`vu ${n<=0?"aujourd'hui":'il y a '+n+' j'}`);
-      if(temp)bits.push(`RDV ${TLBL[temp]}`);
-      bits.push(`en ${stg(d.etape).l.toLowerCase()}`);
-      const urgence=temp==='chaud'?'À relancer vite : ':n>=10?'Ne le laisse pas filer : ':'À relancer : ';
-      why=`${urgence}<b>${bits.join(', ')}</b>.`;
-    }
-    const hot=temp==='chaud';
-    rows.push({rc:hot?'var(--copper)':'var(--gold)',ic:'arrow',nm:d.entreprise,why,
-      act:lb?'Relancer':'Voir',ac:lb?'rel':'see',
-      fn:lb?()=>{current=lb;openRecap('relance');}:()=>openFiche(d),
-      done:async()=>{d.updated_at=new Date().toISOString();try{await sb.from('deals').update({updated_at:d.updated_at}).eq('id',d.id);}catch(e){}toast('Relance marquée comme faite');}});
-  });
-  // 3) Un seul deal froid, le plus critique, si pas déjà en relance
-  const coldest=cold.filter(d=>days(d.updated_at)>=10&&!aRel.includes(d))[0];
-  if(coldest&&rows.length<5){
-    const n=days(coldest.updated_at);
-    rows.push({rc:'var(--gold)',ic:'snow',nm:coldest.entreprise,
-      why:`En <b>${stg(coldest.etape).l}</b>, sans mouvement depuis <b>${n} j</b>. Ne le laisse pas filer.`,
-      act:'Voir',ac:'see',fn:()=>openFiche(coldest),
-      done:async()=>{coldest.updated_at=new Date().toISOString();try{await sb.from('deals').update({updated_at:coldest.updated_at}).eq('id',coldest.id);}catch(e){}toast('Marqué comme suivi');}});
-  }
-  if(!rows.length){
-    $('focusW').innerHTML=`<div class="focus-empty"><div class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><div class="fe-t">Tout est à jour.</div><div class="fe-d">Aucune action en attente. Prépare ton prochain rendez-vous quand tu veux.</div></div>`;
-    if($('focusAll'))$('focusAll').style.display='none';
-    return;
-  }
-  
-  const ICO={clock:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',snow:'<path d="M12 2v20M4 6l16 12M20 6L4 18"/>'};
-  const BIGART={
-    clock:'<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="42" stroke="currentColor" stroke-width="4" opacity=".18"/><circle cx="60" cy="60" r="42" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="70 400" transform="rotate(-90 60 60)"/><path d="M60 34v26l17 10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    arrow:'<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="3" opacity=".14"/><path d="M40 60h38M62 44l18 16-18 16" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    snow:'<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="3" opacity=".14"/><path d="M60 34v52M40 44l40 32M80 44L40 76" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>'
-  };
-  if(!rows.length){
-    $('focusW').innerHTML=`<div class="focus-empty"><span class="fe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="fe-t">Rien à relancer.</div><div class="fe-d">Tes relances sont à jour. Ta priorité du jour est en haut.</div></div>`;
-    return;
-  }
-  let html=`<div class="rest-list">`;
-  html+=rows.map((it,i)=>{
-    return `<div class="rest-row" data-fi="${i}" style="--ac:${it.rc}">
-      <span class="rr-ic" style="color:${it.rc};background:${it.rc}14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[it.ic]}</svg></span>
-      <div class="rr-body"><div class="rr-nm">${esc(trunc(it.nm,34))}</div><div class="rr-why">${it.why}</div></div>
-      <button class="rr-act ${it.ac}">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-    </div>`;
-  }).join('');
-  html+=`</div>`;
-  $('focusW').innerHTML=html;
-  $('focusW').querySelectorAll('.rest-row').forEach((row,i)=>{
-    const it=rows[i];
-    row.querySelector('.rr-act').addEventListener('click',e=>{e.stopPropagation();const b=e.currentTarget;if(b.classList.contains('loading'))return;b.classList.add('loading');setTimeout(()=>{b.classList.remove('loading');it.fn();},300);});
-  });
-}
-
 // Intelligence : taux par interlocuteur, objections fréquentes
 // Ce que Faro sait de toi : observations vraies dès le début, taux seulement si significatif
 // Nettoie un intitulé de poste pour l'affichage : libellé complet, jamais tronqué bizarrement
@@ -2949,26 +2796,6 @@ function renderPipeFilters(){
   el.querySelector('[data-stale]').addEventListener('click',()=>{pipeFilters.stale=!pipeFilters.stale;renderPipeFilters();boardRender($('board'),false);if(affView==='table')entList();});
 }
 
-// Entonnoir : conversion entre étapes
-function renderFunnel(){
-  const el=$('funnelWrap'); if(!el)return;
-  const order=['contact','decouverte','negociation','closing','gagne'];
-  const counts=order.map(k=>deals.filter(d=>d.etape===k).length);
-  const totalActive=deals.filter(d=>!['perdu'].includes(d.etape)).length;
-  if(totalActive<2){el.innerHTML='';return;}
-  const max=Math.max(1,...counts);
-  const cols=order.map((k,i)=>{
-    const s=stg(k);const c=counts[i];
-    const h=Math.round((c/max)*100);
-    return `<div class="fb-col"><div class="fb-val">${c}</div><div class="fb-bar" style="height:${Math.max(4,h)}%;background:${s.c}"></div><div class="fb-lbl">${s.l}</div></div>`;
-  }).join('');
-  const wins=deals.filter(d=>d.etape==='gagne').length;
-  const losts=deals.filter(d=>d.etape==='perdu').length;
-  const closed=wins+losts;
-  const wr=closed?Math.round(wins/closed*100):null;
-  const avgAge=(()=>{const a=deals.filter(d=>!['gagne','perdu'].includes(d.etape));if(!a.length)return null;return Math.round(a.reduce((s,d)=>s+days(d.created_at),0)/a.length);})();
-  el.innerHTML=`<div class="funnel-card"><div class="chd"><span class="t">Santé de ton entonnoir</span><span class="d">Combien de deals à chaque étape.</span></div><div class="funnel-bars">${cols}</div><div class="funnel-foot">${wr!=null?`<span>Taux de closing : <b>${wr}%</b></span>`:'<span>Taux de closing : <b>à venir</b></span>'}<span>Deals ouverts : <b>${deals.filter(d=>!['gagne','perdu'].includes(d.etape)).length}</b></span>${avgAge!=null?`<span>Âge moyen : <b>${avgAge} j</b></span>`:''}</div></div>`;
-}
 async function acceptSugg(id){
   const d=deals.find(x=>x.id===id); if(!d||!d.etape_suggeree)return;
   const nv=d.etape_suggeree;
@@ -3388,18 +3215,6 @@ function entList(){
     entList();
   }));
   w.querySelectorAll('.etr').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
-}
-
-function renderEntFilters_OBSOLETE(){
-  const el=$('entFilters'); if(!el)return;
-  const stages=[['contact','Contact'],['decouverte','Découverte'],['negociation','Négociation'],['closing','Closing'],['gagne','Gagné']];
-  el.innerHTML=stages.filter(([k])=>deals.some(d=>d.etape===k)).map(([k,l])=>{
-    const s=stg(k);
-    return `<button class="ptf ${entFilter.etape===k?'on':''}" data-ef="${k}"><span class="dt" style="background:${s.c}"></span>${l}</button>`;
-  }).join('');
-  el.querySelectorAll('[data-ef]').forEach(b=>b.addEventListener('click',()=>{
-    entFilter.etape=entFilter.etape===b.dataset.ef?null:b.dataset.ef;entList();
-  }));
 }
 
 /* ═══ Fiche entreprise / deal ═══ */
