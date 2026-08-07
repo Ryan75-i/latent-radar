@@ -33,34 +33,62 @@
   .sk{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--line3) 25%,#F6F1E4 50%,var(--line3) 75%);background-size:760px 100%;animation:shimmer 1.3s linear infinite;}
 
   /* ═══ Shell : sidebar + main ═══ */
-  .shell{display:grid;grid-template-columns:236px 1fr;min-height:100vh;}
-  .side{background:linear-gradient(180deg,#F3EDDF,#F0E9D8);border-right:1px solid #E7DFCD;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:18px 12px 14px;z-index:25;}
-  .side .logo{padding:2px 10px 18px;}
-  .side .logo svg{height:30px;display:block;}
+  .shell{display:block;min-height:100vh;}
+  /* ══ Barre haute : les domaines. Sous-barre : ce qu'ils contiennent ══ */
+  .hdr{position:sticky;top:0;z-index:30;background:rgba(247,247,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line3);}
+  .hdr-1{display:flex;align-items:center;gap:20px;padding:0 24px;height:56px;max-width:1620px;margin:0 auto;}
+  .hdr-logo svg{height:26px;display:block;}
+  .hdr-nav{display:flex;align-items:center;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+  .hdr-nav::-webkit-scrollbar{display:none;}
+  .hn{position:relative;display:inline-flex;align-items:center;gap:7px;border:none;background:none;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--soft);padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .13s,color .13s;}
+  .hn:hover{background:var(--wash);color:var(--ink);}
+  .hn.on{color:var(--ink);font-weight:600;}
+  .hn.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-9px;height:2px;border-radius:2px;background:var(--copper);}
+  .hn svg{width:15px;height:15px;stroke-width:1.9;color:var(--faint);}
+  .hn.on svg{color:var(--copper);}
+  .hn .cnt{font-family:var(--mono);font-size:9.5px;color:var(--dim);background:var(--wash);border:1px solid var(--line);border-radius:20px;padding:1px 6px;}
+  .hn.on .cnt{color:var(--copper-d);border-color:var(--copper-l);background:var(--washc);}
+  .hn .soon{width:5px;height:5px;border-radius:50%;background:var(--line2);flex-shrink:0;}
+  .hdr-r{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .hdr-2{border-top:1px solid var(--line3);background:rgba(250,250,248,.7);}
+  .hdr-2-in{display:flex;align-items:center;gap:2px;padding:0 24px;height:40px;max-width:1620px;margin:0 auto;overflow-x:auto;scrollbar-width:none;}
+  .hdr-2-in::-webkit-scrollbar{display:none;}
+  .sub-g{display:none;align-items:center;gap:2px;}
+  .sub-g.on{display:flex;}
+  .sn{display:inline-flex;align-items:center;gap:7px;border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:500;color:var(--dim);padding:6px 11px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:.13s;}
+  .sn:hover{background:var(--wash);color:var(--soft);}
+  .sn.on{background:#fff;color:var(--copper-d);font-weight:600;box-shadow:var(--sh);}
+  .sn .cnt{font-family:var(--mono);font-size:9.5px;color:var(--faint);}
+  .sn.on .cnt{color:var(--copper-d);}
+  .sn .soon{width:5px;height:5px;border-radius:50%;background:var(--line2);flex-shrink:0;}
+  .sn-sep{width:1px;height:16px;background:var(--line);margin:0 8px;flex-shrink:0;}
+  .hdr .newbtn{margin:0;padding:8px 14px;font-size:13px;border-radius:9px;}
+  .hdr .newbtn svg{width:14px;height:14px;}
+  .hdr .search{min-width:172px;}
+  .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hdr-av img{width:100%;height:100%;object-fit:cover;}
+  .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  /* L'écran d'une page qui n'existe pas encore : honnête, jamais mort */
+  .soon-p{display:flex;flex-direction:column;align-items:flex-start;padding:26px 0 40px;max-width:560px;}
+  .soon-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:20px;}
+  .soon-t{font-family:var(--serif);font-weight:600;font-size:30px;letter-spacing:-.5px;line-height:1.1;color:var(--ink);margin-bottom:10px;}
+  .soon-d{font-size:15px;color:var(--soft);line-height:1.6;margin-bottom:22px;}
+  .soon-l{display:flex;gap:11px;font-size:13.5px;color:var(--dim);line-height:1.5;padding:7px 0;border-top:1px solid var(--line3);}
+  .soon-l::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--copper-l);margin-top:8px;flex-shrink:0;}
+  .soon-f{margin-top:24px;font-size:12.5px;color:var(--faint);line-height:1.5;}
+  @media(max-width:900px){
+    .hdr-1{padding:0 16px;gap:12px;} .hdr-2-in{padding:0 16px;}
+    .hdr .search{display:none;} .hdr-tok{display:none;} .hn span.lb{display:inline;}
+  }
+  @media(max-width:640px){ .hdr .newbtn span{display:none;} .hdr .newbtn{padding:8px 10px;} }
   .newbtn{white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:11px 12px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s;margin-bottom:16px;box-shadow:var(--sh);}
   .newbtn:hover{background:var(--copper-d);}
   .newbtn svg{width:15px;height:15px;stroke-width:2.4;}
-  .ngroup{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:14px 12px 6px;}
-  .nav{display:flex;flex-direction:column;gap:1px;}
-  .nav button{position:relative;display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:none;background:transparent;font-size:13px;font-weight:500;color:var(--soft);padding:9px 12px;border-radius:9px;cursor:pointer;transition:.14s;}
-  .nav button:hover{background:rgba(255,255,255,.7);color:var(--ink);}
-  .nav button.on{background:#fff;color:var(--copper-d);font-weight:600;box-shadow:var(--sh);}
-  .nav button.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--copper);}
-  .nav button svg{width:16px;height:16px;flex-shrink:0;stroke-width:1.9;}
-  .nav .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--dim);background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:6px;padding:1px 7px;}
-  .nav button.on .cnt{color:var(--copper-d);border-color:var(--copper-l);}
-  .sp{flex:1;}
-  .ucard{border:1px solid var(--line);border-radius:var(--r);background:#fff;padding:8px;display:flex;align-items:center;gap:9px;box-shadow:var(--sh);}
-  .av{width:32px;height:32px;border-radius:8px;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--copper);border:none;cursor:pointer;}
-  .av img{width:100%;height:100%;object-fit:cover;}
-  .uname{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .utok{font-family:var(--mono);font-size:9px;color:var(--copper-d);}
   .iconbtn{border:none;background:transparent;color:var(--faint);cursor:pointer;padding:5px;border-radius:7px;display:flex;transition:.14s;}
   .iconbtn:hover{color:var(--red);background:var(--redbg);}
   .iconbtn svg{width:14px;height:14px;stroke-width:2;}
 
   .main{min-width:0;display:flex;flex-direction:column;}
-  .topbar{position:sticky;top:0;z-index:20;background:rgba(247,243,234,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line3);padding:0 26px;height:54px;display:flex;align-items:center;gap:14px;}
   .crumb{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;}
   .crumb .sep{color:var(--faint);font-weight:400;}
   .tsp{flex:1;}
@@ -299,7 +327,6 @@
   .jhcell.lx{background:transparent;}
   .jhcell.t{box-shadow:0 0 0 1.5px var(--copper);}
   /* Version compacte dans la carte Ton rythme */
-  .ov-heat .jhcell{max-width:12px;border-radius:2.5px;}
   .jheat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:12px;font-family:var(--mono);font-size:9.5px;color:var(--faint);}
   .jheat-legend .jhcell{width:11px;max-width:11px;height:11px;aspect-ratio:auto;}
   /* Hint D sur le CTA compagnon */
@@ -355,6 +382,62 @@
   /* Un seul compteur de jetons à l'écran : celui de la carte utilisateur */
   #pillTok{display:none;}
   @media(max-width:820px){.dw-steps{grid-template-columns:1fr;}.dw-card::after{display:none;}.dw-loop{padding-bottom:0;}.dw-back{display:none;}.dw-greet{font-size:28px;}.dw-acts{flex-direction:column;align-items:stretch;}}
+  /* ══ Aujourd'hui : ta prochaine heure, pas un tableau de bord ══ */
+  .nh{background:var(--card);border:1px solid var(--line2);border-radius:var(--rl);box-shadow:var(--shm);overflow:hidden;margin-bottom:16px;}
+  .nh-hd{display:flex;align-items:baseline;gap:12px;padding:16px 20px 14px;border-bottom:1px solid var(--line3);background:linear-gradient(140deg,var(--washc),var(--card) 55%);}
+  .nh-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
+  .nh-m{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap;}
+  .nh-l{display:flex;align-items:center;gap:15px;padding:15px 20px;border-bottom:1px solid var(--line3);transition:background .13s;}
+  .nh-l:last-child{border-bottom:none;}
+  .nh-l:hover{background:var(--wash);}
+  .nh-n{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--copper-d);width:22px;flex-shrink:0;text-align:center;}
+  .nh-b{flex:1;min-width:0;}
+  .nh-t{font-size:15px;font-weight:600;color:var(--ink);line-height:1.3;letter-spacing:-.01em;}
+  .nh-w{font-size:12.5px;color:var(--dim);line-height:1.4;margin-top:2px;}
+  .nh-w b{color:var(--soft);font-weight:600;}
+  .nh-min{font-family:var(--mono);font-size:10px;color:var(--faint);white-space:nowrap;flex-shrink:0;}
+  .nh-go{display:inline-flex;align-items:center;gap:7px;border:none;border-radius:9px;padding:9px 16px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;flex-shrink:0;transition:.14s cubic-bezier(.2,.7,.2,1);}
+  .nh-go svg{width:13px;height:13px;transition:transform .15s;}
+  .nh-go:hover svg{transform:translateX(3px);}
+  .nh-go.raconter{background:var(--blue);color:#fff;} .nh-go.raconter:hover{filter:brightness(1.1);}
+  .nh-go.relancer{background:var(--copper);color:#fff;} .nh-go.relancer:hover{background:var(--copper-d);}
+  .nh-go.preparer{background:var(--card);color:var(--copper-d);border:1px solid var(--line2);} .nh-go.preparer:hover{border-color:var(--copper);background:var(--washc);}
+  .nh-go.loading{pointer-events:none;opacity:.75;} .nh-go.loading svg{display:none;}
+  .nh-go.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
+  .nh-go.preparer.loading::after{border-color:var(--line2);border-top-color:var(--copper);}
+  .nh-clear{display:flex;align-items:center;gap:13px;padding:20px;}
+  .nh-clear-i{width:34px;height:34px;border-radius:50%;background:var(--greenbg);color:var(--green-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .nh-clear-i svg{width:17px;height:17px;stroke-width:2.4;}
+  .nh-clear-t{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--ink);}
+  .nh-clear-d{font-size:13px;color:var(--dim);margin-top:2px;}
+  /* Ton état : une ligne, quatre segments cliquables */
+  .st-line{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px;}
+  .st-s{flex:1;display:flex;flex-direction:column;gap:2px;padding:13px 18px;border-right:1px solid var(--line3);cursor:pointer;transition:background .13s;min-width:0;}
+  .st-s:last-child{border-right:none;}
+  .st-s:hover{background:var(--wash);}
+  .st-v{font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .st-v em{font-style:normal;font-size:13px;color:var(--dim);margin-left:3px;}
+  .st-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  /* La boucle : le seul indicateur que personne d'autre ne peut afficher */
+  .lp-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:20px 22px;}
+  .lp-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;}
+  .lp-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+  .lp-pct{margin-left:auto;font-family:var(--serif);font-weight:700;font-size:22px;color:var(--tc,var(--copper));line-height:1;}
+  .lp-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px;}
+  .lp-node{text-align:center;}
+  .lp-nv{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .lp-nk{font-family:var(--mono);font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-top:6px;}
+  .lp-ar{color:var(--line2);font-size:15px;}
+  .lp-bar{height:5px;border-radius:3px;background:var(--line2);overflow:hidden;margin-top:18px;}
+  .lp-bar i{display:block;height:100%;border-radius:3px;background:var(--tc,var(--copper));width:0;transition:width .8s cubic-bezier(.2,.7,.2,1);}
+  .lp-verdict{font-size:13.5px;color:var(--soft);line-height:1.5;margin-top:13px;}
+  .lp-verdict b{color:var(--ink);font-weight:600;}
+  .lp-verdict .fuite{color:var(--red);font-weight:600;}
+  @media(max-width:820px){
+    .st-line{flex-wrap:wrap;} .st-s{min-width:50%;border-bottom:1px solid var(--line3);}
+    .lp-flow{grid-template-columns:1fr;gap:14px;} .lp-ar{display:none;}
+    .nh-l{flex-wrap:wrap;} .nh-go{width:100%;justify-content:center;}
+  }
   /* ══════ PAGE AUJOURD'HUI — vue d'ensemble ══════ */
   /* Ligne d'horizon : date · salut · CTA principal */
   .dash-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;}
@@ -362,83 +445,12 @@
   .dh-l .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   .dh-greet{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink);letter-spacing:-.3px;}
   /* Fil du jour : orientation en une phrase */
-  .dash-fil{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--soft);padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);margin-bottom:20px;}
-  .dash-fil .comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-  .dash-fil .comp-dot.blue{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
-  .dash-fil .comp-dot.copper{background:var(--copper);box-shadow:0 0 0 4px color-mix(in srgb,var(--copper) 16%,transparent);animation:softpulse 2.4s ease-in-out infinite;}
-  .dash-fil .comp-dot.green{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 16%,transparent);}
   /* Vue d'ensemble : 4 cartes */
-  .dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
-  .ov-card{padding:20px;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),border-color .18s,transform .14s;}
-  .ov-card:hover{box-shadow:var(--shm);border-color:var(--copper-l);transform:translateY(-1px);}
-  .ov-head{margin-bottom:12px;}
-  .ov-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:700;}
-  .ov-body{flex:1;display:flex;flex-direction:column;gap:8px;min-height:100px;}
-  .ov-hero{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--ink);line-height:1.15;letter-spacing:-.2px;}
-  .ov-hero .ov-sub{font-family:var(--sans);font-weight:500;font-size:14px;color:var(--dim);letter-spacing:0;}
-  .ov-note{font-size:12.5px;color:var(--dim);}
-  .ov-note b{color:var(--soft);font-weight:600;}
-  .ov-last{font-size:12px;color:var(--faint);margin-top:auto;padding-top:6px;}
-  .ov-last b{color:var(--soft);font-weight:600;}
   /* Mini-barres de distribution pipeline */
-  .ov-bars{display:flex;align-items:flex-end;gap:6px;height:36px;margin:4px 0;}
-  .ov-bar{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;}
-  .ov-bar-fill{width:100%;background:linear-gradient(180deg,var(--copper),var(--copper-l));border-radius:3px 3px 0 0;min-height:3px;transition:height .5s cubic-bezier(.3,.7,.3,1);}
-  .ov-bar-l{font-family:var(--mono);font-size:8.5px;color:var(--faint);margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
   /* Mini heatmap ryhtme */
-  .ov-heat{display:flex;gap:3px;margin-top:4px;}
-  .ov-hcol{display:flex;flex-direction:column;gap:3px;flex:1;}
   /* CTA contour uniforme des cartes vue d'ensemble */
-  .ov-foot{margin-top:16px;padding-top:12px;border-top:1px solid var(--line3);}
-  .ov-cta{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line2);color:var(--copper-d);border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s;height:32px;}
-  .ov-cta:hover{border-color:var(--copper);background:var(--washc);}
-  .ov-cta svg{width:14px;height:14px;transition:transform .15s;}
-  .ov-cta:hover svg{transform:translateX(3px);}
-  .ov-cta.ghost{border-color:transparent;padding-right:8px;}
-  .ov-cta.ghost:hover{border-color:var(--line2);}
   /* Ce qui bouge cette semaine */
-  .news-card{padding:0;overflow:hidden;}
-  .news-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--line3);}
-  .news-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.1px;}
-  .news-empty{padding:24px 20px;text-align:center;font-size:13px;color:var(--dim);}
-  .news-row{display:grid;grid-template-columns:24px minmax(140px,1.2fr) minmax(180px,2fr) auto;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line3);transition:background .13s;cursor:pointer;}
-  .news-row:last-child{border-bottom:none;}
-  .news-row:hover{background:var(--wash);}
-  .news-ic{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
-  .news-ic.k-win{background:var(--green);}
-  .news-ic.k-risk{background:var(--gold);}
-  .news-ic.k-todo{background:var(--blue);}
-  .news-ic.k-sleep{background:var(--faint);}
-  .news-ic.k-move{background:var(--copper);}
-  .news-t2{font-size:14px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .news-d{font-size:12.5px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .news-act{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--copper-d);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:6px;transition:.13s;height:28px;}
-  .news-act:hover{background:var(--washc);}
-  .news-act svg{width:12px;height:12px;transition:transform .15s;}
-  .news-act:hover svg{transform:translateX(2px);}
-  .news-act.loading{pointer-events:none;opacity:.7;}
-  .news-act.loading svg{display:none;}
-  .news-act.loading::after{content:"";width:10px;height:10px;border:2px solid var(--line2);border-top-color:var(--copper);border-radius:50%;animation:spin .6s linear infinite;}
   /* Rendez-vous : parent + sous-catégories */
-  .nav-parent{display:flex;flex-direction:column;}
-  .np-head{display:flex;align-items:center;gap:10px;padding:8px 12px;background:none;border:none;color:var(--soft);font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;border-radius:8px;transition:background .13s,color .13s;width:100%;}
-  .np-head:hover{background:var(--wash);color:var(--ink);}
-  .np-head svg:first-of-type{width:16px;height:16px;flex-shrink:0;color:var(--dim);}
-  .np-head .lb{flex:1;text-align:left;}
-  .np-head .np-chevron{width:13px;height:13px;color:var(--faint);transition:transform .2s;}
-  .nav-parent.open .np-head .np-chevron{transform:rotate(90deg);}
-  .np-sub{display:none;flex-direction:column;gap:1px;margin:2px 0 4px 10px;padding-left:12px;border-left:1.5px solid var(--line3);}
-  .nav-parent.open .np-sub{display:flex;}
-  .np-item{display:flex;align-items:center;gap:8px;padding:7px 12px;background:none;border:none;color:var(--dim);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;border-radius:7px;transition:background .13s,color .13s;text-align:left;width:100%;}
-  .np-item:hover{background:var(--wash);color:var(--soft);}
-  .np-item.on{background:var(--washc);color:var(--copper-d);font-weight:600;}
-  .np-item .np-dot{width:5px;height:5px;border-radius:50%;background:var(--line);flex-shrink:0;transition:background .13s;}
-  .np-item.on .np-dot{background:var(--copper);}
-  .np-item .lb{flex:1;}
-  .np-item .cnt{font-size:10.5px;color:var(--faint);background:none;padding:0;}
-  .np-item.on .cnt{color:var(--copper-d);}
-  .np-head.on{background:var(--washc);color:var(--copper-d);}
-  .np-head.on svg{color:var(--copper);}
   /* Tag "À raconter" (Récits) : bleu = mémoire à capturer */
   .rf-tag.match{color:#fff;background:var(--blue);}
   /* Carte urgente : liseré gauche plus marqué, léger halo */
@@ -489,13 +501,10 @@
   /* Cascade d'entrée (réf Linear) */
   @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
   .view.on .dash-head{animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
-  .view.on .dash-fil{animation:rise .35s cubic-bezier(.2,.7,.2,1) .05s both;}
-  .view.on .ov-card:nth-child(1){animation:rise .35s cubic-bezier(.2,.7,.2,1) .10s both;}
-  .view.on .ov-card:nth-child(2){animation:rise .35s cubic-bezier(.2,.7,.2,1) .14s both;}
-  .view.on .ov-card:nth-child(3){animation:rise .35s cubic-bezier(.2,.7,.2,1) .18s both;}
-  .view.on .ov-card:nth-child(4){animation:rise .35s cubic-bezier(.2,.7,.2,1) .22s both;}
-  .view.on .news-card{animation:rise .35s cubic-bezier(.2,.7,.2,1) .28s both;}
-  @media(max-width:900px){.dash-grid{grid-template-columns:1fr;}.dash-head{flex-direction:column;align-items:flex-start;}.news-row{grid-template-columns:22px 1fr auto;}.news-d{display:none;}}
+  .view.on #nextHour{animation:rise .4s cubic-bezier(.2,.7,.2,1) .06s both;}
+  .view.on #stateLine{animation:rise .4s cubic-bezier(.2,.7,.2,1) .12s both;}
+  .view.on #loopCard{animation:rise .4s cubic-bezier(.2,.7,.2,1) .18s both;}
+  @media(max-width:900px){.dash-head{flex-direction:column;align-items:flex-start;gap:12px;}}
   /* ══ Vue Affaires par priorité d'action ══ */
   .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
   .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12.5px;font-weight:600;color:var(--dim);padding:7px 14px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
@@ -975,11 +984,6 @@
   .sl-d{font-size:12.5px;color:var(--dim);margin-top:7px;line-height:1.5;max-width:280px;}
   .sl-d b{color:var(--copper-d);font-weight:600;}
   /* Pouls de la semaine dans la sidebar */
-  .side-pouls{margin:0 2px 8px;}
-  .sp-in{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.55);border:1px solid #E3D8C2;border-radius:9px;padding:9px 11px;}
-  .sp-in svg{width:16px;height:16px;color:var(--copper);flex-shrink:0;}
-  .sp-in b{display:block;font-size:12px;color:var(--ink);font-weight:700;line-height:1.15;}
-  .sp-in span{display:block;font-size:10px;color:var(--dim);}
   /* Surtitre éditorial de page */
   .eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);margin-bottom:7px;}
   .eyebrow::before{content:"";width:16px;height:2px;background:var(--copper);border-radius:2px;}
@@ -1899,12 +1903,7 @@
   }
   @media(max-width:960px){
     .shell{grid-template-columns:1fr;}
-    .side{position:sticky;height:auto;flex-direction:row;align-items:center;gap:6px;padding:8px 12px;overflow-x:auto;}
-    .side .logo{padding:0;} .side .logo svg{height:24px;} .ngroup{display:none;} .sp{display:none;}
     .newbtn{white-space:nowrap;margin:0;padding:8px 12px;} .newbtn span{display:none;}
-    .nav{flex-direction:row;gap:2px;} .nav button{padding:7px 9px;white-space:nowrap;} .nav button span.lb{display:none;} .nav .cnt{display:none;} .nav button.on::before{display:none;}
-    .ucard{padding:2px;border:none;background:none;box-shadow:none;} .ucard .uinfo{display:none;}
-    .topbar{padding:0 14px;} .search{min-width:0;flex:1;} .search span.txt{display:none;} .crumb{display:none;}
     .page{padding:16px 14px;}
     .stats{grid-template-columns:1fr 1fr;} .g2{grid-template-columns:1fr;}
     .board{grid-template-columns:repeat(6,minmax(150px,1fr));font-size:12px;}
@@ -1916,45 +1915,66 @@
 </head>
 <body>
 <div class="shell">
-<aside class="side">
-  <a class="logo" data-go="dash" aria-label="Faro"><svg viewBox="14 22 272 68" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="translate(10,10) scale(0.76)"><circle cx="38" cy="50" r="5" fill="#C96A2E"></circle><path d="M56.02 37.38 A 22 22 0 0 1 50.62 68.02" stroke="#C96A2E" stroke-width="5" stroke-linecap="round"></path><path d="M62.43 20.89 A 38 38 0 0 1 67.11 74.43" stroke="#C96A2E" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"></path></g><text x="120" y="68" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
-  <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Nouveau brief</span></button>
-  <div class="ngroup">Pilotage</div>
-  <nav class="nav">
-    <button class="on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Aujourd'hui</span></button>
-  </nav>
-  <div class="ngroup">Activité</div>
-  <nav class="nav">
-    <div class="nav-parent" data-parent="rdv">
-      <button class="np-head" data-toggle="rdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span class="lb">Rendez-vous</span><svg class="np-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
-      <div class="np-sub">
-        <button data-go="prep" class="np-item"><span class="np-dot"></span><span class="lb">Brief</span><span class="cnt" id="cntPrep">0</span></button>
-        <button data-go="match" class="np-item"><span class="np-dot"></span><span class="lb">Récits</span><span class="cnt" id="cntMatch">0</span></button>
-      </div>
+<header class="hdr">
+  <div class="hdr-1">
+    <a class="hdr-logo" data-go="dash" aria-label="Faro"><svg viewBox="100 22 190 68" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="120" y="72" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" font-size="46" letter-spacing="-1.8" fill="#C96A2E">faro</text></svg></a>
+    <nav class="hdr-nav">
+      <button class="hn on" data-go="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lb">Aujourd'hui</span></button>
+      <button class="hn" data-go="prep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span class="lb">Rendez-vous</span><span class="cnt" id="cntPrep">0</span></button>
+      <button class="hn" data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Affaires</span><span class="cnt" id="cntDeals">0</span></button>
+      <button class="hn" data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg><span class="lb">Mémoire</span><span class="cnt" id="cntEnt">0</span></button>
+      <button class="hn" data-soon="chasse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span class="lb">Chasse</span><span class="soon"></span></button>
+      <button class="hn" data-go="offre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><span class="lb">Configuration</span><span class="cnt" id="offDot" style="display:none;color:var(--copper-d);border-color:var(--copper-l);background:var(--washc);">!</span></button>
+    </nav>
+    <div class="hdr-r">
+      <button class="search" id="palOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span class="txt">Rechercher…</span><span class="k">⌘K</span></button>
+      <span class="hdr-tok" id="pillTok">— jetons</span>
+      <button class="newbtn" id="newBrief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Nouveau brief</span></button>
+      <button class="hdr-av" id="uav" title="Ton compte">F</button>
+      <button class="iconbtn" id="out" aria-label="Se déconnecter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></button>
     </div>
-    <button data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Affaires</span><span class="cnt" id="cntDeals">0</span></button>
-  </nav>
-  <div class="ngroup">Mémoire</div>
-  <nav class="nav">
-    <button data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h1M9 13h1M14 9h1M14 13h1M11 21v-4h2v4"/></svg><span class="lb">Tes clients</span><span class="cnt" id="cntEnt">0</span></button>
-    <button data-go="toi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span class="lb">Ce que Faro sait de toi</span></button>
-  </nav>
-  <div class="ngroup">Configuration</div>
-  <nav class="nav">
-    <button data-go="offre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6.9L12 16.8 6.4 20l1.1-6.9L3 8.9 9 8z"/></svg><span class="lb">Mon offre</span><span class="cnt" id="offDot" style="display:none">!</span></button>
-    <button data-go="reglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><span class="lb">Réglages</span></button>
-  </nav>
-  <div class="sp"></div>
-  <div class="side-pouls" id="sidePouls"></div>
-  <div class="ucard"><button class="av" id="uav">F</button><div class="uinfo" style="min-width:0;flex:1;"><div class="uname" id="uname">…</div><div class="utok" id="utok">— jetons</div></div><button class="iconbtn" id="out" aria-label="Se déconnecter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></button></div>
-</aside>
-<main class="main">
-  <div class="topbar">
-    <span class="crumb" id="crumb">Aujourd'hui</span>
-    <span class="tsp"></span>
-    <button class="search" id="palOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span class="txt">Rechercher…</span><span class="k">⌘K</span></button>
-    <span class="pill" id="pillTok">— jetons</span>
   </div>
+  <div class="hdr-2"><div class="hdr-2-in">
+    <div class="sub-g on" data-for="dash">
+      <button class="sn on" data-go="dash">Ta journée</button>
+      <button class="sn" data-soon="semaine">Ta semaine<span class="soon"></span></button>
+      <button class="sn" data-go="toi">Ce que Faro sait de toi</button>
+    </div>
+    <div class="sub-g" data-for="rdv">
+      <button class="sn" data-go="prep">Briefs<span class="cnt" id="cntPrep2">0</span></button>
+      <button class="sn" data-go="match">Récits<span class="cnt" id="cntMatch">0</span></button>
+      <span class="sn-sep"></span>
+      <button class="sn" data-soon="modeles">Modèles de brief<span class="soon"></span></button>
+      <button class="sn" data-soon="simulateur">Simulateur de rendez-vous<span class="soon"></span></button>
+      <button class="sn" data-soon="contrebrief">Contre-brief<span class="soon"></span></button>
+    </div>
+    <div class="sub-g" data-for="affaires">
+      <button class="sn" data-go="affaires">Pipeline</button>
+      <span class="sn-sep"></span>
+      <button class="sn" data-soon="prevision">Prévisions<span class="soon"></span></button>
+      <button class="sn" data-soon="cycle">Durée de cycle<span class="soon"></span></button>
+    </div>
+    <div class="sub-g" data-for="memoire">
+      <button class="sn" data-go="entreprises">Tes clients<span class="cnt" id="cntEnt2">0</span></button>
+      <button class="sn" data-go="toi">Ce que Faro sait de toi</button>
+      <span class="sn-sep"></span>
+      <button class="sn" data-soon="objections">Tes objections<span class="soon"></span></button>
+      <button class="sn" data-soon="secteurs">Signaux sectoriels<span class="soon"></span></button>
+    </div>
+    <div class="sub-g" data-for="chasse">
+      <button class="sn" data-soon="chasse">Comptes à surveiller<span class="soon"></span></button>
+      <button class="sn" data-soon="signaux">Signaux du marché<span class="soon"></span></button>
+    </div>
+    <div class="sub-g" data-for="config">
+      <button class="sn" data-go="offre">Mon offre</button>
+      <button class="sn" data-go="reglages">Réglages</button>
+      <span class="sn-sep"></span>
+      <button class="sn" data-soon="connexions">Connexions<span class="soon"></span></button>
+      <button class="sn" data-soon="equipe">Ton équipe<span class="soon"></span></button>
+    </div>
+  </div></div>
+</header>
+<main class="main">
   <div class="page">
 
   <section class="view on" id="v-dash">
@@ -1965,38 +1985,14 @@
         <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
       </div>
 
-      <!-- Fil du jour : une phrase, orientation -->
-      <div class="dash-fil" id="dashFil"><div class="skel" style="width:60%;height:14px;"></div></div>
+      <!-- Ta prochaine heure : ce que Faro te propose de faire maintenant -->
+      <div id="nextHour"></div>
 
-      <!-- Vue d'ensemble : 4 cartes, une par domaine -->
-      <div class="dash-grid">
-        <div class="card ov-card" data-ov="affaires">
-          <div class="ov-head"><span class="ov-lbl">Ton pipeline</span></div>
-          <div class="ov-body" id="ovPipeline"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
-          <div class="ov-foot"><button class="ov-cta" data-go="affaires">Voir mes affaires<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-        </div>
-        <div class="card ov-card" data-ov="rdv">
-          <div class="ov-head"><span class="ov-lbl">Ton terrain</span></div>
-          <div class="ov-body" id="ovTerrain"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
-          <div class="ov-foot"><button class="ov-cta" data-go="match">Voir mes récits<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-        </div>
-        <div class="card ov-card" data-ov="entreprises">
-          <div class="ov-head"><span class="ov-lbl">Ta mémoire</span></div>
-          <div class="ov-body" id="ovMemoire"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
-          <div class="ov-foot"><button class="ov-cta" data-go="entreprises">Voir ma mémoire client<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-        </div>
-        <div class="card ov-card" data-ov="toi">
-          <div class="ov-head"><span class="ov-lbl">Ton rythme</span></div>
-          <div class="ov-body" id="ovRythme"><div class="skel" style="width:50%;height:22px;"></div><div class="skel" style="width:80%;height:12px;margin-top:10px;"></div></div>
-          <div class="ov-foot"><button class="ov-cta" data-go="toi">Voir mon profil<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-        </div>
-      </div>
+      <!-- Ton état : une ligne, quatre segments -->
+      <div id="stateLine"></div>
 
-      <!-- Ce qui bouge cette semaine : fil d'actualité -->
-      <div class="card news-card">
-        <div class="news-head"><span class="news-t">Ce qui bouge cette semaine</span><button class="ov-cta ghost" id="newsAll">Tout voir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-        <div id="newsList"></div>
-      </div>
+      <!-- La boucle : prépares-tu plus que tu ne racontes ? -->
+      <div id="loopCard"></div>
     </div>
   </section>
 
@@ -2238,6 +2234,8 @@
       </aside>
     </div>
   </section>
+
+  <section class="view" id="v-soon"><div id="soonW"></div></section>
 
   <section class="view" id="v-reglages">
     <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Réglages</h1><div class="sub">Ton compte, tes jetons, tes données. Tout ce qui fait tourner Faro pour toi.</div></div></div>
@@ -2541,6 +2539,7 @@ const esc=s=>(s||'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>
 const trunc=(s,n)=>s&&s.length>n?s.slice(0,n-1)+'…':(s||'');
 const days=d=>Math.floor((Date.now()-new Date(d).getTime())/864e5);
 const rel=d=>{const n=days(d);return n<=0?"aujourd'hui":n===1?'hier':n<7?`il y a ${n} j`:new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});};
+const relShort=d=>{const n=days(d);return n<=0?"aujourd'hui":n===1?'hier':`il y a ${n} j`;};
 const favicon=site=>site?`https://www.google.com/s2/favicons?domain=${encodeURIComponent(site.replace(/^https?:\/\//,'').split('/')[0])}&sz=64`:null;
 function logoHtml(name,logo,site,cls){
   const inner=logo?`<img src="${esc(logo)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='${ini(name)}';">`
@@ -2563,13 +2562,54 @@ const briefTempChip=b=>{
 };
 
 /* ═══ Navigation ═══ */
+// Chaque domaine et ce qu'il contient, y compris ce qui n'existe pas encore
+const NAVGROUP={dash:'dash',toi:'dash',prep:'rdv',match:'rdv',rdv:'rdv',affaires:'affaires',fiche:'memoire',entreprises:'memoire',offre:'config',reglages:'config',nouveau:'rdv',ctx:'rdv',soon:'dash'};
+const NAVPRIM={dash:'dash',rdv:'prep',affaires:'affaires',memoire:'entreprises',chasse:'chasse',config:'offre'};
+// Ce que chaque page à venir fera, dit honnêtement
+const SOON={
+  chasse:{g:'chasse',t:'La chasse',d:"Aujourd'hui tu prépares les rendez-vous que tu as déjà. Demain, Faro te dira qui démarcher avant tes concurrents.",l:["Les entreprises de ta cible qui viennent de lever, de recruter ou de changer de dirigeant.","Un score de timing : trop tôt, maintenant, trop tard.","Un brief prêt à générer sur chaque compte détecté."],w:"Après la bêta, si les premiers utilisateurs la réclament."},
+  signaux:{g:'chasse',t:'Les signaux du marché',d:"Les mouvements de ton secteur, filtrés pour toi, avec l'angle commercial qui va avec.",l:["Recrutements, levées, annonces légales, marques déposées.","Filtrés sur ta cible type, pas sur toute la France.","Chaque signal devient une raison d'appeler."],w:"Après le branchement des sources publiques."},
+  semaine:{g:'dash',t:'Ta semaine',d:"Aujourd'hui te dit quoi faire maintenant. Ta semaine te dira où tu vas.",l:["Ton rythme de préparation et de récits, semaine après semaine.","Ce que tu as gagné, perdu, et pourquoi.","Le taux de bouclage de ta boucle dans le temps."],w:"Quand tu auras assez de rendez-vous pour que la courbe dise quelque chose."},
+  modeles:{g:'rdv',t:'Tes modèles de brief',d:"Tes rendez-vous se ressemblent souvent. Faro apprendra tes structures préférées.",l:["Enregistrer une trame qui marche pour un type d'interlocuteur.","Réutiliser tes meilleures ouvertures et tes ripostes qui débloquent.","Partager une trame si tu travailles à plusieurs."],w:"Après la bêta."},
+  simulateur:{g:'rdv',t:'Le simulateur de rendez-vous',d:"Faro joue ton prospect et te fait répéter avant d'y aller pour de vrai.",l:["Il objecte comme un DAF, un DSI ou un acheteur.","Il te dit ce que tu as esquivé et ce que tu n'as pas obtenu.","Tu t'entraînes trois minutes, tu entres armé."],w:"C'est l'idée la plus ambitieuse de la liste. Elle attend que le socle soit solide."},
+  contrebrief:{g:'rdv',t:'Le contre-brief',d:"Le rendez-vous vu depuis le siège de l'acheteur. Ce qu'il prépare contre toi.",l:["Ce qu'il va comparer, et à qui.","Les questions qu'il te posera pour te faire baisser ton prix.","Ce qui le ferait dire non, avant qu'il le dise."],w:"Après la bêta."},
+  prevision:{g:'affaires',t:'Les prévisions',d:"Pas une probabilité de closing inventée. Ce que ton propre historique dit de tes affaires en cours.",l:["Ce que tu as signé par étape, en vrai, sur tes rendez-vous.","Le montant réaliste du trimestre selon ton taux réel.","Aucun pourcentage sorti d'un modèle : uniquement tes chiffres."],w:"Quand tu auras assez d'affaires closes pour que la moyenne soit honnête."},
+  cycle:{g:'affaires',t:'La durée de ton cycle',d:"Combien de temps tes affaires passent à chaque étape, et où elles s'enlisent.",l:["Le temps moyen entre le premier rendez-vous et la signature.","L'étape où tes affaires meurent le plus souvent.","Une alerte quand une affaire dépasse ta propre moyenne."],w:"Quand tu auras une dizaine d'affaires closes."},
+  objections:{g:'memoire',t:'Tes objections',d:"Toutes les objections que tu as rencontrées, ce que tu as répondu, et ce qui a marché.",l:["Classées par interlocuteur et par secteur.","Avec la riposte qui a débloqué, tirée de tes récits.","Faro s'en servira pour armer tes prochains briefs."],w:"Elle se remplit toute seule à chaque récit. Elle s'ouvrira quand il y aura de quoi la lire."},
+  secteurs:{g:'memoire',t:'Les signaux sectoriels',d:"Ce que Faro sait du secteur de tes clients, pas seulement de chaque entreprise.",l:["Les objections récurrentes d'un secteur donné.","Ce qui bouge chez leurs concurrents.","L'avance américaine sur le sujet, quand elle existe."],w:"Après le branchement des sources publiques."},
+  connexions:{g:'config',t:'Tes connexions',d:"Les sources que Faro interroge pour armer tes briefs.",l:["Offres d'emploi, annonces légales, site web du prospect.","Ton agenda, pour te rappeler de préparer avant d'y aller.","Ton CRM, si tu en as un, en lecture seule."],w:"Les premières sources arrivent en priorité, elles ne coûtent rien."},
+  equipe:{g:'config',t:'Ton équipe',d:"Faro est pensé pour un commercial seul. Il pourra en accueillir plusieurs.",l:["Partager une mémoire client entre commerciaux.","Voir ce qui marche chez les autres, sans surveillance.","Un compte par personne, une mémoire commune."],w:"Bien plus tard, et seulement si des équipes le demandent."}
+};
+function openSoon(k){
+  const it=SOON[k]; if(!it)return;
+  $('soonW').innerHTML=`<div class="soon-p">
+    <span class="soon-b">Bientôt</span>
+    <div class="soon-t">${esc(it.t)}</div>
+    <div class="soon-d">${esc(it.d)}</div>
+    ${it.l.map(x=>`<div class="soon-l">${esc(x)}</div>`).join('')}
+    <div class="soon-f">${esc(it.w)}</div>
+  </div>`;
+  document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-soon'));
+  navSet(it.g,k);
+  $('crumb')&&($('crumb').textContent=it.t);
+  window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+}
+// Allume le bon domaine en haut et la bonne entrée en dessous
+function navSet(group,activeKey){
+  document.querySelectorAll('.hdr-nav .hn').forEach(b=>{
+    const g=b.dataset.go?NAVGROUP[b.dataset.go]:(b.dataset.soon?(SOON[b.dataset.soon]||{}).g:null);
+    b.classList.toggle('on',g===group);
+  });
+  document.querySelectorAll('.sub-g').forEach(x=>x.classList.toggle('on',x.dataset.for===group));
+  document.querySelectorAll('.hdr-2 .sn').forEach(b=>{
+    b.classList.toggle('on',(b.dataset.go&&b.dataset.go===activeKey)||(b.dataset.soon&&b.dataset.soon===activeKey));
+  });
+}
 const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Récits',affaires:'Affaires',entreprises:'Tes clients',toi:'Ce que Faro sait de toi',fiche:'Dossier client',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
-  document.querySelectorAll('.side .nav button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===v||(v==='fiche'&&b.dataset.go==='entreprises')||((v==='nouveau'||v==='ctx')&&false)));
-  // Le parent Rendez-vous n'est allumé QUE si on est sur une de ses sous-catégories
-  document.querySelectorAll('.side .nav [data-toggle="rdv"]').forEach(b=>b.classList.toggle('on', v==='prep'||v==='match'));
-  $('crumb').textContent=CRUMBS[v]||'';
+  navSet(NAVGROUP[v]||'dash',v==='fiche'?'entreprises':v);
+  const cr=$('crumb'); if(cr)cr.textContent=CRUMBS[v]||'';
   if(v==='affaires'){
     const ae=$('affExport');if(ae&&!ae.dataset.wired){ae.dataset.wired='1';ae.addEventListener('click',()=>exportAffCsv());}
     const vt=$('affViewTabs');if(vt&&!vt.dataset.wired){vt.dataset.wired='1';vt.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{affView=b.dataset.view;vt.querySelectorAll('.avt').forEach(x=>x.classList.toggle('on',x===b));$('affAction').style.display=affView==='action'?'':'none';$('affBoardWrap').style.display=affView==='board'?'':'none';renderAll();}));}
@@ -2583,15 +2623,8 @@ function go(v){
     rdvView=(v==='match')?'match':'prep';
     document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-rdv'));
     // Le parent Rendez-vous reste actif quand une sous-catégorie l'est
-    document.querySelectorAll('.side .nav button[data-go]').forEach(b=>{
-      const g=b.dataset.go;
-      b.classList.toggle('on', g===v );
-    });
-    // Le parent Rendez-vous (bouton data-toggle) reste allumé quand une sous-catégorie l'est
-    document.querySelectorAll('.side .nav [data-toggle="rdv"]').forEach(b=>b.classList.toggle('on', v==='prep'||v==='match'));
-    const np=document.querySelector('.nav-parent[data-parent="rdv"]');
-    if(np)np.classList.add('open');
-    $('crumb').textContent=CRUMBS[rdvView==='prep'?'prep':'match']||'';
+    navSet('rdv',v);
+    const cr2=$('crumb'); if(cr2)cr2.textContent=CRUMBS[rdvView==='prep'?'prep':'match']||'';
     renderRdvList();
     return;
   }
@@ -2601,11 +2634,8 @@ function go(v){
   if(v==='nouveau') setTimeout(()=>$('qEnt').focus(),150);
 }
 document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+document.querySelectorAll('[data-soon]').forEach(el=>el.addEventListener('click',()=>openSoon(el.dataset.soon)));
 // Parent "Rendez-vous" : le clic ne fait QUE déplier/replier. L'état "on" est géré par go() selon la vue active.
-document.querySelectorAll('[data-toggle]').forEach(el=>el.addEventListener('click',e=>{
-  e.preventDefault();
-  const p=el.closest('.nav-parent'); if(p)p.classList.toggle('open');
-}));
 // Raccourci : N pour préparer un rendez-vous, partout (hors saisie)
 document.addEventListener('keydown',e=>{
   if(e.key!=='n'&&e.key!=='N')return;
@@ -2644,7 +2674,7 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   const de=$('dashEyebrow');
   if(de){const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});de.textContent=today.charAt(0).toUpperCase()+today.slice(1);}
   const gr=$('greet'); if(gr)gr.textContent=pre?`${h<18?'Bonjour':'Bonsoir'} ${pre}.`:`${h<18?'Bonjour':'Bonsoir'}.`;
-  const un=$('uname'); if(un)un.textContent=name||u.email;
+  const av0=$('uav'); if(av0)av0.title=(name||u.email||'')+' · ton compte';
   const sm=$('sMail2'); if(sm)sm.value=u.email||'';
   const sn=$('sName'); if(sn)sn.value=set.full_name||meta||'';
   const av=$('uav');
@@ -2664,27 +2694,21 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   deals=dr.data||[]; briefs=br.data||[];
   renderAll();
 })();
-function tok(n){if(typeof n!=='number')return;const s=n+(n>1?' jetons':' jeton');$('pillTok').textContent=s;$('utok').textContent=s;$('left').textContent=n;$('uL').textContent=n;}
+function tok(n){
+  if(typeof n!=='number')return;
+  const t=n+(n>1?' jetons':' jeton');
+  const set2=(id,v)=>{const e=$(id);if(e)e.textContent=v;};
+  set2('pillTok',t); set2('left',n); set2('uL',n);
+}
 function renderAll(){
   const setCnt=(el,n)=>{if(!el)return;el.textContent=n;el.style.display=n?'':'none';};
+  const setCnt2=(a,b,n)=>{setCnt($(a),n);setCnt($(b),n);};
   setCnt($('cntDeals'),deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape)).length);
-  setCnt($('cntEnt'),deals.length);
+  setCnt2('cntEnt','cntEnt2',deals.length);
   const nd=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer').length;
   const nPrep=briefs.filter(b=>!b.debrief).length;
-  const cp=$('cntPrep'); if(cp){setCnt(cp,nPrep); cp.classList.toggle('hot',nd>0);}
+  setCnt2('cntPrep','cntPrep2',nPrep);
   const cm=$('cntMatch'); if(cm){setCnt(cm,briefs.length); cm.classList.toggle('hot',false);}
-  // Pouls de la semaine dans la sidebar
-  const sp=$('sidePouls');
-  if(sp){
-    const ws=weekStats();
-    if(ws.streak>=2){
-      sp.innerHTML=`<div class="sp-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg><div><b>${ws.streak} débriefs</b><span>d'affilée, tiens la série</span></div></div>`;
-      sp.style.display='';
-    } else if(ws.briefs>0){
-      sp.innerHTML=`<div class="sp-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><div><b>${ws.briefs} brief${ws.briefs>1?'s':''}</b><span>cette semaine</span></div></div>`;
-      sp.style.display='';
-    } else sp.style.display='none';
-  }
   const uTel=$('uT'); if(uTel)uTel.textContent=briefs.length;
   const bcOld=$('boardClosed'); if(bcOld)bcOld.remove();
   dash(); boardRender($('board'),false); renderActionView(); renderPilot(); renderPipeFilters(); entList();
@@ -2722,210 +2746,152 @@ function dealEntered(d){
   if(['gagne','perdu'].includes(d.etape))return true;
   return dealBriefs(d).some(b=>b.debrief);
 }
-function coldGlobal(cold){return cold&&cold.some(d=>days(d.updated_at)>=10);}
 function dash(){
-  const actifs=deals.filter(d=>!['gagne','perdu'].includes(d.etape));
+  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
   const aDeb=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer');
-  const aRel=deals.filter(d=>!['gagne','perdu'].includes(d.etape)&&d.prochaine_action);
-  const cold=actifs.filter(d=>days(d.updated_at)>=7).sort((a,b)=>days(b.updated_at)-days(a.updated_at));
-  const wins=deals.filter(d=>d.etape==='gagne');
-  const losts=deals.filter(d=>d.etape==='perdu');
-  const debriefed=briefs.filter(b=>!!b.debrief);
+  const dashWrapIds=['nextHour','stateLine','loopCard'];
 
-  const dashTop=document.querySelector('.dash-fil');
-  const dashGrid=document.querySelector('.dash-grid');
-  const dashNews=document.querySelector('.news-card');
-
-  // ─── Cas vide : compte vierge → écran de bienvenue ───
+  // ─── Compte vierge : l'écran de bienvenue prend toute la place ───
   if(!briefs.length && !deals.length){
-    if(dashTop)dashTop.style.display='none';
-    if(dashGrid)dashGrid.style.display='none';
-    if(dashNews)dashNews.style.display='none';
+    dashWrapIds.forEach(id=>{const e=$(id);if(e)e.style.display='none';});
+    const dh=document.querySelector('#v-dash .dash-head'); if(dh)dh.style.display='none';
     let welcome=document.getElementById('dashWelcome');
-    if(!welcome){
-      welcome=document.createElement('div');
-      welcome.id='dashWelcome'; welcome.className='dash-welcome';
-      const ck=document.querySelector('#v-dash .cockpit'); if(ck)ck.appendChild(welcome);
-    }
-    welcome.style.display='';
-    const dwHead=document.querySelector('#v-dash .dash-head'); if(dwHead)dwHead.style.display='none';
-    const jrs=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
-    const mss=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-    const nw=new Date();
-    const hh=nw.getHours();
-    const salut=hh<12?'Bonjour':hh<18?'Bon après-midi':'Bonsoir';
-    const pre=dashPrenom();
-    welcome.innerHTML=`
-      <div class="dw-date">${jrs[nw.getDay()]} ${nw.getDate()} ${mss[nw.getMonth()]}</div>
-      <div class="dw-greet">${salut}${pre?' '+esc(pre):''}.</div>
-      <div class="dw-lede">Ton espace est vierge. Un rendez-vous suffit à le remplir.</div>
-      <div class="dw-acts">
-        <button class="dw-go" id="dwGo">Préparer mon premier rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><kbd class="kbd-hint">N</kbd></button>
-        <button class="dw-alt" id="dwDemo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/></svg>Voir un brief exemple</button>
-      </div>
-      <div class="dw-rule"></div>
-      <div class="dw-k">Ce qui rend Faro différent</div>
-      <div class="dw-loop">
-        <div class="dw-steps">
-          <div class="dw-card"><div class="n">01</div><div class="t">Le brief</div><div class="d">Ce que tu prévois de dire, armé de données réelles sur son entreprise.</div></div>
-          <div class="dw-card"><div class="n">02</div><div class="t">Le carnet</div><div class="d">Ce qui se passe vraiment. Tu notes en vrac, Faro observe en silence.</div></div>
-          <div class="dw-card"><div class="n">03</div><div class="t">Le récit</div><div class="d">Tu racontes, Faro compose l'écart entre le prévu et le vécu.</div></div>
-        </div>
-        <div class="dw-back"><svg viewBox="0 0 600 44" preserveAspectRatio="none" aria-hidden="true"><path d="M584 2 L584 30 Q584 38 574 38 L26 38 Q16 38 16 30 L16 6"/><path d="M11 13 L16 4 L21 13" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="dw-kick">Chaque récit arme le brief suivant. <b>Aucun CRM ne part du brief, c'est pour ça qu'aucun n'apprend.</b></div>`;
-    const dwg=welcome.querySelector('#dwGo');
-    dwg.addEventListener('click',()=>{
-      if(dwg.classList.contains('loading'))return;
-      dwg.classList.add('loading');
-      setTimeout(()=>{dwg.classList.remove('loading');ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');},250);
-    });
-    welcome.querySelector('#dwDemo').addEventListener('click',openDemoBrief);
-    fillDashHead();
+    if(!welcome){welcome=document.createElement('div');welcome.id='dashWelcome';welcome.className='dash-welcome';const ck=document.querySelector('#v-dash .cockpit');if(ck)ck.appendChild(welcome);}
+    renderWelcome(welcome);
     return;
   }
   const dw=document.getElementById('dashWelcome'); if(dw)dw.style.display='none';
   const dwHead2=document.querySelector('#v-dash .dash-head'); if(dwHead2)dwHead2.style.display='';
-  if(dashTop)dashTop.style.display='';
-  if(dashGrid)dashGrid.style.display='';
-  if(dashNews)dashNews.style.display='';
-
+  dashWrapIds.forEach(id=>{const e=$(id);if(e)e.style.display='';});
   fillDashHead();
 
-  // ─── Fil du jour : Faro parle en une phrase ───
-  const ws=weekStats();
-  const hotDeals=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape)&&['chaud','close'].includes(dealTemp(d)));
-  const bits=[];
-  if(aDeb.length)bits.push(`${aDeb.length} rendez-vous à raconter`);
-  if(hotDeals.length)bits.push(`${hotDeals.length} affaire${hotDeals.length>1?'s':''} chaude${hotDeals.length>1?'s':''}`);
-  if(coldGlobal(cold))bits.push('une affaire qui dort');
-  let fil, dot='green';
-  if(bits.length){
-    const liste=bits.length>1?bits.slice(0,-1).join(', ')+' et '+bits.slice(-1):bits[0];
-    const dense=(aDeb.length+hotDeals.length)>=3;
-    dot=aDeb.length?'blue':hotDeals.length?'copper':'green';
-    fil=`${dense?'Journée dense. ':''}${liste.charAt(0).toUpperCase()+liste.slice(1)}.`;
-  } else {
-    fil=ws.streak>1?`Tout est à jour. Série de ${ws.streak} débriefs, tiens-la.`:'Tout est à jour. Prépare la suite quand tu veux.';
+  // ─── Ta prochaine heure : Faro compose une séquence, pas une liste ───
+  const acts=[];
+  aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,3).forEach(b=>{
+    const n=days(b.created_at);
+    acts.push({min:2,cls:'raconter',lbl:'Raconter',
+      t:`Raconte ${trunc(b.entreprise||'ce rendez-vous',26)}`,
+      w:n<=0?"Vu aujourd'hui. C'est maintenant que tu te souviens de tout."
+        :n>=5?`Vu il y a <b>${n} jours</b>. Chaque jour qui passe efface un détail.`
+        :`Vu il y a <b>${n} jours</b>. La mémoire s'efface vite.`,
+      fn:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},220);}});
+  });
+  const froids=actifs.filter(d=>{const t=dealTemp(d);return (t==='chaud'||t==='close')&&days(d.updated_at)>=7;})
+    .sort((a,b)=>days(b.updated_at)-days(a.updated_at));
+  froids.slice(0,2).forEach(d=>{
+    const n=days(d.updated_at);
+    acts.push({min:5,cls:'relancer',lbl:'Relancer',
+      t:`Relance ${trunc(d.entreprise,26)}`,
+      w:`Chaude, mais silencieuse depuis <b>${n} jours</b>. Elle refroidit.`,
+      fn:()=>{const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');}else openFiche(d);}});
+  });
+  if(acts.length<3){
+    const dorm=actifs.filter(d=>days(d.updated_at)>=14&&!froids.includes(d)).sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
+    if(dorm)acts.push({min:5,cls:'relancer',lbl:'Réveiller',t:`Réveille ${trunc(dorm.entreprise,26)}`,
+      w:`En <b>${stg(dorm.etape).l.toLowerCase()}</b> depuis <b>${days(dorm.updated_at)} jours</b> sans un mouvement.`,
+      fn:()=>openFiche(dorm)});
   }
-  const fEl=$('dashFil');
-  if(fEl)fEl.innerHTML=`<span class="comp-dot ${dot}"></span><span>${esc(fil)}</span>`;
-
-  // ─── Vue d'ensemble : 4 cartes ───
-  const pipeVal=deals.filter(dealEntered).filter(d=>!['gagne','perdu'].includes(d.etape)).reduce((a,d)=>a+dealVal(d),0);
-  const activesN=actifs.filter(dealEntered).length;
-  const STG={decouverte:'déc',contact:'con',rdv:'rdv',nego:'nég',closing:'clo'};
-  const dist={decouverte:0,contact:0,rdv:0,nego:0,closing:0};
-  actifs.filter(dealEntered).forEach(d=>{if(dist[d.etape]!==undefined)dist[d.etape]++;});
-  const maxD=Math.max(1,...Object.values(dist));
-  const distHtml=Object.entries(STG).map(([k,l])=>`<div class="ov-bar"><span class="ov-bar-fill" style="height:${Math.round((dist[k]/maxD)*100)}%"></span><span class="ov-bar-l">${l}</span></div>`).join('');
-  const ovP=$('ovPipeline');
-  if(ovP)ovP.innerHTML=`
-    <div class="ov-hero">${activesN} affaire${activesN>1?'s':''}${pipeVal>0?` <span class="ov-sub">· ${eur(pipeVal)}</span>`:''}</div>
-    <div class="ov-bars">${distHtml}</div>
-    <div class="ov-note">${hotDeals.length?`<b>${hotDeals.length} chaude${hotDeals.length>1?'s':''}</b>`:'Aucune chaude'}${coldGlobal(cold)?' · 1 qui dort':''}</div>`;
-
-  const lastDeb=debriefed.slice().sort((a,b)=>new Date(b.debrief.created_at||b.created_at)-new Date(a.debrief.created_at||a.created_at))[0];
-  const TL={close:'closé',chaud:'chaud',tiede:'tiède',mort:'difficile'};
-  const ovT=$('ovTerrain');
-  if(ovT)ovT.innerHTML=`
-    <div class="ov-hero">${aDeb.length} à raconter</div>
-    <div class="ov-note">${ws.debriefs} racontés cette semaine</div>
-    ${lastDeb?`<div class="ov-last">Dernier : <b>${esc(trunc(lastDeb.entreprise,22))}</b>, ${TL[lastDeb.debrief.temperature]||'—'}, il y a ${days(lastDeb.debrief.created_at||lastDeb.created_at)} j</div>`:'<div class="ov-last">Aucun rendez-vous raconté encore.</div>'}`;
-
-  const uniqEnt=new Set(briefs.map(b=>(b.entreprise||'').toLowerCase()).filter(Boolean));
-  const byEnt={};
-  debriefed.forEach(b=>{const k=(b.entreprise||'').toLowerCase();byEnt[k]=(byEnt[k]||0)+1;});
-  const topEnt=Object.entries(byEnt).sort((a,b)=>b[1]-a[1])[0];
-  const topName=topEnt?briefs.find(b=>(b.entreprise||'').toLowerCase()===topEnt[0])?.entreprise:'';
-  const ovM=$('ovMemoire');
-  if(ovM)ovM.innerHTML=`
-    <div class="ov-hero">${uniqEnt.size} client${uniqEnt.size>1?'s':''} suivi${uniqEnt.size>1?'s':''}</div>
-    <div class="ov-note">${debriefed.length} récit${debriefed.length>1?'s':''} capturé${debriefed.length>1?'s':''}</div>
-    ${topEnt?`<div class="ov-last">Le mieux connu : <b>${esc(trunc(topName||'',20))}</b>, ${topEnt[1]} récit${topEnt[1]>1?'s':''}</div>`:'<div class="ov-last">Débriefe pour bâtir ta mémoire.</div>'}`;
-
-  // Mini heatmap 3 semaines pour Ton rythme
-  const today=new Date(); today.setHours(0,0,0,0);
-  const dayCount={};
-  briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);dayCount[d.getTime()]=(dayCount[d.getTime()]||0)+1;});
-  const dow=(today.getDay()+6)%7;
-  const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6);
-  let heatMini='<div class="ov-heat">';
-  for(let wk=2;wk>=0;wk--){
-    heatMini+='<div class="ov-hcol">';
-    for(let d=0;d<7;d++){
-      const day=new Date(gridEnd); day.setDate(gridEnd.getDate()-(wk*7)+(d-6));
-      const n=dayCount[day.getTime()]||0;
-      const future=day>today;
-      const isToday=day.getTime()===today.getTime();
-      const lvl=n===0?0:n===1?1:n===2?2:3;
-      heatMini+=`<span class="jhcell l${future?'x':lvl}${isToday?' t':''}"${future?'':` title="${day.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}, ${n} brief${n>1?'s':''}"`}></span>`;
+  if(acts.length<3)acts.push({min:1,cls:'preparer',lbl:'Préparer',t:'Prépare ton prochain rendez-vous',
+    w:'Deux clics, et Faro t\'arme des données du marché et de ta mémoire client.',
+    fn:()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');}});
+  const list=acts.slice(0,4);
+  const tot=list.reduce((a,x)=>a+x.min,0);
+  const nh=$('nextHour');
+  if(nh){
+    if(!aDeb.length&&!froids.length){
+      nh.innerHTML=`<div class="nh"><div class="nh-clear"><span class="nh-clear-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="nh-clear-t">Rien ne traîne.</div><div class="nh-clear-d">Tous tes rendez-vous sont racontés et aucune affaire ne refroidit. Prépare la suite quand tu veux.</div></div></div></div>`;
+    } else {
+      nh.innerHTML=`<div class="nh"><div class="nh-hd"><span class="nh-k">Ta prochaine heure</span><span class="nh-m">${list.length} geste${list.length>1?'s':''} · environ ${tot} min</span></div>`
+        +list.map((a,i)=>`<div class="nh-l" data-nh="${i}"><span class="nh-n">${i+1}</span><div class="nh-b"><div class="nh-t">${esc(a.t)}</div><div class="nh-w">${a.w}</div></div><span class="nh-min">${a.min} min</span><button class="nh-go ${a.cls}" data-nhb="${i}">${a.lbl}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>`).join('')
+        +`</div>`;
+      nh.querySelectorAll('[data-nhb]').forEach(b=>b.addEventListener('click',e=>{
+        e.stopPropagation();
+        if(b.classList.contains('loading'))return;
+        b.classList.add('loading');
+        setTimeout(()=>{b.classList.remove('loading');list[+b.dataset.nhb].fn();},250);
+      }));
     }
-    heatMini+='</div>';
   }
-  heatMini+='</div>';
-  const ovR=$('ovRythme');
-  if(ovR)ovR.innerHTML=`
-    <div class="ov-hero">${ws.streak} jour${ws.streak>1?'s':''} de série</div>
-    <div class="ov-note">${ws.briefs} brief${ws.briefs>1?'s':''} cette semaine</div>
-    ${heatMini}`;
 
-  // ─── Fil d'actualité : ce qui bouge cette semaine ───
-  renderNews(aDeb,hotDeals,cold,wins);
-
-  // Câblage des cartes vue d'ensemble (toute la carte cliquable)
-  document.querySelectorAll('#v-dash .ov-card').forEach(c=>{
-    if(c.dataset.wired)return; c.dataset.wired='1';
-    c.addEventListener('click',e=>{if(e.target.closest('.ov-cta'))return;const d=c.dataset.ov;if(d)go(d);});
-  });
-  document.querySelectorAll('#v-dash .ov-cta[data-go]').forEach(b=>{
-    if(b.dataset.wired)return; b.dataset.wired='1';
-    b.addEventListener('click',e=>{e.stopPropagation();go(b.dataset.go);});
-  });
-  const na=$('newsAll'); if(na&&!na.dataset.wired){na.dataset.wired='1';na.addEventListener('click',()=>go('match'));}
-}
-
-function dashPrenom(){
-  try{
-    const u=session&&session.user; if(!u)return'';
-    const m=(u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||'';
-    const n=(set.full_name||m||(u.email||'').split('@')[0].split('.')[0]).trim();
-    return n?n.split(' ')[0].replace(/^./,c=>c.toUpperCase()):'';
-  }catch(e){return'';}
-}
-// Brief exemple : la boucle se comprend en 30 s, sans jeton, sans saisie, sans base
-function openDemoBrief(){
-  const demo={
-    demo:true, entreprise:'Novaflux', poste:'Direction financière (DAF)',
-    created_at:new Date().toISOString(), offre:set.offre||'Automatisation des flux financiers',
-    entreprise_data:{activite:'Éditeur SaaS logistique',ville:'Lyon',effectif:'140 personnes',annee_creation:2018,anciennete:8},
-    maturite_score:88, maturite_label:'Maturité du marché',
-    maturite_verdict:'Fenêtre ouverte. Le bon moment pour pousser.',
-    maturite_raisons:['Levée de 8 M€ bouclée en mars, budget frais.','Recrute un Head of Ops depuis trois semaines.','Son marché US s\'équipe, +41% d\'adoption en un an.'],
-    ouverture:{accroche:'Vous venez de lever 8 millions.',qui_nous_sommes:'C\'est le moment exact où les flux financiers explosent en volume.',pourquoi_vous:'Et où l\'automatisation décide si vous encaissez la croissance ou si vous la subissez.'},
-    questions:[
-      {question:'Combien d\'heures votre équipe passe en rapprochements manuels chaque mois ?',intention:'Chiffrer la douleur avant de parler solution.'},
-      {question:'Qu\'est-ce qui vous coûterait le plus si rien ne bouge d\'ici votre prochain closing ?',intention:'Faire dire le coût de l\'inaction par le prospect.'},
-      {question:'Qui aura le dernier mot sur ce budget ?',intention:'Identifier le décideur dès le premier rendez-vous.'}
-    ],
-    objection:{texte:'On regardera ça après la levée.',riposte:'Justement, c\'est maintenant que les process se figent. Les boîtes qui automatisent juste après une levée gardent leur marge, les autres la voient fondre.',source:'McKinsey, 2026'},
-    chiffre:{valeur:'248%',phrase:'de ROI sur trois ans pour une entreprise qui automatise ses flux financiers.',source:'Forrester TEI, 2024'},
-    pieges:['Parler produit avant d\'avoir chiffré sa douleur.','Lâcher un prix sans avoir identifié qui tranche.'],
-    next_step:{phrase:'Je vous propose un audit flash de vingt minutes jeudi, je vous montre où part la marge.',delai_jours:7},
-    annotations:{}
-  };
-  openBrief(demo);
-  const fl=$('briefFil');
-  if(fl)fl.innerHTML='<span class="fd-node fd-cur">Novaflux</span><span class="fd-sep">·</span><span class="demo-tag">Exemple</span>';
-  const lc=$('linkCard'); if(lc)lc.style.display='none';
-  const mbd=$('memoBand'); if(mbd){mbd.style.display='none';mbd.innerHTML='';}
-  const da=$('docActions');
-  if(da){
-    da.innerHTML='<button id="aDemoOut">Fermer l\'exemple</button><div class="divider"></div><button class="pri" id="aDemoGo">Préparer le mien</button>';
-    const out=()=>{current=null;$('briefDoc').classList.remove('on');const l=$('linkCard');if(l)l.style.display='';};
-    $('aDemoOut').addEventListener('click',out);
-    $('aDemoGo').addEventListener('click',()=>{out();ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');});
+  // ─── Ton état : une ligne, quatre segments ───
+  const totVal=actifs.reduce((a,d)=>a+dealVal(d),0);
+  const uniqEnt=new Set(deals.map(d=>(d.entreprise||'').toLowerCase()).filter(Boolean));
+  const nRecits=briefs.filter(b=>b.debrief).length;
+  const ws=weekStats();
+  const sl=$('stateLine');
+  if(sl){
+    const segs=[
+      {k:'en cours',v:actifs.length+(totVal?`<em>· ${eur(totVal)}</em>`:''),go:'affaires'},
+      {k:'à raconter',v:aDeb.length,go:'match'},
+      {k:'clients en mémoire',v:uniqEnt.size,go:'entreprises'},
+      {k:'briefs cette semaine',v:ws.briefs,go:'toi'}
+    ];
+    sl.innerHTML=`<div class="st-line">${segs.map(x=>`<div class="st-s" data-stgo="${x.go}"><span class="st-v">${x.v}</span><span class="st-k">${x.k}</span></div>`).join('')}</div>`;
+    sl.querySelectorAll('[data-stgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.stgo)));
   }
+
+  // ─── La boucle : prépares-tu plus que tu ne racontes ? ───
+  const lc=$('loopCard');
+  if(lc){
+    const nb=briefs.length, nr=nRecits, manque=nb-nr;
+    const pct=nb?Math.round(nr/nb*100):0;
+    const tc=pct>=80?'var(--green)':pct>=50?'var(--copper)':'var(--red)';
+    let verdict;
+    if(!nb)verdict='Prépare ton premier rendez-vous, la boucle commencera là.';
+    else if(!nr)verdict=`Tu as préparé <b>${nb} brief${nb>1?'s':''}</b> et tu n'en as raconté aucun. <span class="fuite">Ta mémoire est vide</span>, et ton prochain brief repartira de zéro.`;
+    else if(pct>=90)verdict=`Ta boucle est fermée. Chaque rendez-vous que tu prépares finit en mémoire, et chaque brief part de ce que tu sais déjà.`;
+    else if(pct>=60)verdict=`<b>${manque} rendez-vous</b> attendent leur récit. Chacun est un brief futur qui sera moins tranchant.`;
+    else verdict=`Tu prépares deux fois plus que tu ne racontes. <span class="fuite">${manque} récits manquants</span>, c'est autant de mémoire perdue.`;
+    lc.innerHTML=`<div class="lp-card" style="--tc:${tc}">
+      <div class="lp-hd"><span class="lp-k">Ta boucle</span><span class="lp-pct">${pct}%</span></div>
+      <div class="lp-flow">
+        <div class="lp-node"><div class="lp-nv">${nb}</div><div class="lp-nk">briefs préparés</div></div>
+        <span class="lp-ar">→</span>
+        <div class="lp-node"><div class="lp-nv">${nr}</div><div class="lp-nk">récits capturés</div></div>
+        <span class="lp-ar">→</span>
+        <div class="lp-node"><div class="lp-nv">${uniqEnt.size}</div><div class="lp-nk">clients en mémoire</div></div>
+      </div>
+      <div class="lp-bar"><i></i></div>
+      <div class="lp-verdict">${verdict}</div>
+    </div>`;
+    const bar=lc.querySelector('.lp-bar i');
+    if(bar)requestAnimationFrame(()=>requestAnimationFrame(()=>{bar.style.width=Math.max(pct,2)+'%';}));
+  }
+}
+// L'accueil du compte vierge, extrait pour rester lisible
+function renderWelcome(welcome){
+  welcome.style.display='';
+  const jrs=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  const mss=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const nw=new Date(); const hh=nw.getHours();
+  const salut=hh<12?'Bonjour':hh<18?'Bon après-midi':'Bonsoir';
+  const pre=dashPrenom();
+  welcome.innerHTML=`
+    <div class="dw-date">${jrs[nw.getDay()]} ${nw.getDate()} ${mss[nw.getMonth()]}</div>
+    <div class="dw-greet">${salut}${pre?' '+esc(pre):''}.</div>
+    <div class="dw-lede">Ton espace est vierge. Un rendez-vous suffit à le remplir.</div>
+    <div class="dw-acts">
+      <button class="dw-go" id="dwGo">Préparer mon premier rendez-vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><kbd class="kbd-hint">N</kbd></button>
+      <button class="dw-alt" id="dwDemo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/></svg>Voir un brief exemple</button>
+    </div>
+    <div class="dw-rule"></div>
+    <div class="dw-k">Ce qui rend Faro différent</div>
+    <div class="dw-loop">
+      <div class="dw-steps">
+        <div class="dw-card"><div class="n">01</div><div class="t">Le brief</div><div class="d">Ce que tu prévois de dire, armé de données réelles sur son entreprise.</div></div>
+        <div class="dw-card"><div class="n">02</div><div class="t">Le carnet</div><div class="d">Ce qui se passe vraiment. Tu notes en vrac, Faro observe en silence.</div></div>
+        <div class="dw-card"><div class="n">03</div><div class="t">Le récit</div><div class="d">Tu racontes, Faro compose l'écart entre le prévu et le vécu.</div></div>
+      </div>
+      <div class="dw-back"><svg viewBox="0 0 600 44" preserveAspectRatio="none" aria-hidden="true"><path d="M584 2 L584 30 Q584 38 574 38 L26 38 Q16 38 16 30 L16 6"/><path d="M11 13 L16 4 L21 13" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="dw-kick">Chaque récit arme le brief suivant. <b>Aucun CRM ne part du brief, c'est pour ça qu'aucun n'apprend.</b></div>`;
+  const dwg=welcome.querySelector('#dwGo');
+  dwg.addEventListener('click',()=>{
+    if(dwg.classList.contains('loading'))return;
+    dwg.classList.add('loading');
+    setTimeout(()=>{dwg.classList.remove('loading');ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');},250);
+  });
+  welcome.querySelector('#dwDemo').addEventListener('click',openDemoBrief);
 }
 function fillDashHead(){
   const jours=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
@@ -2937,38 +2903,6 @@ function fillDashHead(){
   try{prenom=(session&&session.user&&session.user.user_metadata&&session.user.user_metadata.prenom)||((session&&session.user&&session.user.email||'').split('@')[0].split('.')[0].replace(/^\w/,c=>c.toUpperCase()))||'';}catch(e){}
   const salut=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
   const g=$('dashGreet'); if(g)g.textContent=`${salut}${prenom?' '+prenom:''}.`;
-}
-
-function renderNews(aDeb,hotDeals,cold,wins){
-  const el=$('newsList'); if(!el)return;
-  const items=[];
-  // Signés cette semaine
-  const weekAgo=Date.now()-7*86400000;
-  wins.forEach(d=>{if(d.updated_at&&new Date(d.updated_at).getTime()>weekAgo)items.push({k:'win',ic:'✓',t:d.entreprise,d:`signé${dealVal(d)?` · ${eur(dealVal(d))}`:''}`,act:'Voir',go:()=>openFiche(d)});});
-  // Chaudes silencieuses (risque)
-  hotDeals.filter(d=>days(d.updated_at)>=7).slice(0,2).forEach(d=>{items.push({k:'risk',ic:'⚠',t:d.entreprise,d:`chaud mais silencieux depuis ${days(d.updated_at)} j`,act:'Relancer',go:()=>openFiche(d)});});
-  // À raconter les plus anciens
-  aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,3).forEach(b=>{const n=days(b.created_at);items.push({k:'todo',ic:'○',t:b.entreprise,d:n===0?"vu aujourd'hui, à raconter":`vu il y a ${n} j, à raconter`,act:'Raconter',go:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof askPass==='function')askPass();},200);}});});
-  // Deals qui dorment
-  if(cold.length){const d=cold[0];items.push({k:'sleep',ic:'◐',t:d.entreprise,d:`silencieux depuis ${days(d.updated_at)} j`,act:'Réveiller',go:()=>openFiche(d)});}
-
-  if(!items.length){
-    el.innerHTML=`<div class="news-empty">Rien de nouveau cette semaine. Tout est calme.</div>`;
-    return;
-  }
-  el.innerHTML=items.slice(0,6).map((it,i)=>`
-    <div class="news-row" data-i="${i}">
-      <span class="news-ic k-${it.k}">${it.ic}</span>
-      <span class="news-t2">${esc(trunc(it.t,26))}</span>
-      <span class="news-d">${esc(it.d)}</span>
-      <button class="news-act">${it.act}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-    </div>`).join('');
-  el.querySelectorAll('.news-row').forEach((row,i)=>{
-    const it=items[i];
-    const fn=e=>{e.stopPropagation();const b=row.querySelector('.news-act');if(b&&!b.classList.contains('loading')){b.classList.add('loading');setTimeout(()=>{b.classList.remove('loading');it.go();},250);}};
-    row.querySelector('.news-act').addEventListener('click',fn);
-    row.addEventListener('click',e=>{if(!e.target.closest('.news-act'))it.go();});
-  });
 }
 
 function renderToi(){
@@ -4317,7 +4251,7 @@ async function onbSave(){
       const e=$(id); if(e&&set[key])e.value=set[key];
     });
     const sn=$('sName'); if(sn&&set.full_name)sn.value=set.full_name;
-    const un=$('uname'); if(un&&set.full_name)un.textContent=set.full_name;
+    const av1=$('uav'); if(av1&&set.full_name)av1.title=set.full_name+' · ton compte';
     refreshOffre();
   }catch(e){toast("L'enregistrement a échoué, tu pourras reprendre dans Mon offre.");}
   finally{b.classList.remove('load');b.disabled=false;}
