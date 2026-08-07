@@ -165,6 +165,66 @@
   /* ═══ Entreprises : table Attio-Faro ═══ */
   @media(max-width:960px){
   }
+  /* ══ Mon offre : les champs respirent, l'aperçu montre ══ */
+  #v-offre textarea.fld{min-height:104px;line-height:1.55;}
+  #v-offre .fld{font-size:13.5px;}
+  .offre-ring{width:76px!important;height:76px!important;}
+  .offre-ring svg{width:76px!important;height:76px!important;}
+  .offre-ring-card{padding:20px 18px!important;}
+  .offre-ring-v{font-size:21px!important;}
+  /* L'aperçu : ce que ton offre produit, pas pourquoi elle compte */
+  .ap-k{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+  .ap-k+.ap-k{margin-top:16px;}
+  .ap-say{font-family:var(--serif);font-size:14.5px;line-height:1.45;color:var(--ink);padding-left:12px;border-left:2px solid var(--copper);}
+  .ap-say.vide{font-family:var(--sans);font-size:12.5px;color:var(--faint);border-left-color:var(--line2);font-style:italic;}
+  .ap-l{display:flex;gap:9px;font-size:12.5px;color:var(--dim);line-height:1.45;padding:3px 0;}
+  .ap-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper-l);margin-top:7px;flex-shrink:0;}
+  .ap-note{margin-top:14px;padding-top:11px;border-top:1px dashed var(--line2);font-size:11px;color:var(--faint);line-height:1.45;}
+  /* ══ Premier pas : l'accueil du nouveau, en quatre écrans ══ */
+  .onb{position:fixed;inset:0;background:var(--bg);z-index:140;display:none;flex-direction:column;overflow-y:auto;}
+  .onb.on{display:flex;}
+  .onb-in{max-width:560px;width:100%;margin:auto;padding:44px 26px 36px;}
+  .onb-dots{display:flex;gap:6px;margin-bottom:30px;}
+  .onb-dots i{height:3px;flex:1;border-radius:3px;background:var(--line2);transition:background .4s cubic-bezier(.2,.7,.2,1);}
+  .onb-dots i.on{background:var(--copper);}
+  .onb-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);margin-bottom:14px;}
+  .onb-q{font-family:var(--serif);font-weight:600;font-size:31px;line-height:1.1;letter-spacing:-.6px;color:var(--ink);margin-bottom:8px;}
+  .onb-s{font-size:14.5px;color:var(--dim);line-height:1.5;margin-bottom:26px;}
+  .onb-step{display:none;} .onb-step.on{display:block;animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .onb-f{margin-bottom:16px;}
+  .onb-f label{display:block;font-size:12px;font-weight:600;color:var(--soft);margin-bottom:6px;}
+  .onb-f input,.onb-f textarea{width:100%;border:1.5px solid var(--line2);border-radius:10px;padding:13px 15px;font-family:inherit;font-size:15px;color:var(--ink);background:var(--card);outline:none;transition:.15s;}
+  .onb-f textarea{min-height:78px;resize:vertical;line-height:1.5;font-size:14.5px;}
+  .onb-f input:focus,.onb-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  .onb-f input::placeholder,.onb-f textarea::placeholder{color:var(--faint);}
+  .onb-g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .onb-search{position:relative;}
+  .onb-ac{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:var(--shl);z-index:5;max-height:280px;overflow-y:auto;display:none;}
+  .onb-ac.on{display:block;}
+  .onb-ai{display:flex;align-items:center;gap:11px;padding:11px 14px;cursor:pointer;border-bottom:1px solid var(--line3);transition:.1s;}
+  .onb-ai:last-child{border-bottom:none;} .onb-ai:hover{background:var(--wash);}
+  .onb-ai .mono{width:32px;height:32px;border-radius:8px;font-size:11px;}
+  .onb-ai .n{font-size:13.5px;font-weight:700;} .onb-ai .m{font-size:11px;color:var(--faint);margin-top:1px;}
+  /* Ce que Faro a trouvé tout seul */
+  .onb-found{display:flex;align-items:center;gap:13px;background:linear-gradient(140deg,var(--washc),var(--card) 60%);border:1px solid var(--copper-l);border-radius:12px;padding:14px 16px;margin-bottom:16px;animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
+  .onb-found .mono{width:40px;height:40px;border-radius:10px;font-size:14px;flex-shrink:0;}
+  .onb-found .n{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.1;}
+  .onb-found .m{font-size:12px;color:var(--dim);margin-top:2px;}
+  .onb-found button{margin-left:auto;border:none;background:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--copper-d);cursor:pointer;flex-shrink:0;}
+  .onb-auto{font-size:11.5px;color:var(--copper-d);margin:-6px 0 16px;display:flex;align-items:center;gap:7px;}
+  .onb-auto svg{width:13px;height:13px;}
+  .onb-foot{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);}
+  .onb-foot .sp{flex:1;}
+  .onb-skip{border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--faint);cursor:pointer;padding:5px 0;transition:.13s;}
+  .onb-skip:hover{color:var(--soft);}
+  .onb-go{display:inline-flex;align-items:center;gap:9px;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:13px 24px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:var(--sh);transition:.15s cubic-bezier(.2,.7,.2,1);}
+  .onb-go:hover:not(:disabled){background:var(--copper-d);transform:translateY(-1px);box-shadow:var(--shm);}
+  .onb-go:disabled{opacity:.4;cursor:not-allowed;}
+  .onb-go .spin{display:none;} .onb-go.load .spin{display:inline-block;}
+  /* Le dernier écran : la récompense */
+  .onb-pay{background:var(--card);border:1px solid var(--line2);border-radius:var(--rl);box-shadow:var(--shm);padding:20px 22px;margin-bottom:22px;}
+  .onb-pay .ap-say{font-size:16px;}
+  @media(max-width:600px){.onb-q{font-size:25px;}.onb-g2{grid-template-columns:1fr;}.onb-in{padding:30px 20px;}}
   /* ═══ Mon offre ═══ */
   .offre-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;}
   .offre-form{display:flex;flex-direction:column;gap:16px;}
@@ -2141,7 +2201,7 @@
           <div class="chd"><span class="t">Ton identité</span><span class="d">Qui tu es, ce que tu vends.</span></div>
           <div class="cbd">
             <div class="g2"><div class="fg"><label>Ton entreprise</label><input class="fld" id="sComp" autocomplete="off"/></div><div class="fg"><label>Site web <span>· pour ton logo</span></label><input class="fld" id="sSite" autocomplete="off"/></div></div>
-            <div class="g2"><div class="fg"><label>Ton secteur</label><input class="fld" id="sSec" autocomplete="off"/></div><div class="fg"><label>Ta cible type</label><input class="fld" id="sCible" autocomplete="off"/></div></div>
+            <div class="g2"><div class="fg"><label>Ton secteur</label><input class="fld" id="sSec" autocomplete="off"/></div><div class="fg"><label>Ta cible type</label><input class="fld" id="sCible" autocomplete="off" placeholder="DAF et DRH de PME industrielles"/></div></div>
             <div class="fg" style="margin-bottom:0;"><label>Ce que tu vends</label><input class="fld" id="sOff"/></div>
           </div>
         </div>
@@ -2164,6 +2224,10 @@
           <div class="offre-ring-d" id="offRingD">Plus elle est riche, plus tes briefs sont précis.</div>
         </div>
         <div class="card">
+          <div class="chd"><span class="t">Ce que Faro en fera</span><span class="d">Aperçu, à partir de tes champs.</span></div>
+          <div class="cbd" id="offPreview"></div>
+        </div>
+        <div class="card" id="offWhyCard" style="display:none;">
           <div class="chd"><span class="t">Pourquoi ça compte</span></div>
           <div class="cbd offre-why">
             <div class="ow-row"><span class="ow-ic" style="color:var(--copper)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div><div class="ow-t">L'ouverture sur mesure</div><div class="ow-d">Faro adapte ta phrase d'accroche à ton offre et à l'interlocuteur.</div></div></div>
@@ -2319,6 +2383,49 @@
     <button class="rec-go" id="recGo" disabled><span class="spin"></span><span id="recGoL">C'est dit</span></button>
   </div>
   <div class="rec-acts" id="recActs"></div>
+</div></div>
+
+<div class="onb" id="onbOv"><div class="onb-in">
+  <div class="onb-dots" id="onbDots"><i class="on"></i><i></i><i></i><i></i></div>
+
+  <div class="onb-step on" data-s="1">
+    <div class="onb-k">Premier pas · 1 sur 4</div>
+    <div class="onb-q">Bienvenue. Comment tu t'appelles ?</div>
+    <div class="onb-s">Faro te tutoie et te parle comme un collègue. Autant savoir à qui.</div>
+    <div class="onb-f"><label>Prénom et nom</label><input id="onbName" placeholder="Ryan Djebbar" autocomplete="name"/></div>
+  </div>
+
+  <div class="onb-step" data-s="2">
+    <div class="onb-k">Premier pas · 2 sur 4</div>
+    <div class="onb-q">Pour qui tu vends ?</div>
+    <div class="onb-s">Tape le nom de ton entreprise. Faro la cherche dans le référentiel officiel, exactement comme il le fera pour tes prospects.</div>
+    <div class="onb-f onb-search"><label>Ton entreprise</label><input id="onbComp" placeholder="Nom de ton entreprise…" autocomplete="off"/><div class="onb-ac" id="onbAc"></div></div>
+    <div id="onbFound"></div>
+    <div class="onb-f"><label>Site web <span style="color:var(--faint);font-weight:400">· pour ton logo</span></label><input id="onbSite" placeholder="cadence-rh.fr" autocomplete="off"/></div>
+    <div class="onb-f" style="margin-bottom:0;"><label>Ton secteur</label><input id="onbSec" placeholder="SaaS RH" autocomplete="off"/></div>
+  </div>
+
+  <div class="onb-step" data-s="3">
+    <div class="onb-k">Premier pas · 3 sur 4</div>
+    <div class="onb-q">Qu'est-ce que tu vends, et à qui ?</div>
+    <div class="onb-s">C'est le socle de chaque brief. Une ligne suffit, tu affineras après.</div>
+    <div class="onb-f"><label>Ce que tu vends</label><input id="onbOff" placeholder="Logiciel de suivi des heures et de la masse salariale"/></div>
+    <div class="onb-f"><label>Ta cible type</label><input id="onbCible" placeholder="DAF et DRH de PME industrielles de 100 à 500 personnes"/></div>
+    <div class="onb-f" style="margin-bottom:0;"><label>Ta proposition de valeur <span style="color:var(--faint);font-weight:400">· facultatif</span></label><textarea id="onbVal" placeholder="Le problème que tu résous, mieux que les autres."></textarea></div>
+  </div>
+
+  <div class="onb-step" data-s="4">
+    <div class="onb-k">Premier pas · 4 sur 4</div>
+    <div class="onb-q" id="onbPayQ">Faro est prêt.</div>
+    <div class="onb-s">Voilà ce qu'il dira en arrivant chez ton prochain prospect. Il l'adaptera à chaque entreprise et à chaque interlocuteur.</div>
+    <div class="onb-pay" id="onbPay"></div>
+  </div>
+
+  <div class="onb-foot">
+    <button class="onb-skip" id="onbSkip">Je remplirai plus tard</button>
+    <span class="sp"></span>
+    <button class="onb-go" id="onbGo"><span class="spin"></span><span id="onbGoL">Continuer</span></button>
+  </div>
 </div></div>
 
 <div class="mem" id="memOv">
@@ -2548,6 +2655,8 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   try{const {data:p}=await sb.from('profiles').select('tokens_left,tokens_month,reset_at').eq('user_id',uid).single();
     if(p){tokMax=p.tokens_month;tok(p.tokens_left);$('uM').textContent=p.tokens_month||5;if(p.reset_at)$('uR').textContent=new Date(p.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric'});}}catch(e){}
   buildPList(); buildRdv(); refreshOffre(); wireDashTabs();
+  // Un compte tout neuf passe d'abord par le premier pas
+  if(!set.company&&!set.offre&&!set.cible)setTimeout(openOnb,400);
   const [dr,br]=await Promise.all([
     sb.from('deals').select('*').eq('user_id',uid).order('updated_at',{ascending:false}),
     sb.from('briefs').select('*').eq('user_id',uid).order('created_at',{ascending:false})
@@ -4175,6 +4284,105 @@ document.addEventListener('keydown',e=>{
 const note=(t,c)=>{const n=$('note');n.textContent=t;n.className='note on '+c;};
 const clr=()=>{$('note').className='note';};
 let cmpTimer=null, justWritten=false, typeTimers=[];
+// ══ Premier pas : quatre écrans, et Faro trouve ton entreprise tout seul ══
+let onbStep=1, onbT=null, onbData={};
+function onbShow(n){
+  onbStep=n;
+  document.querySelectorAll('#onbOv .onb-step').forEach(x=>x.classList.toggle('on',+x.dataset.s===n));
+  document.querySelectorAll('#onbDots i').forEach((x,i)=>x.classList.toggle('on',i<n));
+  $('onbGoL').textContent=n===3?'Voir ce que ça donne':n===4?'Préparer mon premier rendez-vous':'Continuer';
+  $('onbSkip').style.display=n===4?'none':'';
+  if(n===4)onbPay();
+  const f=$('onbOv').querySelector('.onb-step.on input,.onb-step.on textarea');
+  if(f)setTimeout(()=>f.focus(),180);
+}
+function onbPay(){
+  const comp=onbData.company||'', val=(onbData.contexte||'').trim(), off=(onbData.offre||'').trim(), cible=(onbData.cible||'').trim();
+  const first=t=>{const x=(t||'').split(/[.!?]/)[0].trim();return x.length>110?x.slice(0,109)+'…':x;};
+  const low=t=>t?t.charAt(0).toLowerCase()+t.slice(1):'';
+  let ouv='';
+  if(comp&&val)ouv=`Chez ${comp}, ${low(first(val))}.`;
+  else if(val)ouv=`${first(val)}.`;
+  $('onbPay').innerHTML=`<div class="ap-k">${ouv?'Son ouverture ressemblera à':'Ce que Faro sait de ton offre'}</div>`
+    +(ouv?`<div class="ap-say">${esc(ouv)}</div>`:`<div class="ap-say vide">${off?esc(off)+'. Ajoute ta proposition de valeur dans Mon offre, Faro en tirera ton ouverture.':'Tu compléteras ton offre plus tard, dans Mon offre.'}</div>`)
+    +(cible?`<div class="ap-k">Et chaque brief visera</div><div class="ap-l">${esc(cible)}</div>`:'');
+}
+async function onbSave(){
+  const b=$('onbGo'); b.classList.add('load'); b.disabled=true;
+  try{
+    await sb.from('user_settings').upsert({user_id:uid,...set,...onbData,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+    set={...set,...onbData};
+    ['sComp','sSite','sSec','sCible','sOff','sVal'].forEach((id,i)=>{
+      const key=['company','site','secteur','cible','offre','contexte'][i];
+      const e=$(id); if(e&&set[key])e.value=set[key];
+    });
+    const sn=$('sName'); if(sn&&set.full_name)sn.value=set.full_name;
+    const un=$('uname'); if(un&&set.full_name)un.textContent=set.full_name;
+    refreshOffre();
+  }catch(e){toast("L'enregistrement a échoué, tu pourras reprendre dans Mon offre.");}
+  finally{b.classList.remove('load');b.disabled=false;}
+}
+function openOnb(){ onbData={}; onbShow(1); $('onbOv').classList.add('on'); }
+(function(){
+  const g=id=>{const e=$(id);return e?e.value.trim():'';};
+  const go=$('onbGo'); if(!go)return;
+  go.addEventListener('click',async()=>{
+    if(onbStep===1){
+      const n=g('onbName'); if(n)onbData.full_name=n;
+      onbShow(2); return;
+    }
+    if(onbStep===2){
+      onbData.company=g('onbComp')||onbData.company;
+      onbData.site=g('onbSite')||onbData.site;
+      onbData.secteur=g('onbSec')||onbData.secteur;
+      onbShow(3); return;
+    }
+    if(onbStep===3){
+      onbData.offre=g('onbOff'); onbData.cible=g('onbCible'); onbData.contexte=g('onbVal');
+      await onbSave(); onbShow(4); return;
+    }
+    $('onbOv').classList.remove('on');
+    ent=null; const q=$('qEnt'); if(q)q.value=''; go2Nouveau();
+  });
+  const sk=$('onbSkip');
+  if(sk)sk.addEventListener('click',async()=>{
+    if(onbStep===1&&g('onbName'))onbData.full_name=g('onbName');
+    if(Object.keys(onbData).length)await onbSave();
+    $('onbOv').classList.remove('on');
+  });
+  // Entrée valide l'écran
+  $('onbOv').addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'){e.preventDefault();go.click();}
+  });
+  // Faro cherche ta propre entreprise dans le référentiel officiel
+  const ci=$('onbComp');
+  if(ci)ci.addEventListener('input',()=>{
+    const q2=ci.value.trim(); clearTimeout(onbT);
+    if(q2.length<2){$('onbAc').classList.remove('on');return;}
+    onbT=setTimeout(async()=>{
+      try{
+        const r=await fetch('/api/entreprise?q='+encodeURIComponent(q2));
+        const j=await r.json();
+        const res=(typeof rankAc==='function'?rankAc(j.results||[],q2):(j.results||[])).slice(0,5);
+        if(!res.length){$('onbAc').classList.remove('on');return;}
+        $('onbAc').innerHTML=res.map((e2,i)=>`<div class="onb-ai" data-i="${i}">${logoHtml(e2.nom,e2.logo,e2.site)}<div style="min-width:0"><div class="n">${esc(e2.nom)}</div><div class="m">${esc([e2.activite,e2.ville,e2.effectif].filter(Boolean).join(' · ')||'—')}</div></div></div>`).join('');
+        $('onbAc').classList.add('on');
+        $('onbAc').querySelectorAll('.onb-ai').forEach(el=>el.addEventListener('click',()=>{
+          const e2=res[+el.dataset.i];
+          onbData.company=e2.nom; onbData.site=e2.site||''; onbData.secteur=e2.activite||'';
+          ci.value=e2.nom;
+          if(e2.site)$('onbSite').value=e2.site;
+          if(e2.activite)$('onbSec').value=e2.activite;
+          $('onbAc').classList.remove('on');
+          $('onbFound').innerHTML=`<div class="onb-found">${logoHtml(e2.nom,e2.logo,e2.site)}<div style="min-width:0"><div class="n">${esc(e2.nom)}</div><div class="m">${esc([e2.activite,e2.ville,e2.effectif].filter(Boolean).join(' · '))}</div></div><button id="onbUndo">Ce n'est pas ça</button></div>`;
+          const u=$('onbUndo'); if(u)u.addEventListener('click',()=>{$('onbFound').innerHTML='';ci.value='';ci.focus();});
+        }));
+      }catch(e){$('onbAc').classList.remove('on');}
+    },260);
+  });
+  document.addEventListener('click',e=>{if(!e.target.closest('.onb-search'))$('onbAc').classList.remove('on');});
+})();
+function go2Nouveau(){ go('nouveau'); }
 // ══ Mémoriser : le plan et la récolte, en grand, sans scroll ══
 function openMem(){
   const b=current; if(!b)return;
@@ -5378,7 +5586,31 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ═══ Offre + réglages ═══ */
+// L'aperçu : ce que ces champs produisent, en clair
+function offPreview(){
+  const el=$('offPreview'); if(!el)return;
+  const g=id=>{const e=$(id);return e?e.value.trim():'';};
+  const comp=g('sComp'), cible=g('sCible'), off=g('sOff'), val=g('sVal'), pr=g('sPr');
+  const first=t=>{const x=(t||'').split(/[.!?]/)[0].trim();return x.length>110?x.slice(0,109)+'…':x;};
+  const low=t=>t?t.charAt(0).toLowerCase()+t.slice(1):'';
+  // Pas de proposition de valeur, pas d'ouverture inventée : on le dit
+  let ouv='';
+  if(comp&&val)ouv=`Chez ${comp}, ${low(first(val))}.`;
+  else if(val)ouv=`${first(val)}.`;
+  const manque=!val?(off?'Ajoute ta proposition de valeur : c\'est elle qui donne sa phrase d\'ouverture à Faro.':'Renseigne ton entreprise et ta proposition de valeur pour voir l\'ouverture que Faro écrira.'):'';
+  const preuve=pr?first(pr):'';
+  const h=[];
+  h.push('<div class="ap-k">Son ouverture ressemblera à</div>');
+  h.push(ouv?`<div class="ap-say">${esc(ouv)}</div>`:`<div class="ap-say vide">${esc(manque)}</div>`);
+  h.push('<div class="ap-k">Il appuiera ses ripostes sur</div>');
+  h.push(preuve?`<div class="ap-l">${esc(preuve)}</div>`:`<div class="ap-l" style="color:var(--faint);font-style:italic">Ajoute une preuve chiffrée, c'est ce qui débloque les objections.</div>`);
+  h.push('<div class="ap-k">Il orientera chaque brief vers</div>');
+  h.push(cible?`<div class="ap-l">${esc(cible)}</div>`:`<div class="ap-l" style="color:var(--faint);font-style:italic">Précise ta cible type pour que Faro vise le bon angle.</div>`);
+  h.push(`<div class="ap-note">Ceci est un assemblage de tes champs, pas une génération. Le vrai brief sera écrit pour l'entreprise et l'interlocuteur que tu choisiras.</div>`);
+  el.innerHTML=h.join('');
+}
 function refreshOffre(){
+  offPreview();
   const fields=['company','site','secteur','cible','offre','contexte','preuves'];
   const filled=fields.filter(f=>(set[f]||'').trim()).length;
   const pct=Math.round(filled/fields.length*100);
@@ -5395,7 +5627,13 @@ function refreshOffre(){
     else {$('offRingT').textContent='Complète ton offre';$('offRingD').textContent='Plus elle est riche, plus tes briefs sont précis.';}
   }
   const od=$('offDot'); if(od)od.style.display=pct<100?'':'none';
+  const wc=$('offWhyCard'); if(wc)wc.style.display=pct>=100?'none':'';
 }
+(function(){
+  ['sComp','sSite','sSec','sCible','sOff','sVal','sPr'].forEach(id=>{
+    const e=$(id); if(e)e.addEventListener('input',()=>{offPreview();});
+  });
+})();
 async function save(patch,btn){
   btn.classList.add('load'); btn.disabled=true;
   try{await sb.from('user_settings').upsert({user_id:uid,...set,...patch,updated_at:new Date().toISOString()},{onConflict:'user_id'});set={...set,...patch};toast('Enregistré');}
