@@ -574,20 +574,36 @@
   /* ══ Le brief se compose sous tes yeux : squelette puis contenu ══ */
   @keyframes cmpd{0%,60%,100%{opacity:.25;}30%{opacity:1;}}
   /* ══ Le brief : quatre moments du rendez-vous, de gauche à droite ══ */
-  .moments{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch;}
+  /* Chaque moment a la largeur que son contenu demande */
+  .moments{display:grid;grid-template-columns:.9fr 1.12fr 1.12fr .96fr;gap:12px;align-items:stretch;}
+  /* La frise du temps : un rendez-vous se lit de gauche à droite */
+  .spine{display:grid;grid-template-columns:.9fr 1.12fr 1.12fr .96fr;gap:12px;margin-bottom:10px;}
+  .spine-c{position:relative;display:flex;align-items:center;gap:9px;padding-bottom:9px;}
+  .spine-c::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sc);flex-shrink:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--sc) 14%,transparent);}
+  .spine-c::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--sc),color-mix(in srgb,var(--sc) 15%,transparent));}
+  .spine-t{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sc);white-space:nowrap;}
   .mom{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
   .mom:hover{box-shadow:var(--shm);transform:translateY(-1px);border-color:var(--line2);}
   .mom::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--tc);}
-  .mom-hd{padding:14px 16px 0;flex-shrink:0;}
-  .mom-when{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--tc);margin-bottom:5px;}
-  .mom-when::after{content:"";flex:1;height:1px;background:var(--tc);opacity:.22;}
+  .mom-hd{padding:14px 16px 0;flex-shrink:0;position:relative;z-index:1;}
+  .mom-when{display:none;}
+  /* Le chiffre du moment, en filigrane : de la profondeur, pas du bruit */
+  .mom-ghost{position:absolute;top:-14px;right:6px;font-family:var(--serif);font-weight:700;font-size:72px;line-height:1;color:var(--tc);opacity:.06;pointer-events:none;user-select:none;letter-spacing:-.04em;}
   .mom-t{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.3px;color:var(--ink);line-height:1.1;}
   .mom-d{font-size:11px;color:var(--faint);margin-top:3px;line-height:1.35;}
   .mom-acts{position:absolute;top:12px;right:12px;display:flex;gap:4px;opacity:0;transition:.15s;}
   .mom:hover .mom-acts{opacity:1;}
   /* La phrase clé, puis le détail en dessous */
   .mom-lead{padding:14px 16px 0;flex-shrink:0;}
-  .mom-rest{padding:12px 16px 16px;overflow-y:auto;flex:1;min-height:0;}
+  .mom-rest{padding:12px 16px 16px;overflow-y:auto;flex:1;min-height:0;scrollbar-width:thin;}
+  /* Une colonne qui déborde le dit, elle ne se fait pas trancher */
+  .mom::after{content:"";position:absolute;left:1px;right:1px;bottom:1px;height:52px;border-radius:0 0 var(--rl) var(--rl);background:linear-gradient(transparent,var(--fadeb,var(--card)) 72%);pointer-events:none;opacity:0;transition:opacity .25s cubic-bezier(.2,.7,.2,1);}
+  .mom.more::after{opacity:1;}
+  .mom-more{position:absolute;left:0;right:0;bottom:9px;display:flex;justify-content:center;pointer-events:none;opacity:0;transition:opacity .25s;z-index:2;}
+  .mom.more .mom-more{opacity:1;}
+  .mom-more span{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;box-shadow:var(--sh);}
+  .mom-more svg{width:10px;height:10px;}
+  .mom.scrolled::after,.mom.scrolled .mom-more{opacity:0;}
   .mom-rest::-webkit-scrollbar{width:5px;} .mom-rest::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   .mom-sep{height:1px;background:var(--line3);margin:14px 16px 0;flex-shrink:0;}
   .mom-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
@@ -595,8 +611,8 @@
   /* Chaque moment sa couleur, prise dans le code existant */
   .mom.m-ouvrir{--tc:var(--copper);}
   .mom.m-creuser{--tc:var(--copper-l);}
-  .mom.m-tenir{--tc:var(--red);background:linear-gradient(170deg,#FDF7F4,var(--card) 40%);}
-  .mom.m-sortir{--tc:var(--green);background:linear-gradient(170deg,#F4F9F5,var(--card) 40%);}
+  .mom.m-tenir{--tc:var(--red);--fadeb:var(--card);background:linear-gradient(170deg,#FDF7F4,var(--card) 40%);}
+  .mom.m-sortir{--tc:var(--green);--fadeb:var(--card);background:linear-gradient(170deg,#F4F9F5,var(--card) 40%);}
   /* Les textes se resserrent pour tenir sans défiler */
   .mom .say{font-size:16.5px;line-height:1.38;padding-left:13px;max-width:none;}
   .mom .qsay{font-family:var(--serif);font-size:14.5px;font-weight:500;line-height:1.35;max-width:none;}
@@ -604,6 +620,11 @@
   .mom .nextv{font-size:16.5px;padding-left:13px;max-width:none;}
   .mom .fig{gap:10px;} .mom .fig b{font-size:32px;} .mom .fig .phr{font-size:13px;line-height:1.4;min-width:0;max-width:none;}
   .mom .why{grid-template-columns:1fr;gap:2px;margin:4px 0 0 13px;font-size:11px;line-height:1.4;max-width:none;}
+  .mom .why-v{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer;}
+  .mom .why-v.open{-webkit-line-clamp:unset;}
+  .mom .fig{flex-wrap:nowrap;align-items:baseline;}
+  .mom .fig b{font-size:30px;flex-shrink:0;}
+  .mom .cit{margin-top:6px;}
   .mom .qitem{padding:7px 0;} .mom .qitem+.qitem{border-top:1px dashed var(--line3);}
   .mom .qtop{gap:8px;} .mom .qtop .dot{height:18px;}
   .mom .hv{padding:7px 0;gap:9px;} .mom .hv-q{font-size:12.5px;line-height:1.35;} .mom .hv-w{display:none;}
@@ -636,12 +657,17 @@
   .cmp-f.on{opacity:1;transform:none;}
   .cmp-f .k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:3px;}
   .cmp-f .v{display:block;font-size:14px;font-weight:600;color:var(--ink);line-height:1.3;}
-  .cmp-f::after{content:"";position:absolute;top:50%;width:26px;height:1px;background:linear-gradient(90deg,var(--copper),transparent);opacity:0;transition:opacity .5s .15s;}
-  .cmp-f.on::after{opacity:.5;}
-  .cmp-col.l .cmp-f::after{right:-26px;background:linear-gradient(90deg,transparent,var(--copper));}
+  .cmp-f::after{content:"";position:absolute;top:50%;width:0;height:1px;background:var(--copper);opacity:.45;transition:width .55s cubic-bezier(.2,.7,.2,1) .12s;}
+  .cmp-f.on::after{width:26px;}
+  .cmp-col.l .cmp-f::after{right:-26px;}
   .cmp-col.r .cmp-f::after{left:-26px;}
-  .cmp-core{position:relative;width:128px;height:128px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .cmp-core::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--copper);opacity:.1;animation:cnbreathe 3.2s ease-in-out infinite;}
+  .cmp-core{position:relative;width:136px;height:136px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cmp-core::before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--copper);opacity:.1;animation:cnbreathe 3.2s ease-in-out infinite;}
+  /* Un anneau qui avance : le temps passe, sans inventer d'étapes */
+  .cmp-ring{position:absolute;inset:0;transform:rotate(-90deg);}
+  .cmp-ring circle{fill:none;stroke-width:2;stroke-linecap:round;}
+  .cmp-ring .rb{stroke:var(--line2);opacity:.55;}
+  .cmp-ring .rf{stroke:var(--copper);stroke-dasharray:414;stroke-dashoffset:414;transition:stroke-dashoffset .6s linear;}
   .cmp-core .disc{position:relative;width:92px;height:92px;border-radius:50%;background:#fff;border:1.5px solid var(--copper);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:var(--shm);}
   .cmp-core .disc img{width:56px;height:56px;object-fit:contain;}
   .cmp-core .disc span{font-family:var(--serif);font-weight:700;font-size:30px;color:var(--copper-d);}
@@ -652,6 +678,16 @@
   .cmp-foot .dots i:nth-child(2){animation-delay:.15s;}
   .cmp-foot .dots i:nth-child(3){animation-delay:.3s;}
   .cmp-foot b{font-family:var(--mono);font-size:11px;color:var(--copper-d);font-weight:500;}
+  /* La sortie : les faits rentrent dans le centre, puis le brief prend la place */
+  .cmpov.out{pointer-events:none;}
+  .cmpov.out .cmp-f{opacity:0;transform:translateY(0) scale(.94);transition:opacity .32s cubic-bezier(.4,0,1,1),transform .32s cubic-bezier(.4,0,1,1);}
+  .cmpov.out .cmp-col.l .cmp-f{transform:translateX(34px) scale(.94);}
+  .cmpov.out .cmp-col.r .cmp-f{transform:translateX(-34px) scale(.94);}
+  .cmpov.out .cmp-f::after{width:0;}
+  .cmpov.out .cmp-core{transform:scale(1.14);opacity:0;transition:transform .42s cubic-bezier(.4,0,1,1) .16s,opacity .42s cubic-bezier(.4,0,1,1) .16s;}
+  .cmpov.out .cmp-name,.cmpov.out .cmp-k,.cmpov.out .cmp-foot{opacity:0;transition:opacity .3s .1s;}
+  .cmpov{transition:opacity .3s cubic-bezier(.4,0,1,1);}
+  .cmpov.out{opacity:0;transition:opacity .34s cubic-bezier(.4,0,1,1) .3s;}
   @media(max-width:740px){
     .cmp-const{grid-template-columns:1fr;gap:20px;}
     .cmp-col{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:14px 22px;}
@@ -2163,7 +2199,7 @@
   <div class="cmp-k" id="cmpK">Ce que Faro sait déjà</div>
   <div class="cmp-const">
     <div class="cmp-col l" id="cmpL"></div>
-    <div><div class="cmp-core"><div class="disc" id="cmpDisc"></div></div><div class="cmp-name" id="cmpName"></div></div>
+    <div><div class="cmp-core"><svg class="cmp-ring" viewBox="0 0 136 136" aria-hidden="true"><circle class="rb" cx="68" cy="68" r="66"/><circle class="rf" cx="68" cy="68" r="66" id="cmpRing"/></svg><div class="disc" id="cmpDisc"></div></div><div class="cmp-name" id="cmpName"></div></div>
     <div class="cmp-col r" id="cmpR"></div>
   </div>
   <div class="cmp-foot"><span class="dots"><i></i><i></i><i></i></span><span id="cmpMsg">Faro compose ton brief</span><b id="cmpSec">0 s</b></div>
@@ -4212,13 +4248,29 @@ function openComposing(){
   let mi=0;
   $('cmpMsg').textContent=MSG[0]; $('cmpSec').textContent='0 s';
   clearInterval(cmpTimer); clearInterval(cmpMsgTimer);
-  cmpTimer=setInterval(()=>{$('cmpSec').textContent=Math.round((performance.now()-t0)/1000)+' s';},250);
+  const RING=414, ETA=22000;
+  cmpTimer=setInterval(()=>{
+    const el=(performance.now()-t0);
+    $('cmpSec').textContent=Math.round(el/1000)+' s';
+    // L'anneau approche sans jamais prétendre finir avant la vraie réponse
+    const r=$('cmpRing');
+    if(r)r.style.strokeDashoffset=RING*(1-Math.min(.93,1-Math.exp(-el/ETA*2.2)));
+  },250);
   cmpMsgTimer=setInterval(()=>{mi=Math.min(mi+1,MSG.length-1);$('cmpMsg').textContent=MSG[mi];},6000);
   $('cmpOv').classList.add('on');
 }
 function closeComposing(){
   clearInterval(cmpTimer); clearInterval(cmpFactTimer); clearInterval(cmpMsgTimer);
-  $('cmpOv').classList.remove('on');
+  $('cmpOv').className='cmpov';
+}
+// La transition : les faits convergent vers le centre, le brief prend la place
+function composingOut(after){
+  clearInterval(cmpTimer); clearInterval(cmpFactTimer); clearInterval(cmpMsgTimer);
+  const ov=$('cmpOv');
+  if(!ov.classList.contains('on')){if(after)after();return;}
+  const r=$('cmpRing'); if(r)r.style.strokeDashoffset='0';
+  ov.classList.add('out');
+  setTimeout(()=>{ov.className='cmpov';if(after)after();},640);
 }
 $('gen').addEventListener('click',async()=>{
   clr();
@@ -4259,10 +4311,10 @@ $('gen').addEventListener('click',async()=>{
       else note(o.error||'Une erreur est survenue.','e');
       return;
     }
-    closeComposing();
     if(typeof o.tokens_left==='number')tok(o.tokens_left);
     if(o.deal){const i=deals.findIndex(d=>d.id===o.deal.id);if(i>=0)deals[i]=o.deal;else deals.unshift(o.deal);}
-    if(o.brief){o.brief.objectif=goalSel||'qualifier';briefs.unshift(o.brief);renderAll();justWritten=true;openBrief(o.brief);}
+    if(o.brief){o.brief.objectif=goalSel||'qualifier';briefs.unshift(o.brief);renderAll();justWritten=true;composingOut(()=>openBrief(o.brief));}
+    else closeComposing();
     ent=null;$('qEnt').value='';
   }catch(e){closeComposing();note('Connexion impossible au serveur.','e');}
   finally{b.classList.remove('load');b.disabled=!posteSel;$('genL').textContent='Générer le brief';const kb2=b.querySelector('.kbd-hint');if(kb2)kb2.style.display='';}
@@ -4390,7 +4442,7 @@ function openBrief(b){
   b._hv=hv;
   // Un rendez-vous se déroule dans le temps : quatre moments, de gauche à droite
   const qBody=qs.map((q,i)=>{const question=typeof q==='string'?q:q.question;const intent=typeof q==='object'?q.intention:'';
-    return `<div class="qitem" data-q="${i}"><div class="qtop"><span class="dot"></span><div class="qsay" data-edit="q${i}">${esc(question)}</div><span class="qstate w2">A marché</span><span class="qstate d2">Esquivée</span><button class="qref" data-qref="${i}" title="Reformuler cette question">${aiSvg}</button></div>${intent?`<div class="why"><b>Pourquoi</b>${esc(intent)}</div>`:''}${refbox('question',i)}<div class="qtags"><button class="w3" data-tag="worked">A marché</button><button class="d3" data-tag="dodged">Esquivée</button></div>${anz('q'+i,'Sa réponse…')}</div>`;}).join('');
+    return `<div class="qitem" data-q="${i}"><div class="qtop"><span class="dot"></span><div class="qsay" data-edit="q${i}">${esc(question)}</div><span class="qstate w2">A marché</span><span class="qstate d2">Esquivée</span><button class="qref" data-qref="${i}" title="Reformuler cette question">${aiSvg}</button></div>${intent?`<div class="why"><b>Pourquoi</b><span class="why-v">${esc(intent)}</span></div>`:''}${refbox('question',i)}<div class="qtags"><button class="w3" data-tag="worked">A marché</button><button class="d3" data-tag="dodged">Esquivée</button></div>${anz('q'+i,'Sa réponse…')}</div>`;}).join('');
   const MOMENTS=[
     {key:'ouverture',cls:'m-ouvrir',when:'Les trois premières minutes',t:'Ouvrir',d:"Ce que tu dis avant qu'on te coupe.",ref:'ouverture',
       copy:ouTxt.join(' ')||(typeof b.ouverture==='string'?b.ouverture:''),
@@ -4411,17 +4463,21 @@ function openBrief(b){
       rest:refbox('next_step')+`<div class="mom-k">Ne pars pas sans</div>`
         +hv.map(h=>`<div class="hv"><span class="hv-b"></span><span class="hv-t"><span class="hv-q">${esc(h[0])}</span><span class="hv-w">${esc(h[1])}</span></span></div>`).join('')}
   ];
+  html+='<div class="spine">'+MOMENTS.map(m=>`<div class="spine-c" style="--sc:var(${m.key==='ouverture'?'--copper':m.key==='questions'?'--copper-l':m.key==='objection'?'--red':'--green'})"><span class="spine-t">${m.when}</span></div>`).join('')+'</div>';
   html+='<div class="moments">'+MOMENTS.map((m,i)=>`<div class="mom sect ${m.cls}" data-sec="${m.key}">
-    <div class="mom-hd"><div class="mom-when">${String(i+1).padStart(2,'0')}<span>${m.when}</span></div><div class="mom-t">${m.t}</div><div class="mom-d">${m.d}</div></div>
+    <span class="mom-ghost">${String(i+1).padStart(2,'0')}</span>
+    <div class="mom-hd"><div class="mom-t">${m.t}</div><div class="mom-d">${m.d}</div></div>
     <div class="mom-acts">${m.key!=='harvest'?`<button class="sbtn" data-editbtn="${m.key}">${penSvg}</button>`:''}${m.ref?`<button class="sbtn" data-refbtn="${m.ref}">${aiSvg}</button>`:''}<button class="sbtn" data-copy="${esc(m.copy)}">${cpySvg}</button></div>
     ${m.lead?`<div class="mom-lead">${m.lead}</div><div class="mom-sep"></div>`:''}
     <div class="mom-rest">${m.rest}</div>
+    <div class="mom-more"><span>Fais défiler<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
   </div>`).join('')+'</div>';
   if(pg.length)html+=`<div class="traps"><span class="traps-k">Pièges</span><div class="traps-l">${pg.map(p=>`<div class="trap">${esc(p)}</div>`).join('')}</div></div>`;
   html+=`<div class="sect" id="libreCard"><div class="secthd"><span class="num">✎</span><span class="tt">Notes rapides</span><span class="dd">Ce que tu captes en vrac. Cmd+N.</span></div><div class="sectbd"><div id="libreList"></div><button class="btn g sm" id="libreAdd" style="margin-top:8px;">+ Une note</button></div></div>`;
   $('dMain').innerHTML=html;
   const sects=$('dMain').querySelectorAll('.sect');
   stopTyping();
+  setTimeout(momOverflow,80); setTimeout(momOverflow,700);
   const st=justWritten?260:60, gap=justWritten?190:120;
   sects.forEach((el,i)=>setTimeout(()=>el.classList.add('reveal'),st+i*gap));
   if(justWritten){justWritten=false;setTimeout(composeReveal,120);}
@@ -4559,7 +4615,25 @@ function confidence(b){
   const weak=checks.find(c=>!c.ok);
   return {pct,pass,total:checks.length,weak:weak?weak.w:null};
 }
+// Une colonne qui déborde l'annonce, et le dit tant qu'on n'a pas fait défiler
+function momOverflow(){
+  document.querySelectorAll('#dMain .mom').forEach(m=>{
+    const r=m.querySelector('.mom-rest'); if(!r)return;
+    const has=r.scrollHeight-r.clientHeight>10;
+    m.classList.toggle('more',has);
+    if(has&&!r.dataset.wired){
+      r.dataset.wired='1';
+      r.addEventListener('scroll',()=>{m.classList.toggle('scrolled',r.scrollTop>6);},{passive:true});
+    }
+  });
+}
+window.addEventListener('resize',()=>{if($('briefDoc').classList.contains('on'))momOverflow();});
 function wireDoc(){
+  // Le pourquoi tient en deux lignes, il se déplie au clic
+  $('dMain').querySelectorAll('.why').forEach(w=>{
+    const v=w.querySelector('.why-v'); if(!v)return;
+    v.addEventListener('click',e=>{e.stopPropagation();v.classList.toggle('open');setTimeout(momOverflow,60);});
+  });
   const stg2=$('sayTog');
   if(stg2)stg2.addEventListener('click',e=>{
     e.stopPropagation();
