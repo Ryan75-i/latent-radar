@@ -108,45 +108,62 @@
   .tagc{font-family:var(--mono);font-size:9px;border-radius:4px;padding:1.5px 6px;background:var(--wash);border:1px solid var(--line);color:var(--dim);}
 
   .col-val{font-family:var(--mono);font-size:9.5px;color:var(--copper-d);padding:0 12px 6px;margin-top:-2px;}
+  /* ══ Tes clients : des dossiers de mémoire, pas un tableau ══ */
+  .mem-hd{display:flex;align-items:stretch;gap:0;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px;}
+  .mem-hc{flex:1;padding:15px 20px;border-right:1px solid var(--line3);min-width:0;}
+  .mem-hc:last-child{border-right:none;}
+  .mem-hv{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .mem-hv em{font-style:normal;font-size:15px;color:var(--dim);margin-left:2px;}
+  .mem-hk{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-top:6px;}
+  .mem-sort{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:16px;}
+  .mem-sb{border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--dim);padding:6px 13px;border-radius:7px;cursor:pointer;transition:.13s;}
+  .mem-sb.on{background:#fff;color:var(--ink);box-shadow:var(--sh);}
+  .mem-sb:hover:not(.on){color:var(--soft);}
+  .mem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
+  .mc{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
+  .mc:hover{box-shadow:var(--shm);transform:translateY(-2px);border-color:var(--line2);}
+  .mc-top{display:flex;align-items:center;gap:12px;padding:16px 18px 0;}
+  .mc-top .mono{width:38px;height:38px;border-radius:10px;font-size:13px;flex-shrink:0;}
+  .mc-n{font-size:15.5px;font-weight:700;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mc-s{font-size:11.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+  .mc-b{min-width:0;flex:1;}
+  /* Ce que Faro a retenu : le cœur de la carte */
+  .mc-mem{margin:14px 18px 0;padding:12px 14px;background:linear-gradient(140deg,#EDF3F8,#F9FCFD);border:1px solid #D5E6F0;border-radius:var(--r);}
+  .mc-mem-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:8px;}
+  .mc-l{font-size:12.5px;color:var(--soft);line-height:1.45;padding:4px 0;display:flex;gap:9px;}
+  .mc-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--blue);opacity:.45;margin-top:7px;flex-shrink:0;}
+  .mc-mem.vide{background:var(--wash);border-color:var(--line3);border-style:dashed;}
+  .mc-mem.vide .mc-mem-k{color:var(--faint);}
+  .mc-mem.vide .mc-l{color:var(--dim);font-style:italic;}
+  .mc-mem.vide .mc-l::before{background:var(--line2);opacity:1;}
+  /* La force de la mémoire, en points */
+  .mc-mid{display:flex;align-items:center;gap:11px;padding:14px 18px 0;}
+  .mc-dots{display:flex;gap:3px;flex-shrink:0;}
+  .mc-dots i{width:6px;height:6px;border-radius:50%;background:var(--line2);}
+  .mc-dots i.on{background:var(--blue);}
+  .mc-force{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--dim);white-space:nowrap;}
+  .mc-temp{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--dim);white-space:nowrap;}
+  .mc-temp i{width:8px;height:8px;border-radius:50%;}
+  .mc-money{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums;}
+  /* L'action, en bas, cliquable */
+  .mc-foot{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 18px;border-top:1px solid var(--line3);background:var(--wash);}
+  .mc-do{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:8px 14px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;transition:.14s cubic-bezier(.2,.7,.2,1);}
+  .mc-do:hover{border-color:var(--copper);background:var(--washc);}
+  .mc-do svg{width:13px;height:13px;transition:transform .15s;}
+  .mc-do:hover svg{transform:translateX(3px);}
+  .mc-do.loading{pointer-events:none;opacity:.7;}
+  .mc-do.loading svg{display:none;}
+  .mc-do.loading::after{content:"";width:11px;height:11px;border:2px solid var(--line2);border-top-color:var(--copper);border-radius:50%;animation:spin .6s linear infinite;}
+  .mc-when{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint);white-space:nowrap;}
+  .view.on .mem-hd{animation:rise .4s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .mem-sort{animation:rise .4s cubic-bezier(.2,.7,.2,1) .05s both;}
+  .view.on .mc:nth-child(1){animation:rise .4s cubic-bezier(.2,.7,.2,1) .1s both;}
+  .view.on .mc:nth-child(2){animation:rise .4s cubic-bezier(.2,.7,.2,1) .14s both;}
+  .view.on .mc:nth-child(3){animation:rise .4s cubic-bezier(.2,.7,.2,1) .18s both;}
+  .view.on .mc:nth-child(n+4){animation:rise .4s cubic-bezier(.2,.7,.2,1) .22s both;}
+  @media(max-width:720px){.mem-hd{flex-wrap:wrap;}.mem-hc{min-width:45%;}}
   /* ═══ Entreprises : table Attio-Faro ═══ */
-  .ent-ctx{display:flex;gap:0;padding:0;margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;}
-  .ent-ctx .ec{display:flex;flex-direction:column;gap:3px;padding:14px 20px;border-right:1px solid var(--line3);flex:1;}
-  .ent-ctx .ec:last-child{border-right:none;}
-  .ent-ctx .ec-v{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
-  .ent-ctx .ec-v em{font-style:normal;color:var(--copper);}
-  .ent-ctx .ec-k{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
-  .ent-tablecard{overflow:hidden;border-color:var(--line2);}
-  .ent-toolbar{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--head);flex-wrap:wrap;}
-  .ent-toolbar .pt-search{max-width:300px;}
-  .ent-table{width:100%;background:var(--card);}
-  .ent-thead{display:grid;grid-template-columns:2.4fr 1.1fr 1.2fr 0.9fr 1.6fr;gap:14px;padding:10px 20px;border-bottom:1.5px solid var(--line2);background:var(--head);}
-  .eth{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);cursor:pointer;display:flex;align-items:center;gap:4px;transition:.13s;user-select:none;white-space:nowrap;}
-  .eth:hover{color:var(--copper-d);}
-  .eth .ar{width:9px;height:9px;opacity:0;transition:.13s;}
-  .eth.sorted .ar{opacity:1;}
-  .eth.sorted{color:var(--copper-d);}
-  .etr{display:grid;grid-template-columns:2.4fr 1.1fr 1.2fr 0.9fr 1.6fr;gap:14px;padding:0 20px;height:60px;border-bottom:1px solid var(--line3);cursor:pointer;transition:background .12s;align-items:center;}
-  .etr:last-child{border-bottom:none;}
-  .etr:hover{background:var(--wash);}
-  .etd{min-width:0;display:flex;align-items:center;}
-  .etd-comp{gap:12px;}
-  .etd-comp .mono{width:36px;height:36px;border-radius:8px;font-size:12px;flex-shrink:0;}
-  .etd-comp .ecn{min-width:0;}
-  .etd-comp .ecn-n{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em;}
-  .etd-comp .ecn-m{font-size:11px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
-  .etd-temp{gap:8px;font-size:12px;color:var(--soft);}
-  .etd-temp .tdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-  .etd-val{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);}
-  .etd-val.none{color:var(--faint);font-weight:400;}
-  .etd-next{font-size:12px;color:var(--soft);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-  .etd-next.none{color:var(--faint);font-style:italic;}
-  .etd-next b{color:var(--copper-d);font-weight:600;}
-  .ent-empty{text-align:center;padding:20px;}
   @media(max-width:960px){
-    .ent-ctx{flex-wrap:wrap;} .ent-ctx .ec{min-width:40%;}
-    .ent-thead{display:none;}
-    .etr{grid-template-columns:1fr;gap:6px;height:auto;padding:14px 16px;}
-    .etd-temp,.etd-val,.etd-next{padding-left:48px;}
   }
   /* ═══ Mon offre ═══ */
   .offre-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;}
@@ -1974,7 +1991,7 @@
 
   <section class="view" id="v-entreprises">
     <div class="ptitle"><div><div class="eyebrow">Mémoire · Tes clients</div><h1>Tes clients</h1><div class="sub">Chacun avec toute son histoire. Clique pour ouvrir son dossier et ce que Faro en a retenu.</div></div></div>
-    <div class="card ent-tablecard"><div class="ent-table" id="entW"></div></div>
+    <div id="entW"></div>
   </section>
 
   <section class="view" id="v-toi">
@@ -3589,89 +3606,112 @@ function exportAffCsv(subset){
 }
 
 /* ═══ Table des affaires (vue liste) ═══ */
-let entSort={key:'recent',dir:-1};
+let entSort={key:'memoire',dir:-1};
 
 function entLastActivity(d){
   const bs=dealBriefs(d);
   const lb=bs.find(b=>b.debrief)||bs[0];
   return lb;
 }
-function entNextText(d){
-  const bs=dealBriefs(d);
-  const lb=bs.find(b=>b.debrief);
-  const looksLikeMail=t=>/^(bonjour|madame|monsieur|je vous|je me permets|suite à|comme convenu|cher|chère)/i.test((t||'').trim());
-  const note=(lb&&lb.debrief&&lb.debrief.next_action)||d.prochaine_action;
-  if(['gagne'].includes(d.etape))return {t:'Affaire gagnée, entretiens la relation.',cls:''};
-  if(['perdu'].includes(d.etape))return {t:'Affaire close. Reste en veille.',cls:'none'};
-  if(note&&!looksLikeMail(note)&&note.length<=52)return {t:`<b>${esc(note)}</b>`,cls:''};
-  const n=days(d.updated_at);
-  if(n>=7)return {t:`Sans mouvement depuis ${n} jours.`,cls:''};
-  return {t:'Prépare le prochain rendez-vous.',cls:'none'};
-}
-
 function entList(){
-  // Utilise la recherche, le tri et les filtres partagés avec le board
+  const w=$('entW'); if(!w)return;
   let list=deals.slice();
   const q=(typeof pipeSearch!=='undefined'?pipeSearch:'').toLowerCase();
   if(q)list=list.filter(d=>((d.entreprise||'')+' '+(d.tags||[]).join(' ')+' '+(d.interlocuteur||'')).toLowerCase().includes(q));
-  if(typeof pipeFilters!=='undefined'){
-    if(pipeFilters.temp)list=list.filter(d=>dealTemp(d)===pipeFilters.temp);
-    if(pipeFilters.stale)list=list.filter(d=>dealStale(d));
-  }
 
-  const STORD={contact:0,decouverte:1,negociation:2,closing:3,gagne:4,perdu:5};
-  list.sort((a,b)=>{
-    let v=0;
-    if(entSort.key==='recent')v=new Date(a.updated_at)-new Date(b.updated_at);
-    else if(entSort.key==='nom')v=(a.entreprise||'').localeCompare(b.entreprise||'');
-    else if(entSort.key==='etape')v=STORD[a.etape]-STORD[b.etape];
-    else if(entSort.key==='valeur')v=dealVal(a)-dealVal(b);
-    return v*entSort.dir;
-  });
-
-  const w=$('entW'); if(!w)return;
   if(!list.length){
-    w.innerHTML=`<div class="ent-empty">${q?'<div class="empty">Rien ne correspond.</div>':`<div class="esvg">${ESVG.entreprises}</div><div class="empty">Tes affaires apparaîtront ici, avec toute leur mémoire.</div>`}</div>`;
+    w.innerHTML=`<div class="page-empty">
+      <div class="pe-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
+      <div class="pe-t">Ta mémoire est vide.</div>
+      <div class="pe-d">Prépare un rendez-vous, raconte-le, et Faro commence à retenir ce qui compte chez ce client.</div>
+      <div class="pe-acts"><button class="pe-cta" id="peGoMem">Nouveau brief<kbd class="kbd-hint">N</kbd></button><button class="pe-alt" id="peDemoMem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/></svg>Voir un brief exemple</button></div>
+    </div>`;
+    wireEmptyCta($('peGoMem'),$('peDemoMem'));
     return;
   }
 
+  // Ce que Faro retient d'un client : les observations de ses récits, les plus récentes d'abord
+  const retained=d=>{
+    const out=[];
+    dealBriefs(d).filter(b=>b.debrief).forEach(b=>{
+      if(b.synthese_post&&b.synthese_post.observations)b.synthese_post.observations.forEach(o=>{if(o&&!out.includes(o))out.push(o);});
+      if(b.debrief&&b.debrief.phrase&&!out.includes(b.debrief.phrase))out.push(b.debrief.phrase);
+    });
+    return out;
+  };
+  const nRecits=d=>dealBriefs(d).filter(b=>b.debrief).length;
+
+  const totalRecits=list.reduce((a,d)=>a+nRecits(d),0);
+  const best=list.slice().sort((a,b)=>nRecits(b)-nRecits(a))[0];
+  const bestN=best?nRecits(best):0;
+  const STORD={contact:0,decouverte:1,negociation:2,closing:3,gagne:4,perdu:5};
+  const sorters={
+    memoire:(a,b)=>nRecits(b)-nRecits(a)||new Date(b.updated_at)-new Date(a.updated_at),
+    recent:(a,b)=>new Date(b.updated_at)-new Date(a.updated_at),
+    etape:(a,b)=>STORD[a.etape]-STORD[b.etape]||new Date(b.updated_at)-new Date(a.updated_at)
+  };
+  list.sort(sorters[entSort.key]||sorters.recent);
+
   const TC={close:'#4F9D69',chaud:'#C96A2E',tiede:'#B8860B',mort:'#9a3d2a'};
-  const TLBL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
-  const arw='<svg class="ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>';
-  const sc=k=>entSort.key===k?'sorted':'';
-  const head=`<div class="ent-thead">
-    <div class="eth ${sc('nom')}" data-sort="nom">Entreprise ${arw}</div>
-    <div class="eth ${sc('etape')}" data-sort="etape">Où ça en est ${arw}</div>
-    <div class="eth ${sc('recent')}" data-sort="recent">Dernier RDV ${arw}</div>
-    <div class="eth ${sc('valeur')}" data-sort="valeur">Valeur ${arw}</div>
-    <div class="eth">Ce qui t'attend</div>
-  </div>`;
-  const rows=list.map(d=>{
-    const bs=dealBriefs(d);
+  const TL={close:'Closé',chaud:'Chaud',tiede:'Tiède',mort:'Difficile'};
+  const SORTS=[['memoire','Les mieux connus'],['recent','Vus récemment'],['etape','Par étape']];
+
+  let html=`<div class="mem-hd">
+    <div class="mem-hc"><div class="mem-hv">${list.length}</div><div class="mem-hk">client${list.length>1?'s':''} suivi${list.length>1?'s':''}</div></div>
+    <div class="mem-hc"><div class="mem-hv">${totalRecits}</div><div class="mem-hk">récit${totalRecits>1?'s':''} capturé${totalRecits>1?'s':''}</div></div>
+    <div class="mem-hc"><div class="mem-hv">${bestN?esc(trunc(best.entreprise,16)):'—'}${bestN?`<em> · ${bestN}</em>`:''}</div><div class="mem-hk">le mieux connu</div></div>
+  </div>
+  <div class="mem-sort">${SORTS.map(([k,l])=>`<button class="mem-sb ${entSort.key===k?'on':''}" data-ms="${k}">${l}</button>`).join('')}</div>
+  <div class="mem-grid">`;
+
+  html+=list.map(d=>{
+    const ed=d.entreprise_data||{};
+    const st=stg(d.etape);
+    const n=nRecits(d), lines=retained(d).slice(0,2);
     const lb=entLastActivity(d);
     const temp=lb&&lb.debrief?lb.debrief.temperature:null;
     const mv=dealVal(d);
-    const nx=entNextText(d);
-    const tempCell=temp
-      ? `<span class="tdot" style="background:${TC[temp]}"></span>${TLBL[temp]} · ${rel(lb.updated_at||lb.created_at)}`
-      : (lb?`<span class="tdot" style="background:var(--line2)"></span>${rel(lb.created_at)}`:`<span class="tdot" style="background:var(--line2)"></span>—`);
-    return `<div class="etr" data-d="${d.id}">
-      <div class="etd etd-comp">${dealLogo(d)}<div class="ecn"><div class="ecn-n">${esc(d.entreprise)}</div><div class="ecn-m">${bs.length} brief${bs.length>1?'s':''}${(d.tags||[]).length?' · '+esc((d.tags||[]).slice(0,2).join(', ')):''}</div></div></div>
-      <div class="etd">${stageChip(d.etape)}</div>
-      <div class="etd etd-temp">${tempCell}</div>
-      <div class="etd etd-val ${mv?'':'none'}">${mv?eur(mv):'—'}</div>
-      <div class="etd etd-next ${nx.cls}">${nx.t}</div>
+    const na=dealNextAction(d);
+    const force=n===0?'Faro ne sait rien encore':n===1?'mémoire naissante':n<=2?'mémoire correcte':n<=4?'mémoire solide':'mémoire profonde';
+    const dots=Array.from({length:5},(_,i)=>`<i class="${i<Math.min(n,5)?'on':''}"></i>`).join('');
+    return `<div class="mc" data-d="${d.id}">
+      <div class="mc-top">${dealLogo(d)}<div class="mc-b"><div class="mc-n">${esc(d.entreprise)}</div><div class="mc-s">${esc([ed.activite,ed.ville].filter(Boolean).join(' · ')||d.interlocuteur&&cleanPoste(d.interlocuteur)||'—')}</div></div>${stageChip(d.etape)}</div>
+      <div class="mc-mem ${lines.length?'':'vide'}">
+        <div class="mc-mem-k">${lines.length?'Ce que Faro a retenu':'Rien en mémoire'}</div>
+        ${lines.length?lines.map(l=>`<div class="mc-l">${esc(trunc(l,120))}</div>`).join(''):`<div class="mc-l">Raconte ton rendez-vous, Faro commencera à retenir.</div>`}
+      </div>
+      <div class="mc-mid">
+        <span class="mc-dots">${dots}</span><span class="mc-force">${n} récit${n>1?'s':''} · ${force}</span>
+        ${mv?`<span class="mc-money" style="margin-left:auto">${eur(mv)}</span>`:''}
+        ${temp?`<span class="mc-temp"${mv?' style="margin-left:10px"':''}><i style="background:${TC[temp]}"></i>${TL[temp]}</span>`:''}
+      </div>
+      <div class="mc-foot">
+        <button class="mc-do" data-mdo="${d.id}">${na?esc(trunc(na.txt,30)):'Préparer le prochain'}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <span class="mc-when">${lb?rel(lb.created_at):'jamais vu'}</span>
+      </div>
     </div>`;
-  }).join('');
-  w.innerHTML=head+rows;
-  w.querySelectorAll('.eth[data-sort]').forEach(el=>el.addEventListener('click',()=>{
-    const k=el.dataset.sort;
-    if(entSort.key===k)entSort.dir*=-1;
-    else {entSort.key=k;entSort.dir=k==='nom'?1:-1;}
-    entList();
+  }).join('')+'</div>';
+
+  w.innerHTML=html;
+  w.querySelectorAll('[data-ms]').forEach(b=>b.addEventListener('click',()=>{entSort={key:b.dataset.ms,dir:-1};entList();}));
+  w.querySelectorAll('.mc').forEach(el=>el.addEventListener('click',e=>{
+    if(e.target.closest('.mc-do'))return;
+    const d=deals.find(x=>x.id===el.dataset.d); if(d)openFiche(d);
   }));
-  w.querySelectorAll('.etr').forEach(el=>el.addEventListener('click',()=>{const d=deals.find(x=>x.id===el.dataset.d);if(d)openFiche(d);}));
+  w.querySelectorAll('[data-mdo]').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(b.classList.contains('loading'))return;
+    b.classList.add('loading');
+    const d=deals.find(x=>x.id===b.dataset.mdo);
+    setTimeout(()=>{
+      b.classList.remove('loading'); if(!d)return;
+      const und=dealBriefs(d).find(x=>!x.debrief&&x.statut==='a_relancer');
+      if(und){current=und;openBrief(und);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},200);return;}
+      startFromDeal(d);
+    },250);
+  }));
 }
+
 
 /* ═══ Fiche entreprise / deal ═══ */
 
