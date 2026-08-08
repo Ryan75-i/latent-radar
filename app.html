@@ -93,7 +93,19 @@
   .dk-d{font-size:13px;color:var(--dim);margin-top:2px;}
   .dk-opt{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--goldbg);border:1px solid #E7CE8C;border-radius:20px;padding:3px 10px;white-space:nowrap;}
   .dk-opt.pow{color:var(--copper-d);background:var(--washc);border-color:var(--copper-l);}
-  .dk-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px 16px;flex:1;min-height:0;overflow-y:auto;}
+  .dk-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px 16px;flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;}
+  /* Le numéro de l'étage en filigrane : de la matière, pas du bruit */
+  .dk-wm{position:absolute;right:16px;bottom:-56px;font-family:var(--serif);font-weight:700;font-size:260px;line-height:1;letter-spacing:-14px;color:var(--copper);opacity:.038;pointer-events:none;user-select:none;}
+  .dk-in{position:relative;z-index:1;overflow-y:auto;padding-right:2px;}
+  .dk-in::-webkit-scrollbar{width:5px;} .dk-in::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
+  /* Ce que cet étage produit, en direct */
+  .dk-out{position:relative;z-index:1;margin-top:auto;padding-top:14px;border-top:1px dashed var(--line2);}
+  .dk-out-k{display:flex;align-items:baseline;gap:9px;font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:9px;}
+  .dk-out-k span{margin-left:auto;color:var(--faint);letter-spacing:.06em;}
+  .dk-ins{display:flex;gap:9px;font-size:12.5px;color:var(--soft);line-height:1.45;padding:4px 0;animation:rise .3s cubic-bezier(.2,.7,.2,1) both;}
+  .dk-ins::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper);opacity:.55;margin-top:7px;flex-shrink:0;}
+  .dk-ins.vide{color:var(--faint);font-style:italic;}
+  .dk-ins.vide::before{background:var(--line2);opacity:1;}
   .dk-card::-webkit-scrollbar{width:5px;} .dk-card::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   /* Le rail : où tu en es, et ce qui reste */
   .dk-rail{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;padding-top:2px;}
@@ -124,7 +136,7 @@
   .dk-chip{border:1.5px solid var(--line2);background:var(--card);border-radius:20px;padding:7px 14px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--dim);cursor:pointer;transition:.13s;}
   .dk-chip:hover{border-color:var(--copper-l);}
   .dk-chip.on{border-color:var(--copper);background:var(--washc);color:var(--copper-d);}
-  .dk-why{display:flex;gap:9px;font-size:12px;color:var(--faint);line-height:1.5;margin-top:6px;padding-top:12px;border-top:1px dashed var(--line2);}
+  .dk-why{display:flex;gap:9px;font-size:11.5px;color:var(--faint);line-height:1.5;margin-top:12px;}
   .dk-why::before{content:"→";color:var(--copper-l);font-weight:700;flex-shrink:0;}
   .dk-foot{display:flex;align-items:center;gap:12px;margin-top:12px;flex-shrink:0;}
   .dk-save{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);border-radius:9px;padding:9px 16px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;box-shadow:var(--sh);transition:.14s;}
@@ -3460,6 +3472,49 @@ function etageRempli(k){
   if(k==='marche')return !!(prof.objections||prof.concurrents);
   return false;
 }
+// Les instructions que cet étage envoie réellement au modèle, à cet instant
+function etageInstr(k){
+  const pf=prof, g=x=>((set[x]||'').toString().trim());
+  const l=[];
+  if(k==='toi'){
+    if(g('full_name'))l.push(`Tes relances seront signées ${g('full_name').split(' ')[0]}.`);
+    if(pf.role)l.push(`Le commercial est ${pf.role.toLowerCase()}. Le registre s'adapte à ce rôle.`);
+    if(pf.vous==='Tutoies')l.push(`Tout le brief tutoie, sans exception.`);
+    if(pf.vous==='Vouvoies')l.push(`Tout le brief vouvoie.`);
+    if(pf.anc)l.push(`Il exerce ce métier depuis ${pf.anc.toLowerCase()}.`);
+  }
+  if(k==='boite'){
+    if(g('company'))l.push(`Faro nomme ${g('company')} dans chaque ouverture.`);
+    if(g('secteur'))l.push(`Secteur ${g('secteur')}, les références resteront dans ce monde.`);
+    if(pf.taille)l.push(`Une structure de ${pf.taille.toLowerCase()} personnes.`);
+    if(pf.place)l.push(`${pf.place} de son marché. L'ouverture assume cette position au lieu de la contourner.`);
+  }
+  if(k==='pupitre')return AXES.map(a=>a.v[pupitre[a.k]]);
+  if(k==='vend'){
+    if(g('offre'))l.push(`Ce qu'il vend : ${g('offre')}.`);
+    if(g('cible'))l.push(`Chaque brief vise ${g('cible')}.`);
+    if(pf.prix)l.push(`Prix d'entrée : ${pf.prix}. Faro n'en parle que si le brief l'exige.`);
+    if(pf.cycle)l.push(`Cycle de ${pf.cycle.toLowerCase()}. La prochaine étape reste réaliste pour ce rythme.`);
+  }
+  if(k==='preuve'){
+    if(g('contexte'))l.push(`Sa proposition de valeur nourrit l'ouverture.`);
+    if(g('preuves'))l.push(`Ses preuves arment les ripostes aux objections.`);
+    if(pf.chiffre)l.push(`Son chiffre passe avant une statistique de secteur : ${pf.chiffre}.`);
+    if(pf.garantie)l.push(`Sa garantie sert à lever le risque perçu : ${pf.garantie}.`);
+  }
+  if(k==='regles'){
+    if(g('style'))g('style').split(/[.\n]/).map(x=>x.trim()).filter(Boolean).slice(0,3).forEach(x=>l.push(x+'.'));
+    if(pf.bannis)l.push(`Ces mots ne seront jamais employés : ${pf.bannis}.`);
+    if(pf.tard)l.push(`Ces sujets ne seront pas ouverts : ${pf.tard}.`);
+  }
+  if(k==='marche'){
+    if(pf.objections)l.push(`Faro anticipe tes objections habituelles au lieu d'en inventer une autre.`);
+    if(pf.concurrents)l.push(`Comparaison préparée face à ${pf.concurrents}, sans les dénigrer.`);
+    if(pf.diff)l.push(`Angle à défendre dans la riposte : ${pf.diff}.`);
+    if(pf.declencheur)l.push(`Les questions cherchent ce signal : ${pf.declencheur}.`);
+  }
+  return l;
+}
 function renderToi(){
   const w=$('toiW'); if(!w)return;
   prof=profGet();
@@ -3526,7 +3581,10 @@ function renderToi(){
   w.innerHTML=`<div class="dk">
     <div class="dk-stage">${ETAGES.map((e,i)=>`<div class="dk-slide ${i===etage?'on':''}" data-slide="${i}">
       <div class="dk-head"><svg class="dk-pic" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${EPIC[e.k]||''}</svg><div class="dk-ti"><div class="dk-tr"><span class="dk-n">0${i+1}</span><span class="dk-t">${e.t}</span>${e.opt?`<span class="dk-opt ${/gros/.test(e.opt)?'pow':''}">${e.opt}</span>`:''}</div><div class="dk-d">${e.d}</div></div></div>
-      <div class="dk-card">${corps(e)}<div class="dk-why">${e.why}</div></div>
+      <div class="dk-card"><span class="dk-wm">0${i+1}</span>
+        <div class="dk-in">${corps(e)}<div class="dk-why">${e.why}</div></div>
+        <div class="dk-out" data-out="${e.k}"></div>
+      </div>
       <div class="dk-foot"><button class="dk-save" data-save="1">Enregistrer</button><span class="dk-hint">Enregistré pour tous tes prochains briefs.</span></div>
     </div>`).join('')}</div>
     <div class="dk-rail">
@@ -3559,7 +3617,7 @@ function renderToi(){
     w.querySelectorAll(`[data-axk="${k}"]`).forEach(x=>x.classList.toggle('on',+x.dataset.axi===i));
     const v=w.querySelector(`[data-axv="${k}"]`);
     if(v)v.textContent=(AXES.find(a=>a.k===k)||{l:[]}).l[i]||'';
-    drawFill();
+    drawFill(); drawOut('pupitre');
   };
   w.querySelectorAll('[data-axt]').forEach(tr=>{
     const k=tr.dataset.axt;
@@ -3579,6 +3637,7 @@ function renderToi(){
     const c=b.dataset.c;
     prof[c]=(prof[c]===b.dataset.v)?'':b.dataset.v;
     w.querySelectorAll(`[data-c="${c}"]`).forEach(x=>x.classList.toggle('on',x===b&&prof[c]===b.dataset.v));
+    drawOut(ETAGES[etage].k);
   }));
   const u=$('dkUp'), d=$('dkDown');
   if(u)u.addEventListener('click',()=>go2(etage-1));
@@ -3592,6 +3651,27 @@ function renderToi(){
     w.querySelectorAll('.dk-dot').forEach((x,i)=>x.classList.toggle('full',etageRempli(ETAGES[i].k)));
     setTimeout(()=>{b.classList.remove('ok');b.textContent='Enregistrer';b.disabled=false;},1700);
   }));
+  // Ce que l'étage produit, recalculé à chaque frappe et à chaque clic
+  // Déclaration hissée : appelable depuis les gestionnaires définis plus haut
+  function drawOut(k){
+    w.querySelectorAll('[data-out]').forEach(el=>{
+      const kk=el.dataset.out;
+      if(k&&kk!==k)return;
+      const ins=etageInstr(kk);
+      el.innerHTML=`<div class="dk-out-k">Ce que Faro reçoit de cet étage<span>${ins.length} instruction${ins.length>1?'s':''}</span></div>`
+        +(ins.length?ins.map(x=>`<div class="dk-ins">${esc(x)}</div>`).join('')
+                    :`<div class="dk-ins vide">Rien pour l'instant. Remplis un champ, la phrase apparaît ici.</div>`);
+    });
+  }
+  const lire=()=>{
+    const g=id=>{const e=$(id);return e?e.value.trim():undefined;};
+    const map={dkName:'full_name',dkComp:'company',dkSite:'site',dkSec:'secteur',dkOff:'offre',dkCible:'cible',dkVal:'contexte',dkPr:'preuves',dkStyle:'style'};
+    Object.keys(map).forEach(id=>{const v=g(id); if(v!==undefined)set[map[id]]=v;});
+    const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents',dkPrix:'prix',dkChiffre:'chiffre',dkGarantie:'garantie',dkTard:'tard',dkDiff:'diff',dkDecl:'declencheur'};
+    Object.keys(pmap).forEach(id=>{const v=g(id); if(v!==undefined)prof[pmap[id]]=v;});
+  };
+  w.querySelectorAll('.dk-in input,.dk-in textarea').forEach(el=>el.addEventListener('input',()=>{lire();drawOut(ETAGES[etage].k);}));
+  drawOut(null);
   go2(etage); requestAnimationFrame(drawFill);
 }
 // Un seul enregistrement pour tous les étages
