@@ -79,11 +79,65 @@
   .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  /* ══ Le jeu d'étages : on descend, Faro en sait plus ══ */
+  .dk{position:relative;flex:1;min-height:0;display:flex;gap:22px;z-index:1;}
+  .dk-stage{position:relative;flex:1;min-width:0;}
+  .dk-slide{position:absolute;inset:0;opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .38s cubic-bezier(.2,.7,.2,1),transform .38s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;}
+  .dk-slide.on{opacity:1;transform:none;pointer-events:auto;}
+  .dk-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-shrink:0;flex-wrap:wrap;}
+  .dk-n{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--copper-d);}
+  .dk-t{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:-.5px;color:var(--ink);}
+  .dk-d{font-size:13px;color:var(--dim);}
+  .dk-opt{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--goldbg);border:1px solid #E7CE8C;border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  .dk-opt.pow{color:var(--copper-d);background:var(--washc);border-color:var(--copper-l);}
+  .dk-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px 16px;flex:1;min-height:0;overflow-y:auto;}
+  .dk-card::-webkit-scrollbar{width:5px;} .dk-card::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
+  /* Le rail : où tu en es, et ce qui reste */
+  .dk-rail{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;padding-top:2px;}
+  .dk-arw{width:30px;height:30px;border-radius:9px;border:1px solid var(--line2);background:var(--card);color:var(--dim);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.14s;padding:0;box-shadow:var(--sh);}
+  .dk-arw:hover:not(:disabled){border-color:var(--copper);color:var(--copper-d);transform:translateY(-1px);}
+  .dk-arw:disabled{opacity:.28;cursor:default;box-shadow:none;}
+  .dk-arw svg{width:15px;height:15px;stroke-width:2.2;}
+  .dk-dots{display:flex;flex-direction:column;gap:2px;margin:4px 0;}
+  .dk-dot{position:relative;width:30px;height:26px;border:none;background:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;}
+  .dk-dot i{width:8px;height:8px;border-radius:50%;background:var(--line2);transition:.22s cubic-bezier(.2,.7,.2,1);}
+  .dk-dot.full i{background:var(--copper-l);}
+  .dk-dot.on i{width:8px;height:20px;border-radius:5px;background:var(--copper);}
+  .dk-dot:hover i{background:var(--copper-l);}
+  .dk-dot .tipl{position:absolute;right:calc(100% + 9px);top:50%;transform:translateY(-50%) translateX(4px);background:var(--ink);color:#F5F2EC;border-radius:8px;padding:6px 11px;font-family:var(--sans);font-size:11.5px;white-space:nowrap;opacity:0;visibility:hidden;transition:.15s;pointer-events:none;box-shadow:var(--shl);z-index:5;}
+  .dk-dot:hover .tipl{opacity:1;visibility:visible;transform:translateY(-50%);}
+  .dk-pct{font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-top:2px;}
+  /* Les champs */
+  .dk-g{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;}
+  .dk-f{margin-bottom:14px;}
+  .dk-f.full{grid-column:1/-1;}
+  .dk-f label{display:block;font-size:12px;font-weight:600;color:var(--soft);margin-bottom:6px;}
+  .dk-f label em{font-style:normal;color:var(--faint);font-weight:400;}
+  .dk-f input,.dk-f textarea{width:100%;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14px;color:var(--ink);background:var(--card);outline:none;transition:.15s;}
+  .dk-f textarea{min-height:74px;resize:none;font-family:var(--serif);line-height:1.5;}
+  .dk-f input:focus,.dk-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  .dk-f input::placeholder,.dk-f textarea::placeholder{color:var(--faint);}
+  .dk-chips{display:flex;gap:7px;flex-wrap:wrap;}
+  .dk-chip{border:1.5px solid var(--line2);background:var(--card);border-radius:20px;padding:7px 14px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--dim);cursor:pointer;transition:.13s;}
+  .dk-chip:hover{border-color:var(--copper-l);}
+  .dk-chip.on{border-color:var(--copper);background:var(--washc);color:var(--copper-d);}
+  .dk-why{display:flex;gap:9px;font-size:12px;color:var(--faint);line-height:1.5;margin-top:6px;padding-top:12px;border-top:1px dashed var(--line2);}
+  .dk-why::before{content:"→";color:var(--copper-l);font-weight:700;flex-shrink:0;}
+  .dk-foot{display:flex;align-items:center;gap:12px;margin-top:12px;flex-shrink:0;}
+  .dk-save{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);border-radius:9px;padding:9px 16px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;box-shadow:var(--sh);transition:.14s;}
+  .dk-save:hover{border-color:var(--copper);background:var(--washc);}
+  .dk-save.ok{border-color:var(--greenbd);background:var(--greenbg);color:var(--green-d);}
+  .dk-hint{font-size:11.5px;color:var(--faint);}
+  @media(max-width:900px){
+    .dk{flex-direction:column-reverse;}
+    .dk-rail{flex-direction:row;justify-content:center;}
+    .dk-dots{flex-direction:row;}
+    .dk-stage{position:static;}
+    .dk-slide{position:static;opacity:1;transform:none;pointer-events:auto;}
+    .dk-slide:not(.on){display:none;}
+  }
   /* ══ Ton pupitre : trois réglages, un aperçu qui se réécrit ══ */
   #v-toi{position:relative;overflow:hidden;}
-  /* La trame, posée en haut à droite là où rien ne la recouvre */
-  .toi-trame{position:absolute;top:-50px;right:-90px;width:700px;transform:rotate(4deg);transform-origin:top right;opacity:0;transition:opacity 1.1s ease .25s;z-index:0;pointer-events:none;}
-  .toi-trame.lit{opacity:1;}
   .pu-head,.pu-2{position:relative;z-index:1;}
   .pu-head{display:flex;align-items:baseline;gap:14px;padding:2px 0 20px;flex-shrink:0;}
   .pu-h1{font-family:var(--serif);font-weight:600;font-size:27px;letter-spacing:-.5px;color:var(--ink);}
@@ -100,15 +154,18 @@
   .ax{padding:14px 0 12px;border-top:1px solid var(--line3);}
   .ax:first-child{border-top:none;}
   .ax.a-approche{--ac:var(--copper);} .ax.a-ouverture{--ac:var(--blue);} .ax.a-closing{--ac:var(--green-d);}
-  .ax-h{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
-  .ax-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);}
+  .ax-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:2px;}
   /* L'infobulle : ce que chaque pôle veut dire, sans encombrer */
   .ax-i{width:15px;height:15px;border-radius:50%;border:1px solid var(--line2);background:none;color:var(--faint);font-family:var(--serif);font-size:10px;font-weight:700;line-height:1;cursor:help;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;transition:.14s;position:relative;}
   .ax-i:hover{border-color:var(--ac);color:var(--ac);}
-  .ax-tip{position:absolute;left:0;top:calc(100% + 8px);width:262px;background:var(--ink);color:#F5F2EC;border-radius:9px;padding:11px 13px;font-size:11.5px;line-height:1.5;font-weight:400;font-family:var(--sans);box-shadow:var(--shl);opacity:0;visibility:hidden;transform:translateY(-3px);transition:.16s cubic-bezier(.2,.7,.2,1);z-index:20;text-align:left;pointer-events:none;}
+  .ax-tip{position:absolute;left:0;bottom:calc(100% + 9px);top:auto;width:250px;text-transform:none;letter-spacing:0;background:var(--ink);color:#F5F2EC;border-radius:9px;padding:11px 13px;font-size:11.5px;line-height:1.5;font-weight:400;font-family:var(--sans);box-shadow:var(--shl);opacity:0;visibility:hidden;transform:translateY(-3px);transition:.16s cubic-bezier(.2,.7,.2,1);z-index:20;text-align:left;pointer-events:none;}
   .ax-tip b{color:var(--copper-l);font-weight:600;}
   .ax-tip::before{content:"";position:absolute;left:14px;top:-4px;width:8px;height:8px;background:var(--ink);transform:rotate(45deg);}
+  .ax-tip.r{left:auto;right:0;}
+  .ax-tip.r::before{left:auto;right:14px;}
+  .ax-tip b{display:inline-block;margin-bottom:3px;}
   .ax-i:hover .ax-tip,.ax-i:focus-visible .ax-tip{opacity:1;visibility:visible;transform:none;}
+  .ax-tip::before{top:auto;bottom:-4px;}
   .ax-v{font-size:12px;color:var(--ac);margin-bottom:11px;min-height:17px;font-weight:500;}
   /* La piste se glisse autant qu'elle se clique */
   .ax-track{position:relative;display:flex;align-items:center;height:24px;cursor:grab;touch-action:none;user-select:none;}
@@ -122,7 +179,9 @@
   .ax-s.on::after{width:19px;height:19px;background:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 15%,transparent);}
   .ax-track.grab .ax-s.on::after{box-shadow:0 0 0 7px color-mix(in srgb,var(--ac) 18%,transparent);}
   .ax-s.obs::before{content:"";position:absolute;left:50%;bottom:-5px;width:1px;height:6px;background:var(--faint);transform:translateX(-50%);opacity:.7;}
-  .ax-poles{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .ax-poles{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .ax-poles .pole{display:inline-flex;align-items:center;gap:6px;}
+  .ax-poles .pole:hover{color:var(--ac);}
   .ax-obs{font-size:11.5px;color:var(--faint);line-height:1.45;margin-top:7px;}
   .ax-obs b{color:var(--dim);font-weight:600;}
   /* L'aperçu, qui se réécrit à chaque réglage */
@@ -321,8 +380,6 @@
   @media(max-width:960px){
   }
   /* ══ Mon offre : les champs respirent, l'aperçu montre ══ */
-  #v-offre textarea.fld{min-height:104px;line-height:1.55;}
-  #v-offre .fld{font-size:13.5px;}
   .offre-ring{width:76px!important;height:76px!important;}
   .offre-ring svg{width:76px!important;height:76px!important;}
   .offre-ring-card{padding:20px 18px!important;}
@@ -502,6 +559,16 @@
   /* Le décor est rogné : un absolu qui dépasse étendrait la zone de défilement */
   #v-dash{position:relative;overflow:hidden;justify-content:flex-start;}
   body{overflow-x:hidden;}
+  /* Chaque page porte sa trame : même grammaire d'arcs, géométrie différente */
+  .pgtrame{position:absolute;z-index:0;pointer-events:none;user-select:none;opacity:0;transition:opacity 1s ease .2s;max-width:none;}
+  .view.on .pgtrame{opacity:1;}
+  .tr-pupitre{bottom:-70px;left:-90px;width:820px;}
+  .tr-clients{top:-30px;right:-60px;width:640px;}
+  .tr-rdv{bottom:-110px;left:50%;width:900px;transform:translateX(-50%);}
+  .tr-config{bottom:-60px;right:-80px;width:760px;}
+  #v-rdv,#v-reglages{position:relative;}
+  #v-rdv>*:not(.pgtrame),#v-reglages>*:not(.pgtrame){position:relative;z-index:1;}
+  @media(max-width:900px){.pgtrame{display:none;}}
   /* La trame verticale : pour les pages hautes, ancrée à droite */
   .tramev{position:absolute;top:-40px;right:-70px;width:420px;z-index:0;pointer-events:none;user-select:none;}
   #v-affaires,#v-entreprises{position:relative;}
@@ -2122,7 +2189,7 @@
       <button class="hn" data-go="affaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M6 12h12M9 19h6"/></svg><span class="lb">Affaires</span><span class="cnt" id="cntDeals">0</span></button>
       <button class="hn" data-go="entreprises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg><span class="lb">Mémoire</span><span class="cnt" id="cntEnt">0</span></button>
       <button class="hn" data-soon="chasse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span class="lb">Chasse</span><span class="soon"></span></button>
-      <button class="hn" data-go="offre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><span class="lb">Configuration</span><span class="cnt" id="offDot" style="display:none;color:var(--copper-d);border-color:var(--copper-l);background:var(--washc);">!</span></button>
+      <button class="hn" data-go="reglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><span class="lb">Configuration</span><span class="cnt" id="offDot" style="display:none;color:var(--copper-d);border-color:var(--copper-l);background:var(--washc);">!</span></button>
     </nav>
     <div class="hdr-r">
       <button class="search" id="palOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span class="txt">Rechercher…</span><span class="k">⌘K</span></button>
@@ -2136,7 +2203,6 @@
     <div class="sub-g on" data-for="dash">
       <button class="sn on" data-go="dash">Ta journée</button>
       <button class="sn" data-soon="semaine">Ta semaine<span class="soon"></span></button>
-      <button class="sn" data-go="toi">Ce que Faro sait de toi</button>
     </div>
     <div class="sub-g" data-for="rdv">
       <button class="sn" data-go="prep">Briefs<span class="cnt" id="cntPrep2">0</span></button>
@@ -2154,7 +2220,7 @@
     </div>
     <div class="sub-g" data-for="memoire">
       <button class="sn" data-go="entreprises">Tes clients<span class="cnt" id="cntEnt2">0</span></button>
-      <button class="sn" data-go="toi">Ce que Faro sait de toi</button>
+      <button class="sn" data-go="toi">Ton pupitre</button>
       <span class="sn-sep"></span>
       <button class="sn" data-soon="objections">Tes objections<span class="soon"></span></button>
       <button class="sn" data-soon="secteurs">Signaux sectoriels<span class="soon"></span></button>
@@ -2164,7 +2230,7 @@
       <button class="sn" data-soon="signaux">Signaux du marché<span class="soon"></span></button>
     </div>
     <div class="sub-g" data-for="config">
-      <button class="sn" data-go="offre">Mon offre</button>
+      <button class="sn" data-goe="3">Mon offre</button>
       <button class="sn" data-go="reglages">Réglages</button>
       <span class="sn-sep"></span>
       <button class="sn" data-soon="connexions">Connexions<span class="soon"></span></button>
@@ -2237,6 +2303,7 @@
   </section>
 
   <section class="view" id="v-rdv">
+    <svg class="pgtrame tr-rdv" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M-100.9 335.0 A210 210 0 0 1 220.9 335.0" stroke-width="1.40" opacity="0.0450"></path><path d="M-5.9 335.0 A210 210 0 0 1 315.9 335.0" stroke-width="1.32" opacity="0.0405"></path><path d="M89.1 335.0 A210 210 0 0 1 410.9 335.0" stroke-width="1.23" opacity="0.0360"></path><path d="M184.1 335.0 A210 210 0 0 1 505.9 335.0" stroke-width="1.15" opacity="0.0315"></path><path d="M279.1 335.0 A210 210 0 0 1 600.9 335.0" stroke-width="1.07" opacity="0.0270"></path><path d="M374.1 335.0 A210 210 0 0 1 695.9 335.0" stroke-width="0.98" opacity="0.0225"></path><path d="M469.1 335.0 A210 210 0 0 1 790.9 335.0" stroke-width="0.90" opacity="0.0180"></path></g></svg>
     <div class="ptitle"><div><div class="eyebrow" id="rdvEyebrow">Activité · Terrain</div><h1 id="rdvH1">Rendez-vous</h1><div class="sub" id="rdvSub">Le brief avant, le débrief après.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="rdvExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn g" id="rdvNewBtn" data-go2="nouveau">Nouveau brief</button></div></div>
 
     <div class="aff-tools">
@@ -2257,27 +2324,13 @@
   </section>
 
   <section class="view" id="v-entreprises">
-    <svg class="tramev" viewBox="0 0 400 900" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M648.6 603.2 A200 200 0 0 1 320.0 450.0" stroke-width="1.50" opacity="0.05"></path><path d="M700.0 664.5 A280 280 0 0 1 240.0 450.0" stroke-width="1.41" opacity="0.0456"></path><path d="M751.4 725.8 A360 360 0 0 1 160.0 450.0" stroke-width="1.32" opacity="0.0413"></path><path d="M802.8 787.1 A440 440 0 0 1 80.0 450.0" stroke-width="1.24" opacity="0.0369"></path><path d="M1001.4 646.5 A520 520 0 0 1 60.0 692.5" stroke-width="1.15" opacity="0.0325"></path><path d="M1110.8 554.8 A600 600 0 0 1 60.0 835.2" stroke-width="1.06" opacity="0.0281"></path><path d="M1199.3 480.5 A680 680 0 0 1 60.0 950.8" stroke-width="0.98" opacity="0.0238"></path><path d="M1279.1 413.5 A760 760 0 0 1 60.0 1055.0" stroke-width="0.89" opacity="0.0194"></path><path d="M1354.1 350.6 A840 840 0 0 1 60.0 1152.9" stroke-width="0.80" opacity="0.015"></path></g></svg>
+    <svg class="pgtrame tr-clients" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M548.1 137.1 A120 120 0 0 1 541.7 -8.8" stroke-width="1.50" opacity="0.0500"></path><path d="M494.5 182.1 A190 190 0 0 1 484.4 -49.0" stroke-width="1.43" opacity="0.0462"></path><path d="M440.8 227.1 A260 260 0 0 1 427.0 -89.1" stroke-width="1.35" opacity="0.0425"></path><path d="M570.1 375.0 A150 150 0 0 1 564.1 236.6" stroke-width="1.27" opacity="0.0387"></path><path d="M505.1 412.5 A225 225 0 0 1 496.1 204.9" stroke-width="1.20" opacity="0.0350"></path><path d="M440.2 450.0 A300 300 0 0 1 428.1 173.2" stroke-width="1.12" opacity="0.0312"></path><path d="M451.7 410.9 A110 110 0 0 1 522.4 326.6" stroke-width="1.05" opacity="0.0275"></path><path d="M387.7 399.6 A175 175 0 0 1 500.1 265.6" stroke-width="0.97" opacity="0.0238"></path><path d="M323.6 388.3 A240 240 0 0 1 477.9 204.5" stroke-width="0.90" opacity="0.0200"></path></g></svg>
     <div class="ptitle"><div><div class="eyebrow">Mémoire · Tes clients</div><h1>Tes clients</h1><div class="sub">Chacun avec toute son histoire. Clique pour ouvrir son dossier et ce que Faro en a retenu.</div></div></div>
     <div class="scrollz"><div id="entW"></div></div>
   </section>
 
   <section class="view" id="v-toi">
-    <svg class="trame toi-trame" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <g fill="none" stroke="#C96A2E" stroke-linecap="round">
-        <path d="M612.2 97.6 A160 160 0 0 1 489.6 -114.7" stroke-width="1.60" opacity="0.075"></path>
-        <path d="M601.8 156.7 A220 220 0 0 1 433.3 -135.2" stroke-width="1.52" opacity="0.069"></path>
-        <path d="M591.4 215.7 A280 280 0 0 1 376.9 -155.8" stroke-width="1.44" opacity="0.063"></path>
-        <path d="M581.0 274.8 A340 340 0 0 1 320.5 -176.3" stroke-width="1.36" opacity="0.057"></path>
-        <path d="M570.5 333.9 A400 400 0 0 1 264.1 -196.8" stroke-width="1.28" opacity="0.051"></path>
-        <path d="M412.8 340.0 A460 460 0 0 1 285.5 -353.2" stroke-width="1.20" opacity="0.045"></path>
-        <path d="M307.7 340.0 A520 520 0 0 1 303.8 -456.7" stroke-width="1.12" opacity="0.039"></path>
-        <path d="M220.0 340.0 A580 580 0 0 1 319.0 -543.1" stroke-width="1.04" opacity="0.033"></path>
-        <path d="M140.4 340.0 A640 640 0 0 1 332.8 -621.5" stroke-width="0.96" opacity="0.027"></path>
-        <path d="M65.5 340.0 A700 700 0 0 1 345.8 -695.2" stroke-width="0.88" opacity="0.022"></path>
-        <path d="M-6.2 340.0 A760 760 0 0 1 358.3 -765.9" stroke-width="0.80" opacity="0.018"></path>
-      </g>
-    </svg>
+    <svg class="pgtrame tr-pupitre" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M5.3 263.7 A170 170 0 0 1 138.3 406.3" stroke-width="1.60" opacity="0.0520"></path><path d="M18.2 203.1 A232 232 0 0 1 199.7 397.7" stroke-width="1.51" opacity="0.0480"></path><path d="M31.1 142.4 A294 294 0 0 1 261.1 389.1" stroke-width="1.42" opacity="0.0440"></path><path d="M44.0 81.8 A356 356 0 0 1 322.5 380.5" stroke-width="1.33" opacity="0.0400"></path><path d="M56.9 21.1 A418 418 0 0 1 383.9 371.8" stroke-width="1.24" opacity="0.0360"></path><path d="M69.8 -39.5 A480 480 0 0 1 445.3 363.2" stroke-width="1.16" opacity="0.0320"></path><path d="M82.7 -100.2 A542 542 0 0 1 506.7 354.6" stroke-width="1.07" opacity="0.0280"></path><path d="M95.6 -160.8 A604 604 0 0 1 568.1 345.9" stroke-width="0.98" opacity="0.0240"></path><path d="M108.5 -221.4 A666 666 0 0 1 629.5 337.3" stroke-width="0.89" opacity="0.0200"></path><path d="M121.4 -282.1 A728 728 0 0 1 690.9 328.7" stroke-width="0.80" opacity="0.0160"></path></g></svg>
     <div id="toiW" style="display:flex;flex-direction:column;flex:1;min-height:0;"></div>
   </section>
 
@@ -2415,55 +2468,11 @@
     </div>
   </section>
 
-  <section class="view scrollhost" id="v-offre">
-    <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Mon offre</h1><div class="sub">Le socle de chaque brief. Saisi une fois, Faro s'en sert à chaque rendez-vous.</div></div></div>
-    <div class="offre-grid">
-      <div class="offre-form">
-        <div class="card">
-          <div class="chd"><span class="t">Ton identité</span><span class="d">Qui tu es, ce que tu vends.</span></div>
-          <div class="cbd">
-            <div class="g2"><div class="fg"><label>Ton entreprise</label><input class="fld" id="sComp" autocomplete="off"/></div><div class="fg"><label>Site web <span>· pour ton logo</span></label><input class="fld" id="sSite" autocomplete="off"/></div></div>
-            <div class="g2"><div class="fg"><label>Ton secteur</label><input class="fld" id="sSec" autocomplete="off"/></div><div class="fg"><label>Ta cible type</label><input class="fld" id="sCible" autocomplete="off" placeholder="DAF et DRH de PME industrielles"/></div></div>
-            <div class="fg" style="margin-bottom:0;"><label>Ce que tu vends</label><input class="fld" id="sOff"/></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="chd"><span class="t">Ton argumentaire</span><span class="d">Ce qui convainc. Faro s'en sert pour l'ouverture et les ripostes.</span></div>
-          <div class="cbd">
-            <div class="fg"><label>Ta proposition de valeur</label><textarea class="fld" id="sVal" placeholder="Le problème que tu résous, mieux que les autres."></textarea></div>
-            <div class="fg" style="margin-bottom:0;"><label>Tes preuves <span>· clients, résultats, chiffres</span></label><textarea class="fld" id="sPr" placeholder="Des faits vérifiables : noms de clients, gains mesurés, ROI."></textarea></div>
-          </div>
-        </div>
-        <button class="btn lg" id="saveO"><span class="spin"></span><span>Enregistrer mon offre</span></button>
-      </div>
-      <aside class="offre-side">
-        <div class="card offre-ring-card">
-          <div class="offre-ring">
-            <svg viewBox="0 0 96 96"><circle class="orb" cx="48" cy="48" r="40"/><circle class="orf" cx="48" cy="48" r="40" id="offRing"/></svg>
-            <div class="offre-ring-v"><span id="offPct">0</span><em>%</em></div>
-          </div>
-          <div class="offre-ring-t" id="offRingT">Complète ton offre</div>
-          <div class="offre-ring-d" id="offRingD">Plus elle est riche, plus tes briefs sont précis.</div>
-        </div>
-        <div class="card">
-          <div class="chd"><span class="t">Ce que Faro en fera</span><span class="d">Aperçu, à partir de tes champs.</span></div>
-          <div class="cbd" id="offPreview"></div>
-        </div>
-        <div class="card" id="offWhyCard" style="display:none;">
-          <div class="chd"><span class="t">Pourquoi ça compte</span></div>
-          <div class="cbd offre-why">
-            <div class="ow-row"><span class="ow-ic" style="color:var(--copper)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div><div class="ow-t">L'ouverture sur mesure</div><div class="ow-d">Faro adapte ta phrase d'accroche à ton offre et à l'interlocuteur.</div></div></div>
-            <div class="ow-row"><span class="ow-ic" style="color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg></span><div><div class="ow-t">Les ripostes aux objections</div><div class="ow-d">Tes preuves nourrissent les réponses aux objections probables.</div></div></div>
-            <div class="ow-row"><span class="ow-ic" style="color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span><div><div class="ow-t">Le bon angle, à chaque fois</div><div class="ow-d">Ta cible et ta valeur orientent tout le brief vers ce qui touche.</div></div></div>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </section>
 
   <section class="view" id="v-soon"><div class="scrollz"><div id="soonW"></div></div></section>
 
   <section class="view scrollhost" id="v-reglages">
+    <svg class="pgtrame tr-config" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M480.8 489.2 A220 220 0 0 1 607.0 270.6" stroke-width="1.60" opacity="0.0500"></path><path d="M403.1 496.0 A298 298 0 0 1 574.1 199.9" stroke-width="1.50" opacity="0.0456"></path><path d="M325.4 502.8 A376 376 0 0 1 541.1 129.2" stroke-width="1.40" opacity="0.0413"></path><path d="M247.7 509.6 A454 454 0 0 1 508.1 58.5" stroke-width="1.30" opacity="0.0369"></path><path d="M170.0 516.4 A532 532 0 0 1 475.2 -12.2" stroke-width="1.20" opacity="0.0325"></path><path d="M92.3 523.2 A610 610 0 0 1 442.2 -82.8" stroke-width="1.10" opacity="0.0281"></path><path d="M14.6 530.0 A688 688 0 0 1 409.2 -153.5" stroke-width="1.00" opacity="0.0238"></path><path d="M-63.1 536.8 A766 766 0 0 1 376.3 -224.2" stroke-width="0.90" opacity="0.0194"></path><path d="M-140.8 543.6 A844 844 0 0 1 343.3 -294.9" stroke-width="0.80" opacity="0.0150"></path></g></svg>
     <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Réglages</h1><div class="sub">Ton compte, tes jetons, tes données. Tout ce qui fait tourner Faro pour toi.</div></div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;" id="regGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
@@ -2789,8 +2798,8 @@ const briefTempChip=b=>{
 
 /* ═══ Navigation ═══ */
 // Chaque domaine et ce qu'il contient, y compris ce qui n'existe pas encore
-const NAVGROUP={dash:'dash',toi:'dash',prep:'rdv',match:'rdv',rdv:'rdv',affaires:'affaires',fiche:'memoire',entreprises:'memoire',offre:'config',reglages:'config',nouveau:'rdv',ctx:'rdv',soon:'dash'};
-const NAVPRIM={dash:'dash',rdv:'prep',affaires:'affaires',memoire:'entreprises',chasse:'chasse',config:'offre'};
+const NAVGROUP={dash:'dash',toi:'memoire',prep:'rdv',match:'rdv',rdv:'rdv',affaires:'affaires',fiche:'memoire',entreprises:'memoire',reglages:'config',nouveau:'rdv',ctx:'rdv',soon:'dash'};
+const NAVPRIM={dash:'dash',rdv:'prep',affaires:'affaires',memoire:'entreprises',chasse:'chasse',config:'reglages'};
 // Ce que chaque page à venir fera, dit honnêtement
 const SOON={
   chasse:{g:'chasse',t:'La chasse',d:"Aujourd'hui tu prépares les rendez-vous que tu as déjà. Demain, Faro te dira qui démarcher avant tes concurrents.",l:["Les entreprises de ta cible qui viennent de lever, de recruter ou de changer de dirigeant.","Un score de timing : trop tôt, maintenant, trop tard.","Un brief prêt à générer sur chaque compte détecté."],w:"Après la bêta, si les premiers utilisateurs la réclament."},
@@ -2879,7 +2888,7 @@ function navSet(group,activeKey){
     b.classList.toggle('on',(b.dataset.go&&b.dataset.go===activeKey)||(b.dataset.soon&&b.dataset.soon===activeKey));
   });
 }
-const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Récits',affaires:'Affaires',entreprises:'Tes clients',toi:'Ce que Faro sait de toi',fiche:'Dossier client',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',offre:'Mon offre',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Récits',affaires:'Affaires',entreprises:'Tes clients',toi:'Ton pupitre',fiche:'Dossier client',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   navSet(NAVGROUP[v]||'dash',v==='fiche'?'entreprises':v);
@@ -2909,6 +2918,8 @@ function go(v){
 }
 document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
 document.querySelectorAll('[data-soon]').forEach(el=>el.addEventListener('click',()=>openSoon(el.dataset.soon)));
+// Un raccourci qui ouvre directement le bon étage
+document.querySelectorAll('[data-goe]').forEach(el=>el.addEventListener('click',()=>{etage=+el.dataset.goe;go('toi');}));
 // Parent "Rendez-vous" : le clic ne fait QUE déplier/replier. L'état "on" est géré par go() selon la vue active.
 // Raccourci : N pour préparer un rendez-vous, partout (hors saisie)
 document.addEventListener('keydown',e=>{
@@ -2952,8 +2963,6 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   const av=$('uav');
   if(photo){if(av){av.style.background='none';av.innerHTML=`<img src="${photo}" alt="" referrerpolicy="no-referrer">`;}}
   else{if(av){av.style.background=grad(name);av.textContent=ini(name);}}
-  $('sComp').value=set.company||'';$('sSite').value=set.site||'';$('sSec').value=set.secteur||'';
-  $('sCible').value=set.cible||'';$('sOff').value=set.offre||'';$('sVal').value=set.contexte||'';$('sPr').value=set.preuves||'';
   try{const {data:p}=await sb.from('profiles').select('tokens_left,tokens_month,reset_at').eq('user_id',uid).single();
     if(p){tokMax=p.tokens_month;tok(p.tokens_left);$('uM').textContent=p.tokens_month||5;if(p.reset_at)$('uR').textContent=new Date(p.reset_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric'});}}catch(e){}
   buildPList(); buildRdv(); refreshOffre(); wireDashTabs();
@@ -3355,24 +3364,6 @@ function anglesMorts(){
   if(froids/n>=.6)out.push("Ses rendez-vous ressortent souvent tièdes. L'ouverture doit créer une raison d'agir maintenant, pas seulement présenter.");
   return out.join('\n');
 }
-// La liste lisible des mêmes règles, pour la page
-function reglesActives(){
-  const faits=briefs.filter(b=>b.debrief);
-  const n=faits.length;
-  const out=[];
-  if(n<3)return out;
-  const sansSuite=faits.filter(b=>!(b.debrief.next_action||'').trim()).length;
-  if(sansSuite/n>=.34)out.push({p:`Tu repars <b>${sansSuite} fois sur ${n}</b> sans prochaine action.`,
-    e:'Faro met une date précise à proposer dans la colonne Sortir de tous tes briefs.'});
-  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
-  const sm=actifs.filter(d=>!dealVal(d)).length;
-  if(sm>=2)out.push({p:`<b>${sm} de tes affaires</b> n'ont pas de montant.`,
-    e:"Une de tes trois questions fait dire un ordre de grandeur budgétaire."});
-  const froids=faits.filter(b=>!['close','chaud'].includes(b.debrief.temperature)).length;
-  if(froids/n>=.6)out.push({p:`<b>${froids} rendez-vous sur ${n}</b> ressortent tièdes.`,
-    e:"L'ouverture cherche une raison d'agir maintenant, au lieu de présenter."});
-  return out;
-}
 // Les trois axes du pupitre, et ce que chaque position écrit dans le prompt
 const AXES=[
   {k:'approche',t:'Ton approche',a:'Chasseur',b:'Fermier',
@@ -3420,60 +3411,104 @@ function pupitreObserve(){
 }
 // Les réglages deviennent des instructions, ajoutées à ce que tu écris toi-même
 function pupitreStyle(){
-  return AXES.map(a=>a.v[pupitre[a.k]]).join('\n');
+  const l=AXES.map(a=>a.v[pupitre[a.k]]);
+  const pf=profGet();
+  if(pf.role)l.push(`Le commercial est ${pf.role.toLowerCase()}. Adapte le registre à ce rôle.`);
+  if(pf.bannis)l.push(`N'emploie jamais ces mots : ${pf.bannis}.`);
+  if(pf.objections)l.push(`Objections qu'il rencontre le plus souvent : ${pf.objections}. Anticipe-les plutôt que d'en inventer une autre.`);
+  if(pf.concurrents)l.push(`Concurrents qu'il croise habituellement : ${pf.concurrents}. Prépare la comparaison sans les dénigrer.`);
+  return l.join('\n');
+}
+// Les étages, du nécessaire au facultatif. Plus on descend, plus Faro devient précis.
+const ETAGES=[
+  {k:'toi',t:'Toi',d:'Qui Faro a en face de lui.',why:"Ton prénom signe tes mails de relance. Ton rôle change le ton de tout ce que Faro écrit."},
+  {k:'boite',t:'Ton entreprise',d:'Celle que tu représentes.',why:"Faro la nomme dans chaque ouverture. Sans elle, il écrit au conditionnel."},
+  {k:'pupitre',t:'Ton pupitre',d:'Ta manière de mener un rendez-vous.',why:"Ces trois réglages partent tels quels dans chaque brief que tu génères."},
+  {k:'vend',t:'Ce que tu vends',d:'Ton offre et ta cible.',why:"C'est le champ qui change le plus la qualité. Sans lui, le brief reste générique."},
+  {k:'preuve',t:'Tes preuves',d:'Ce qui te rend crédible.',opt:'Facultatif · gros gain',why:"Faro s'en sert pour les ripostes. Un client nommé vaut dix arguments."},
+  {k:'regles',t:'Tes règles',d:"Ce que Faro ne doit jamais faire.",opt:'Facultatif · gros gain',why:"Il ne les enfreint jamais. C'est ce qui rend tes briefs impossibles à confondre."},
+  {k:'marche',t:'Ton marché',d:'Ce que tu affrontes tous les jours.',opt:'Facultatif · pour aller loin',why:"Les objections que tu connais déjà, Faro les anticipe au lieu de les découvrir."}
+];
+const ROLES=['Commercial','Fondateur','Consultant','Account manager'];
+let etage=0, prof={};
+function profGet(){ try{ return set.profil?JSON.parse(set.profil):{}; }catch(e){ return {}; } }
+function etageRempli(k){
+  const g=x=>((set[x]||'').toString().trim().length>0);
+  if(k==='toi')return g('full_name')&&!!prof.role;
+  if(k==='boite')return g('company')&&g('secteur');
+  if(k==='pupitre')return !!set.reglages;
+  if(k==='vend')return g('offre')&&g('cible');
+  if(k==='preuve')return g('contexte')&&g('preuves');
+  if(k==='regles')return g('style');
+  if(k==='marche')return !!(prof.objections||prof.concurrents);
+  return false;
 }
 function renderToi(){
   const w=$('toiW'); if(!w)return;
-  const n=briefs.filter(b=>b.debrief).length;
-  // Ce qui a été réglé la dernière fois
+  prof=profGet();
   try{ const r=set.reglages?JSON.parse(set.reglages):null; if(r&&typeof r==='object')pupitre={...pupitre,...r}; }catch(e){}
   const obs=pupitreObserve();
+  const V=k=>esc(set[k]||'');
 
   const axHtml=AXES.map(a=>{
     const cur=pupitre[a.k], ob=obs[a.k];
     return `<div class="ax a-${a.k}" data-ax="${a.k}">
-      <div class="ax-h"><span class="ax-t">${a.t}</span><button class="ax-i" tabindex="0" aria-label="Ce que veulent dire ${a.a} et ${a.b}">i<span class="ax-tip"><b>${a.a}</b> ${esc(a.ta)}<br><br><b>${a.b}</b> ${esc(a.tb)}</span></button></div>
+      <div class="ax-t">${a.t}</div>
       <div class="ax-v" data-axv="${a.k}">${esc(a.l[cur])}</div>
       <div class="ax-track" data-axt="${a.k}"><span class="ax-line"></span><span class="ax-fill" data-axf="${a.k}"></span>
         ${a.v.map((_,i)=>`<button class="ax-s ${i===cur?'on':''} ${ob&&ob.i===i?'obs':''}" data-axk="${a.k}" data-axi="${i}" aria-label="${esc(a.l[i])}"></button>`).join('')}
       </div>
-      <div class="ax-poles"><span>${a.a}</span><span>${a.b}</span></div>
+      <div class="ax-poles">
+        <span class="pole">${a.a}<button class="ax-i" tabindex="0" aria-label="Définition de ${a.a}">i<span class="ax-tip"><b>${a.a}</b><br>${esc(a.ta)}</span></button></span>
+        <span class="pole r">${a.b}<button class="ax-i" tabindex="0" aria-label="Définition de ${a.b}">i<span class="ax-tip r"><b>${a.b}</b><br>${esc(a.tb)}</span></button></span>
+      </div>
       ${ob?`<div class="ax-obs">${ob.w}</div>`:''}
     </div>`;
   }).join('');
 
-  w.innerHTML=`
-    <div class="pu-head">
-      <span class="pu-h1">Ton pupitre</span>
-      <span class="pu-sub">Trois réglages. Faro écrit avec, à chaque brief.</span>
-      <span class="pu-n">${n} récit${n>1?'s':''} observé${n>1?'s':''}</span>
-    </div>
-    <div class="pu-2">
-      <div class="pu-card">
-        <div class="pu-ch"><span class="k">Tes réglages</span><span class="d">le trait sous la piste est ce que Faro observe</span></div>
-        <div class="pu-cb">${axHtml}</div>
-      </div>
-      <div>
-        <div class="pu-card">
-          <div class="pu-ch"><span class="k">Ce que Faro recevra</span><span class="d">texte exact envoyé au modèle</span></div>
-          <div class="pu-cb" id="puPreview"></div>
-        </div>
-        <div class="pu-card st-f">
-          <div class="pu-ch"><span class="k">Tes règles absolues</span><span class="d">jamais enfreintes</span></div>
-          <div class="pu-cb">
-            <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je ne cite jamais un concurrent par son nom. Je tutoie systématiquement.">${esc(set.style||'')}</textarea>
-            <div class="st-row"><span class="st-hint">Une règle par phrase. Faro les ajoute aux trois instructions ci-dessus, et ne les contredit jamais.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+  const corps=e=>{
+    if(e.k==='toi')return `<div class="dk-g">
+      <div class="dk-f"><label>Ton prénom et ton nom</label><input id="dkName" value="${V('full_name')}" placeholder="Ryan Djebbar"/></div>
+      <div class="dk-f"><label>Ton rôle</label><div class="dk-chips">${ROLES.map(r=>`<button class="dk-chip ${prof.role===r?'on':''}" data-role="${esc(r)}">${r}</button>`).join('')}</div></div></div>`;
+    if(e.k==='boite')return `<div class="dk-g">
+      <div class="dk-f"><label>Nom de ton entreprise</label><input id="dkComp" value="${V('company')}" placeholder="Cadence"/></div>
+      <div class="dk-f"><label>Son site <em>· pour ton logo</em></label><input id="dkSite" value="${V('site')}" placeholder="cadence-rh.fr"/></div>
+      <div class="dk-f full"><label>Son secteur</label><input id="dkSec" value="${V('secteur')}" placeholder="SaaS RH"/></div></div>`;
+    if(e.k==='pupitre')return axHtml;
+    if(e.k==='vend')return `<div class="dk-f full"><label>Ce que tu vends</label><input id="dkOff" value="${V('offre')}" placeholder="Logiciel de suivi des heures et de la masse salariale"/></div>
+      <div class="dk-f full"><label>Ta cible type</label><input id="dkCible" value="${V('cible')}" placeholder="DAF et DRH de PME industrielles de 100 à 500 personnes"/></div>`;
+    if(e.k==='preuve')return `<div class="dk-f full"><label>Ta proposition de valeur</label><textarea id="dkVal" placeholder="Le problème que tu résous, mieux que les autres.">${V('contexte')}</textarea></div>
+      <div class="dk-f full"><label>Tes preuves <em>· clients, résultats, chiffres</em></label><textarea id="dkPr" placeholder="Utilisé par Somelec, 240 personnes, économie de 4 ETP en un an.">${V('preuves')}</textarea></div>`;
+    if(e.k==='regles')return `<div class="dk-f full"><label>Ce que Faro ne doit jamais faire</label><textarea id="dkStyle" placeholder="Je ne parle jamais prix au premier rendez-vous. Je ne cite jamais un concurrent par son nom.">${V('style')}</textarea></div>
+      <div class="dk-f full"><label>Les mots que tu bannis <em>· facultatif</em></label><input id="dkBan" value="${esc(prof.bannis||'')}" placeholder="solution, synergie, accompagner"/></div>`;
+    if(e.k==='marche')return `<div class="dk-f full"><label>Les objections que tu entends le plus</label><textarea id="dkObj" placeholder="On a déjà un outil. C'est trop cher. Ce n'est pas le moment.">${esc(prof.objections||'')}</textarea></div>
+      <div class="dk-f full"><label>Tes concurrents habituels</label><input id="dkConc" value="${esc(prof.concurrents||'')}" placeholder="Payfit, Lucca, Excel"/></div>`;
+    return '';
+  };
+  const rempli=()=>ETAGES.filter(e=>etageRempli(e.k)).length;
 
-  // La colonne droite montre le texte exact que le modèle recevra
-  const drawPreview=(k)=>{
-    const el=$('puPreview'); if(!el)return;
-    el.innerHTML=AXES.map(a=>`<div class="ins a-${a.k} ${k===a.k?'flash':''}" data-ins="${a.k}"><div><div class="ins-k">${esc(a.t)}</div><div class="ins-t">${esc(a.v[pupitre[a.k]])}</div></div></div>`).join('')
-      +`<div class="ins-note">Ces trois phrases partent telles quelles dans chaque brief que tu génères. Bouge un curseur, la phrase change.</div>`;
-    if(k)setTimeout(()=>{const f=el.querySelector('.ins.flash');if(f)f.classList.remove('flash');},900);
+  w.innerHTML=`<div class="dk">
+    <div class="dk-stage">${ETAGES.map((e,i)=>`<div class="dk-slide ${i===etage?'on':''}" data-slide="${i}">
+      <div class="dk-head"><span class="dk-n">0${i+1}</span><span class="dk-t">${e.t}</span><span class="dk-d">${e.d}</span>${e.opt?`<span class="dk-opt ${/gros/.test(e.opt)?'pow':''}">${e.opt}</span>`:''}</div>
+      <div class="dk-card">${corps(e)}<div class="dk-why">${e.why}</div></div>
+      <div class="dk-foot"><button class="dk-save" data-save="1">Enregistrer</button><span class="dk-hint">Enregistré pour tous tes prochains briefs.</span></div>
+    </div>`).join('')}</div>
+    <div class="dk-rail">
+      <button class="dk-arw" id="dkUp" aria-label="Étage précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg></button>
+      <div class="dk-dots">${ETAGES.map((e,i)=>`<button class="dk-dot ${i===etage?'on':''} ${etageRempli(e.k)?'full':''}" data-dot="${i}"><i></i><span class="tipl">${e.t}${etageRempli(e.k)?'':' · à remplir'}</span></button>`).join('')}</div>
+      <button class="dk-arw" id="dkDown" aria-label="Étage suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+      <span class="dk-pct" id="dkPct">${rempli()}/${ETAGES.length}</span>
+    </div>
+  </div>`;
+
+  const go2=n=>{
+    etage=Math.max(0,Math.min(ETAGES.length-1,n));
+    w.querySelectorAll('.dk-slide').forEach(x=>x.classList.toggle('on',+x.dataset.slide===etage));
+    w.querySelectorAll('.dk-dot').forEach(x=>x.classList.toggle('on',+x.dataset.dot===etage));
+    const u=$('dkUp'), d=$('dkDown');
+    if(u)u.disabled=etage===0;
+    if(d)d.disabled=etage===ETAGES.length-1;
+    if(etage===2)requestAnimationFrame(drawFill);
   };
   const drawFill=()=>{
     AXES.forEach(a=>{
@@ -3481,63 +3516,63 @@ function renderToi(){
       if(f)f.style.width='calc('+(pupitre[a.k]/4*100)+'% - '+(pupitre[a.k]/4*12)+'px)';
     });
   };
-  drawPreview(null); requestAnimationFrame(drawFill);
-  const tr=document.querySelector('#v-toi .toi-trame'); if(tr)setTimeout(()=>tr.classList.add('lit'),60);
-
-  let saveT=null;
   const setAx=(k,i)=>{
     i=Math.max(0,Math.min(4,i));
-    if(pupitre[k]===i)return false;
+    if(pupitre[k]===i)return;
     pupitre[k]=i;
     w.querySelectorAll(`[data-axk="${k}"]`).forEach(x=>x.classList.toggle('on',+x.dataset.axi===i));
     const v=w.querySelector(`[data-axv="${k}"]`);
     if(v)v.textContent=(AXES.find(a=>a.k===k)||{l:[]}).l[i]||'';
-    drawFill(); drawPreview(k);
-    clearTimeout(saveT); saveT=setTimeout(savePupitre,700);
-    return true;
+    drawFill();
   };
-  // La piste se glisse : on lit la position du doigt, on cale sur le cran le plus proche
   w.querySelectorAll('[data-axt]').forEach(tr=>{
     const k=tr.dataset.axt;
-    const idxFromX=x=>{
-      const r=tr.getBoundingClientRect();
-      const pad=r.width/10;
-      const t=(x-r.left-pad)/Math.max(1,(r.width-pad*2));
-      return Math.round(Math.max(0,Math.min(1,t))*4);
-    };
+    const idxFromX=x=>{const r=tr.getBoundingClientRect(),pad=r.width/10;
+      return Math.round(Math.max(0,Math.min(1,(x-r.left-pad)/Math.max(1,r.width-pad*2)))*4);};
     let on=false;
-    tr.addEventListener('pointerdown',e=>{
-      on=true; tr.classList.add('grab');
-      try{tr.setPointerCapture(e.pointerId);}catch(err){}
-      setAx(k,idxFromX(e.clientX));
-    });
-    tr.addEventListener('pointermove',e=>{ if(on)setAx(k,idxFromX(e.clientX)); });
-    const stop=e=>{ if(!on)return; on=false; tr.classList.remove('grab'); try{tr.releasePointerCapture(e.pointerId);}catch(err){} };
-    tr.addEventListener('pointerup',stop);
-    tr.addEventListener('pointercancel',stop);
-    // Au clavier : flèches gauche et droite
+    tr.addEventListener('pointerdown',e=>{on=true;tr.classList.add('grab');try{tr.setPointerCapture(e.pointerId);}catch(err){}setAx(k,idxFromX(e.clientX));});
+    tr.addEventListener('pointermove',e=>{if(on)setAx(k,idxFromX(e.clientX));});
+    const stop=e=>{if(!on)return;on=false;tr.classList.remove('grab');try{tr.releasePointerCapture(e.pointerId);}catch(err){}};
+    tr.addEventListener('pointerup',stop); tr.addEventListener('pointercancel',stop);
     tr.querySelectorAll('[data-axk]').forEach(b=>b.addEventListener('keydown',e=>{
-      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
-        e.preventDefault();
-        setAx(k,pupitre[k]+(e.key==='ArrowRight'?1:-1));
-        const nb=w.querySelector(`[data-axk="${k}"][data-axi="${pupitre[k]}"]`); if(nb)nb.focus();
-      }
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();setAx(k,pupitre[k]+(e.key==='ArrowRight'?1:-1));
+        const nb=w.querySelector(`[data-axk="${k}"][data-axi="${pupitre[k]}"]`); if(nb)nb.focus();}
     }));
   });
-
-  const sv=$('styleSave'), st=$('styleTxt');
-  if(sv&&st)sv.addEventListener('click',async()=>{
-    sv.disabled=true; sv.textContent='…';
-    const ok=await savePupitre(st.value.trim());
-    sv.classList.toggle('ok',ok); sv.textContent=ok?'Enregistré':'Échec';
-    setTimeout(()=>{sv.classList.remove('ok');sv.textContent='Enregistrer';sv.disabled=false;},1800);
-  });
+  w.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>{
+    prof.role=b.dataset.role;
+    w.querySelectorAll('[data-role]').forEach(x=>x.classList.toggle('on',x===b));
+  }));
+  const u=$('dkUp'), d=$('dkDown');
+  if(u)u.addEventListener('click',()=>go2(etage-1));
+  if(d)d.addEventListener('click',()=>go2(etage+1));
+  w.querySelectorAll('[data-dot]').forEach(b=>b.addEventListener('click',()=>go2(+b.dataset.dot)));
+  w.querySelectorAll('[data-save]').forEach(b=>b.addEventListener('click',async()=>{
+    b.disabled=true; b.textContent='…';
+    const ok=await saveProfil();
+    b.classList.toggle('ok',ok); b.textContent=ok?'Enregistré':'Échec';
+    const pc=$('dkPct'); if(pc)pc.textContent=rempli()+'/'+ETAGES.length;
+    w.querySelectorAll('.dk-dot').forEach((x,i)=>x.classList.toggle('full',etageRempli(ETAGES[i].k)));
+    setTimeout(()=>{b.classList.remove('ok');b.textContent='Enregistrer';b.disabled=false;},1700);
+  }));
+  go2(etage); requestAnimationFrame(drawFill);
 }
-async function savePupitre(styleTxt){
-  const v=typeof styleTxt==='string'?styleTxt:(set.style||'');
+// Un seul enregistrement pour tous les étages
+async function saveProfil(){
+  const g=id=>{const e=$(id);return e?e.value.trim():undefined;};
+  const set2={...set};
+  const map={dkName:'full_name',dkComp:'company',dkSite:'site',dkSec:'secteur',dkOff:'offre',dkCible:'cible',dkVal:'contexte',dkPr:'preuves',dkStyle:'style'};
+  Object.keys(map).forEach(id=>{const v=g(id); if(v!==undefined)set2[map[id]]=v;});
+  const pf={...prof};
+  const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents'};
+  Object.keys(pmap).forEach(id=>{const v=g(id); if(v!==undefined)pf[pmap[id]]=v;});
+  set2.profil=JSON.stringify(pf);
+  set2.reglages=JSON.stringify(pupitre);
   try{
-    await sb.from('user_settings').upsert({user_id:uid,...set,style:v,reglages:JSON.stringify(pupitre),updated_at:new Date().toISOString()},{onConflict:'user_id'});
-    set.style=v; set.reglages=JSON.stringify(pupitre);
+    await sb.from('user_settings').upsert({user_id:uid,...set2,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+    set=set2; prof=pf;
+    const av=$('uav'); if(av&&set.full_name)av.title=set.full_name+' · ton compte';
+    if(typeof refreshOffre==='function')refreshOffre();
     return true;
   }catch(e){ return false; }
 }
@@ -4845,14 +4880,10 @@ async function onbSave(){
   try{
     await sb.from('user_settings').upsert({user_id:uid,...set,...onbData,updated_at:new Date().toISOString()},{onConflict:'user_id'});
     set={...set,...onbData};
-    ['sComp','sSite','sSec','sCible','sOff','sVal'].forEach((id,i)=>{
-      const key=['company','site','secteur','cible','offre','contexte'][i];
-      const e=$(id); if(e&&set[key])e.value=set[key];
-    });
     const sn=$('sName'); if(sn&&set.full_name)sn.value=set.full_name;
     const av1=$('uav'); if(av1&&set.full_name)av1.title=set.full_name+' · ton compte';
     refreshOffre();
-  }catch(e){toast("L'enregistrement a échoué, tu pourras reprendre dans Mon offre.");}
+  }catch(e){toast("L'enregistrement a échoué, tu pourras reprendre dans Ton pupitre.");}
   finally{b.classList.remove('load');b.disabled=false;}
 }
 function openOnb(){ onbData={}; onbShow(1); $('onbOv').classList.add('on'); }
@@ -5057,7 +5088,7 @@ $('gen').addEventListener('click',async()=>{
   clr();
   if(!ent){note("Choisis d'abord l'entreprise en face.",'e');return;}
   if(!posteSel){note('Choisis ton interlocuteur.','e');return;}
-  if(!set.offre){note('Renseigne ton offre, Faro en a besoin.','e');setTimeout(()=>go('offre'),1300);return;}
+  if(!set.offre){note('Renseigne ton offre, Faro en a besoin.','e');setTimeout(()=>{etage=3;go('toi');},1300);return;}
   const pl=posteSel.toLowerCase();
   const dirNom=(ent.dirigeants&&ent.dirigeants[0]&&(pl.includes('fondateur')||pl.includes('générale')||pl.includes('dirigeant')))?ent.dirigeants[0].nom:null;
   const histo=currentDeal?dealBriefs(currentDeal).filter(b=>b.debrief).slice(0,2).map(b=>{
@@ -6088,7 +6119,7 @@ function toggleCarnetDictation(){
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
-const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Brief',go:'prep'},{t:'Récits',go:'match'},{t:'Tes clients',go:'entreprises'},{t:'Ce que Faro sait de toi',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Mon offre',go:'offre'},{t:'Réglages',go:'reglages'}];
+const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Brief',go:'prep'},{t:'Récits',go:'match'},{t:'Tes clients',go:'entreprises'},{t:'Ce que Faro sait de toi',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Réglages',go:'reglages'}];
 function palOpenF(){$('pal').classList.add('on');$('palQ').value='';palRender('');setTimeout(()=>$('palQ').focus(),30);}
 function palClose(){$('pal').classList.remove('on');}
 $('palOpen').addEventListener('click',palOpenF);
@@ -6130,53 +6161,13 @@ document.addEventListener('keydown',e=>{
 
 /* ═══ Offre + réglages ═══ */
 // L'aperçu : ce que ces champs produisent, en clair
-function offPreview(){
-  const el=$('offPreview'); if(!el)return;
-  const g=id=>{const e=$(id);return e?e.value.trim():'';};
-  const comp=g('sComp'), cible=g('sCible'), off=g('sOff'), val=g('sVal'), pr=g('sPr');
-  const first=t=>{const x=(t||'').split(/[.!?]/)[0].trim();return x.length>110?x.slice(0,109)+'…':x;};
-  const low=t=>t?t.charAt(0).toLowerCase()+t.slice(1):'';
-  // Pas de proposition de valeur, pas d'ouverture inventée : on le dit
-  let ouv='';
-  if(comp&&val)ouv=`Chez ${comp}, ${low(first(val))}.`;
-  else if(val)ouv=`${first(val)}.`;
-  const manque=!val?(off?'Ajoute ta proposition de valeur : c\'est elle qui donne sa phrase d\'ouverture à Faro.':'Renseigne ton entreprise et ta proposition de valeur pour voir l\'ouverture que Faro écrira.'):'';
-  const preuve=pr?first(pr):'';
-  const h=[];
-  h.push('<div class="ap-k">Son ouverture ressemblera à</div>');
-  h.push(ouv?`<div class="ap-say">${esc(ouv)}</div>`:`<div class="ap-say vide">${esc(manque)}</div>`);
-  h.push('<div class="ap-k">Il appuiera ses ripostes sur</div>');
-  h.push(preuve?`<div class="ap-l">${esc(preuve)}</div>`:`<div class="ap-l" style="color:var(--faint);font-style:italic">Ajoute une preuve chiffrée, c'est ce qui débloque les objections.</div>`);
-  h.push('<div class="ap-k">Il orientera chaque brief vers</div>');
-  h.push(cible?`<div class="ap-l">${esc(cible)}</div>`:`<div class="ap-l" style="color:var(--faint);font-style:italic">Précise ta cible type pour que Faro vise le bon angle.</div>`);
-  h.push(`<div class="ap-note">Ceci est un assemblage de tes champs, pas une génération. Le vrai brief sera écrit pour l'entreprise et l'interlocuteur que tu choisiras.</div>`);
-  el.innerHTML=h.join('');
-}
 function refreshOffre(){
-  offPreview();
-  const fields=['company','site','secteur','cible','offre','contexte','preuves'];
-  const filled=fields.filter(f=>(set[f]||'').trim()).length;
-  const pct=Math.round(filled/fields.length*100);
-  const ring=$('offRing');
-  if(ring){
-    const C=2*Math.PI*40;
-    ring.style.strokeDashoffset=C*(1-pct/100);
-  }
-  if($('offPct'))$('offPct').textContent=pct;
-  if($('offRingT')&&$('offRingD')){
-    if(pct===100){$('offRingT').textContent='Offre complète';$('offRingD').textContent='Tes briefs ont tout ce qu\'il faut pour viser juste.';}
-    else if(pct>=60){$('offRingT').textContent='Presque là';$('offRingD').textContent=`Encore ${fields.length-filled} champ${fields.length-filled>1?'s':''} et ton offre est complète.`;}
-    else if(pct>0){$('offRingT').textContent='Bon début';$('offRingD').textContent='Plus tu enrichis, plus tes briefs sont précis.';}
-    else {$('offRingT').textContent='Complète ton offre';$('offRingD').textContent='Plus elle est riche, plus tes briefs sont précis.';}
-  }
-  const od=$('offDot'); if(od)od.style.display=pct<100?'':'none';
-  const wc=$('offWhyCard'); if(wc)wc.style.display=pct>=100?'none':'';
+  // La pastille de la barre haute : ce qui manque encore à Faro
+  const need=['company','offre','cible','contexte'];
+  const manque=need.filter(k=>!((set[k]||'').toString().trim()));
+  const od=$('offDot'); if(od)od.style.display=manque.length?'':'none';
 }
-(function(){
-  ['sComp','sSite','sSec','sCible','sOff','sVal','sPr'].forEach(id=>{
-    const e=$(id); if(e)e.addEventListener('input',()=>{offPreview();});
-  });
-})();
+
 async function save(patch,btn){
   btn.classList.add('load'); btn.disabled=true;
   try{await sb.from('user_settings').upsert({user_id:uid,...set,...patch,updated_at:new Date().toISOString()},{onConflict:'user_id'});set={...set,...patch};toast('Enregistré');}
@@ -6184,10 +6175,6 @@ async function save(patch,btn){
   finally{btn.classList.remove('load');btn.disabled=false;}
 }
 $('saveP').addEventListener('click',()=>save({full_name:$('sName').value.trim()||null},$('saveP')));
-$('saveO').addEventListener('click',async()=>{
-  await save({company:$('sComp').value.trim()||null,site:$('sSite').value.trim()||null,secteur:$('sSec').value.trim()||null,cible:$('sCible').value.trim()||null,offre:$('sOff').value.trim()||null,contexte:$('sVal').value.trim()||null,preuves:$('sPr').value.trim()||null},$('saveO'));
-  refreshOffre();
-});
 $('savePw').addEventListener('click',async()=>{
   const p=$('sPass').value; if(p.length<6){toast('Six caractères minimum');return;}
   const b=$('savePw'); b.classList.add('load'); b.disabled=true;
