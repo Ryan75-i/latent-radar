@@ -418,6 +418,15 @@
   .phare-v{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);margin-top:-8px;text-align:center;}
   .phare-v em{font-style:normal;color:var(--faint);font-weight:400;font-size:13px;}
   .phare-q{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-top:-6px;}
+  /* L'échelle dit ce qu'un arc vaut : sans elle, le dessin reste abstrait */
+  .phare-sc{display:flex;align-items:flex-end;gap:16px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line3);}
+  .phare-sc i{display:flex;flex-direction:column;align-items:center;gap:5px;font-style:normal;}
+  .phare-sc i::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--line2);transition:background .5s cubic-bezier(.2,.7,.2,1);}
+  .phare-sc i.on::before{background:var(--copper);}
+  .phare-sc b{font-family:var(--mono);font-size:9px;font-weight:400;color:var(--faint);}
+  .phare-sc i.on b{color:var(--copper-d);}
+  .phare-n{font-size:11.5px;color:var(--dim);text-align:center;line-height:1.4;max-width:210px;margin-top:8px;}
+  .phare-n b{color:var(--soft);font-weight:600;}
   /* Au-delà du cinquième arc, le dernier respire : la portée continue de croître */
   .phare .pa.beyond{animation:paBeyond 3s ease-in-out infinite;}
   @keyframes paBeyond{0%,100%{opacity:.16;}50%{opacity:.34;}}
@@ -450,25 +459,26 @@
   .gc-ic{width:32px;height:32px;border-radius:9px;background:color-mix(in srgb,var(--gc) 11%,transparent);color:var(--gc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .gc-ic svg{width:16px;height:16px;stroke-width:1.9;}
   .gc-t{font-family:var(--serif);font-weight:600;font-size:17.5px;letter-spacing:-.35px;line-height:1.1;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;}
-  .gc-k{font-family:var(--mono);font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--gc);background:color-mix(in srgb,var(--gc) 9%,transparent);border-radius:5px;padding:3px 7px;flex-shrink:0;white-space:nowrap;}
+  .gc-k{font-family:var(--mono);font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--gc);opacity:.75;flex-shrink:0;white-space:nowrap;}
   .gc-w{font-size:12.5px;color:var(--dim);line-height:1.5;padding:11px 16px 0;flex:1;}
   .gc-w b{color:var(--soft);font-weight:600;}
-  .gc-foot{display:flex;align-items:center;gap:10px;margin-top:13px;padding:11px 16px 13px;border-top:1px solid var(--line3);background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--gc) 3%,transparent));}
-  .gc-go{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:var(--gc);border:none;border-radius:9px;padding:9px 15px;cursor:pointer;box-shadow:var(--sh);transition:filter .14s cubic-bezier(.2,.7,.2,1),transform .14s,box-shadow .14s;}
+  .gc-foot{display:flex;align-items:center;gap:10px;margin-top:13px;padding:11px 16px 13px;border-top:1px solid var(--line3);}
+  /* Un seul cuivre plein par écran : ici les boutons sont en contour, la couleur porte le sens */
+  .gc-go{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--gc);background:var(--card);border:1px solid var(--line2);border-radius:9px;padding:9px 15px;cursor:pointer;transition:border-color .14s cubic-bezier(.2,.7,.2,1),background .14s,transform .14s;}
   /* La flèche est la marque Faro tournée : un point qui émet vers la droite */
   .gc-go svg{width:16px;height:16px;overflow:visible;}
   .arw-d{transition:transform .22s cubic-bezier(.2,.7,.2,1),opacity .22s;}
   .arw-s{transition:transform .22s cubic-bezier(.2,.7,.2,1);}
   .arw-a1{transition:transform .22s cubic-bezier(.2,.7,.2,1),opacity .22s;}
   .arw-a2{opacity:0;transition:transform .26s cubic-bezier(.2,.7,.2,1) .04s,opacity .26s .04s;}
-  .gc:hover .gc-go{filter:brightness(1.08);transform:translateY(-1px);box-shadow:var(--shm);}
+  .gc:hover .gc-go{border-color:var(--gc);background:color-mix(in srgb,var(--gc) 7%,var(--card));}
   .gc:hover .arw-d{transform:translateX(3px);opacity:.55;}
   .gc:hover .arw-s{transform:translateX(2px) scaleX(.8);transform-origin:left;}
   .gc:hover .arw-a1{transform:translateX(3px);}
   .gc:hover .arw-a2{opacity:.6;transform:translateX(3px);}
-  .gc-go.loading{pointer-events:none;opacity:.8;}
+  .gc-go.loading{pointer-events:none;opacity:.7;}
   .gc-go.loading svg{display:none;}
-  .gc-go.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
+  .gc-go.loading::after{content:"";width:12px;height:12px;border:2px solid var(--line2);border-top-color:var(--gc);border-radius:50%;animation:spin .6s linear infinite;}
   .gc-hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--faint);margin-left:auto;white-space:nowrap;}
   .gc.raconter{--gc:var(--blue);}
   .gc.relancer{--gc:var(--copper);}
@@ -2926,6 +2936,14 @@ function dash(){
   const bestNom=bestK?(briefs.find(b=>(b.entreprise||'').toLowerCase()===bestK)||{}).entreprise:'';
   const portee=bestN>=11?5:bestN>=7?4:bestN>=4?3:bestN>=2?2:bestN>=1?1:0;
   const PORTEE_L=['portée à construire','premier pas','portée courte','bonne portée','longue portée','portée maximale'];
+  const PORTEE_S=[1,2,4,7,11];
+  // Ce qui débloque l'arc suivant, dit en clair
+  const porteeNext=(()=>{
+    if(!bestNom)return "Chaque récit chez un même client allonge ta portée d'un arc.";
+    if(portee>=5)return `Ta portée est au maximum chez <b>${esc(trunc(bestNom,20))}</b>. Elle continue de croître, le dessin s'arrête là.`;
+    const seuil=PORTEE_S[portee], manque=seuil-bestN;
+    return `Encore <b>${nWord(manque)} récit${manque>1?'s':''}</b> chez ${esc(trunc(bestNom,20))} et le ${['premier','deuxième','troisième','quatrième','cinquième'][portee]} arc s'allume.`;
+  })();
   // Ce qui s'est passé aujourd'hui
   const today0=new Date(); today0.setHours(0,0,0,0);
   const vus=briefs.filter(b=>new Date(b.created_at)>=today0);
@@ -2997,6 +3015,8 @@ function dash(){
           <span class="phare-k">Ta portée</span>
           <span class="phare-v">${bestN?`${nWord(bestN)} récit${bestN>1?'s':''}`:'à construire'}${bestNom?`<em> chez ${esc(trunc(bestNom,18))}</em>`:''}</span>
           <span class="phare-q">${PORTEE_L[portee]}</span>
+          <span class="phare-sc">${PORTEE_S.map((sc,i)=>`<i class="${i<portee?'on':''}"><b>${sc}</b></i>`).join('')}</span>
+          <span class="phare-n">${porteeNext}</span>
         </div>
       </div>
       <div class="day-acts">
