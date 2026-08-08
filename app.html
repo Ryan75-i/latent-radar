@@ -2849,6 +2849,8 @@ function dash(){
 
   // ─── Les gestes qui referment la journée ───
   const acts=[];
+  // Les nombres s'écrivent en lettres : c'est le registre de Faro
+  const nWord=n=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][n]||String(n);
   // La phrase dépend de l'âge du rendez-vous, jamais de sa position dans la liste
   const jr=n=>n+(n>1?' jours':' jour');
   const MEMES=["Tout est encore frais, c'est le meilleur moment.","Deux minutes et il est en mémoire.","Enchaîne pendant que tu y es."];
@@ -2949,7 +2951,6 @@ function dash(){
   const vus=briefs.filter(b=>new Date(b.created_at)>=today0);
   const vusRac=vus.filter(b=>b.debrief).length;
   const resteJour=vus.length-vusRac;
-  const nWord=n=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][n]||String(n);
   // Un point, une hampe, deux arcs : la marque Faro devenue flèche
   const ARW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">'
     +'<circle class="arw-d" cx="4.5" cy="12" r="1.9" fill="currentColor" stroke="none"/>'
