@@ -79,7 +79,11 @@
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
   /* ══ Ce que Faro sait de toi : un écran, deux colonnes, aucun défilement ══ */
-  #v-toi{overflow:hidden;}
+  #v-toi{position:relative;overflow:hidden;}
+  /* La même trame que sur Ta journée, mais retournée : même matière, autre composition */
+  .toi-trame{position:absolute;top:auto;bottom:-90px;left:-120px;right:auto;width:820px;transform:scaleX(-1) rotate(6deg);transform-origin:bottom left;opacity:0;transition:opacity 1.1s ease .2s;}
+  .toi-trame.lit{opacity:1;}
+  .toi-hero,.toi-2{position:relative;z-index:1;}
   .toi-hero{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:end;padding:4px 0 22px;}
   .toi-p{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.18;letter-spacing:-.6px;color:var(--ink);max-width:32ch;}
   .toi-p em{font-style:normal;color:var(--copper);}
@@ -2212,6 +2216,21 @@
   </section>
 
   <section class="view" id="v-toi">
+    <svg class="trame toi-trame" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#C96A2E" stroke-linecap="round">
+        <path d="M612.2 97.6 A160 160 0 0 1 489.6 -114.7" stroke-width="1.60" opacity="0.075"></path>
+        <path d="M601.8 156.7 A220 220 0 0 1 433.3 -135.2" stroke-width="1.52" opacity="0.069"></path>
+        <path d="M591.4 215.7 A280 280 0 0 1 376.9 -155.8" stroke-width="1.44" opacity="0.063"></path>
+        <path d="M581.0 274.8 A340 340 0 0 1 320.5 -176.3" stroke-width="1.36" opacity="0.057"></path>
+        <path d="M570.5 333.9 A400 400 0 0 1 264.1 -196.8" stroke-width="1.28" opacity="0.051"></path>
+        <path d="M412.8 340.0 A460 460 0 0 1 285.5 -353.2" stroke-width="1.20" opacity="0.045"></path>
+        <path d="M307.7 340.0 A520 520 0 0 1 303.8 -456.7" stroke-width="1.12" opacity="0.039"></path>
+        <path d="M220.0 340.0 A580 580 0 0 1 319.0 -543.1" stroke-width="1.04" opacity="0.033"></path>
+        <path d="M140.4 340.0 A640 640 0 0 1 332.8 -621.5" stroke-width="0.96" opacity="0.027"></path>
+        <path d="M65.5 340.0 A700 700 0 0 1 345.8 -695.2" stroke-width="0.88" opacity="0.022"></path>
+        <path d="M-6.2 340.0 A760 760 0 0 1 358.3 -765.9" stroke-width="0.80" opacity="0.018"></path>
+      </g>
+    </svg>
     <div class="ptitle"><div><div class="eyebrow">Mémoire · De toi</div><h1>Ce que Faro sait de toi</h1><div class="sub">Ton profil de vendeur, tiré de tes rendez-vous. Il s'affine à chaque débrief.</div></div></div>
     <div id="toiW"></div>
   </section>
@@ -3317,6 +3336,8 @@ function renderToi(){
     return;
   }
   const nWord=x=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][x]||String(x);
+  // Le féminin : une affaire, pas un affaire
+  const nWordF=x=>x===1?'une':(x===0?'aucune':nWord(x));
   const MINI=3; // Rien n'est affirmé sous trois occurrences
 
   // ─── Ce que les données permettent de dire, et rien de plus ───
@@ -3332,6 +3353,8 @@ function renderToi(){
   const parPoste=Object.entries(posts).sort((a,b)=>b[1].c-a[1].c);
   const solides=parPoste.filter(([,v])=>v.c>=MINI);
   const meilleur=solides.slice().sort((a,b)=>(b[1].hot/b[1].c)-(a[1].hot/a[1].c))[0];
+  // Un profil n'est une réussite que si le taux l'est vraiment
+  const meilleurBon=meilleur&&(meilleur[1].hot/meilleur[1].c)>=.5;
   // Le jour de la semaine où tu prépares le plus
   const jours=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
   const parJour={}; briefs.forEach(b=>{const j=new Date(b.created_at).getDay();parJour[j]=(parJour[j]||0)+1;});
@@ -3345,9 +3368,13 @@ function renderToi(){
   } else if(sansSuite/n>=.5){
     phrase=`Ton angle mort est net : <em>tu repars ${sansSuite>n/2?'souvent':'parfois'} sans prochaine action.</em>`;
     sousPhrase=`Sur ${nWord(n)} récits, ${nWord(sansSuite)} n'ont aucune suite écrite. C'est là que tes affaires s'arrêtent sans mourir.`;
-  } else if(meilleur){
+  } else if(meilleurBon){
     phrase=`Tu réussis mieux face aux <em>${esc(meilleur[0].toLowerCase())}</em>.`;
     sousPhrase=`${Math.round(meilleur[1].hot/meilleur[1].c*100)}% de tes rendez-vous avec eux ressortent chauds, sur ${nWord(meilleur[1].c)}.`;
+  } else if(meilleur){
+    const r=Math.round(meilleur[1].hot/meilleur[1].c*100);
+    phrase=`Aucun profil ne te réussit encore vraiment. <em>Même les ${esc(meilleur[0].toLowerCase())}</em> ressortent tièdes.`;
+    sousPhrase=`${r}% de chauds sur ${nWord(meilleur[1].c)} rendez-vous, et c'est ton meilleur score. Le problème n'est pas l'interlocuteur.`;
   } else {
     phrase=`Faro commence à te lire. <em>Encore quelques récits</em> et il pourra nommer tes constantes.`;
     sousPhrase=`Il lui faut au moins trois rendez-vous par type d'interlocuteur pour oser une comparaison.`;
@@ -3360,7 +3387,7 @@ function renderToi(){
   if(n>=MINI){
     const pc=Math.round(chauds/n*100);
     obs.push({c:pc>=50?'force':'angle',k:pc>=50?'Une force':'Un point à travailler',
-      t:pc>=50?`Un rendez-vous sur deux ressort chaud.`:`${nWord(chauds)} rendez-vous sur ${nWord(n)} ressortent chauds.`,
+      t:pc>=50?`Un rendez-vous sur deux ressort chaud.`:`${nWord(chauds)} rendez-vous sur ${nWord(n)} ressort${chauds>1?'ent':''} chaud${chauds>1?'s':''}.`,
       w:`<b>${pc}%</b> de tes récits sont notés chauds ou closés. ${pc>=50?'Tu tiens la température.':'Le reste refroidit faute de suite immédiate.'}`});
   }
   if(sansSuite>0){
@@ -3369,15 +3396,15 @@ function renderToi(){
       w:`Une affaire sans suite écrite s'arrête là, même quand elle allait bien. C'est le trou le plus discret de ta boucle.`});
   }
   if(sansMontant>0){
-    obs.push({c:'angle',k:'Un angle mort',t:`${nWord(sansMontant)} affaire${sansMontant>1?'s':''} sans montant.`,
+    obs.push({c:'angle',k:'Un angle mort',t:`${nWordF(sansMontant)} affaire${sansMontant>1?'s':''} sans montant.`,
       w:`Tant que l'enjeu n'est pas chiffré, ni toi ni Faro ne pouvez dire ce que vaut ton trimestre.`});
   }
   if(clos>=MINI){
     const wr=Math.round(wins.length/clos*100);
-    obs.push({c:wr>=50?'force':'fait',k:'Ton closing',t:`Tu signes ${nWord(wins.length)} affaire${wins.length>1?'s':''} sur ${nWord(clos)}.`,
+    obs.push({c:wr>=50?'force':'fait',k:'Ton closing',t:`Tu signes ${nWordF(wins.length)} affaire${wins.length>1?'s':''} sur ${nWord(clos)}.`,
       w:`Soit <b>${wr}%</b> de tes affaires closes. La moyenne devient fiable à partir d'une dizaine.`});
   } else if(clos>0){
-    obs.push({c:'tot',k:'Trop tôt',t:`${nWord(clos)} affaire${clos>1?'s':''} close${clos>1?'s':''}.`,
+    obs.push({c:'tot',k:'Trop tôt',t:`${nWordF(clos)} affaire${clos>1?'s':''} close${clos>1?'s':''}.`,
       w:`Faro ne calcule pas de taux de closing avant <b>trois</b> affaires closes : ça ne voudrait rien dire.`});
   }
   if(topJour&&briefs.length>=6){
@@ -3435,6 +3462,7 @@ function renderToi(){
   `;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     w.querySelectorAll('.tp-fill').forEach(el=>{el.style.width=(+el.dataset.w)+'%';});
+    const tr=document.querySelector('#v-toi .toi-trame'); if(tr)tr.classList.add('lit');
   }));
   const sv=$('styleSave'), st=$('styleTxt');
   if(sv&&st)sv.addEventListener('click',async()=>{
