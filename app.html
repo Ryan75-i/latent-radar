@@ -84,10 +84,13 @@
   .dk-stage{position:relative;flex:1;min-width:0;}
   .dk-slide{position:absolute;inset:0;opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .38s cubic-bezier(.2,.7,.2,1),transform .38s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;}
   .dk-slide.on{opacity:1;transform:none;pointer-events:auto;}
-  .dk-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-shrink:0;flex-wrap:wrap;}
+  .dk-head{display:flex;align-items:center;gap:15px;margin-bottom:14px;flex-shrink:0;}
+  .dk-pic{width:46px;height:46px;flex-shrink:0;}
+  .dk-ti{min-width:0;flex:1;}
+  .dk-tr{display:flex;align-items:baseline;gap:11px;}
   .dk-n{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--copper-d);}
-  .dk-t{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:-.5px;color:var(--ink);}
-  .dk-d{font-size:13px;color:var(--dim);}
+  .dk-t{font-family:var(--serif);font-weight:600;font-size:24px;letter-spacing:-.5px;color:var(--ink);}
+  .dk-d{font-size:13px;color:var(--dim);margin-top:2px;}
   .dk-opt{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--goldbg);border:1px solid #E7CE8C;border-radius:20px;padding:3px 10px;white-space:nowrap;}
   .dk-opt.pow{color:var(--copper-d);background:var(--washc);border-color:var(--copper-l);}
   .dk-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px 16px;flex:1;min-height:0;overflow-y:auto;}
@@ -136,7 +139,7 @@
     .dk-slide{position:static;opacity:1;transform:none;pointer-events:auto;}
     .dk-slide:not(.on){display:none;}
   }
-  /* ══ Ton pupitre : trois réglages, un aperçu qui se réécrit ══ */
+  /* ══ Le pupitre : trois réglages, au troisième étage du socle ══ */
   #v-toi{position:relative;overflow:hidden;}
   .pu-head,.pu-2{position:relative;z-index:1;}
   .pu-head{display:flex;align-items:baseline;gap:14px;padding:2px 0 20px;flex-shrink:0;}
@@ -2220,7 +2223,7 @@
     </div>
     <div class="sub-g" data-for="memoire">
       <button class="sn" data-go="entreprises">Tes clients<span class="cnt" id="cntEnt2">0</span></button>
-      <button class="sn" data-go="toi">Ton pupitre</button>
+      <button class="sn" data-go="toi">Ton socle</button>
       <span class="sn-sep"></span>
       <button class="sn" data-soon="objections">Tes objections<span class="soon"></span></button>
       <button class="sn" data-soon="secteurs">Signaux sectoriels<span class="soon"></span></button>
@@ -2888,7 +2891,7 @@ function navSet(group,activeKey){
     b.classList.toggle('on',(b.dataset.go&&b.dataset.go===activeKey)||(b.dataset.soon&&b.dataset.soon===activeKey));
   });
 }
-const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Récits',affaires:'Affaires',entreprises:'Tes clients',toi:'Ton pupitre',fiche:'Dossier client',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',reglages:'Réglages'};
+const CRUMBS={dash:"Aujourd'hui",rdv:'Rendez-vous',prep:'Brief',match:'Récits',affaires:'Affaires',entreprises:'Tes clients',toi:'Ton socle',fiche:'Dossier client',nouveau:'Préparer un rendez-vous',ctx:'Préparer un rendez-vous',reglages:'Réglages'};
 function go(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
   navSet(NAVGROUP[v]||'dash',v==='fiche'?'entreprises':v);
@@ -3414,9 +3417,21 @@ function pupitreStyle(){
   const l=AXES.map(a=>a.v[pupitre[a.k]]);
   const pf=profGet();
   if(pf.role)l.push(`Le commercial est ${pf.role.toLowerCase()}. Adapte le registre à ce rôle.`);
+  if(pf.vous==='Tutoies')l.push(`Le commercial tutoie ses prospects. Tout le brief tutoie, sans exception.`);
+  if(pf.vous==='Vouvoies')l.push(`Le commercial vouvoie ses prospects. Tout le brief vouvoie.`);
+  if(pf.anc)l.push(`Il exerce ce métier depuis ${pf.anc.toLowerCase()}.`);
+  if(pf.place)l.push(`Son entreprise est ${pf.place.toLowerCase()} de son marché. L'ouverture doit assumer cette position au lieu de la contourner.`);
+  if(pf.taille)l.push(`Son entreprise compte ${pf.taille.toLowerCase()} personnes.`);
+  if(pf.cycle)l.push(`Son cycle de vente habituel dure ${pf.cycle.toLowerCase()}. La prochaine étape doit être réaliste pour ce rythme, jamais plus rapide.`);
+  if(pf.prix)l.push(`Son prix d'entrée : ${pf.prix}. N'en parle que si le brief l'exige.`);
+  if(pf.chiffre)l.push(`Son chiffre le plus fort : ${pf.chiffre}. Préfère-le à une statistique de secteur si les deux conviennent.`);
+  if(pf.garantie)l.push(`Sa garantie : ${pf.garantie}. Sers-t'en pour lever le risque perçu.`);
   if(pf.bannis)l.push(`N'emploie jamais ces mots : ${pf.bannis}.`);
+  if(pf.tard)l.push(`Sujets à ne pas ouvrir dans ce rendez-vous : ${pf.tard}.`);
   if(pf.objections)l.push(`Objections qu'il rencontre le plus souvent : ${pf.objections}. Anticipe-les plutôt que d'en inventer une autre.`);
   if(pf.concurrents)l.push(`Concurrents qu'il croise habituellement : ${pf.concurrents}. Prépare la comparaison sans les dénigrer.`);
+  if(pf.diff)l.push(`Ce qui le distingue : ${pf.diff}. C'est l'angle à défendre dans la riposte.`);
+  if(pf.declencheur)l.push(`Ce qui déclenche un achat chez ses clients : ${pf.declencheur}. Cherche ce signal dans les questions.`);
   return l.join('\n');
 }
 // Les étages, du nécessaire au facultatif. Plus on descend, plus Faro devient précis.
@@ -3430,6 +3445,8 @@ const ETAGES=[
   {k:'marche',t:'Ton marché',d:'Ce que tu affrontes tous les jours.',opt:'Facultatif · pour aller loin',why:"Les objections que tu connais déjà, Faro les anticipe au lieu de les découvrir."}
 ];
 const ROLES=['Commercial','Fondateur','Consultant','Account manager'];
+// Un pictogramme par étage, dans la grammaire Faro
+const EPIC={"toi": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <circle cx=\"30\" cy=\"60\" r=\"5\" fill=\"#C96A2E\" stroke=\"none\"></circle> <path d=\"M45 44.5 A32 32 0 0 1 45 75.5\" stroke=\"#C96A2E\"></path> <path d=\"M60 30.4 A56 56 0 0 1 60 89.6\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M75 16.4 A80 80 0 0 1 75 103.6\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> </g>", "boite": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <path d=\"M16 96 L104 96\" stroke=\"#DED2BC\"></path> <path d=\"M36 96 L36 68\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M60 96 L60 48\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M84 96 L84 28\" stroke=\"#C96A2E\"></path> <path d=\"M26 62 L94 62\" stroke=\"#DED2BC\" stroke-width=\"1.4\" stroke-dasharray=\"4 5\"></path> </g>", "pupitre": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <path d=\"M20 36 L100 36\" stroke=\"#DED2BC\"></path> <path d=\"M20 60 L100 60\" stroke=\"#DED2BC\"></path> <path d=\"M20 84 L100 84\" stroke=\"#DED2BC\"></path> <circle cx=\"46.7\" cy=\"36\" r=\"5\" fill=\"#C96A2E\" stroke=\"none\"></circle> <circle cx=\"73.3\" cy=\"60\" r=\"5\" fill=\"#C96A2E\" stroke=\"none\"></circle> <circle cx=\"60\" cy=\"84\" r=\"5\" fill=\"#C96A2E\" stroke=\"none\"></circle> </g>", "vend": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <rect x=\"16\" y=\"44\" width=\"32\" height=\"32\" rx=\"7\" stroke=\"#C96A2E\"></rect> <circle cx=\"86\" cy=\"60\" r=\"7\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></circle> <circle cx=\"86\" cy=\"60\" r=\"14\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></circle> <circle cx=\"86\" cy=\"60\" r=\"21\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></circle> <path d=\"M54 60 L70 60\" stroke=\"#C96A2E\"></path> <path d=\"M65 55 L70 60 L65 65\" stroke=\"#C96A2E\"></path> </g>", "preuve": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <rect x=\"20\" y=\"66\" width=\"36\" height=\"24\" rx=\"5\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></rect> <rect x=\"64\" y=\"66\" width=\"36\" height=\"24\" rx=\"5\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></rect> <rect x=\"42\" y=\"34\" width=\"36\" height=\"24\" rx=\"5\" stroke=\"#C96A2E\"></rect> <path d=\"M16 98 L104 98\" stroke=\"#DED2BC\"></path> </g>", "regles": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <path d=\"M60 26 L60 100\" stroke=\"#C96A2E\"></path> <circle cx=\"60\" cy=\"20\" r=\"4\" fill=\"#C96A2E\" stroke=\"none\"></circle> <path d=\"M20 44 L48 44\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M20 62 L48 62\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M20 80 L48 80\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> </g>", "marche": "<g fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"> <path d=\"M16 88 L104 88\" stroke=\"#DED2BC\"></path> <path d=\"M16 88 A9 9 0 0 1 34 88\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M37 88 A13 13 0 0 1 63 88\" stroke=\"#C96A2E\"></path> <path d=\"M65 88 A7 7 0 0 1 79 88\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> <path d=\"M82 88 A11 11 0 0 1 104 88\" stroke=\"#DED2BC\" stroke-dasharray=\"4 5\"></path> </g>"};
 let etage=0, prof={};
 function profGet(){ try{ return set.profil?JSON.parse(set.profil):{}; }catch(e){ return {}; } }
 function etageRempli(k){
@@ -3469,27 +3486,46 @@ function renderToi(){
   const corps=e=>{
     if(e.k==='toi')return `<div class="dk-g">
       <div class="dk-f"><label>Ton prénom et ton nom</label><input id="dkName" value="${V('full_name')}" placeholder="Ryan Djebbar"/></div>
-      <div class="dk-f"><label>Ton rôle</label><div class="dk-chips">${ROLES.map(r=>`<button class="dk-chip ${prof.role===r?'on':''}" data-role="${esc(r)}">${r}</button>`).join('')}</div></div></div>`;
+      <div class="dk-f"><label>Ton rôle</label><div class="dk-chips">${ROLES.map(r=>`<button class="dk-chip ${prof.role===r?'on':''}" data-c="role" data-v="${esc(r)}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f"><label>Avec tes prospects, tu</label><div class="dk-chips">${['Vouvoies','Tutoies','Ça dépend'].map(r=>`<button class="dk-chip ${prof.vous===r?'on':''}" data-c="vous" data-v="${r}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f"><label>Dans ce métier depuis</label><div class="dk-chips">${['Moins d\'un an','1 à 3 ans','3 à 10 ans','Plus de 10 ans'].map(r=>`<button class="dk-chip ${prof.anc===r?'on':''}" data-c="anc" data-v="${esc(r)}">${r}</button>`).join('')}</div></div></div>`;
     if(e.k==='boite')return `<div class="dk-g">
       <div class="dk-f"><label>Nom de ton entreprise</label><input id="dkComp" value="${V('company')}" placeholder="Cadence"/></div>
       <div class="dk-f"><label>Son site <em>· pour ton logo</em></label><input id="dkSite" value="${V('site')}" placeholder="cadence-rh.fr"/></div>
-      <div class="dk-f full"><label>Son secteur</label><input id="dkSec" value="${V('secteur')}" placeholder="SaaS RH"/></div></div>`;
+      <div class="dk-f"><label>Son secteur</label><input id="dkSec" value="${V('secteur')}" placeholder="SaaS RH"/></div>
+      <div class="dk-f"><label>Sa taille</label><div class="dk-chips">${['Solo','2 à 10','10 à 50','Plus de 50'].map(r=>`<button class="dk-chip ${prof.taille===r?'on':''}" data-c="taille" data-v="${r}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f full"><label>Sa place sur le marché <em>· change complètement l'ouverture</em></label><div class="dk-chips">${['Le challenger','Le spécialiste','Le leader','Le nouveau'].map(r=>`<button class="dk-chip ${prof.place===r?'on':''}" data-c="place" data-v="${r}">${r}</button>`).join('')}</div></div></div>`;
     if(e.k==='pupitre')return axHtml;
     if(e.k==='vend')return `<div class="dk-f full"><label>Ce que tu vends</label><input id="dkOff" value="${V('offre')}" placeholder="Logiciel de suivi des heures et de la masse salariale"/></div>
-      <div class="dk-f full"><label>Ta cible type</label><input id="dkCible" value="${V('cible')}" placeholder="DAF et DRH de PME industrielles de 100 à 500 personnes"/></div>`;
+      <div class="dk-f full"><label>Ta cible type</label><input id="dkCible" value="${V('cible')}" placeholder="DAF et DRH de PME industrielles de 100 à 500 personnes"/></div>
+      <div class="dk-g">
+        <div class="dk-f"><label>Ton prix d'entrée <em>· facultatif</em></label><input id="dkPrix" value="${esc(prof.prix||'')}" placeholder="à partir de 450 € par mois"/></div>
+        <div class="dk-f"><label>Ton cycle de vente habituel</label><div class="dk-chips">${['Une réunion','2 à 4 semaines','1 à 3 mois','Plus de 6 mois'].map(r=>`<button class="dk-chip ${prof.cycle===r?'on':''}" data-c="cycle" data-v="${r}">${r}</button>`).join('')}</div></div>
+      </div>`;
     if(e.k==='preuve')return `<div class="dk-f full"><label>Ta proposition de valeur</label><textarea id="dkVal" placeholder="Le problème que tu résous, mieux que les autres.">${V('contexte')}</textarea></div>
-      <div class="dk-f full"><label>Tes preuves <em>· clients, résultats, chiffres</em></label><textarea id="dkPr" placeholder="Utilisé par Somelec, 240 personnes, économie de 4 ETP en un an.">${V('preuves')}</textarea></div>`;
+      <div class="dk-f full"><label>Tes preuves <em>· clients, résultats, chiffres</em></label><textarea id="dkPr" placeholder="Utilisé par Somelec, 240 personnes, économie de 4 ETP en un an.">${V('preuves')}</textarea></div>
+      <div class="dk-g">
+        <div class="dk-f"><label>Ton chiffre le plus fort</label><input id="dkChiffre" value="${esc(prof.chiffre||'')}" placeholder="ROI médian en 6 mois sur 40 clients"/></div>
+        <div class="dk-f"><label>Ta garantie ou ton engagement</label><input id="dkGarantie" value="${esc(prof.garantie||'')}" placeholder="déployé en 3 semaines, sans engagement la première année"/></div>
+      </div>`;
     if(e.k==='regles')return `<div class="dk-f full"><label>Ce que Faro ne doit jamais faire</label><textarea id="dkStyle" placeholder="Je ne parle jamais prix au premier rendez-vous. Je ne cite jamais un concurrent par son nom.">${V('style')}</textarea></div>
-      <div class="dk-f full"><label>Les mots que tu bannis <em>· facultatif</em></label><input id="dkBan" value="${esc(prof.bannis||'')}" placeholder="solution, synergie, accompagner"/></div>`;
+      <div class="dk-g">
+        <div class="dk-f"><label>Les mots que tu bannis</label><input id="dkBan" value="${esc(prof.bannis||'')}" placeholder="solution, synergie, accompagner"/></div>
+        <div class="dk-f"><label>Les sujets que tu gardes pour plus tard</label><input id="dkTard" value="${esc(prof.tard||'')}" placeholder="l'intégration technique, la migration des données"/></div>
+      </div>`;
     if(e.k==='marche')return `<div class="dk-f full"><label>Les objections que tu entends le plus</label><textarea id="dkObj" placeholder="On a déjà un outil. C'est trop cher. Ce n'est pas le moment.">${esc(prof.objections||'')}</textarea></div>
-      <div class="dk-f full"><label>Tes concurrents habituels</label><input id="dkConc" value="${esc(prof.concurrents||'')}" placeholder="Payfit, Lucca, Excel"/></div>`;
+      <div class="dk-g">
+        <div class="dk-f"><label>Tes concurrents habituels</label><input id="dkConc" value="${esc(prof.concurrents||'')}" placeholder="Payfit, Lucca, Excel"/></div>
+        <div class="dk-f"><label>Ce qui te distingue d'eux</label><input id="dkDiff" value="${esc(prof.diff||'')}" placeholder="le seul à traiter la paie et les heures dans le même outil"/></div>
+      </div>
+      <div class="dk-f full"><label>Ce qui déclenche un achat chez tes clients</label><input id="dkDecl" value="${esc(prof.declencheur||'')}" placeholder="un contrôle URSSAF, une croissance rapide, un départ au service paie"/></div>`;
     return '';
   };
   const rempli=()=>ETAGES.filter(e=>etageRempli(e.k)).length;
 
   w.innerHTML=`<div class="dk">
     <div class="dk-stage">${ETAGES.map((e,i)=>`<div class="dk-slide ${i===etage?'on':''}" data-slide="${i}">
-      <div class="dk-head"><span class="dk-n">0${i+1}</span><span class="dk-t">${e.t}</span><span class="dk-d">${e.d}</span>${e.opt?`<span class="dk-opt ${/gros/.test(e.opt)?'pow':''}">${e.opt}</span>`:''}</div>
+      <div class="dk-head"><svg class="dk-pic" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${EPIC[e.k]||''}</svg><div class="dk-ti"><div class="dk-tr"><span class="dk-n">0${i+1}</span><span class="dk-t">${e.t}</span>${e.opt?`<span class="dk-opt ${/gros/.test(e.opt)?'pow':''}">${e.opt}</span>`:''}</div><div class="dk-d">${e.d}</div></div></div>
       <div class="dk-card">${corps(e)}<div class="dk-why">${e.why}</div></div>
       <div class="dk-foot"><button class="dk-save" data-save="1">Enregistrer</button><span class="dk-hint">Enregistré pour tous tes prochains briefs.</span></div>
     </div>`).join('')}</div>
@@ -3539,9 +3575,10 @@ function renderToi(){
         const nb=w.querySelector(`[data-axk="${k}"][data-axi="${pupitre[k]}"]`); if(nb)nb.focus();}
     }));
   });
-  w.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>{
-    prof.role=b.dataset.role;
-    w.querySelectorAll('[data-role]').forEach(x=>x.classList.toggle('on',x===b));
+  w.querySelectorAll('[data-c]').forEach(b=>b.addEventListener('click',()=>{
+    const c=b.dataset.c;
+    prof[c]=(prof[c]===b.dataset.v)?'':b.dataset.v;
+    w.querySelectorAll(`[data-c="${c}"]`).forEach(x=>x.classList.toggle('on',x===b&&prof[c]===b.dataset.v));
   }));
   const u=$('dkUp'), d=$('dkDown');
   if(u)u.addEventListener('click',()=>go2(etage-1));
@@ -3564,7 +3601,7 @@ async function saveProfil(){
   const map={dkName:'full_name',dkComp:'company',dkSite:'site',dkSec:'secteur',dkOff:'offre',dkCible:'cible',dkVal:'contexte',dkPr:'preuves',dkStyle:'style'};
   Object.keys(map).forEach(id=>{const v=g(id); if(v!==undefined)set2[map[id]]=v;});
   const pf={...prof};
-  const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents'};
+  const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents',dkPrix:'prix',dkChiffre:'chiffre',dkGarantie:'garantie',dkTard:'tard',dkDiff:'diff',dkDecl:'declencheur'};
   Object.keys(pmap).forEach(id=>{const v=g(id); if(v!==undefined)pf[pmap[id]]=v;});
   set2.profil=JSON.stringify(pf);
   set2.reglages=JSON.stringify(pupitre);
@@ -4883,7 +4920,7 @@ async function onbSave(){
     const sn=$('sName'); if(sn&&set.full_name)sn.value=set.full_name;
     const av1=$('uav'); if(av1&&set.full_name)av1.title=set.full_name+' · ton compte';
     refreshOffre();
-  }catch(e){toast("L'enregistrement a échoué, tu pourras reprendre dans Ton pupitre.");}
+  }catch(e){toast("L'enregistrement a échoué, tu pourras reprendre dans Ton socle.");}
   finally{b.classList.remove('load');b.disabled=false;}
 }
 function openOnb(){ onbData={}; onbShow(1); $('onbOv').classList.add('on'); }
@@ -6119,7 +6156,7 @@ function toggleCarnetDictation(){
 
 /* ═══ Palette ═══ */
 let palIdx=0, palItems=[];
-const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Brief',go:'prep'},{t:'Récits',go:'match'},{t:'Tes clients',go:'entreprises'},{t:'Ce que Faro sait de toi',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Réglages',go:'reglages'}];
+const palNav=[{t:"Aujourd'hui",go:'dash'},{t:'Affaires',go:'affaires'},{t:'Brief',go:'prep'},{t:'Récits',go:'match'},{t:'Tes clients',go:'entreprises'},{t:'Ton socle',go:'toi'},{t:'Préparer un rendez-vous',go:'nouveau'},{t:'Réglages',go:'reglages'}];
 function palOpenF(){$('pal').classList.add('on');$('palQ').value='';palRender('');setTimeout(()=>$('palQ').focus(),30);}
 function palClose(){$('pal').classList.remove('on');}
 $('palOpen').addEventListener('click',palOpenF);
