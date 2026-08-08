@@ -49,6 +49,8 @@ async function saveBrief(uid,input,b,dealId){
     poste:input.poste||null,
     offre:input.offre||null,
     contexte:input.contexte||null,
+    // L'objectif de sortie survit désormais au rechargement
+    objectif:input.objectif||null,
     maturite:b.maturite_score??null,
     label:b.maturite_label||null,
     ouverture:[b.ouverture&&b.ouverture.accroche,b.ouverture&&b.ouverture.qui_nous_sommes,b.ouverture&&b.ouverture.pourquoi_vous].filter(Boolean).join(' '),
@@ -86,7 +88,11 @@ LES PIÈGES : deux erreurs à ne pas commettre avec ce profil précis.
 
 LA MATURITÉ : score 0 à 100 sur l'ouverture du marché et du prospect. Label court, trois raisons courtes, un verdict d'une phrase.
 
-HONNÊTETÉ : dans faits_verifies tu ne mets QUE ce qui figure dans les données fournies. Dans hypotheses tu mets ce que tu déduis.`;
+HONNÊTETÉ : dans faits_verifies tu ne mets QUE ce qui figure dans les données fournies. Dans hypotheses tu mets ce que tu déduis.
+
+LA MANIÈRE DE VENDRE DU COMMERCIAL, quand elle est fournie, est une contrainte, pas une suggestion. Elle prime sur tes habitudes. S'il dit qu'il ne parle jamais prix au premier rendez-vous, aucune phrase du brief ne mentionne le prix. S'il dit qu'il tutoie, tout le brief tutoie.
+
+SES ANGLES MORTS, quand ils sont fournis, sont des corrections à appliquer sans les nommer. Tu ne lui fais jamais la leçon dans le brief : tu compenses silencieusement. S'il oublie souvent de verrouiller la date, la prochaine étape contient une date précise à proposer.`;
 
 const TOOL = {
   name:'rediger_brief', description:'Rédige le brief de rendez-vous.',
@@ -124,8 +130,41 @@ function bloc(e){
   return l.join('\n');
 }
 
+// Ce que le parcours a collecté, en paramètres propres plutôt qu'en pavé de texte
+const DECLS={
+  entrant:"Le prospect a demandé le rendez-vous. Il a donc déjà un besoin exprimé : ne le survends pas, fais-lui préciser ce qu'il cherche.",
+  sortant:"Le commercial a décroché ce rendez-vous à froid. Le prospect n'a rien demandé : l'ouverture doit justifier les quinze premières minutes.",
+  recommandation:"Le rendez-vous vient d'une recommandation. Nomme-la dans l'accroche, c'est le meilleur capital de départ.",
+  salon:"Le contact vient d'un salon ou d'un événement. Rappelle le contexte de la rencontre dans l'accroche.",
+  relance:"Le rendez-vous fait suite à une relance du commercial. Le prospect a mis du temps à répondre : ne le lui reproche jamais."
+};
+const GOALS={
+  qualifier:"Qualifier : sortir avec budget, décideur et échéance identifiés. La prochaine étape doit servir cet objectif.",
+  rdv2:"Décrocher un deuxième rendez-vous avec la bonne personne. La prochaine étape doit contenir une date précise à proposer.",
+  chiffrer:"Obtenir le périmètre exact à chiffrer. La prochaine étape doit verrouiller ce qui entre et ce qui sort du devis.",
+  signer:"Faire signer. La prochaine étape doit lever le dernier obstacle et nommer le signataire."
+};
+const ROOMS={
+  seul:"Le commercial sera seul face à un seul interlocuteur.",
+  duo:"Ils seront deux en face. Prévois une question qui fasse parler celui qui se taira.",
+  comite:"Rendez-vous en comité. L'ouverture doit tenir devant plusieurs métiers à la fois.",
+  visio:"Le rendez-vous se tient en visio. Les phrases doivent être plus courtes encore."
+};
+
+function contexteRiche(i){
+  const l=[];
+  if(i.declencheur&&DECLS[i.declencheur]) l.push(`COMMENT CE RENDEZ-VOUS EST NÉ : ${DECLS[i.declencheur]}`);
+  if(i.objectif&&GOALS[i.objectif]) l.push(`OBJECTIF DE SORTIE : ${GOALS[i.objectif]}`);
+  if(i.room&&ROOMS[i.room]) l.push(`QUI SERA DANS LA PIÈCE : ${ROOMS[i.room]}`);
+  if(i.concurrent) l.push(`CONCURRENT DÉJÀ EN PLACE : ${i.concurrent}. Construis la riposte en tenant compte de cette solution existante, sans jamais la dénigrer frontalement.`);
+  if(i.echeance) l.push(`ÉCHÉANCE CONNUE CHEZ LE PROSPECT : ${i.echeance}. Sers-t'en pour créer une urgence légitime, jamais artificielle.`);
+  if(i.memoire) l.push(`CE QUE LE COMMERCIAL SAIT DÉJÀ DE CE CLIENT, tiré de ses rendez-vous précédents :\n${i.memoire}\nAppuie-toi dessus. Ne repose jamais une question dont la réponse figure ici.`);
+  return l.join('\n\n');
+}
+
 async function generate(input){
   const rdv={premier:'Premier rendez-vous, il ne connaît pas encore l offre.',relance:'Rendez-vous de relance, un premier contact a déjà eu lieu.',negociation:'Négociation finale, le sujet est le prix et les conditions.'}[input.type_rdv]||'Premier rendez-vous.';
+  const riche=contexteRiche(input);
   const msg=`DONNÉES OFFICIELLES DE L'ENTREPRISE EN FACE
 ${bloc(input.entreprise_data)}
 
@@ -135,12 +174,22 @@ TYPE DE RENDEZ-VOUS : ${rdv}
 CE QUE VEND LE COMMERCIAL : ${input.offre||'non précisé'}
 ${input.valeur?`SA PROPOSITION DE VALEUR : ${input.valeur}`:''}
 ${input.company?`SON ENTREPRISE : ${input.company}`:''}
+${input.cible?`SA CIBLE TYPE : ${input.cible}`:''}
 ${input.preuves?`SES PREUVES : ${input.preuves}`:''}
-${input.contexte?`CE QU'IL SAIT EN PLUS : ${input.contexte}`:''}`;
+${input.style?`SA MANIÈRE DE VENDRE, à respecter sans exception :\n${input.style}`:''}
+${input.angles?`SES ANGLES MORTS, à compenser sans jamais les nommer dans le brief :\n${input.angles}`:''}
+${riche?`\n${riche}`:''}
+${input.contexte?`\nCE QU'IL SAIT EN PLUS : ${input.contexte}`:''}`;
 
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
     headers:{'x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01','content-type':'application/json'},
-    body:JSON.stringify({model:MODEL,max_tokens:2400,system:SYSTEM,tools:[TOOL],tool_choice:{type:'tool',name:'rediger_brief'},messages:[{role:'user',content:msg}]})});
+    body:JSON.stringify({
+      model:MODEL,max_tokens:2400,
+      // Le bloc système ne change jamais : on le met en cache
+      system:[{type:'text',text:SYSTEM,cache_control:{type:'ephemeral'}}],
+      tools:[TOOL],tool_choice:{type:'tool',name:'rediger_brief'},
+      messages:[{role:'user',content:msg}]
+    })});
   if(!r.ok){ const t=await r.text(); throw new Error(`Anthropic ${r.status}: ${t.slice(0,200)}`); }
   const d=await r.json();
   const b=(d.content||[]).find(x=>x.type==='tool_use');
@@ -177,7 +226,7 @@ export default async function handler(req,res){
 
     const deal=await findOrCreateDeal(uid,body);
     let saved=null; try{ saved=await saveBrief(uid,body,brief,deal?deal.id:null); }catch(e){}
-    const out={...brief,id:saved?saved.id:null,deal_id:deal?deal.id:null,statut:'a_relancer',created_at:saved?saved.created_at:new Date().toISOString(),poste:body.poste||null,entreprise_data:body.entreprise_data||null,site:body.site||null};
+    const out={...brief,id:saved?saved.id:null,deal_id:deal?deal.id:null,statut:'a_relancer',created_at:saved?saved.created_at:new Date().toISOString(),poste:body.poste||null,objectif:body.objectif||null,entreprise_data:body.entreprise_data||null,site:body.site||null};
     return res.status(200).json({brief:out,deal:deal||null,tokens_left:tl,reset_at:resetAt});
   }catch(e){ return res.status(500).json({error:'Erreur serveur.'}); }
 }
