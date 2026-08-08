@@ -402,7 +402,9 @@
   .trame2{position:absolute;bottom:-70px;left:-90px;width:540px;max-width:none;z-index:0;pointer-events:none;user-select:none;transform:rotate(180deg);transform-origin:bottom left;opacity:0;transition:opacity 1s ease .3s;}
   .trame2.lit{opacity:.55;}
   .dayw{position:relative;z-index:1;}
-  .day-hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;padding:14px 0 24px;}
+  .day-date{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;margin-bottom:16px;}
+  .day-date::before{content:"";width:16px;height:2px;background:var(--copper);border-radius:2px;}
+  .day-hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;padding:22px 0 26px;}
   .day-p{font-family:var(--serif);font-weight:500;font-size:35px;line-height:1.12;letter-spacing:-.8px;color:var(--ink);max-width:19ch;}
   .day-p em{font-style:normal;color:var(--copper);}
   .day-s{font-size:15px;color:var(--dim);line-height:1.5;margin-top:14px;max-width:36ch;}
@@ -413,8 +415,12 @@
   .phare .pa{transition:opacity .6s cubic-bezier(.2,.7,.2,1),stroke .6s;}
   .phare .pa.off{stroke:var(--line2)!important;opacity:.5!important;}
   .phare-k{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
-  .phare-v{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);margin-top:-8px;}
+  .phare-v{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);margin-top:-8px;text-align:center;}
   .phare-v em{font-style:normal;color:var(--faint);font-weight:400;font-size:13px;}
+  .phare-q{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-top:-6px;}
+  /* Au-delà du cinquième arc, le dernier respire : la portée continue de croître */
+  .phare .pa.beyond{animation:paBeyond 3s ease-in-out infinite;}
+  @keyframes paBeyond{0%,100%{opacity:.16;}50%{opacity:.34;}}
   /* Les gestes qui referment la journée : trois cartes, aucun bloc lourd */
   .day-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;}
   .day-hd .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
@@ -470,6 +476,7 @@
   .gc.reveiller{--gc:var(--gold);}
   .gc.chiffrer{--gc:var(--violet);}
   .gc.trancher{--gc:var(--red);}
+  .gc.suite{--gc:var(--green-d);}
   .gc.preparer{--gc:var(--copper-d);}
   .day-clear{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--greenbd);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px;}
   .day-clear-i{width:34px;height:34px;border-radius:50%;background:var(--greenbg);color:var(--green-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -483,7 +490,8 @@
   .day-foot b{color:var(--soft);font-weight:500;}
   .day-foot .sep{color:var(--line2);}
   .day-foot .boucle{margin-left:auto;color:var(--copper-d);}
-  .view.on .day-p{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .day-date{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;}
+  .view.on .day-p{animation:rise .5s cubic-bezier(.2,.7,.2,1) .05s both;}
   .view.on .day-s{animation:rise .5s cubic-bezier(.2,.7,.2,1) .08s both;}
   .view.on .phare{animation:rise .5s cubic-bezier(.2,.7,.2,1) .14s both;}
   .view.on .day-acts{animation:rise .45s cubic-bezier(.2,.7,.2,1) .2s both;}
@@ -502,9 +510,6 @@
   }
   /* ══════ PAGE AUJOURD'HUI — vue d'ensemble ══════ */
   /* Ligne d'horizon : date · salut · CTA principal */
-  .dash-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;}
-  .dh-l{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
-  .dh-l .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   /* Fil du jour : orientation en une phrase */
   /* Vue d'ensemble : 4 cartes */
   /* Mini-barres de distribution pipeline */
@@ -561,11 +566,9 @@
   .rtc-wait.ready .rtc-wait-txt{color:var(--copper-d);}
   /* Cascade d'entrée (réf Linear) */
   @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-  .view.on .dash-head{animation:rise .35s cubic-bezier(.2,.7,.2,1) both;}
   .view.on #nextHour{animation:rise .4s cubic-bezier(.2,.7,.2,1) .06s both;}
   .view.on #stateLine{animation:rise .4s cubic-bezier(.2,.7,.2,1) .12s both;}
   .view.on #loopCard{animation:rise .4s cubic-bezier(.2,.7,.2,1) .18s both;}
-  @media(max-width:900px){.dash-head{flex-direction:column;align-items:flex-start;gap:12px;}}
   /* ══ Vue Affaires par priorité d'action ══ */
   .aff-viewtabs{display:inline-flex;gap:3px;background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:3px;margin-bottom:14px;}
   .avt{display:inline-flex;align-items:center;gap:6px;border:none;background:none;font-size:12.5px;font-weight:600;color:var(--dim);padding:7px 14px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.13s;}
@@ -2064,12 +2067,6 @@
       </g>
     </svg>
     <div class="cockpit">
-      <!-- Ligne d'horizon : date · salut · CTA principal (seul cuivre plein) -->
-      <div class="dash-head">
-        <div class="dh-l"><span class="eyebrow" id="dashEyebrow">Mardi</span></div>
-        <button class="btn" data-go2="nouveau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:6px;vertical-align:-2px;"><path d="M12 5v14M5 12h14"/></svg>Préparer un rendez-vous</button>
-      </div>
-
       <!-- Ta journée : la phrase, le phare, les gestes -->
       <div id="dayw"></div>
     </div>
@@ -2750,8 +2747,6 @@ $('newBrief').addEventListener('click',()=>{ent=null;$('qEnt').value='';go('nouv
   const pre=name?name.split(' ')[0].replace(/^./,c=>c.toUpperCase()):'';
   const photo=(u.user_metadata&&(u.user_metadata.avatar_url||u.user_metadata.picture))||'';
   const h=new Date().getHours();
-  const de=$('dashEyebrow');
-  if(de){const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});de.textContent=today.charAt(0).toUpperCase()+today.slice(1);}
   const gr=$('greet'); if(gr)gr.textContent=pre?`${h<18?'Bonjour':'Bonsoir'} ${pre}.`:`${h<18?'Bonjour':'Bonsoir'}.`;
   const av0=$('uav'); if(av0)av0.title=(name||u.email||'')+' · ton compte';
   const sm=$('sMail2'); if(sm)sm.value=u.email||'';
@@ -2833,7 +2828,6 @@ function dash(){
   // ─── Compte vierge : l'écran de bienvenue prend toute la place ───
   if(!briefs.length && !deals.length){
     dashWrapIds.forEach(id=>{const e=$(id);if(e)e.style.display='none';});
-    const dh=document.querySelector('#v-dash .dash-head'); if(dh)dh.style.display='none';
     tramePortee(0);
     let welcome=document.getElementById('dashWelcome');
     if(!welcome){welcome=document.createElement('div');welcome.id='dashWelcome';welcome.className='dash-welcome';const ck=document.querySelector('#v-dash .cockpit');if(ck)ck.appendChild(welcome);}
@@ -2841,9 +2835,7 @@ function dash(){
     return;
   }
   const dw=document.getElementById('dashWelcome'); if(dw)dw.style.display='none';
-  const dwHead2=document.querySelector('#v-dash .dash-head'); if(dwHead2)dwHead2.style.display='';
   dashWrapIds.forEach(id=>{const e=$(id);if(e)e.style.display='';});
-  fillDashHead();
 
   // ─── Les gestes qui referment la journée ───
   const acts=[];
@@ -2890,6 +2882,16 @@ function dash(){
       d:(b.deal_id?deals.find(x=>x.id===b.deal_id):null)||{entreprise:b.entreprise,entreprise_data:b.entreprise_data},
       fn:()=>{current=b;openBrief(b);}});
   });
+  // Un récit sans prochaine action : la boucle se ferme mais ne repart pas
+  const sansSuite=briefs.filter(b=>b.debrief&&!(b.debrief.next_action||'').trim()&&days(b.created_at)<=21)
+    .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  sansSuite.slice(0,1).forEach(b=>{
+    acts.push({min:1,cls:'suite',ic:'step',k:'Suite à poser',lbl:'Poser la suite',
+      t:trunc(b.entreprise||'Ce rendez-vous',24),
+      w:`Raconté, mais sans prochaine action. Une affaire sans suite s'arrête là, même quand elle allait bien.`,
+      d:(b.deal_id?deals.find(x=>x.id===b.deal_id):null)||{entreprise:b.entreprise,entreprise_data:b.entreprise_data},
+      fn:()=>{current=b;openBrief(b);}});
+  });
   // Une affaire qui dort, sans être chaude
   const dorm=actifs.filter(d=>days(d.updated_at)>=14&&days(d.updated_at)<45&&!froids.includes(d))
     .sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
@@ -2910,7 +2912,7 @@ function dash(){
   if(acts.length<3)acts.push({min:1,cls:'preparer',ic:'plus',k:'Rien en attente',lbl:'Préparer un rendez-vous',t:'Ton prochain rendez-vous',
     w:'Deux clics, et Faro t\'arme des données du marché et de ta mémoire client.',
     fn:()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');}});
-  const list=acts.slice(0,6);
+  const list=acts.slice(0,8);
   const tot=list.reduce((a,x)=>a+x.min,0);
 
   // ─── Ta portée : ce que Faro voit pour toi, en arcs ───
@@ -2923,6 +2925,7 @@ function dash(){
   const bestN=bestK?parEnt[bestK]:0;
   const bestNom=bestK?(briefs.find(b=>(b.entreprise||'').toLowerCase()===bestK)||{}).entreprise:'';
   const portee=bestN>=11?5:bestN>=7?4:bestN>=4?3:bestN>=2?2:bestN>=1?1:0;
+  const PORTEE_L=['portée à construire','premier pas','portée courte','bonne portée','longue portée','portée maximale'];
   // Ce qui s'est passé aujourd'hui
   const today0=new Date(); today0.setHours(0,0,0,0);
   const vus=briefs.filter(b=>new Date(b.created_at)>=today0);
@@ -2942,6 +2945,7 @@ function dash(){
     snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 6l16 12M20 6L4 18"/></svg>',
     euro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 5.5A7 7 0 1 0 17 18.5M4 10h9M4 14h9"/></svg>',
     flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4h13l-2.5 4.5L18 13H5"/></svg>',
+    step:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18h5V6h5"/><path d="M13 3l4 3-4 3"/></svg>',
     plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>'
   };
 
@@ -2964,6 +2968,9 @@ function dash(){
   else if(manque)sub=`Chez <b>${esc(bestNom)}</b>, Faro a ${nWord(bestN)} récit${bestN>1?'s':''} derrière lui. Referme ta journée, il verra aussi loin partout.`;
   else sub=`Chez <b>${esc(bestNom)}</b>, Faro a ${nWord(bestN)} récit${bestN>1?'s':''} en mémoire. Ton prochain brief part de là.`;
 
+  const jrs=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  const mss=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const nw=new Date();
   const w=$('dayw');
   if(w){
     const ARCS=[
@@ -2976,6 +2983,7 @@ function dash(){
     w.innerHTML=`<div class="dayw">
       <div class="day-hero">
         <div>
+          <div class="day-date">${jrs[nw.getDay()]} ${nw.getDate()} ${mss[nw.getMonth()]}</div>
           <div class="day-p">${ph}</div>
           <div class="day-s">${sub}</div>
         </div>
@@ -2987,11 +2995,12 @@ function dash(){
             </g>
           </svg>
           <span class="phare-k">Ta portée</span>
-          <span class="phare-v">${portee} arc${portee>1?'s':''}<em> sur 5</em></span>
+          <span class="phare-v">${bestN?`${nWord(bestN)} récit${bestN>1?'s':''}`:'à construire'}${bestNom?`<em> chez ${esc(trunc(bestNom,18))}</em>`:''}</span>
+          <span class="phare-q">${PORTEE_L[portee]}</span>
         </div>
       </div>
       <div class="day-acts">
-        ${(!aDeb.length&&!jamais.length&&!froids.length&&!dorm&&!mort)
+        ${(!aDeb.length&&!jamais.length&&!froids.length&&!dorm&&!mort&&!sansSuite.length)
           ? `<div class="day-clear"><span class="day-clear-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="day-clear-t">Rien ne traîne.</div><div class="day-clear-d">Tous tes rendez-vous sont racontés et aucune affaire ne refroidit. Prépare la suite quand tu veux.</div></div></div>`
           : `<div class="day-hd"><span class="k">${resteJour?'Pour refermer ta journée':(aDeb.length?'Pour rattraper ton retard':'Pour refermer ta boucle')}</span><span class="m">${list.length} geste${list.length>1?'s':''} · environ ${tot} min</span>${list.length>3?`<span class="day-nav on"><button class="cnav" id="cnavL" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><button class="cnav" id="cnavR" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></span>`:''}</div>`
             +`<div class="day-cw" id="dayCw"><div class="day-cards ${list.length>3?'many':''}" id="dayCards">`
@@ -3041,6 +3050,8 @@ function dash(){
     // Les arcs s'étendent un par un
     const pas=[...w.querySelectorAll('.phare .pa')];
     pas.forEach((el,i)=>{if(i<portee){el.style.opacity=0;setTimeout(()=>{el.style.opacity=ARCS[i][2];},220+i*150);}});
+    // À pleine portée, le dernier arc respire : rien ne s'arrête à cinq
+    if(portee>=5&&pas[4])setTimeout(()=>pas[4].classList.add('beyond'),1100);
     // Le fond porte la donnée : plus ta mémoire est profonde, plus le phare éclaire loin
     tramePortee(portee);
   }
@@ -3101,18 +3112,6 @@ function renderWelcome(welcome){
   });
   welcome.querySelector('#dwDemo').addEventListener('click',openDemoBrief);
 }
-function fillDashHead(){
-  const jours=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-  const mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-  const now=new Date();
-  const eb=$('dashEyebrow'); if(eb)eb.textContent=`${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]}`;
-  const h=now.getHours();
-  let prenom='';
-  try{prenom=(session&&session.user&&session.user.user_metadata&&session.user.user_metadata.prenom)||((session&&session.user&&session.user.email||'').split('@')[0].split('.')[0].replace(/^\w/,c=>c.toUpperCase()))||'';}catch(e){}
-  const salut=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
-  const g=$('dashGreet'); if(g)g.textContent=`${salut}${prenom?' '+prenom:''}.`;
-}
-
 function renderToi(){
   const w=$('toiW'); if(!w)return;
   const debriefed=briefs.filter(b=>b.debrief);
