@@ -423,8 +423,6 @@
   .pa-lb text.on{fill:var(--copper-d);}
   .pa-lb text.nxt{fill:var(--faint);}
   .phare .pa.part{transition:stroke-dasharray 1s cubic-bezier(.2,.7,.2,1) .5s;}
-  .phare-n{font-size:11.5px;color:var(--dim);text-align:center;line-height:1.45;max-width:216px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line3);}
-  .phare-n b{color:var(--soft);font-weight:600;}
   /* Au-delà du cinquième arc, le dernier respire : la portée continue de croître */
   .phare .pa.beyond{animation:paBeyond 3s ease-in-out infinite;}
   @keyframes paBeyond{0%,100%{opacity:.16;}50%{opacity:.34;}}
@@ -433,7 +431,7 @@
   .day-hd .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   .day-hd .m{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap;}
   .day-cw{position:relative;}
-  .day-cards{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:none;}
+  .day-cards{display:flex;align-items:flex-start;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:none;}
   .day-cards::-webkit-scrollbar{display:none;}
   .gc{flex:1 0 0;min-width:262px;scroll-snap-align:start;}
   /* Au-delà de trois, on fait défiler vers la droite */
@@ -446,15 +444,15 @@
   .cnav:hover{border-color:var(--copper);color:var(--copper-d);}
   .cnav svg{width:13px;height:13px;stroke-width:2.4;}
   .cnav:disabled{opacity:.35;cursor:default;}
-  .gc{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);cursor:pointer;overflow:hidden;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
+  .gc{position:relative;display:flex;flex-direction:column;background:var(--card);border:1.5px solid color-mix(in srgb,var(--gc) 42%,var(--line));border-radius:var(--rl);box-shadow:var(--sh);cursor:pointer;overflow:hidden;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
   /* Plus de filet rectangulaire : un arc du phare, dans la couleur du type */
   .gc-arc{position:absolute;top:10px;left:12px;width:26px;height:26px;color:var(--gc);opacity:.5;pointer-events:none;transition:opacity .18s,transform .18s cubic-bezier(.2,.7,.2,1);}
   .gc:hover .gc-arc{opacity:.9;transform:translateX(2px);}
-  .gc:hover{box-shadow:var(--shm);transform:translateY(-2px);border-color:var(--line2);}
+  .gc:hover{box-shadow:var(--shm);transform:translateY(-2px);border-color:var(--gc);}
   .gc.first{background:linear-gradient(168deg,color-mix(in srgb,var(--gc) 6%,var(--card)),var(--card) 58%);}
   /* L'identité en tête : le logo et le nom sur la même ligne, la nature en pastille */
   /* Deux registres : DM Mono en marge, Fraunces pour ce qui compte, Inter pour le détail */
-  .gc-in{display:grid;grid-template-columns:52px 1fr;gap:0;padding:16px 16px 14px;flex:1;}
+  .gc-in{display:grid;grid-template-columns:52px 1fr;gap:0;padding:15px 16px 13px;}
   .gc-marge{display:flex;flex-direction:column;align-items:center;gap:8px;padding-right:12px;border-right:1px solid var(--line3);}
   .gc-marge .mono{width:34px;height:34px;border-radius:9px;font-size:12px;flex-shrink:0;}
   .gc-ic{width:34px;height:34px;border-radius:9px;background:color-mix(in srgb,var(--gc) 11%,transparent);color:var(--gc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -2949,12 +2947,6 @@ function dash(){
   const porteeSeuil=portee<4?PORTEE_S[portee]:null;
   const porteeFrac=porteeSeuil?Math.min(1,Math.max(0,(bestN-porteePrev)/(porteeSeuil-porteePrev))):0;
   // Ce qui débloque l'arc suivant, dit en clair
-  const porteeNext=(()=>{
-    if(!bestNom)return "Chaque récit chez un même client allonge ta portée.";
-    if(!porteeSeuil)return `<b>${nWord(bestN)} récits</b> chez ${esc(trunc(bestNom,20))}. Ta portée continue de croître, le dessin s'arrête là.`;
-    const manque=porteeSeuil-bestN;
-    return `<b>${nWord(bestN)} récit${bestN>1?'s':''}</b> chez ${esc(trunc(bestNom,20))}. Encore ${nWord(manque)} récit${manque>1?'s':''} et l'arc suivant s'allume.`;
-  })();
   // Ce qui s'est passé aujourd'hui
   const today0=new Date(); today0.setHours(0,0,0,0);
   const vus=briefs.filter(b=>new Date(b.created_at)>=today0);
@@ -3032,7 +3024,6 @@ function dash(){
           <span class="phare-k">Ta portée</span>
           <span class="phare-v">${bestN?`${nWord(bestN)} récit${bestN>1?'s':''}`:'à construire'}${bestNom?`<em> chez ${esc(trunc(bestNom,18))}</em>`:''}</span>
           <span class="phare-q">${PORTEE_L[portee]}</span>
-          <span class="phare-n">${porteeNext}</span>
         </div>
       </div>
       <div class="day-acts">
