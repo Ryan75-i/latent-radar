@@ -431,12 +431,13 @@
   .day-hd .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   .day-hd .m{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap;}
   .day-cw{position:relative;}
-  .day-cards{display:flex;align-items:stretch;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:none;}
+  /* overflow-x rogne aussi en vertical : on réserve la place du soulèvement et de l'ombre */
+  .day-cards{display:flex;align-items:stretch;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px;margin:-6px -2px -8px;scrollbar-width:none;}
   .day-cards::-webkit-scrollbar{display:none;}
   .gc{flex:1 0 0;min-width:262px;scroll-snap-align:start;}
   /* Au-delà de trois, on fait défiler vers la droite */
   .day-cards.many .gc{flex:0 0 300px;}
-  .day-fade{position:absolute;top:0;bottom:4px;right:0;width:56px;pointer-events:none;background:linear-gradient(90deg,rgba(247,247,245,0),var(--bg) 72%);opacity:0;transition:opacity .2s;}
+  .day-fade{position:absolute;top:6px;bottom:14px;right:0;width:56px;pointer-events:none;background:linear-gradient(90deg,rgba(247,247,245,0),var(--bg) 72%);opacity:0;transition:opacity .2s;}
   .day-cw.more .day-fade{opacity:1;}
   .day-nav{display:none;gap:5px;margin-left:auto;}
   .day-cw.more~.day-hd .day-nav,.day-hd .day-nav.on{display:flex;}
@@ -2857,16 +2858,16 @@ function dash(){
   const nWord=n=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][n]||String(n);
   // La phrase dépend de l'âge du rendez-vous, jamais de sa position dans la liste
   const jr=n=>n+(n>1?' jours':' jour');
-  const MEMES=["Tout est encore frais, c'est le meilleur moment.","Deux minutes et il est en mémoire.","Enchaîne pendant que tu y es."];
+  const MEMES=["Tout est encore frais, c'est le meilleur moment pour le dire.","Deux minutes de ta voix et il est en mémoire pour toujours.","Le troisième, enchaîne pendant que tu as encore tout en tête."];
   let sameDay=0;
   aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,3).forEach(b=>{
     const n=days(b.created_at);
     let w;
-    if(n<=0){w=`Vu aujourd'hui. ${MEMES[Math.min(sameDay,2)]}`;sameDay++;}
-    else if(n===1)w="Vu <b>hier</b>. Il reste l'essentiel, pas les détails.";
-    else if(n<=3)w=`Vu il y a <b>${jr(n)}</b>. Les détails commencent à s'effacer.`;
-    else if(n<=7)w=`Vu il y a <b>${jr(n)}</b>. Il ne reste que les grandes lignes.`;
-    else w=`Vu il y a <b>${jr(n)}</b>. Sauve ce qu'il en reste avant qu'il n'y ait plus rien.`;
+    if(n<=0){w=MEMES[Math.min(sameDay,2)];sameDay++;}
+    else if(n===1)w="Il reste l'essentiel, mais les détails commencent déjà à partir.";
+    else if(n<=3)w="Tu te souviens du fil, plus des phrases exactes qu'il a employées.";
+    else if(n<=7)w="Il ne reste que les grandes lignes. Sauve-les avant qu'elles partent aussi.";
+    else w="Presque tout est parti. Écris ce qui te revient, c'est mieux que rien.";
     // La mémoire s'efface d'environ douze points par jour, plancher à quinze
     const frais=Math.max(.15,1-n*0.12);
     acts.push({min:2,cls:'raconter',ic:'mem',k:'Récit à capturer',lbl:'Raconter',when:n<=0?"auj.":n===1?'hier':n+' j',
