@@ -433,19 +433,21 @@
   .cnav:hover{border-color:var(--copper);color:var(--copper-d);}
   .cnav svg{width:13px;height:13px;stroke-width:2.4;}
   .cnav:disabled{opacity:.35;cursor:default;}
-  .gc{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:15px 17px 13px;cursor:pointer;overflow:hidden;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
-  .gc::before{content:"";position:absolute;left:0;right:0;top:0;height:2.5px;background:var(--gc);}
+  .gc{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);cursor:pointer;overflow:hidden;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
+  .gc::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--gc);opacity:.85;transition:height .18s cubic-bezier(.2,.7,.2,1),opacity .18s;}
   .gc:hover{box-shadow:var(--shm);transform:translateY(-2px);border-color:var(--line2);}
-  .gc.first{background:linear-gradient(165deg,color-mix(in srgb,var(--gc) 7%,var(--card)),var(--card) 62%);}
-  .gc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-  .gc-top .mono{width:30px;height:30px;border-radius:8px;font-size:11px;flex-shrink:0;}
-  .gc-ic{width:30px;height:30px;border-radius:8px;background:color-mix(in srgb,var(--gc) 12%,transparent);color:var(--gc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .gc-ic svg{width:15px;height:15px;stroke-width:2;}
-  .gc-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gc);font-weight:600;margin-bottom:5px;}
-  .gc-t{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:-.3px;line-height:1.15;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .gc-w{font-size:12.5px;color:var(--dim);line-height:1.45;margin-top:6px;flex:1;}
+  .gc:hover::before{height:3px;opacity:1;}
+  .gc.first{background:linear-gradient(168deg,color-mix(in srgb,var(--gc) 6%,var(--card)),var(--card) 58%);}
+  /* L'identité en tête : le logo et le nom sur la même ligne, la nature en pastille */
+  .gc-top{display:flex;align-items:center;gap:11px;padding:15px 16px 0;}
+  .gc-top .mono{width:32px;height:32px;border-radius:9px;font-size:11.5px;flex-shrink:0;}
+  .gc-ic{width:32px;height:32px;border-radius:9px;background:color-mix(in srgb,var(--gc) 11%,transparent);color:var(--gc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .gc-ic svg{width:16px;height:16px;stroke-width:1.9;}
+  .gc-t{font-family:var(--serif);font-weight:600;font-size:17.5px;letter-spacing:-.35px;line-height:1.1;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;}
+  .gc-k{font-family:var(--mono);font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--gc);background:color-mix(in srgb,var(--gc) 9%,transparent);border-radius:5px;padding:3px 7px;flex-shrink:0;white-space:nowrap;}
+  .gc-w{font-size:12.5px;color:var(--dim);line-height:1.5;padding:11px 16px 0;flex:1;}
   .gc-w b{color:var(--soft);font-weight:600;}
-  .gc-foot{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line3);}
+  .gc-foot{display:flex;align-items:center;gap:10px;margin-top:13px;padding:11px 16px 13px;border-top:1px solid var(--line3);background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--gc) 3%,transparent));}
   .gc-go{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:var(--gc);border:none;border-radius:9px;padding:9px 15px;cursor:pointer;box-shadow:var(--sh);transition:filter .14s cubic-bezier(.2,.7,.2,1),transform .14s,box-shadow .14s;}
   /* La flèche est la marque Faro tournée : un point qui émet vers la droite */
   .gc-go svg{width:16px;height:16px;overflow:visible;}
@@ -2862,12 +2864,19 @@ function dash(){
       fn:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},220);}});
   });
   // Une affaire chaude qui se tait : c'est là que les ventes meurent
-  const froids=actifs.filter(d=>{const t=dealTemp(d);return (t==='chaud'||t==='close')&&days(d.updated_at)>=7;})
-    .sort((a,b)=>days(b.updated_at)-days(a.updated_at));
+  // Une chaude se relance à 5 jours, une tiède à 8 : les deux meurent du silence
+  const froids=actifs.filter(d=>{
+    const t=dealTemp(d), n=days(d.updated_at);
+    if(t==='chaud'||t==='close')return n>=5;
+    if(t==='tiede')return n>=8;
+    return n>=10;
+  }).sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   froids.slice(0,2).forEach(d=>{
-    const n=days(d.updated_at);
+    const n=days(d.updated_at), t=dealTemp(d);
+    const chaud=(t==='chaud'||t==='close');
     acts.push({min:5,cls:'relancer',ic:'mail',k:'Relance à écrire',lbl:'Écrire la relance',t:trunc(d.entreprise,24),
-      w:`Chaude, mais silencieuse depuis <b>${jr(n)}</b>. Faro a déjà l'angle, il ne reste qu'à envoyer.`,d,
+      w:chaud?`Chaude, mais silencieuse depuis <b>${jr(n)}</b>. Faro a déjà l'angle, il ne reste qu'à envoyer.`
+             :`Tiède et sans nouvelle depuis <b>${jr(n)}</b>. Il faut une vraie raison de revenir, Faro en a une.`,d,
       fn:()=>{const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');}else openFiche(d);}});
   });
   // Un brief préparé où tu n'es jamais allé : une fuite en amont de la boucle
@@ -2887,10 +2896,10 @@ function dash(){
   if(dorm)acts.push({min:5,cls:'reveiller',ic:'snow',k:'Affaire qui dort',lbl:'La réveiller',t:trunc(dorm.entreprise,24),
     w:`En <b>${stg(dorm.etape).l.toLowerCase()}</b> depuis <b>${jr(days(dorm.updated_at))}</b> sans un mouvement.`,d:dorm,
     fn:()=>openFiche(dorm)});
-  // Une affaire chaude sans montant : Faro ne peut rien prévoir de ton trimestre
-  actifs.filter(d=>{const t=dealTemp(d);return (t==='chaud'||t==='close')&&!dealVal(d);}).slice(0,1).forEach(d=>{
+  // Une affaire sans montant, quelle que soit sa température : Faro ne peut rien prévoir
+  actifs.filter(d=>!dealVal(d)&&dealBriefs(d).some(b=>b.debrief)&&!froids.includes(d)).slice(0,1).forEach(d=>{
     acts.push({min:1,cls:'chiffrer',ic:'euro',k:'Enjeu à poser',lbl:"Chiffrer l'enjeu",t:trunc(d.entreprise,24),
-      w:`Chaude, mais tu n'as pas noté ce qu'elle vaut. Sans montant, Faro ne peut rien dire de ton trimestre.`,d,
+      w:`En <b>${stg(d.etape).l.toLowerCase()}</b>, mais tu n'as pas noté ce qu'elle vaut. Sans montant, Faro ne peut rien dire de ton trimestre.`,d,
       fn:()=>openFiche(d)});
   });
   // Après un long silence, Faro propose de trancher. Il ne tranche jamais seul.
@@ -2990,9 +2999,7 @@ function dash(){
               const ed=(a.d&&a.d.entreprise_data)||{};
               const logo=a.d&&a.d.entreprise?logoHtml(a.d.entreprise,ed.logo,ed.site):`<span class="gc-ic">${GIC[a.ic]||GIC.plus}</span>`;
               return `<div class="gc ${a.cls} ${i===0?'first':''}" data-actb="${i}">
-                <div class="gc-top">${logo}</div>
-                <div class="gc-k">${esc(a.k||'')}</div>
-                <div class="gc-t">${esc(a.t)}</div>
+                <div class="gc-top">${logo}<span class="gc-t">${esc(a.t)}</span><span class="gc-k">${esc(a.k||'')}</span></div>
                 <div class="gc-w">${a.w}</div>
                 <div class="gc-foot"><button class="gc-go" data-actb="${i}">${a.lbl}${ARW}</button><span class="gc-hint">${a.min} min</span></div>
               </div>`;}).join('')
