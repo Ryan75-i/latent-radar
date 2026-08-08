@@ -188,7 +188,8 @@
   .iconbtn:hover{color:var(--red);background:var(--redbg);}
   .iconbtn svg{width:14px;height:14px;stroke-width:2;}
 
-  .main{min-width:0;display:flex;flex-direction:column;}
+  /* La coque tient dans l'écran : 56 de barre haute, 40 de sous-barre */
+  .main{min-width:0;display:flex;flex-direction:column;height:calc(100vh - 96px);overflow:hidden;}
   .crumb{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;}
   .crumb .sep{color:var(--faint);font-weight:400;}
   .tsp{flex:1;}
@@ -197,8 +198,25 @@
   .search svg{width:12px;height:12px;stroke-width:2;}
   .search .k{margin-left:auto;font-family:var(--mono);font-size:9px;border:1px solid var(--line2);border-radius:4px;padding:1px 5px;color:var(--faint);}
   .pill{font-family:var(--mono);font-size:10px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:6px;padding:4px 10px;white-space:nowrap;}
-  .page{padding:22px 40px 26px;max-width:1400px;width:100%;margin:0 auto;flex:1;}
-  .view{display:none;} .view.on{display:block;animation:up .3s cubic-bezier(.2,.7,.2,1);}
+  .page{padding:22px 40px 26px;max-width:1400px;width:100%;margin:0 auto;flex:1;min-height:0;display:flex;flex-direction:column;}
+  .view{display:none;}
+  .view.on{display:flex;flex-direction:column;flex:1;min-height:0;animation:up .3s cubic-bezier(.2,.7,.2,1);}
+  /* Ce qui peut être long défile à l'intérieur du cadre, jamais la page */
+  .scrollz{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:4px;margin-right:-4px;}
+  .scrollz::-webkit-scrollbar{width:6px;}
+  .scrollz::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
+  .scrollz::-webkit-scrollbar-track{background:transparent;}
+  /* Les blocs fixes d'une vue ne se compriment pas */
+  .view.on>.ptitle,.view.on>.aff-tools,.view.on>.pilot,.view.on>.hint{flex-shrink:0;}
+  /* Une vue entière peut défiler quand son contenu est un formulaire long */
+  .view.scrollhost.on{overflow-y:auto;overscroll-behavior:contain;padding-right:4px;margin-right:-4px;}
+  .view.scrollhost.on::-webkit-scrollbar{width:6px;}
+  .view.scrollhost.on::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
+  @media(max-width:900px){
+    .main{height:auto;overflow:visible;}
+    .view.on{display:block;}
+    .scrollz{overflow:visible;}
+  }
   .ptitle{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
   .ptitle h1{font-family:var(--serif);font-weight:600;font-size:24px;letter-spacing:-.015em;line-height:1.1;}
   .ptitle .sub{font-size:12.5px;color:var(--dim);margin-top:3px;}
@@ -473,8 +491,13 @@
   @media(max-width:820px){.dw-steps{grid-template-columns:1fr;}.dw-card::after{display:none;}.dw-loop{padding-bottom:0;}.dw-back{display:none;}.dw-greet{font-size:28px;}.dw-acts{flex-direction:column;align-items:stretch;}}
   /* ══ Ta journée : une phrase, un phare, des gestes ══ */
   /* Le décor est rogné : un absolu qui dépasse étendrait la zone de défilement */
-  #v-dash{position:relative;overflow:hidden;}
+  #v-dash{position:relative;overflow:hidden;justify-content:flex-start;}
   body{overflow-x:hidden;}
+  /* La trame verticale : pour les pages hautes, ancrée à droite */
+  .tramev{position:absolute;top:-40px;right:-70px;width:420px;z-index:0;pointer-events:none;user-select:none;}
+  #v-affaires,#v-entreprises{position:relative;}
+  #v-affaires>*:not(.tramev),#v-entreprises>*:not(.tramev){position:relative;z-index:1;}
+  @media(max-width:900px){.tramev{display:none;}}
   .trame{position:absolute;top:-34px;right:-56px;width:760px;max-width:none;z-index:0;pointer-events:none;user-select:none;transform-origin:top right;transform:scale(.9);opacity:0;transition:transform 1.1s cubic-bezier(.2,.7,.2,1),opacity .9s ease;}
   .trame.lit{opacity:1;}
   .trame path{opacity:0;transition:opacity .7s cubic-bezier(.2,.7,.2,1);}
@@ -833,6 +856,8 @@
   .mom-when{display:none;}
   /* Le chiffre du moment, en filigrane : de la profondeur, pas du bruit */
   .mom-ghost{position:absolute;top:-14px;right:6px;font-family:var(--serif);font-weight:700;font-size:72px;line-height:1;color:var(--tc);opacity:.06;pointer-events:none;user-select:none;letter-spacing:-.04em;}
+  .mom-ti{display:flex;align-items:center;gap:9px;}
+  .mom-pic{width:19px;height:19px;color:var(--tc);flex-shrink:0;}
   .mom-t{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.3px;color:var(--ink);line-height:1.1;}
   .mom-d{font-size:11px;color:var(--faint);margin-top:3px;line-height:1.35;}
   .mom-acts{position:absolute;top:12px;right:12px;display:flex;gap:4px;opacity:0;transition:.15s;}
@@ -1003,6 +1028,19 @@
   .rec.s3 .rec-acts.show{opacity:1;}
   .rec-acts{display:none;}
   @media(max-width:640px){.rec-q{font-size:25px;}.rec-in{padding:28px 20px;}.rec-temps{grid-template-columns:1fr 1fr;}}
+  /* Le sceau : quatre arcs qui se ferment, puis la coche qui se trace */
+  .verd-seal{width:132px;height:132px;margin:0 auto 22px;}
+  .verd-seal svg{width:100%;height:100%;display:block;overflow:visible;}
+  .verd-seal #seal-check{stroke-dasharray:70;stroke-dashoffset:70;transition:stroke-dashoffset .5s cubic-bezier(.2,.7,.2,1) .62s;}
+  .verd-seal #seal-ring{opacity:0;transform:scale(.72);transform-origin:100px 100px;transition:opacity .4s cubic-bezier(.2,.7,.2,1) .38s,transform .5s cubic-bezier(.2,.7,.2,1) .38s;}
+  .verd-seal [id^="arc-"]{opacity:0;transform:scale(.8) rotate(-22deg);transform-origin:100px 100px;transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);}
+  .verd.on .verd-seal #seal-check{stroke-dashoffset:0;}
+  .verd.on .verd-seal #seal-ring{opacity:1;transform:none;}
+  .verd.on .verd-seal [id^="arc-"]{opacity:var(--o);transform:none;}
+  .verd.on .verd-seal #arc-1{--o:.55;transition-delay:.06s;}
+  .verd.on .verd-seal #arc-2{--o:.4;transition-delay:.14s;}
+  .verd.on .verd-seal #arc-3{--o:.28;transition-delay:.22s;}
+  .verd.on .verd-seal #arc-4{--o:.18;transition-delay:.3s;}
   /* ══ Mémoriser : trois minutes avant, dans le couloir, une main ══ */
   .mem{position:fixed;inset:0;background:var(--bg);z-index:109;display:none;flex-direction:column;padding:0;}
   .mem.on{display:flex;}
@@ -1310,7 +1348,8 @@
   .hint .hi-x:hover{color:var(--soft);background:rgba(0,0,0,.04);}
   .hint .hi-x svg{width:14px;height:14px;stroke-width:2;}
   /* Pipeline board */
-  .board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding-bottom:2px;}
+  .board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding-bottom:2px;flex:1;min-height:0;}
+  #affBoardWrap{display:flex;flex-direction:column;flex:1;min-height:0;}
   .col-see{margin:2px 8px 8px;border:1px solid var(--line2);background:#fff;color:var(--copper-d);border-radius:7px;padding:7px;font-size:11px;font-weight:600;cursor:pointer;transition:.13s;text-align:center;}
   .col-see:hover{background:var(--washc);border-color:var(--copper-l);}
   /* Panneau d'étape en grand */
@@ -1388,7 +1427,7 @@
     .pilot{grid-template-columns:1fr 1fr;}
     .funnel-bars{overflow-x:auto;}
   }
-  .col{position:relative;background:var(--wash);border:1px solid var(--line);border-radius:var(--rl);height:calc(100vh - 330px);min-height:380px;max-height:620px;display:flex;flex-direction:column;overflow:hidden;transition:background .15s,outline-color .15s;}
+  .col{position:relative;background:var(--wash);border:1px solid var(--line);border-radius:var(--rl);height:100%;min-height:300px;display:flex;flex-direction:column;overflow:hidden;transition:background .15s,outline-color .15s;}
   .col::before{content:"";position:absolute;left:0;right:0;top:0;height:2.5px;background:var(--cc);}
   .colhd{padding:13px 13px 10px;display:flex;flex-direction:column;gap:1px;flex-shrink:0;}
   .colhd .ct{display:flex;align-items:center;gap:8px;}
@@ -1829,9 +1868,6 @@
   .verd{position:fixed;inset:0;background:var(--bg);z-index:108;display:none;align-items:center;justify-content:center;padding:24px;}
   .verd.on{display:flex;}
   .verd .in{max-width:460px;width:100%;text-align:left;}
-  .verd-mark{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:26px;animation:vmark .45s cubic-bezier(.2,.7,.2,1) both;}
-  .verd-mark svg{width:18px;height:18px;stroke-width:2.6;}
-  @keyframes vmark{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:none;}}
   .verd-t{font-family:var(--serif);font-weight:600;font-size:40px;letter-spacing:-.8px;line-height:1.05;color:var(--green-d);animation:rise .45s cubic-bezier(.2,.7,.2,1) .08s both;}
   .verd.chaud .verd-t{color:var(--copper-d);} .verd.tiede .verd-t{color:var(--gold);} .verd.mort .verd-t{color:var(--dim);}
   .verd-s{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--soft);letter-spacing:-.3px;line-height:1.2;margin-top:6px;animation:rise .45s cubic-bezier(.2,.7,.2,1) .14s both;}
@@ -2162,6 +2198,7 @@
   </section>
 
   <section class="view" id="v-affaires">
+    <svg class="tramev" viewBox="0 0 400 900" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M648.6 603.2 A200 200 0 0 1 320.0 450.0" stroke-width="1.50" opacity="0.05"></path><path d="M700.0 664.5 A280 280 0 0 1 240.0 450.0" stroke-width="1.41" opacity="0.0456"></path><path d="M751.4 725.8 A360 360 0 0 1 160.0 450.0" stroke-width="1.32" opacity="0.0413"></path><path d="M802.8 787.1 A440 440 0 0 1 80.0 450.0" stroke-width="1.24" opacity="0.0369"></path><path d="M1001.4 646.5 A520 520 0 0 1 60.0 692.5" stroke-width="1.15" opacity="0.0325"></path><path d="M1110.8 554.8 A600 600 0 0 1 60.0 835.2" stroke-width="1.06" opacity="0.0281"></path><path d="M1199.3 480.5 A680 680 0 0 1 60.0 950.8" stroke-width="0.98" opacity="0.0238"></path><path d="M1279.1 413.5 A760 760 0 0 1 60.0 1055.0" stroke-width="0.89" opacity="0.0194"></path><path d="M1354.1 350.6 A840 840 0 0 1 60.0 1152.9" stroke-width="0.80" opacity="0.015"></path></g></svg>
     <div class="ptitle"><div><div class="eyebrow">Activité · Pipeline</div><h1>Affaires</h1><div class="sub">Tes ventes, du premier contact à la signature. Chaque récit fait entrer et avancer son affaire.</div></div><div style="display:flex;gap:8px;"><button class="btn g" id="affExport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exporter</button><button class="btn g" data-go2="nouveau">Nouveau brief</button></div></div>
     <div id="pipeHint"></div>
 
@@ -2204,15 +2241,16 @@
     </div>
 
     <!-- Zone 1 : À traiter (rendez-vous à débriefer) -->
-    <div id="rdvTodo"></div>
+    <div class="scrollz"><div id="rdvTodo"></div>
 
     <!-- Zone 2 : Historique (débriefés, groupés par mois) -->
-    <div id="rdvHistory"></div>
+    <div id="rdvHistory"></div></div>
   </section>
 
   <section class="view" id="v-entreprises">
+    <svg class="tramev" viewBox="0 0 400 900" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#C96A2E" stroke-linecap="round"><path d="M648.6 603.2 A200 200 0 0 1 320.0 450.0" stroke-width="1.50" opacity="0.05"></path><path d="M700.0 664.5 A280 280 0 0 1 240.0 450.0" stroke-width="1.41" opacity="0.0456"></path><path d="M751.4 725.8 A360 360 0 0 1 160.0 450.0" stroke-width="1.32" opacity="0.0413"></path><path d="M802.8 787.1 A440 440 0 0 1 80.0 450.0" stroke-width="1.24" opacity="0.0369"></path><path d="M1001.4 646.5 A520 520 0 0 1 60.0 692.5" stroke-width="1.15" opacity="0.0325"></path><path d="M1110.8 554.8 A600 600 0 0 1 60.0 835.2" stroke-width="1.06" opacity="0.0281"></path><path d="M1199.3 480.5 A680 680 0 0 1 60.0 950.8" stroke-width="0.98" opacity="0.0238"></path><path d="M1279.1 413.5 A760 760 0 0 1 60.0 1055.0" stroke-width="0.89" opacity="0.0194"></path><path d="M1354.1 350.6 A840 840 0 0 1 60.0 1152.9" stroke-width="0.80" opacity="0.015"></path></g></svg>
     <div class="ptitle"><div><div class="eyebrow">Mémoire · Tes clients</div><h1>Tes clients</h1><div class="sub">Chacun avec toute son histoire. Clique pour ouvrir son dossier et ce que Faro en a retenu.</div></div></div>
-    <div id="entW"></div>
+    <div class="scrollz"><div id="entW"></div></div>
   </section>
 
   <section class="view" id="v-toi">
@@ -2232,7 +2270,7 @@
       </g>
     </svg>
     <div class="ptitle"><div><div class="eyebrow">Mémoire · De toi</div><h1>Ce que Faro sait de toi</h1><div class="sub">Ton profil de vendeur, tiré de tes rendez-vous. Il s'affine à chaque débrief.</div></div></div>
-    <div id="toiW"></div>
+    <div class="scrollz"><div id="toiW"></div></div>
   </section>
 
   <!-- Panneau d'étape en grand -->
@@ -2241,7 +2279,7 @@
     <div class="sp-body" id="spBody"></div>
   </div></div>
 
-  <section class="view" id="v-fiche">
+  <section class="view scrollhost" id="v-fiche">
     <nav class="fildar fildar-page" id="ficheFil"></nav>
     <div class="ptitle"><div><div class="eyebrow">Dossier client</div><h1 id="fName">Entreprise</h1><div class="sub" id="fSub"></div></div><div style="display:flex;gap:8px;"><button class="btn g" data-go2="affaires">Retour</button><button class="btn g danger" id="fDelete">Supprimer</button><button class="btn g" id="fRelance" style="display:none">Générer la relance</button><button class="btn" id="fNewBrief">Préparer le prochain RDV</button></div></div>
     <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;" id="fGrid">
@@ -2369,7 +2407,7 @@
     </div>
   </section>
 
-  <section class="view" id="v-offre">
+  <section class="view scrollhost" id="v-offre">
     <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Mon offre</h1><div class="sub">Le socle de chaque brief. Saisi une fois, Faro s'en sert à chaque rendez-vous.</div></div></div>
     <div class="offre-grid">
       <div class="offre-form">
@@ -2415,9 +2453,9 @@
     </div>
   </section>
 
-  <section class="view" id="v-soon"><div id="soonW"></div></section>
+  <section class="view" id="v-soon"><div class="scrollz"><div id="soonW"></div></div></section>
 
-  <section class="view" id="v-reglages">
+  <section class="view scrollhost" id="v-reglages">
     <div class="ptitle"><div><div class="eyebrow">Configuration</div><h1>Réglages</h1><div class="sub">Ton compte, tes jetons, tes données. Tout ce qui fait tourner Faro pour toi.</div></div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;" id="regGrid">
       <div style="display:flex;flex-direction:column;gap:14px;">
@@ -2613,7 +2651,7 @@
 </div>
 
 <div class="verd" id="verdOv"><div class="in">
-  <div class="verd-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <div class="verd-seal"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Affaire signée"><path id="seal-check" d="M78 101 L94 117 L124 85" stroke="#2f6b3f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><circle id="seal-ring" cx="100" cy="100" r="48" stroke="#2f6b3f" stroke-width="2.5" fill="none"></circle><g fill="none" stroke="#2f6b3f" stroke-linecap="round"><path id="arc-1" d="M153.69 131.00 A62 62 0 1 1 153.69 69.00" stroke-width="2.2" opacity="0.55"></path><path id="arc-2" d="M62.00 165.82 A76 76 0 1 1 138.00 165.82" stroke-width="1.8" opacity="0.4"></path><path id="arc-3" d="M22.06 55.00 A90 90 0 1 1 22.06 145.00" stroke-width="1.4" opacity="0.28"></path><path id="arc-4" d="M152.00 9.93 A104 104 0 1 1 48.00 9.93" stroke-width="1" opacity="0.18"></path></g></svg></div>
   <div class="verd-t" id="verdStamp">Closé.</div>
   <div class="verd-s" id="verdSub"></div>
   <div class="steps" id="verdSteps"></div>
@@ -5162,6 +5200,13 @@ function openBrief(b){
   // Un rendez-vous se déroule dans le temps : quatre moments, de gauche à droite
   const qBody=qs.map((q,i)=>{const question=typeof q==='string'?q:q.question;const intent=typeof q==='object'?q.intention:'';
     return `<div class="qitem" data-q="${i}"><div class="qtop"><span class="dot"></span><div class="qsay" data-edit="q${i}">${esc(question)}</div><span class="qstate w2">A marché</span><span class="qstate d2">Esquivée</span><button class="qref" data-qref="${i}" title="Reformuler cette question">${aiSvg}</button></div>${intent?`<div class="why"><b>Pourquoi</b><span class="why-v">${esc(intent)}</span></div>`:''}${refbox('question',i)}<div class="qtags"><button class="w3" data-tag="worked">A marché</button><button class="d3" data-tag="dodged">Esquivée</button></div>${anz('q'+i,'Sa réponse…')}</div>`;}).join('');
+  // Les quatre pictogrammes du sprite, un par moment
+  const MPIC={
+    ouverture:'<path d="M18.55 7.41 A8 8 0 1 0 18.55 16.59"></path> <path d="M18.55 7.41 L21.8 5.5" stroke="#C96A2E"></path> <path d="M18.55 16.59 L21.8 18.5" stroke="#C96A2E"></path>',
+    questions:'<rect x="3" y="3" width="18" height="18" rx="4"></rect> <rect x="7.5" y="7.5" width="9" height="9" rx="2.5"></rect> <circle cx="12" cy="12" r="1.6" fill="#C96A2E" stroke="none"></circle>',
+    objection:'<path d="M4 7.5 L20 7.5" stroke="#C96A2E"></path> <path d="M12 7.5 L12 14"></path> <path d="M6.5 19.5 L12 13.8 L17.5 19.5"></path>',
+    next:'<path d="M12.5 4.5 L5.5 4.5 L5.5 19.5 L12.5 19.5"></path> <path d="M10.5 13.5 L19.5 4.5" stroke="#C96A2E"></path> <path d="M13.8 4.5 L19.5 4.5 L19.5 10.2" stroke="#C96A2E"></path>'
+  };
   const MOMENTS=[
     {key:'ouverture',cls:'m-ouvrir',when:'Les trois premières minutes',t:'Ouvrir',d:"Ce que tu dis avant qu'on te coupe.",ref:'ouverture',
       copy:ouTxt.join(' ')||(typeof b.ouverture==='string'?b.ouverture:''),
@@ -5185,7 +5230,7 @@ function openBrief(b){
   html+='<div class="spine">'+MOMENTS.map(m=>`<div class="spine-c" style="--sc:var(${m.key==='ouverture'?'--copper':m.key==='questions'?'--copper-l':m.key==='objection'?'--red':'--green'})"><span class="spine-t">${m.when}</span></div>`).join('')+'</div>';
   html+='<div class="moments">'+MOMENTS.map((m,i)=>`<div class="mom sect ${m.cls}" data-sec="${m.key}">
     <span class="mom-ghost">${String(i+1).padStart(2,'0')}</span>
-    <div class="mom-hd"><div class="mom-t">${m.t}</div><div class="mom-d">${m.d}</div></div>
+    <div class="mom-hd"><div class="mom-ti"><svg class="mom-pic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${MPIC[m.key]||''}</svg><span class="mom-t">${m.t}</span></div><div class="mom-d">${m.d}</div></div>
     <div class="mom-acts">${m.key!=='harvest'?`<button class="sbtn" data-editbtn="${m.key}">${penSvg}</button>`:''}${m.ref?`<button class="sbtn" data-refbtn="${m.ref}">${aiSvg}</button>`:''}<button class="sbtn" data-copy="${esc(m.copy)}">${cpySvg}</button></div>
     ${m.lead?`<div class="mom-lead">${m.lead}</div><div class="mom-sep"></div>`:''}
     <div class="mom-rest">${m.rest}</div>
