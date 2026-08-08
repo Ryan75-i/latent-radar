@@ -79,58 +79,50 @@
   .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
-  /* ══ Ce que Faro sait de toi : un écran, deux colonnes, aucun défilement ══ */
+  /* ══ Ton pupitre : trois réglages, un aperçu qui se réécrit ══ */
   #v-toi{position:relative;overflow:hidden;}
-  /* La même trame que sur Ta journée, mais retournée : même matière, autre composition */
-  .toi-trame{position:absolute;top:auto;bottom:-90px;left:-120px;right:auto;width:820px;transform:scaleX(-1) rotate(6deg);transform-origin:bottom left;opacity:0;transition:opacity 1.1s ease .2s;}
+  /* La trame, posée en haut à droite là où rien ne la recouvre */
+  .toi-trame{position:absolute;top:-50px;right:-90px;width:700px;transform:rotate(4deg);transform-origin:top right;opacity:0;transition:opacity 1.1s ease .25s;z-index:0;pointer-events:none;}
   .toi-trame.lit{opacity:1;}
-  .toi-hero,.toi-2{position:relative;z-index:1;}
-  .toi-hero{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;padding:0 0 18px;flex-shrink:0;}
-  .toi-p{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2;letter-spacing:-.5px;color:var(--ink);max-width:38ch;}
-  .toi-p em{font-style:normal;color:var(--copper);}
-  .toi-sub{font-size:13px;color:var(--faint);margin-top:8px;line-height:1.5;max-width:54ch;}
-  /* Le compteur de matière, discret, en tête à droite */
-  .toi-jauge{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;}
-  .toi-jn{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1;color:var(--ink);}
-  .toi-jn em{font-style:normal;font-size:13px;color:var(--faint);font-weight:400;margin-left:3px;}
-  .toi-jk{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
-  .toi-jb{display:flex;gap:3px;}
-  .toi-jb i{width:12px;height:4px;border-radius:2px;background:var(--line2);}
-  .toi-jb i.on{background:var(--copper);}
-  /* Deux colonnes de cartes */
-  .toi-2{display:grid;grid-template-columns:1.12fr 1fr;gap:14px;align-items:start;flex:1;min-height:0;}
-  .tc{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;margin-bottom:14px;}
-  .tc:last-child{margin-bottom:0;}
-  .tc-h{display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;border-bottom:1px solid var(--line3);}
-  .tc-h .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
-  .tc-h .d{font-size:11.5px;color:var(--faint);margin-left:auto;white-space:nowrap;}
-  .tc-b{padding:4px 18px 12px;}
-  /* Un constat : sa nature en filet, sa phrase, sa preuve */
-  .ob{display:grid;grid-template-columns:3px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line3);}
-  .ob:first-child{border-top:none;}
-  .ob::before{content:"";background:var(--oc);border-radius:2px;}
-  .ob-t{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.28;letter-spacing:-.2px;color:var(--ink);}
-  .ob-w{font-size:12px;color:var(--dim);line-height:1.45;margin-top:4px;}
-  .ob-w b{color:var(--soft);font-weight:600;}
-  .ob.force{--oc:var(--green-d);} .ob.angle{--oc:var(--red);} .ob.fait{--oc:var(--copper-d);} .ob.tot{--oc:var(--line2);}
-  /* Ce que Faro en fait */
-  .rg{padding:12px 0;border-top:1px solid var(--line3);}
-  .rg:first-child{border-top:none;}
-  .rg-p{font-size:12px;color:var(--faint);line-height:1.45;}
-  .rg-p b{color:var(--dim);font-weight:600;}
-  .rg-e{display:flex;gap:8px;font-family:var(--serif);font-weight:500;font-size:14.5px;color:var(--ink);line-height:1.35;margin-top:5px;}
-  .rg-e::before{content:"→";color:var(--copper);font-family:var(--sans);font-weight:700;flex-shrink:0;}
-  /* Par interlocuteur */
-  .toi-post{display:grid;grid-template-columns:1fr 90px auto;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line3);}
-  .toi-post:first-child{border-top:none;}
-  .tp-k{font-family:var(--serif);font-weight:600;font-size:13.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .tp-bar{height:5px;border-radius:3px;background:var(--line3);overflow:hidden;}
-  .tp-fill{display:block;height:100%;border-radius:3px;background:var(--copper);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
-  .tp-v{font-family:var(--mono);font-size:10px;color:var(--dim);white-space:nowrap;text-align:right;}
-  .tp-v b{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink);}
-  .tp-v.thin{color:var(--faint);}
-  /* Ce que tu dis à Faro */
-  .st-f textarea{width:100%;height:76px;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:14px;line-height:1.5;color:var(--ink);background:var(--card);outline:none;resize:none;transition:.15s;}
+  .pu-head,.pu-2{position:relative;z-index:1;}
+  .pu-head{display:flex;align-items:baseline;gap:14px;padding:2px 0 20px;flex-shrink:0;}
+  .pu-h1{font-family:var(--serif);font-weight:600;font-size:27px;letter-spacing:-.5px;color:var(--ink);}
+  .pu-sub{font-size:13.5px;color:var(--dim);}
+  .pu-n{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap;}
+  .pu-2{display:grid;grid-template-columns:1.05fr 1fr;gap:16px;flex:1;min-height:0;align-items:start;}
+  .pu-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;}
+  .pu-card+.pu-card{margin-top:14px;}
+  .pu-ch{display:flex;align-items:baseline;gap:10px;padding:13px 20px 11px;border-bottom:1px solid var(--line3);}
+  .pu-ch .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
+  .pu-ch .d{font-size:11.5px;color:var(--faint);margin-left:auto;}
+  .pu-cb{padding:8px 20px 16px;}
+  /* Un réglage : deux pôles, une piste, cinq crans */
+  .ax{padding:15px 0 13px;border-top:1px solid var(--line3);}
+  .ax:first-child{border-top:none;}
+  .ax-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:2px;}
+  .ax-v{font-size:12px;color:var(--copper-d);margin-bottom:12px;min-height:17px;}
+  .ax-track{position:relative;display:flex;align-items:center;gap:0;height:22px;}
+  .ax-line{position:absolute;left:6px;right:6px;top:50%;height:3px;border-radius:2px;background:var(--line3);transform:translateY(-50%);}
+  .ax-fill{position:absolute;top:50%;height:3px;border-radius:2px;background:var(--copper);transform:translateY(-50%);left:6px;width:0;transition:width .35s cubic-bezier(.2,.7,.2,1);}
+  .ax-s{position:relative;flex:1;height:22px;border:none;background:none;cursor:pointer;padding:0;}
+  .ax-s::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:50%;background:var(--line2);transform:translate(-50%,-50%);transition:.2s cubic-bezier(.2,.7,.2,1);}
+  .ax-s:hover::after{background:var(--copper-l);transform:translate(-50%,-50%) scale(1.3);}
+  .ax-s.on::after{width:18px;height:18px;background:var(--copper);box-shadow:0 0 0 4px rgba(201,106,46,.14);}
+  .ax-s.obs::before{content:"";position:absolute;left:50%;bottom:-6px;width:1px;height:6px;background:var(--faint);transform:translateX(-50%);opacity:.7;}
+  .ax-poles{display:flex;justify-content:space-between;margin-top:9px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .ax-obs{font-size:11.5px;color:var(--faint);line-height:1.45;margin-top:8px;}
+  .ax-obs b{color:var(--dim);font-weight:600;}
+  /* L'aperçu, qui se réécrit à chaque réglage */
+  .pv-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+  .pv-k+.pv-k{margin-top:16px;}
+  .pv-say{font-family:var(--serif);font-size:15.5px;line-height:1.5;color:var(--ink);padding-left:13px;border-left:2px solid var(--copper);transition:opacity .25s;}
+  .pv-say.vide{font-family:var(--sans);font-size:12.5px;color:var(--faint);border-left-color:var(--line2);font-style:italic;}
+  .pv-say.flash{opacity:.35;}
+  .pv-l{display:flex;gap:9px;font-size:12.5px;color:var(--dim);line-height:1.5;padding:4px 0;}
+  .pv-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper-l);margin-top:8px;flex-shrink:0;}
+  .pv-note{font-size:11px;color:var(--faint);line-height:1.45;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line2);}
+  /* Ce que tu lui dis */
+  .st-f textarea{width:100%;height:70px;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:14px;line-height:1.5;color:var(--ink);background:var(--card);outline:none;resize:none;transition:.15s;}
   .st-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
   .st-f textarea::placeholder{color:var(--faint);font-family:var(--sans);font-size:13px;}
   .st-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
@@ -138,8 +130,7 @@
   .st-save{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:8px 14px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;flex-shrink:0;transition:.14s;}
   .st-save:hover{border-color:var(--copper);background:var(--washc);}
   .st-save.ok{border-color:var(--greenbd);background:var(--greenbg);color:var(--green-d);}
-  .toi-note{font-size:11px;color:var(--faint);line-height:1.45;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line2);}
-  @media(max-width:980px){.toi-2{grid-template-columns:1fr;}.toi-hero{grid-template-columns:1fr;gap:16px;}.toi-jauge{align-items:flex-start;}#v-toi{overflow:visible;}}
+  @media(max-width:980px){.pu-2{grid-template-columns:1fr;}}
   /* ══ Ta semaine : une jauge, un chiffre, une phrase ══ */
   .sw{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 0 20px;}
   .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:26px;}
@@ -2274,7 +2265,7 @@
       </g>
     </svg>
     <div class="ptitle"><div><div class="eyebrow">Mémoire · De toi</div><h1>Ce que Faro sait de toi</h1><div class="sub">Ton profil de vendeur, tiré de tes rendez-vous. Il s'affine à chaque débrief.</div></div></div>
-    <div class="scrollz"><div id="toiW"></div></div>
+    <div id="toiW" style="display:flex;flex-direction:column;flex:1;min-height:0;"></div>
   </section>
 
   <!-- Panneau d'étape en grand -->
@@ -3369,155 +3360,167 @@ function reglesActives(){
     e:"L'ouverture cherche une raison d'agir maintenant, au lieu de présenter."});
   return out;
 }
+// Les trois axes du pupitre, et ce que chaque position écrit dans le prompt
+const AXES=[
+  {k:'approche',t:'Ton approche',a:'Chasseur',b:'Fermier',
+   v:['Va droit au but. Ce rendez-vous doit produire un engagement, pas une relation.',
+      'Cherche un engagement, mais laisse la place à une deuxième rencontre.',
+      'Équilibre : obtenir quelque chose sans forcer la relation.',
+      'Construis la relation d\'abord, l\'affaire viendra au rendez-vous suivant.',
+      'Ne pousse vers aucune décision. Ce rendez-vous sert à comprendre et à exister.'],
+   l:['Direct, obtient un engagement','Pousse, avec une porte de sortie','Équilibré','Construit la relation','Prend son temps, sans pousser']},
+  {k:'ouverture',t:'Ton ouverture',a:'Directe',b:'Large',
+   v:['L\'accroche fait deux phrases maximum et arrive immédiatement au sujet.',
+      'L\'accroche reste courte, une phrase de contexte au plus.',
+      'Une accroche normale : remerciement, cadrage du temps, sujet.',
+      'Prends le temps de situer son entreprise avant d\'arriver au sujet.',
+      'Ouvre large sur son marché et son actualité avant de parler de toi.'],
+   l:['Deux phrases, puis le sujet','Courte, un peu de contexte','Standard','Situe son entreprise d\'abord','Ouvre sur son marché']},
+  {k:'closing',t:'Ta sortie',a:'Pressant',b:'Patient',
+   v:['La prochaine étape propose une date sous cinq jours et demande un engagement clair.',
+      'La prochaine étape propose une date précise, sans exiger de réponse immédiate.',
+      'La prochaine étape propose une date raisonnable.',
+      'La prochaine étape laisse le choix du moment, sans date imposée.',
+      'La prochaine étape ne demande rien. Elle laisse la porte ouverte.'],
+   l:['Date sous cinq jours','Date précise, sans pression','Date raisonnable','Sans date imposée','Porte ouverte, rien à signer']}
+];
+let pupitre={approche:2,ouverture:2,closing:2};
+// Ce que Faro observe dans tes récits, indépendamment de ce que tu règles
+function pupitreObserve(){
+  const faits=briefs.filter(b=>b.debrief), n=faits.length;
+  const o={};
+  if(n>=3){
+    const sansSuite=faits.filter(b=>!(b.debrief.next_action||'').trim()).length;
+    if(sansSuite/n>=.5)o.closing={i:4,w:`Tu repars <b>${sansSuite} fois sur ${n}</b> sans prochaine action. Faro te situe ici.`};
+    else if(sansSuite/n<=.2)o.closing={i:1,w:`Tu poses presque toujours une suite. Faro te situe ici.`};
+    const froids=faits.filter(b=>!['close','chaud'].includes(b.debrief.temperature)).length;
+    if(froids/n>=.6)o.approche={i:3,w:`<b>${froids} rendez-vous sur ${n}</b> ressortent tièdes. Faro te situe côté relation.`};
+    else if(froids/n<=.34)o.approche={i:1,w:`Tes rendez-vous ressortent chauds. Faro te situe côté engagement.`};
+  }
+  return o;
+}
+// La phrase change avec les réglages : c'est l'intérêt du pupitre
+function pupitreApercu(){
+  const comp=(set.company||'').trim();
+  const val=(set.contexte||'').trim();
+  const first=t=>{const x=(t||'').split(/[.!?]/)[0].trim();return x.length>96?x.slice(0,95)+'…':x;};
+  const low=t=>t?t.charAt(0).toLowerCase()+t.slice(1):'';
+  if(!comp||!val)return null;
+  const OUV=[
+    `Merci de me recevoir. Chez ${comp}, ${low(first(val))}.`,
+    `Merci de me recevoir, je sais que votre temps est compté. Chez ${comp}, ${low(first(val))}.`,
+    `Merci de me recevoir, je sais que votre temps est compté. Chez ${comp}, ${low(first(val))}. Je me demandais où vous en étiez sur ce sujet.`,
+    `Merci de me recevoir. J'ai regardé votre activité avant de venir, et une chose m'a marqué. Chez ${comp}, ${low(first(val))}.`,
+    `Merci de me recevoir. Votre marché bouge beaucoup en ce moment, et j'avais envie de comprendre comment vous le vivez. Chez ${comp}, ${low(first(val))}.`
+  ];
+  const SORT=[
+    `On se cale quinze minutes jeudi avec la personne qui décide ?`,
+    `Je vous propose un point de quinze minutes jeudi prochain.`,
+    `Je vous propose qu'on se revoie dans les dix jours.`,
+    `Dites-moi quand ça vous arrange, je m'adapte.`,
+    `Je vous laisse y réfléchir, revenez vers moi quand vous voulez.`
+  ];
+  return {ouv:OUV[pupitre.ouverture],sort:SORT[pupitre.closing]};
+}
+// Les réglages deviennent des instructions, ajoutées à ce que tu écris toi-même
+function pupitreStyle(){
+  return AXES.map(a=>a.v[pupitre[a.k]]).join('\n');
+}
 function renderToi(){
   const w=$('toiW'); if(!w)return;
-  const faits=briefs.filter(b=>b.debrief);
-  const n=faits.length;
-  if(!n){
-    w.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;text-align:center;"><div class="esvg">${ESVG.historique||''}</div><div class="empty">Raconte tes premiers rendez-vous : ton profil se dessinera ici, et il s'affinera à chaque récit.</div></div></div>`;
-    return;
-  }
-  const nWord=x=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][x]||String(x);
-  // Le féminin : une affaire, pas un affaire
-  const nWordF=x=>x===1?'une':(x===0?'aucune':nWord(x));
-  const MINI=3; // Rien n'est affirmé sous trois occurrences
+  const n=briefs.filter(b=>b.debrief).length;
+  // Ce qui a été réglé la dernière fois
+  try{ const r=set.reglages?JSON.parse(set.reglages):null; if(r&&typeof r==='object')pupitre={...pupitre,...r}; }catch(e){}
+  const obs=pupitreObserve();
 
-  // ─── Ce que les données permettent de dire, et rien de plus ───
-  const chauds=faits.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length;
-  const sansSuite=faits.filter(b=>!(b.debrief.next_action||'').trim()).length;
-  const wins=deals.filter(d=>d.etape==='gagne'), losts=deals.filter(d=>d.etape==='perdu');
-  const clos=wins.length+losts.length;
-  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
-  const sansMontant=actifs.filter(d=>!dealVal(d)).length;
-  // Par poste d'interlocuteur
-  const posts={};
-  faits.forEach(b=>{const k=cleanPoste(b.poste||'')||'Autre';posts[k]=posts[k]||{c:0,hot:0};posts[k].c++;if(['close','chaud'].includes(b.debrief.temperature))posts[k].hot++;});
-  const parPoste=Object.entries(posts).sort((a,b)=>b[1].c-a[1].c);
-  const solides=parPoste.filter(([,v])=>v.c>=MINI);
-  const meilleur=solides.slice().sort((a,b)=>(b[1].hot/b[1].c)-(a[1].hot/a[1].c))[0];
-  // Un profil n'est une réussite que si le taux l'est vraiment
-  const meilleurBon=meilleur&&(meilleur[1].hot/meilleur[1].c)>=.5;
-  // Le jour de la semaine où tu prépares le plus
-  const jours=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
-  const parJour={}; briefs.forEach(b=>{const j=new Date(b.created_at).getDay();parJour[j]=(parJour[j]||0)+1;});
-  const topJour=Object.entries(parJour).sort((a,b)=>b[1]-a[1])[0];
-
-  // ─── La phrase du haut : ce que Faro a compris, ou qu'il ne sait pas encore ───
-  let phrase, sousPhrase;
-  if(n<MINI){
-    phrase=`Faro te regarde encore. <em>${nWord(n)} récit${n>1?'s':''}</em>, c'est trop peu pour dire quoi que ce soit de toi.`;
-    sousPhrase=`À partir de trois récits, Faro commence à repérer tes constantes. Il ne dira jamais rien qu'il ne puisse prouver.`;
-  } else if(sansSuite/n>=.5){
-    phrase=`Ton angle mort est net : <em>tu repars ${sansSuite>n/2?'souvent':'parfois'} sans prochaine action.</em>`;
-    sousPhrase=`Sur ${nWord(n)} récits, ${nWord(sansSuite)} n'ont aucune suite écrite. C'est là que tes affaires s'arrêtent sans mourir.`;
-  } else if(meilleurBon){
-    phrase=`Tu réussis mieux face aux <em>${esc(meilleur[0].toLowerCase())}</em>.`;
-    sousPhrase=`${Math.round(meilleur[1].hot/meilleur[1].c*100)}% de tes rendez-vous avec eux ressortent chauds, sur ${nWord(meilleur[1].c)}.`;
-  } else if(meilleur){
-    const r=Math.round(meilleur[1].hot/meilleur[1].c*100);
-    phrase=`Aucun profil ne te réussit encore vraiment. <em>Même les ${esc(meilleur[0].toLowerCase())}</em> ressortent tièdes.`;
-    sousPhrase=`${r}% de chauds sur ${nWord(meilleur[1].c)} rendez-vous, et c'est ton meilleur score. Le problème n'est pas l'interlocuteur.`;
-  } else {
-    phrase=`Faro commence à te lire. <em>Encore quelques récits</em> et il pourra nommer tes constantes.`;
-    sousPhrase=`Il lui faut au moins trois rendez-vous par type d'interlocuteur pour oser une comparaison.`;
-  }
-
-  // ─── Les constats, chacun avec sa preuve ───
-  const obs=[];
-  obs.push({c:'fait',k:'Ce que tu fais',t:`Tu as raconté ${nWord(n)} rendez-vous.`,
-    w:`Sur <b>${briefs.length}</b> préparés. C'est cette matière qui arme tous tes briefs suivants.`});
-  if(n>=MINI){
-    const pc=Math.round(chauds/n*100);
-    obs.push({c:pc>=50?'force':'angle',k:pc>=50?'Une force':'Un point à travailler',
-      t:pc>=50?`Un rendez-vous sur deux ressort chaud.`:`${nWord(chauds)} rendez-vous sur ${nWord(n)} ressort${chauds>1?'ent':''} chaud${chauds>1?'s':''}.`,
-      w:`<b>${pc}%</b> de tes récits sont notés chauds ou closés. ${pc>=50?'Tu tiens la température.':'Le reste refroidit faute de suite immédiate.'}`});
-  }
-  if(sansSuite>0){
-    obs.push({c:sansSuite/n>=.34?'angle':'fait',k:sansSuite/n>=.34?'Un angle mort':'À surveiller',
-      t:`${nWord(sansSuite)} rendez-vous sans prochaine action.`,
-      w:`Une affaire sans suite écrite s'arrête là, même quand elle allait bien. C'est le trou le plus discret de ta boucle.`});
-  }
-  if(sansMontant>0){
-    obs.push({c:'angle',k:'Un angle mort',t:`${nWordF(sansMontant)} affaire${sansMontant>1?'s':''} sans montant.`,
-      w:`Tant que l'enjeu n'est pas chiffré, ni toi ni Faro ne pouvez dire ce que vaut ton trimestre.`});
-  }
-  if(clos>=MINI){
-    const wr=Math.round(wins.length/clos*100);
-    obs.push({c:wr>=50?'force':'fait',k:'Ton closing',t:`Tu signes ${nWordF(wins.length)} affaire${wins.length>1?'s':''} sur ${nWord(clos)}.`,
-      w:`Soit <b>${wr}%</b> de tes affaires closes. La moyenne devient fiable à partir d'une dizaine.`});
-  } else if(clos>0){
-    obs.push({c:'tot',k:'Trop tôt',t:`${nWordF(clos)} affaire${clos>1?'s':''} close${clos>1?'s':''}.`,
-      w:`Faro ne calcule pas de taux de closing avant <b>trois</b> affaires closes : ça ne voudrait rien dire.`});
-  }
-  if(topJour&&briefs.length>=6){
-    obs.push({c:'fait',k:'Ton rythme',t:`Tu prépares surtout le ${jours[+topJour[0]]}.`,
-      w:`<b>${topJour[1]}</b> de tes ${briefs.length} briefs. Les rendez-vous suivent souvent le même jour de la semaine.`});
-  }
-
-  const regles=reglesActives().slice(0,2);
-  // Les angles morts passent devant : c'est ce qui a de la valeur
-  const rang={angle:0,force:1,tot:2,fait:3};
-  const top=obs.slice().sort((a,b)=>(rang[a.c]??9)-(rang[b.c]??9)).slice(0,3);
-  const posts3=parPoste.slice(0,3);
-  const note=posts3.some(([,v])=>v.c<MINI)
-    ? `Sous trois rendez-vous, aucun taux n'est affiché : il ne voudrait rien dire.`
-    : '';
-  const JAU=8, jn=Math.min(JAU,n);
+  const axHtml=AXES.map(a=>{
+    const cur=pupitre[a.k], ob=obs[a.k];
+    return `<div class="ax" data-ax="${a.k}">
+      <div class="ax-t">${a.t}</div>
+      <div class="ax-v" data-axv="${a.k}">${esc(a.l[cur])}</div>
+      <div class="ax-track"><span class="ax-line"></span><span class="ax-fill" data-axf="${a.k}"></span>
+        ${a.v.map((_,i)=>`<button class="ax-s ${i===cur?'on':''} ${ob&&ob.i===i?'obs':''}" data-axk="${a.k}" data-axi="${i}" aria-label="${esc(a.l[i])}"></button>`).join('')}
+      </div>
+      <div class="ax-poles"><span>${a.a}</span><span>${a.b}</span></div>
+      ${ob?`<div class="ax-obs">${ob.w}</div>`:''}
+    </div>`;
+  }).join('');
 
   w.innerHTML=`
-    <div class="toi-hero">
-      <div><div class="toi-p">${phrase}</div><div class="toi-sub">${sousPhrase}</div></div>
-      <div class="toi-jauge">
-        <span class="toi-jk">Ce sur quoi il se fonde</span>
-        <span class="toi-jn">${n}<em>récit${n>1?'s':''}</em></span>
-        <span class="toi-jb">${Array.from({length:JAU},(_,i)=>`<i class="${i<jn?'on':''}"></i>`).join('')}</span>
-      </div>
+    <div class="pu-head">
+      <span class="pu-h1">Ton pupitre</span>
+      <span class="pu-sub">Trois réglages. Faro écrit avec, à chaque brief.</span>
+      <span class="pu-n">${n} récit${n>1?'s':''} observé${n>1?'s':''}</span>
     </div>
-    <div class="toi-2">
-      <div>
-        <div class="tc">
-          <div class="tc-h"><span class="k">Ce que Faro a retenu</span><span class="d">tiré de tes récits</span></div>
-          <div class="tc-b">${top.map(o=>`<div class="ob ${o.c}"><div><div class="ob-t">${o.t}</div><div class="ob-w">${o.w}</div></div></div>`).join('')}</div>
-        </div>
-        ${posts3.length?`<div class="tc">
-          <div class="tc-h"><span class="k">Face à qui tu réussis</span></div>
-          <div class="tc-b">${posts3.map(([k,v])=>{
-            const assez=v.c>=MINI, r=Math.round(v.hot/v.c*100);
-            return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,24))}</span><span class="tp-bar"><span class="tp-fill" data-w="${assez?Math.max(r,3):0}"></span></span><span class="tp-v ${assez?'':'thin'}">${assez?`<b>${r}%</b> chauds · ${v.c}`:`${v.c} RDV · trop peu`}</span></div>`;
-          }).join('')}${note?`<div class="toi-note">${note}</div>`:''}</div>
-        </div>`:''}
+    <div class="pu-2">
+      <div class="pu-card">
+        <div class="pu-ch"><span class="k">Tes réglages</span><span class="d">le trait sous la piste est ce que Faro observe</span></div>
+        <div class="pu-cb">${axHtml}</div>
       </div>
       <div>
-        ${regles.length?`<div class="tc">
-          <div class="tc-h"><span class="k">Ce qu'il en fait</span><span class="d">dans chacun de tes briefs</span></div>
-          <div class="tc-b">${regles.map(r=>`<div class="rg"><div class="rg-p">${r.p}</div><div class="rg-e">${r.e}</div></div>`).join('')}</div>
-        </div>`:''}
-        <div class="tc st-f">
-          <div class="tc-h"><span class="k">Ce que tu lui dis</span></div>
-          <div class="tc-b">
+        <div class="pu-card">
+          <div class="pu-ch"><span class="k">Ce que Faro écrira</span><span class="d">aperçu</span></div>
+          <div class="pu-cb" id="puPreview"></div>
+        </div>
+        <div class="pu-card st-f">
+          <div class="pu-ch"><span class="k">Ce que tu lui dis</span></div>
+          <div class="pu-cb">
             <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je tutoie systématiquement.">${esc(set.style||'')}</textarea>
             <div class="st-row"><span class="st-hint">Ce que les données ne devineront jamais. Faro le respecte sans exception.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
           </div>
         </div>
       </div>
-    </div>
-  `;
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    w.querySelectorAll('.tp-fill').forEach(el=>{el.style.width=(+el.dataset.w)+'%';});
-    const tr=document.querySelector('#v-toi .toi-trame'); if(tr)tr.classList.add('lit');
+    </div>`;
+
+  const drawPreview=(flash)=>{
+    const el=$('puPreview'); if(!el)return;
+    const ap=pupitreApercu();
+    const h=ap
+      ? `<div class="pv-k">Son ouverture</div><div class="pv-say ${flash?'flash':''}">${esc(ap.ouv)}</div>
+         <div class="pv-k">Sa sortie</div><div class="pv-say ${flash?'flash':''}">${esc(ap.sort)}</div>
+         <div class="pv-note">Assemblage de tes champs, pas une génération. Le vrai brief est écrit pour l'entreprise en face.</div>`
+      : `<div class="pv-k">Son ouverture</div><div class="pv-say vide">Renseigne ton entreprise et ta proposition de valeur dans Mon offre pour voir l'aperçu bouger.</div>
+         <div class="pv-k">Ce que tes réglages imposent</div>${AXES.map(a=>`<div class="pv-l">${esc(a.v[pupitre[a.k]])}</div>`).join('')}`;
+    el.innerHTML=h;
+    if(flash)requestAnimationFrame(()=>requestAnimationFrame(()=>el.querySelectorAll('.pv-say').forEach(x=>x.classList.remove('flash'))));
+  };
+  const drawFill=()=>{
+    AXES.forEach(a=>{
+      const f=w.querySelector(`[data-axf="${a.k}"]`);
+      if(f)f.style.width='calc('+(pupitre[a.k]/4*100)+'% - '+(pupitre[a.k]/4*12)+'px)';
+    });
+  };
+  drawPreview(false); requestAnimationFrame(drawFill);
+  const tr=document.querySelector('#v-toi .toi-trame'); if(tr)setTimeout(()=>tr.classList.add('lit'),60);
+
+  let saveT=null;
+  w.querySelectorAll('[data-axk]').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.axk, i=+b.dataset.axi;
+    if(pupitre[k]===i)return;
+    pupitre[k]=i;
+    w.querySelectorAll(`[data-axk="${k}"]`).forEach(x=>x.classList.toggle('on',+x.dataset.axi===i));
+    const v=w.querySelector(`[data-axv="${k}"]`);
+    if(v)v.textContent=(AXES.find(a=>a.k===k)||{l:[]}).l[i]||'';
+    drawFill(); drawPreview(true);
+    clearTimeout(saveT); saveT=setTimeout(savePupitre,700);
   }));
+
   const sv=$('styleSave'), st=$('styleTxt');
   if(sv&&st)sv.addEventListener('click',async()=>{
-    const v=st.value.trim();
     sv.disabled=true; sv.textContent='…';
-    try{
-      await sb.from('user_settings').upsert({user_id:uid,...set,style:v,updated_at:new Date().toISOString()},{onConflict:'user_id'});
-      set.style=v; sv.classList.add('ok'); sv.textContent='Enregistré';
-      setTimeout(()=>{sv.classList.remove('ok');sv.textContent='Enregistrer';sv.disabled=false;},1800);
-    }catch(e){ sv.textContent='Échec'; setTimeout(()=>{sv.textContent='Enregistrer';sv.disabled=false;},1800); }
+    const ok=await savePupitre(st.value.trim());
+    sv.classList.toggle('ok',ok); sv.textContent=ok?'Enregistré':'Échec';
+    setTimeout(()=>{sv.classList.remove('ok');sv.textContent='Enregistrer';sv.disabled=false;},1800);
   });
 }
-// Vélocité : jours moyens entre création et gain, sur les deals gagnés
+async function savePupitre(styleTxt){
+  const v=typeof styleTxt==='string'?styleTxt:(set.style||'');
+  try{
+    await sb.from('user_settings').upsert({user_id:uid,...set,style:v,reglages:JSON.stringify(pupitre),updated_at:new Date().toISOString()},{onConflict:'user_id'});
+    set.style=v; set.reglages=JSON.stringify(pupitre);
+    return true;
+  }catch(e){ return false; }
+}
 // ─── L'argent en roi ───
 let moneyPeriod='month', chartDays=30, affView='board';
 function wireDashTabs(){
@@ -5052,7 +5055,7 @@ $('gen').addEventListener('click',async()=>{
     concurrent:conc||null, echeance:ech||null,
     memoire:histo||null,
     // Ce que tu as dit à Faro de ta manière de vendre, et ce qu'il compense
-    style:(set.style||'').trim()||null,
+    style:[(set.style||'').trim(),(typeof pupitreStyle==='function'?pupitreStyle():'')].filter(Boolean).join('\n')||null,
     angles:anglesMorts()||null,
     contexte:ctxTxt
   };
