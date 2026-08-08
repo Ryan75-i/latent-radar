@@ -47,10 +47,10 @@
   .hdr{position:sticky;top:0;z-index:30;background:rgba(247,247,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line3);}
   .hdr-1{display:flex;align-items:center;gap:20px;padding:0 24px;height:56px;max-width:1620px;margin:0 auto;}
   .hdr-logo svg{height:30px;width:auto;display:block;}
-  .hdr-nav{display:flex;align-items:center;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+  .hdr-nav{display:flex;align-items:center;gap:2px;flex:1;min-width:0;}
   .hdr-nav::-webkit-scrollbar{display:none;}
   .hn{position:relative;display:inline-flex;align-items:center;gap:7px;border:none;background:none;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--soft);padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .13s,color .13s;}
-  .hn:hover{background:var(--wash);color:var(--ink);}
+  .hn:hover{background:none;color:var(--ink);}
   .hn.on{color:var(--ink);font-weight:600;}
   .hn.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-9px;height:2px;border-radius:2px;background:var(--copper);}
   .hn svg{width:15px;height:15px;stroke-width:1.9;color:var(--faint);}
@@ -60,13 +60,14 @@
   .hn .soon{width:5px;height:5px;border-radius:50%;background:var(--line2);flex-shrink:0;}
   .hdr-r{display:flex;align-items:center;gap:10px;flex-shrink:0;}
   .hdr-2{border-top:1px solid var(--line3);background:rgba(250,250,248,.7);}
-  .hdr-2-in{display:flex;align-items:center;gap:2px;padding:0 24px;height:40px;max-width:1620px;margin:0 auto;overflow-x:auto;scrollbar-width:none;}
+  .hdr-2-in{display:flex;align-items:center;gap:2px;padding:0 24px;height:40px;max-width:1620px;margin:0 auto;}
   .hdr-2-in::-webkit-scrollbar{display:none;}
   .sub-g{display:none;align-items:center;gap:2px;}
   .sub-g.on{display:flex;}
   .sn{display:inline-flex;align-items:center;gap:7px;border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:500;color:var(--dim);padding:6px 11px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:.13s;}
-  .sn:hover{background:var(--wash);color:var(--soft);}
-  .sn.on{background:#fff;color:var(--copper-d);font-weight:600;box-shadow:var(--sh);}
+  .sn:hover{background:none;color:var(--ink);}
+  .sn.on{background:#fff;color:var(--copper-d);font-weight:600;box-shadow:var(--sh);border:1px solid var(--line);padding:5px 10px;}
+  .sn.on:hover{color:var(--copper-d);}
   .sn .cnt{font-family:var(--mono);font-size:9.5px;color:var(--faint);}
   .sn.on .cnt{color:var(--copper-d);}
   .sn .soon{width:5px;height:5px;border-radius:50%;background:var(--line2);flex-shrink:0;}
@@ -85,29 +86,29 @@
   .sw-t{font-family:var(--serif);font-weight:500;font-size:35px;line-height:1.12;letter-spacing:-.8px;color:var(--ink);margin-bottom:12px;}
   .sw-s{font-size:15px;color:var(--dim);line-height:1.55;max-width:44ch;margin-bottom:26px;}
   /* Les deux jauges de matière */
-  .sw-g{margin-bottom:16px;max-width:420px;}
-  .sw-gt{display:flex;align-items:baseline;gap:10px;font-size:13px;color:var(--soft);margin-bottom:7px;}
-  .sw-gt b{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--ink);}
-  .sw-gt span{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--faint);}
-  .sw-gk{height:5px;border-radius:3px;background:var(--line3);overflow:hidden;}
-  .sw-gk i{display:block;height:100%;border-radius:3px;background:var(--copper);width:0;transition:width 1.1s cubic-bezier(.2,.7,.2,1);}
-  .sw-gk.ok i{background:var(--green);}
   .sw-when{font-size:14px;color:var(--soft);line-height:1.55;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);max-width:44ch;}
   .sw-when b{color:var(--ink);font-weight:600;}
   .sw-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:26px 0 10px;}
-  .sw-l{display:flex;gap:11px;font-size:13.5px;color:var(--dim);line-height:1.5;padding:8px 0;border-top:1px solid var(--line3);max-width:52ch;}
-  .sw-l::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--copper-l);margin-top:8px;flex-shrink:0;}
+  /* En bloc, pas en flex : sinon chaque gras devient une colonne */
+  .sw-l{position:relative;display:block;font-size:13.5px;color:var(--dim);line-height:1.55;padding:9px 0 9px 17px;border-top:1px solid var(--line3);max-width:54ch;}
+  .sw-l::before{content:"";position:absolute;left:0;top:17px;width:5px;height:5px;border-radius:50%;background:var(--copper-l);}
   .sw-l b{color:var(--soft);font-weight:600;}
-  /* Le phare en construction : ce qui est capté est plein, le reste attend */
-  .sw-viz{display:flex;flex-direction:column;align-items:center;gap:14px;}
-  .sw-viz svg{width:260px;height:260px;display:block;overflow:visible;}
-  .sw-core{animation:swCore 2.6s ease-in-out infinite;transform-origin:48px 120px;}
-  @keyframes swCore{0%,100%{opacity:1;}50%{opacity:.55;}}
-  .sw-arc-w{stroke:var(--line2);stroke-dasharray:3 7;animation:swMarch 5s linear infinite;}
-  @keyframes swMarch{to{stroke-dashoffset:-50;}}
-  .sw-arc-f{stroke:var(--copper);stroke-dasharray:0 999;transition:stroke-dasharray 1.3s cubic-bezier(.2,.7,.2,1) .3s;}
-  .sw-cap{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);text-align:center;}
-  .sw-cap b{display:block;font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);margin-bottom:4px;}
+  /* Le compteur de matière : un trait par récit, propre à cette page */
+  .sw-viz{display:flex;flex-direction:column;align-items:flex-start;gap:0;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:24px 26px;}
+  .sw-vk{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;}
+  .sw-bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-bottom:18px;}
+  .sw-bars i{width:9px;border-radius:3px;background:var(--line3);transition:height .5s cubic-bezier(.2,.7,.2,1),background .5s;}
+  .sw-bars i.got{background:var(--copper);}
+  .sw-bars i.next{background:none;border:1.5px dashed var(--copper-l);animation:swNext 1.9s ease-in-out infinite;}
+  @keyframes swNext{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .sw-vn{font-family:var(--serif);font-weight:700;font-size:30px;line-height:1;color:var(--ink);}
+  .sw-vn em{font-style:normal;font-size:15px;color:var(--faint);font-weight:400;margin-left:4px;}
+  .sw-vd{font-size:12.5px;color:var(--dim);margin-top:7px;line-height:1.5;}
+  .sw-vsep{height:1px;background:var(--line3);align-self:stretch;margin:18px 0;}
+  .sw-weeks{display:flex;align-items:center;gap:6px;}
+  .sw-weeks i{flex:1;height:5px;border-radius:3px;background:var(--line3);}
+  .sw-weeks i.got{background:var(--copper-l);}
+  .sw-wl{font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-top:9px;}
   @media(max-width:900px){.sw{grid-template-columns:1fr;gap:28px;}.sw-viz{align-items:flex-start;}.sw-viz svg{width:200px;height:200px;}.sw-t{font-size:28px;}}
   /* L'écran d'une page qui n'existe pas encore : honnête, jamais mort */
   .soon-p{display:flex;flex-direction:column;align-items:flex-start;padding:26px 0 40px;max-width:560px;}
@@ -117,6 +118,9 @@
   .soon-l{display:flex;gap:11px;font-size:13.5px;color:var(--dim);line-height:1.5;padding:7px 0;border-top:1px solid var(--line3);}
   .soon-l::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--copper-l);margin-top:8px;flex-shrink:0;}
   .soon-f{margin-top:24px;font-size:12.5px;color:var(--faint);line-height:1.5;}
+  @media(max-width:1180px){
+    .hdr-nav,.hdr-2-in{overflow-x:auto;}
+  }
   @media(max-width:900px){
     .hdr-1{padding:0 16px;gap:12px;} .hdr-2-in{padding:0 16px;}
     .hdr .search{display:none;} .hdr-tok{display:none;} .hn span.lb{display:inline;}
@@ -2710,11 +2714,14 @@ function renderSemaine(){
   const first=briefs.length?briefs.reduce((a,b)=>new Date(a.created_at)<new Date(b.created_at)?a:b):null;
   const sem=first?Math.max(0,Math.floor(days(first.created_at)/7)):0;
   const pRec=Math.min(1,nr/REC_CIBLE), pSem=Math.min(1,sem/SEM_CIBLE);
-  const rythme=sem>=1?nr/sem:nr;
+  // Sous une semaine d'usage, aucun rythme hebdomadaire n'est calculable honnêtement
+  const rythme=sem>=1?nr/sem:0;
   // La date estimée sort de ton rythme réel, pas d'une promesse
   let quand;
   if(pRec>=1&&pSem>=1)quand=`Faro a la matière qu'il lui faut. <b>Ta semaine s'ouvre au prochain lundi.</b>`;
-  else if(!rythme)quand=`Faro attend tes récits. <b>Raconte tes rendez-vous</b> et cette page se remplira toute seule.`;
+  else if(!rythme)quand=sem<1
+    ?`Tu viens de commencer. <b>Reviens dans une semaine</b>, Faro saura te dire quand cette page s'ouvrira.`
+    :`Faro attend tes récits. <b>Raconte tes rendez-vous</b> et cette page se remplira toute seule.`;
   else{
     const semRec=Math.ceil(Math.max(0,REC_CIBLE-nr)/Math.max(.35,rythme));
     const semTot=Math.max(semRec,SEM_CIBLE-sem);
@@ -2728,17 +2735,11 @@ function renderSemaine(){
       quand=`À ton rythme actuel, <b>${ryth} récit${rythme>=2?'s':''} par semaine</b>, Ta semaine s'ouvrira vers le <b>${d.getDate()} ${mss[d.getMonth()]}</b>.`;
     }
   }
-  // Le phare se construit : l'arc plein est ce qui est capté
-  const AR=[['M63 94 A30 30 0 0 1 63 146',7,62.8],['M75 73.2 A54 54 0 0 1 75 166.8',6,113.1],
-            ['M87 52.4 A78 78 0 0 1 87 187.6',5,163.4],['M99 31.7 A102 102 0 0 1 99 208.3',4,213.6]];
-  const glob=(pRec+pSem)/2;
   return `<div class="sw">
     <div>
       <span class="sw-b"><i></i>En construction</span>
       <div class="sw-t">Ta semaine</div>
       <div class="sw-s">Aujourd'hui te dit quoi faire maintenant. Ta semaine te dira <b>si tu progresses</b>. Pour ça, Faro a besoin d'assez de rendez-vous vécus pour que la comparaison veuille dire quelque chose.</div>
-      <div class="sw-g"><div class="sw-gt"><b>${nr}</b> récit${nr>1?'s':''} captés<span>sur ${REC_CIBLE}</span></div><div class="sw-gk ${pRec>=1?'ok':''}"><i data-w="${pRec.toFixed(3)}"></i></div></div>
-      <div class="sw-g"><div class="sw-gt"><b>${sem}</b> semaine${sem>1?'s':''} d'usage<span>sur ${SEM_CIBLE}</span></div><div class="sw-gk ${pSem>=1?'ok':''}"><i data-w="${pSem.toFixed(3)}"></i></div></div>
       <div class="sw-when">${quand}</div>
       <div class="sw-k">Ce qu'elle te montrera</div>
       <div class="sw-l">L'écart entre ce que tu avais prévu et ce qui s'est dit, et <b>s'il se resserre</b> semaine après semaine.</div>
@@ -2746,14 +2747,13 @@ function renderSemaine(){
       <div class="sw-l">Ton premier rendez-vous chez un client, <b>comparé au troisième</b>. Ce que tu savais en entrant, ce que tu as obtenu en sortant.</div>
     </div>
     <div class="sw-viz">
-      <svg viewBox="0 0 240 240" role="img" aria-label="Faro capte la matière : ${Math.round(glob*100)} pour cent">
-        <circle class="sw-core" cx="48" cy="120" r="11" fill="var(--copper)"></circle>
-        <g fill="none" stroke-linecap="round">
-          ${AR.map(([d,sw,len])=>`<path class="sw-arc-w" d="${d}" stroke-width="${sw*0.55}"></path>`).join('')}
-          ${AR.map(([d,sw,len])=>`<path class="sw-arc-f" d="${d}" stroke-width="${sw}" data-len="${len}"></path>`).join('')}
-        </g>
-      </svg>
-      <div class="sw-cap"><b>${Math.round(glob*100)}%</b>de la matière captée</div>
+      <div class="sw-vk">La matière captée</div>
+      <div class="sw-bars">${Array.from({length:REC_CIBLE},(_,i)=>`<i class="${i<nr?'got':(i===nr?'next':'')}" data-h="${28+((i*37)%9)*5}"></i>`).join('')}</div>
+      <div class="sw-vn">${nr}<em>récit${nr>1?'s':''} sur ${REC_CIBLE}</em></div>
+      <div class="sw-vd">${nr>=REC_CIBLE?'Faro a de quoi comparer.':`Il en manque <b>${REC_CIBLE-nr}</b> pour que la comparaison tienne debout.`}</div>
+      <div class="sw-vsep"></div>
+      <div class="sw-weeks">${Array.from({length:SEM_CIBLE},(_,i)=>`<i class="${i<sem?'got':''}"></i>`).join('')}</div>
+      <div class="sw-wl">${sem} semaine${sem>1?'s':''} d'usage sur ${SEM_CIBLE}</div>
     </div>
   </div>`;
 }
@@ -2764,11 +2764,12 @@ function openSoon(k){
     document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-soon'));
     navSet('dash','semaine');
     const cr0=$('crumb'); if(cr0)cr0.textContent='Ta semaine';
+    // Les traits poussent un par un
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      $('soonW').querySelectorAll('.sw-gk i').forEach(el=>{el.style.width=Math.max(2,(+el.dataset.w)*100)+'%';});
-      const g=[...$('soonW').querySelectorAll('.sw-arc-f')];
-      const pr=parseFloat(($('soonW').querySelector('.sw-cap b')||{}).textContent)/100||0;
-      g.forEach((el,i)=>{const L=+el.dataset.len;setTimeout(()=>{el.style.strokeDasharray=(L*pr).toFixed(1)+' 999';},120*i);});
+      $('soonW').querySelectorAll('.sw-bars i').forEach((el,i)=>{
+        el.style.height='6px';
+        setTimeout(()=>{el.style.height=el.dataset.h+'px';},60+i*45);
+      });
     }));
     window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
     return;
