@@ -447,15 +447,27 @@
   .gc-w b{color:var(--soft);font-weight:600;}
   .gc-foot{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line3);}
   .gc-go{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:var(--gc);border:none;border-radius:9px;padding:9px 15px;cursor:pointer;box-shadow:var(--sh);transition:filter .14s cubic-bezier(.2,.7,.2,1),transform .14s,box-shadow .14s;}
-  .gc-go svg{width:13px;height:13px;transition:transform .16s cubic-bezier(.2,.7,.2,1);}
+  /* La flèche est la marque Faro tournée : un point qui émet vers la droite */
+  .gc-go svg{width:16px;height:16px;overflow:visible;}
+  .arw-d{transition:transform .22s cubic-bezier(.2,.7,.2,1),opacity .22s;}
+  .arw-s{transition:transform .22s cubic-bezier(.2,.7,.2,1);}
+  .arw-a1{transition:transform .22s cubic-bezier(.2,.7,.2,1),opacity .22s;}
+  .arw-a2{opacity:0;transition:transform .26s cubic-bezier(.2,.7,.2,1) .04s,opacity .26s .04s;}
   .gc:hover .gc-go{filter:brightness(1.08);transform:translateY(-1px);box-shadow:var(--shm);}
-  .gc:hover .gc-go svg{transform:translateX(3px);}
+  .gc:hover .arw-d{transform:translateX(3px);opacity:.55;}
+  .gc:hover .arw-s{transform:translateX(2px) scaleX(.8);transform-origin:left;}
+  .gc:hover .arw-a1{transform:translateX(3px);}
+  .gc:hover .arw-a2{opacity:.6;transform:translateX(3px);}
   .gc-go.loading{pointer-events:none;opacity:.8;}
   .gc-go.loading svg{display:none;}
   .gc-go.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
   .gc-hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--faint);margin-left:auto;white-space:nowrap;}
   .gc.raconter{--gc:var(--blue);}
-  .gc.prepare{--gc:var(--copper);}
+  .gc.relancer{--gc:var(--copper);}
+  .gc.prepare{--gc:var(--copper-l);}
+  .gc.reveiller{--gc:var(--gold);}
+  .gc.chiffrer{--gc:var(--violet);}
+  .gc.trancher{--gc:var(--red);}
   .gc.preparer{--gc:var(--copper-d);}
   .day-clear{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--greenbd);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px;}
   .day-clear-i{width:34px;height:34px;border-radius:50%;background:var(--greenbg);color:var(--green-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -2849,6 +2861,15 @@ function dash(){
       t:trunc(b.entreprise||'Ce rendez-vous',24), w, d:(b.deal_id?deals.find(x=>x.id===b.deal_id):null)||{entreprise:b.entreprise,entreprise_data:b.entreprise_data},
       fn:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},220);}});
   });
+  // Une affaire chaude qui se tait : c'est là que les ventes meurent
+  const froids=actifs.filter(d=>{const t=dealTemp(d);return (t==='chaud'||t==='close')&&days(d.updated_at)>=7;})
+    .sort((a,b)=>days(b.updated_at)-days(a.updated_at));
+  froids.slice(0,2).forEach(d=>{
+    const n=days(d.updated_at);
+    acts.push({min:5,cls:'relancer',ic:'mail',k:'Relance à écrire',lbl:'Écrire la relance',t:trunc(d.entreprise,24),
+      w:`Chaude, mais silencieuse depuis <b>${jr(n)}</b>. Faro a déjà l'angle, il ne reste qu'à envoyer.`,d,
+      fn:()=>{const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');}else openFiche(d);}});
+  });
   // Un brief préparé où tu n'es jamais allé : une fuite en amont de la boucle
   const jamais=briefs.filter(b=>!b.debrief&&b.statut!=='a_relancer'&&days(b.created_at)>=2)
     .sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
@@ -2860,6 +2881,23 @@ function dash(){
       d:(b.deal_id?deals.find(x=>x.id===b.deal_id):null)||{entreprise:b.entreprise,entreprise_data:b.entreprise_data},
       fn:()=>{current=b;openBrief(b);}});
   });
+  // Une affaire qui dort, sans être chaude
+  const dorm=actifs.filter(d=>days(d.updated_at)>=14&&days(d.updated_at)<45&&!froids.includes(d))
+    .sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
+  if(dorm)acts.push({min:5,cls:'reveiller',ic:'snow',k:'Affaire qui dort',lbl:'La réveiller',t:trunc(dorm.entreprise,24),
+    w:`En <b>${stg(dorm.etape).l.toLowerCase()}</b> depuis <b>${jr(days(dorm.updated_at))}</b> sans un mouvement.`,d:dorm,
+    fn:()=>openFiche(dorm)});
+  // Une affaire chaude sans montant : Faro ne peut rien prévoir de ton trimestre
+  actifs.filter(d=>{const t=dealTemp(d);return (t==='chaud'||t==='close')&&!dealVal(d);}).slice(0,1).forEach(d=>{
+    acts.push({min:1,cls:'chiffrer',ic:'euro',k:'Enjeu à poser',lbl:"Chiffrer l'enjeu",t:trunc(d.entreprise,24),
+      w:`Chaude, mais tu n'as pas noté ce qu'elle vaut. Sans montant, Faro ne peut rien dire de ton trimestre.`,d,
+      fn:()=>openFiche(d)});
+  });
+  // Après un long silence, Faro propose de trancher. Il ne tranche jamais seul.
+  const mort=actifs.filter(d=>days(d.updated_at)>=45).sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
+  if(mort)acts.push({min:1,cls:'trancher',ic:'flag',k:'À trancher',lbl:'Clore ou réveiller',t:trunc(mort.entreprise,24),
+    w:`<b>${jr(days(mort.updated_at))}</b> sans un mouvement. Faro te propose de la clore, mais c'est toi qui décides.`,d:mort,
+    fn:()=>openFiche(mort)});
   if(acts.length<3)acts.push({min:1,cls:'preparer',ic:'plus',k:'Rien en attente',lbl:'Préparer un rendez-vous',t:'Ton prochain rendez-vous',
     w:'Deux clics, et Faro t\'arme des données du marché et de ta mémoire client.',
     fn:()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');}});
@@ -2882,9 +2920,19 @@ function dash(){
   const vusRac=vus.filter(b=>b.debrief).length;
   const resteJour=vus.length-vusRac;
   const nWord=n=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][n]||String(n);
+  // Un point, une hampe, deux arcs : la marque Faro devenue flèche
+  const ARW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">'
+    +'<circle class="arw-d" cx="4.5" cy="12" r="1.9" fill="currentColor" stroke="none"/>'
+    +'<path class="arw-s" d="M9 12h4.5" stroke-width="2"/>'
+    +'<path class="arw-a1" d="M15.5 8.2a5.4 5.4 0 0 1 0 7.6" stroke-width="2"/>'
+    +'<path class="arw-a2" d="M18.6 5.4a9.4 9.4 0 0 1 0 13.2" stroke-width="1.6"/></svg>';
   const GIC={
     mem:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg>',
     doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/><path d="M9 14h6M9 18h4"/></svg>',
+    mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+    snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 6l16 12M20 6L4 18"/></svg>',
+    euro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 5.5A7 7 0 1 0 17 18.5M4 10h9M4 14h9"/></svg>',
+    flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4h13l-2.5 4.5L18 13H5"/></svg>',
     plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>'
   };
 
@@ -2934,7 +2982,7 @@ function dash(){
         </div>
       </div>
       <div class="day-acts">
-        ${(!aDeb.length&&!jamais.length)
+        ${(!aDeb.length&&!jamais.length&&!froids.length&&!dorm&&!mort)
           ? `<div class="day-clear"><span class="day-clear-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="day-clear-t">Rien ne traîne.</div><div class="day-clear-d">Tous tes rendez-vous sont racontés et aucune affaire ne refroidit. Prépare la suite quand tu veux.</div></div></div>`
           : `<div class="day-hd"><span class="k">${resteJour?'Pour refermer ta journée':(aDeb.length?'Pour rattraper ton retard':'Pour refermer ta boucle')}</span><span class="m">${list.length} geste${list.length>1?'s':''} · environ ${tot} min</span>${list.length>3?`<span class="day-nav on"><button class="cnav" id="cnavL" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><button class="cnav" id="cnavR" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></span>`:''}</div>`
             +`<div class="day-cw" id="dayCw"><div class="day-cards ${list.length>3?'many':''}" id="dayCards">`
@@ -2946,7 +2994,7 @@ function dash(){
                 <div class="gc-k">${esc(a.k||'')}</div>
                 <div class="gc-t">${esc(a.t)}</div>
                 <div class="gc-w">${a.w}</div>
-                <div class="gc-foot"><button class="gc-go" data-actb="${i}">${a.lbl}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><span class="gc-hint">${a.min} min</span></div>
+                <div class="gc-foot"><button class="gc-go" data-actb="${i}">${a.lbl}${ARW}</button><span class="gc-hint">${a.min} min</span></div>
               </div>`;}).join('')
             +`</div><div class="day-fade"></div></div>`}
       </div>
