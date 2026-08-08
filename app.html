@@ -93,15 +93,17 @@
   .dk-d{font-size:13px;color:var(--dim);margin-top:2px;}
   .dk-opt{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--goldbg);border:1px solid #E7CE8C;border-radius:20px;padding:3px 10px;white-space:nowrap;}
   .dk-opt.pow{color:var(--copper-d);background:var(--washc);border-color:var(--copper-l);}
-  .dk-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px 16px;flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;}
+  .dk-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);flex:1;min-height:0;overflow:hidden;display:grid;grid-template-columns:1fr 268px;}
   /* Le numéro de l'étage en filigrane : de la matière, pas du bruit */
-  .dk-wm{position:absolute;right:16px;bottom:-56px;font-family:var(--serif);font-weight:700;font-size:260px;line-height:1;letter-spacing:-14px;color:var(--copper);opacity:.038;pointer-events:none;user-select:none;}
-  .dk-in{position:relative;z-index:1;overflow-y:auto;padding-right:2px;}
+  .dk-wm{position:absolute;right:274px;bottom:-46px;font-family:var(--serif);font-weight:700;font-size:210px;line-height:1;letter-spacing:-12px;color:var(--copper);opacity:.04;pointer-events:none;user-select:none;z-index:0;}
+  .dk-in{position:relative;z-index:1;overflow-y:auto;padding:18px 20px 16px;}
   .dk-in::-webkit-scrollbar{width:5px;} .dk-in::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   /* Ce que cet étage produit, en direct */
-  .dk-out{position:relative;z-index:1;margin-top:auto;padding-top:14px;border-top:1px dashed var(--line2);}
-  .dk-out-k{display:flex;align-items:baseline;gap:9px;font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:9px;}
-  .dk-out-k span{margin-left:auto;color:var(--faint);letter-spacing:.06em;}
+  .dk-out{position:relative;z-index:1;border-left:1px solid var(--line3);background:linear-gradient(170deg,var(--washc),var(--card) 55%);padding:18px 18px 16px;overflow-y:auto;}
+  .dk-out::-webkit-scrollbar{width:5px;} .dk-out::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
+  .dk-out-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:4px;}
+  .dk-out-n{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--ink);line-height:1;margin-bottom:14px;}
+  .dk-out-n em{font-style:normal;font-size:12px;color:var(--faint);font-weight:400;margin-left:4px;}
   .dk-ins{display:flex;gap:9px;font-size:12.5px;color:var(--soft);line-height:1.45;padding:4px 0;animation:rise .3s cubic-bezier(.2,.7,.2,1) both;}
   .dk-ins::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper);opacity:.55;margin-top:7px;flex-shrink:0;}
   .dk-ins.vide{color:var(--faint);font-style:italic;}
@@ -124,7 +126,8 @@
   .dk-pct{font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-top:2px;}
   /* Les champs */
   .dk-g{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;}
-  .dk-f{margin-bottom:14px;}
+  .dk-g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 12px;}
+  .dk-f{margin-bottom:13px;}
   .dk-f.full{grid-column:1/-1;}
   .dk-f label{display:block;font-size:12px;font-weight:600;color:var(--soft);margin-bottom:6px;}
   .dk-f label em{font-style:normal;color:var(--faint);font-weight:400;}
@@ -133,7 +136,7 @@
   .dk-f input:focus,.dk-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
   .dk-f input::placeholder,.dk-f textarea::placeholder{color:var(--faint);}
   .dk-chips{display:flex;gap:7px;flex-wrap:wrap;}
-  .dk-chip{border:1.5px solid var(--line2);background:var(--card);border-radius:20px;padding:7px 14px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--dim);cursor:pointer;transition:.13s;}
+  .dk-chip{border:1.5px solid var(--line2);background:var(--card);border-radius:20px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;transition:.13s;white-space:nowrap;}
   .dk-chip:hover{border-color:var(--copper-l);}
   .dk-chip.on{border-color:var(--copper);background:var(--washc);color:var(--copper-d);}
   .dk-why{display:flex;gap:9px;font-size:11.5px;color:var(--faint);line-height:1.5;margin-top:12px;}
@@ -150,6 +153,9 @@
     .dk-stage{position:static;}
     .dk-slide{position:static;opacity:1;transform:none;pointer-events:auto;}
     .dk-slide:not(.on){display:none;}
+    .dk-card{grid-template-columns:1fr;}
+    .dk-out{border-left:none;border-top:1px solid var(--line3);}
+    .dk-wm{display:none;}
   }
   /* ══ Le pupitre : trois réglages, au troisième étage du socle ══ */
   #v-toi{position:relative;overflow:hidden;}
@@ -3444,6 +3450,22 @@ function pupitreStyle(){
   if(pf.concurrents)l.push(`Concurrents qu'il croise habituellement : ${pf.concurrents}. Prépare la comparaison sans les dénigrer.`);
   if(pf.diff)l.push(`Ce qui le distingue : ${pf.diff}. C'est l'angle à défendre dans la riposte.`);
   if(pf.declencheur)l.push(`Ce qui déclenche un achat chez ses clients : ${pf.declencheur}. Cherche ce signal dans les questions.`);
+  if(pf.plume)l.push(`Sa plume est ${pf.plume.toLowerCase()}. Écris dans ce ton.`);
+  if(pf.deteste)l.push(`Formulations qu'il déteste, à ne jamais employer : ${pf.deteste}`);
+  if(pf.pitch)l.push(`Sa phrase de présentation, à reprendre dans qui_nous_sommes : ${pf.pitch}`);
+  if(pf.zone)l.push(`Son entreprise opère sur ${pf.zone.toLowerCase()}.`);
+  if(pf.annee)l.push(`Son entreprise a été créée en ${pf.annee}.`);
+  if(pf.modele)l.push(`Son modèle commercial est ${pf.modele.toLowerCase()}.`);
+  if(pf.decideur)l.push(`Le décideur habituel chez ses clients : ${pf.decideur}. Une des trois questions doit le confirmer.`);
+  if(pf.pasvendu)l.push(`Ce qu'il ne vend pas, à ne jamais promettre : ${pf.pasvendu}`);
+  if(pf.refs)l.push(`Références citables : ${pf.refs}. N'en cite qu'une, la plus proche du prospect.`);
+  if(pf.label)l.push(`Label ou certification : ${pf.label}.`);
+  if(pf.longueur==='Très court')l.push(`Le brief doit être le plus court possible. Chaque phrase compte double.`);
+  if(pf.longueur==='Détaillé')l.push(`Le brief peut être détaillé, il a le temps de lire.`);
+  if(pf.accroche)l.push(`Accroches interdites : ${pf.accroche}`);
+  if(pf.relance)l.push(`Il relance ${pf.relance.toLowerCase()}, par ${(pf.canal||'mail').toLowerCase()}. Le delai_jours de la prochaine étape suit ce rythme.`);
+  if(pf.saison)l.push(`Sa saison forte : ${pf.saison.toLowerCase()}.`);
+  if(pf.sources)l.push(`Ses prospects s'informent via ${pf.sources}.`);
   return l.join('\n');
 }
 // Les étages, du nécessaire au facultatif. Plus on descend, plus Faro devient précis.
@@ -3482,36 +3504,56 @@ function etageInstr(k){
     if(pf.vous==='Tutoies')l.push(`Tout le brief tutoie, sans exception.`);
     if(pf.vous==='Vouvoies')l.push(`Tout le brief vouvoie.`);
     if(pf.anc)l.push(`Il exerce ce métier depuis ${pf.anc.toLowerCase()}.`);
+    if(pf.plume)l.push(`Sa plume est ${pf.plume.toLowerCase()}. Le brief prend ce ton.`);
+    if(pf.tel)l.push(`Ses relances portent son numéro : ${pf.tel}.`);
+    if(pf.deteste)l.push(`À bannir absolument, il déteste : ${pf.deteste}`);
   }
   if(k==='boite'){
     if(g('company'))l.push(`Faro nomme ${g('company')} dans chaque ouverture.`);
     if(g('secteur'))l.push(`Secteur ${g('secteur')}, les références resteront dans ce monde.`);
     if(pf.taille)l.push(`Une structure de ${pf.taille.toLowerCase()} personnes.`);
     if(pf.place)l.push(`${pf.place} de son marché. L'ouverture assume cette position au lieu de la contourner.`);
+    if(pf.annee)l.push(`Créée en ${pf.annee}, un argument d'ancienneté ou de fraîcheur selon le cas.`);
+    if(pf.zone)l.push(`Elle opère sur ${pf.zone.toLowerCase()}.`);
+    if(pf.pitch)l.push(`Sa phrase de présentation : ${pf.pitch}`);
   }
-  if(k==='pupitre')return AXES.map(a=>a.v[pupitre[a.k]]);
+  if(k==='pupitre'){
+    const l2=AXES.map(a=>a.v[pupitre[a.k]]);
+    if(pf.relance)l2.push(`Sa relance part ${pf.relance.toLowerCase()}. Le délai de la prochaine étape suit ce rythme.`);
+    if(pf.canal)l2.push(`Il relance par ${pf.canal.toLowerCase()}.`);
+    return l2;
+  }
   if(k==='vend'){
     if(g('offre'))l.push(`Ce qu'il vend : ${g('offre')}.`);
     if(g('cible'))l.push(`Chaque brief vise ${g('cible')}.`);
     if(pf.prix)l.push(`Prix d'entrée : ${pf.prix}. Faro n'en parle que si le brief l'exige.`);
     if(pf.cycle)l.push(`Cycle de ${pf.cycle.toLowerCase()}. La prochaine étape reste réaliste pour ce rythme.`);
+    if(pf.modele)l.push(`Modèle ${pf.modele.toLowerCase()}. L'argumentaire en tient compte.`);
+    if(pf.decideur)l.push(`Le décideur habituel : ${pf.decideur}. Une question sert à le confirmer.`);
+    if(pf.pasvendu)l.push(`Ce qu'il ne vend pas, à ne jamais promettre : ${pf.pasvendu}`);
   }
   if(k==='preuve'){
     if(g('contexte'))l.push(`Sa proposition de valeur nourrit l'ouverture.`);
     if(g('preuves'))l.push(`Ses preuves arment les ripostes aux objections.`);
     if(pf.chiffre)l.push(`Son chiffre passe avant une statistique de secteur : ${pf.chiffre}.`);
     if(pf.garantie)l.push(`Sa garantie sert à lever le risque perçu : ${pf.garantie}.`);
+    if(pf.refs)l.push(`Références citables : ${pf.refs}. Une seule suffit, la plus proche du prospect.`);
+    if(pf.label)l.push(`Label ou certification à mentionner si le sujet vient : ${pf.label}.`);
   }
   if(k==='regles'){
     if(g('style'))g('style').split(/[.\n]/).map(x=>x.trim()).filter(Boolean).slice(0,3).forEach(x=>l.push(x+'.'));
     if(pf.bannis)l.push(`Ces mots ne seront jamais employés : ${pf.bannis}.`);
     if(pf.tard)l.push(`Ces sujets ne seront pas ouverts : ${pf.tard}.`);
+    if(pf.longueur)l.push(`Longueur voulue : ${pf.longueur.toLowerCase()}.`);
+    if(pf.accroche)l.push(`Accroches interdites : ${pf.accroche}`);
   }
   if(k==='marche'){
     if(pf.objections)l.push(`Faro anticipe tes objections habituelles au lieu d'en inventer une autre.`);
     if(pf.concurrents)l.push(`Comparaison préparée face à ${pf.concurrents}, sans les dénigrer.`);
     if(pf.diff)l.push(`Angle à défendre dans la riposte : ${pf.diff}.`);
     if(pf.declencheur)l.push(`Les questions cherchent ce signal : ${pf.declencheur}.`);
+    if(pf.saison)l.push(`Sa saison forte : ${pf.saison.toLowerCase()}. Utile pour créer une urgence légitime.`);
+    if(pf.sources)l.push(`Ses prospects s'informent via ${pf.sources}.`);
   }
   return l;
 }
@@ -3543,37 +3585,63 @@ function renderToi(){
       <div class="dk-f"><label>Ton prénom et ton nom</label><input id="dkName" value="${V('full_name')}" placeholder="Ryan Djebbar"/></div>
       <div class="dk-f"><label>Ton rôle</label><div class="dk-chips">${ROLES.map(r=>`<button class="dk-chip ${prof.role===r?'on':''}" data-c="role" data-v="${esc(r)}">${r}</button>`).join('')}</div></div>
       <div class="dk-f"><label>Avec tes prospects, tu</label><div class="dk-chips">${['Vouvoies','Tutoies','Ça dépend'].map(r=>`<button class="dk-chip ${prof.vous===r?'on':''}" data-c="vous" data-v="${r}">${r}</button>`).join('')}</div></div>
-      <div class="dk-f"><label>Dans ce métier depuis</label><div class="dk-chips">${['Moins d\'un an','1 à 3 ans','3 à 10 ans','Plus de 10 ans'].map(r=>`<button class="dk-chip ${prof.anc===r?'on':''}" data-c="anc" data-v="${esc(r)}">${r}</button>`).join('')}</div></div></div>`;
+      <div class="dk-f"><label>Dans ce métier depuis</label><div class="dk-chips">${['Moins d\'un an','1 à 3 ans','3 à 10 ans','Plus de 10 ans'].map(r=>`<button class="dk-chip ${prof.anc===r?'on':''}" data-c="anc" data-v="${esc(r)}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f"><label>Ta façon d'écrire</label><div class="dk-chips">${['Direct','Chaleureux','Factuel','Piquant'].map(r=>`<button class="dk-chip ${prof.plume===r?'on':''}" data-c="plume" data-v="${r}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f"><label>Ton téléphone <em>· signe tes relances</em></label><input id="dkTel" value="${esc(prof.tel||'')}" placeholder="06 12 34 56 78"/></div>
+      <div class="dk-f full"><label>Ce que tu détestes qu'on te dise en rendez-vous <em>· facultatif</em></label><input id="dkDeteste" value="${esc(prof.deteste||'')}" placeholder="On va vous accompagner dans votre transformation."/></div></div>`;
     if(e.k==='boite')return `<div class="dk-g">
       <div class="dk-f"><label>Nom de ton entreprise</label><input id="dkComp" value="${V('company')}" placeholder="Cadence"/></div>
       <div class="dk-f"><label>Son site <em>· pour ton logo</em></label><input id="dkSite" value="${V('site')}" placeholder="cadence-rh.fr"/></div>
       <div class="dk-f"><label>Son secteur</label><input id="dkSec" value="${V('secteur')}" placeholder="SaaS RH"/></div>
       <div class="dk-f"><label>Sa taille</label><div class="dk-chips">${['Solo','2 à 10','10 à 50','Plus de 50'].map(r=>`<button class="dk-chip ${prof.taille===r?'on':''}" data-c="taille" data-v="${r}">${r}</button>`).join('')}</div></div>
-      <div class="dk-f full"><label>Sa place sur le marché <em>· change complètement l'ouverture</em></label><div class="dk-chips">${['Le challenger','Le spécialiste','Le leader','Le nouveau'].map(r=>`<button class="dk-chip ${prof.place===r?'on':''}" data-c="place" data-v="${r}">${r}</button>`).join('')}</div></div></div>`;
-    if(e.k==='pupitre')return axHtml;
+      <div class="dk-f"><label>Sa place sur le marché <em>· change l'ouverture</em></label><div class="dk-chips">${['Le challenger','Le spécialiste','Le leader','Le nouveau'].map(r=>`<button class="dk-chip ${prof.place===r?'on':''}" data-c="place" data-v="${r}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f"><label>Depuis quand elle existe</label><input id="dkAnnee" value="${esc(prof.annee||'')}" placeholder="2019"/></div>
+      <div class="dk-f"><label>Sa zone</label><div class="dk-chips">${['Une région','La France','Europe','International'].map(r=>`<button class="dk-chip ${prof.zone===r?'on':''}" data-c="zone" data-v="${r}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f full"><label>En une phrase, ce qu'elle fait <em>· celle que tu dirais à un inconnu</em></label><input id="dkPitch" value="${esc(prof.pitch||'')}" placeholder="On aide les PME industrielles à piloter leur masse salariale au réel."/></div></div>`;
+    if(e.k==='pupitre')return axHtml+`<div class="dk-g" style="margin-top:14px;">
+      <div class="dk-f"><label>Ton rythme de relance</label><div class="dk-chips">${['Sous 48h','Une semaine','Deux semaines','Au feeling'].map(r=>`<button class="dk-chip ${prof.relance===r?'on':''}" data-c="relance" data-v="${r}">${r}</button>`).join('')}</div></div>
+      <div class="dk-f"><label>Ton canal de relance</label><div class="dk-chips">${['Mail','Téléphone','LinkedIn','Les trois'].map(r=>`<button class="dk-chip ${prof.canal===r?'on':''}" data-c="canal" data-v="${r}">${r}</button>`).join('')}</div></div>
+    </div>`;
     if(e.k==='vend')return `<div class="dk-f full"><label>Ce que tu vends</label><input id="dkOff" value="${V('offre')}" placeholder="Logiciel de suivi des heures et de la masse salariale"/></div>
       <div class="dk-f full"><label>Ta cible type</label><input id="dkCible" value="${V('cible')}" placeholder="DAF et DRH de PME industrielles de 100 à 500 personnes"/></div>
       <div class="dk-g">
         <div class="dk-f"><label>Ton prix d'entrée <em>· facultatif</em></label><input id="dkPrix" value="${esc(prof.prix||'')}" placeholder="à partir de 450 € par mois"/></div>
         <div class="dk-f"><label>Ton cycle de vente habituel</label><div class="dk-chips">${['Une réunion','2 à 4 semaines','1 à 3 mois','Plus de 6 mois'].map(r=>`<button class="dk-chip ${prof.cycle===r?'on':''}" data-c="cycle" data-v="${r}">${r}</button>`).join('')}</div></div>
-      </div>`;
+      </div>
+      <div class="dk-g">
+        <div class="dk-f"><label>Ton modèle</label><div class="dk-chips">${['Abonnement','Projet','À l\'usage','Mixte'].map(r=>`<button class="dk-chip ${prof.modele===r?'on':''}" data-c="modele" data-v="${esc(r)}">${r}</button>`).join('')}</div></div>
+        <div class="dk-f"><label>Qui décide, la plupart du temps</label><input id="dkDecideur" value="${esc(prof.decideur||'')}" placeholder="la DAF, rarement le DRH seul"/></div>
+      </div>
+      <div class="dk-f full"><label>Ce que tu ne vends surtout pas <em>· évite les hors-sujets</em></label><input id="dkPasVendu" value="${esc(prof.pasvendu||'')}" placeholder="on ne fait pas la paie, seulement le suivi des heures"/></div>`;
     if(e.k==='preuve')return `<div class="dk-f full"><label>Ta proposition de valeur</label><textarea id="dkVal" placeholder="Le problème que tu résous, mieux que les autres.">${V('contexte')}</textarea></div>
       <div class="dk-f full"><label>Tes preuves <em>· clients, résultats, chiffres</em></label><textarea id="dkPr" placeholder="Utilisé par Somelec, 240 personnes, économie de 4 ETP en un an.">${V('preuves')}</textarea></div>
       <div class="dk-g">
         <div class="dk-f"><label>Ton chiffre le plus fort</label><input id="dkChiffre" value="${esc(prof.chiffre||'')}" placeholder="ROI médian en 6 mois sur 40 clients"/></div>
         <div class="dk-f"><label>Ta garantie ou ton engagement</label><input id="dkGarantie" value="${esc(prof.garantie||'')}" placeholder="déployé en 3 semaines, sans engagement la première année"/></div>
+      </div>
+      <div class="dk-g">
+        <div class="dk-f"><label>Tes trois meilleures références</label><input id="dkRefs" value="${esc(prof.refs||'')}" placeholder="Somelec, Métallerie Duval, Groupe Havelis"/></div>
+        <div class="dk-f"><label>Un label ou une certification</label><input id="dkLabel" value="${esc(prof.label||'')}" placeholder="ISO 27001, hébergement France"/></div>
       </div>`;
     if(e.k==='regles')return `<div class="dk-f full"><label>Ce que Faro ne doit jamais faire</label><textarea id="dkStyle" placeholder="Je ne parle jamais prix au premier rendez-vous. Je ne cite jamais un concurrent par son nom.">${V('style')}</textarea></div>
       <div class="dk-g">
         <div class="dk-f"><label>Les mots que tu bannis</label><input id="dkBan" value="${esc(prof.bannis||'')}" placeholder="solution, synergie, accompagner"/></div>
         <div class="dk-f"><label>Les sujets que tu gardes pour plus tard</label><input id="dkTard" value="${esc(prof.tard||'')}" placeholder="l'intégration technique, la migration des données"/></div>
+      </div>
+      <div class="dk-g">
+        <div class="dk-f"><label>La longueur que tu veux</label><div class="dk-chips">${['Très court','Normal','Détaillé'].map(r=>`<button class="dk-chip ${prof.longueur===r?'on':''}" data-c="longueur" data-v="${r}">${r}</button>`).join('')}</div></div>
+        <div class="dk-f"><label>Les accroches que tu refuses</label><input id="dkAccroche" value="${esc(prof.accroche||'')}" placeholder="J'espère que vous allez bien. Je me permets de vous contacter."/></div>
       </div>`;
     if(e.k==='marche')return `<div class="dk-f full"><label>Les objections que tu entends le plus</label><textarea id="dkObj" placeholder="On a déjà un outil. C'est trop cher. Ce n'est pas le moment.">${esc(prof.objections||'')}</textarea></div>
       <div class="dk-g">
         <div class="dk-f"><label>Tes concurrents habituels</label><input id="dkConc" value="${esc(prof.concurrents||'')}" placeholder="Payfit, Lucca, Excel"/></div>
         <div class="dk-f"><label>Ce qui te distingue d'eux</label><input id="dkDiff" value="${esc(prof.diff||'')}" placeholder="le seul à traiter la paie et les heures dans le même outil"/></div>
       </div>
-      <div class="dk-f full"><label>Ce qui déclenche un achat chez tes clients</label><input id="dkDecl" value="${esc(prof.declencheur||'')}" placeholder="un contrôle URSSAF, une croissance rapide, un départ au service paie"/></div>`;
+      <div class="dk-f full"><label>Ce qui déclenche un achat chez tes clients</label><input id="dkDecl" value="${esc(prof.declencheur||'')}" placeholder="un contrôle URSSAF, une croissance rapide, un départ au service paie"/></div>
+      <div class="dk-g">
+        <div class="dk-f"><label>Ta saison forte</label><div class="dk-chips">${['Rentrée','Fin d\'année','Printemps','Toute l\'année'].map(r=>`<button class="dk-chip ${prof.saison===r?'on':''}" data-c="saison" data-v="${esc(r)}">${r}</button>`).join('')}</div></div>
+        <div class="dk-f"><label>Où tes prospects s'informent</label><input id="dkSources" value="${esc(prof.sources||'')}" placeholder="LinkedIn, salons métier, bouche à oreille"/></div>
+      </div>`;
     return '';
   };
   const rempli=()=>ETAGES.filter(e=>etageRempli(e.k)).length;
@@ -3658,7 +3726,7 @@ function renderToi(){
       const kk=el.dataset.out;
       if(k&&kk!==k)return;
       const ins=etageInstr(kk);
-      el.innerHTML=`<div class="dk-out-k">Ce que Faro reçoit de cet étage<span>${ins.length} instruction${ins.length>1?'s':''}</span></div>`
+      el.innerHTML=`<div class="dk-out-k">Ce que Faro reçoit</div><div class="dk-out-n">${ins.length}<em>instruction${ins.length>1?'s':''}</em></div>`
         +(ins.length?ins.map(x=>`<div class="dk-ins">${esc(x)}</div>`).join('')
                     :`<div class="dk-ins vide">Rien pour l'instant. Remplis un champ, la phrase apparaît ici.</div>`);
     });
@@ -3667,7 +3735,7 @@ function renderToi(){
     const g=id=>{const e=$(id);return e?e.value.trim():undefined;};
     const map={dkName:'full_name',dkComp:'company',dkSite:'site',dkSec:'secteur',dkOff:'offre',dkCible:'cible',dkVal:'contexte',dkPr:'preuves',dkStyle:'style'};
     Object.keys(map).forEach(id=>{const v=g(id); if(v!==undefined)set[map[id]]=v;});
-    const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents',dkPrix:'prix',dkChiffre:'chiffre',dkGarantie:'garantie',dkTard:'tard',dkDiff:'diff',dkDecl:'declencheur'};
+    const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents',dkPrix:'prix',dkChiffre:'chiffre',dkGarantie:'garantie',dkTard:'tard',dkDiff:'diff',dkDecl:'declencheur',dkTel:'tel',dkDeteste:'deteste',dkAnnee:'annee',dkPitch:'pitch',dkDecideur:'decideur',dkPasVendu:'pasvendu',dkRefs:'refs',dkLabel:'label',dkAccroche:'accroche',dkSources:'sources'};
     Object.keys(pmap).forEach(id=>{const v=g(id); if(v!==undefined)prof[pmap[id]]=v;});
   };
   w.querySelectorAll('.dk-in input,.dk-in textarea').forEach(el=>el.addEventListener('input',()=>{lire();drawOut(ETAGES[etage].k);}));
@@ -3681,7 +3749,7 @@ async function saveProfil(){
   const map={dkName:'full_name',dkComp:'company',dkSite:'site',dkSec:'secteur',dkOff:'offre',dkCible:'cible',dkVal:'contexte',dkPr:'preuves',dkStyle:'style'};
   Object.keys(map).forEach(id=>{const v=g(id); if(v!==undefined)set2[map[id]]=v;});
   const pf={...prof};
-  const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents',dkPrix:'prix',dkChiffre:'chiffre',dkGarantie:'garantie',dkTard:'tard',dkDiff:'diff',dkDecl:'declencheur'};
+  const pmap={dkBan:'bannis',dkObj:'objections',dkConc:'concurrents',dkPrix:'prix',dkChiffre:'chiffre',dkGarantie:'garantie',dkTard:'tard',dkDiff:'diff',dkDecl:'declencheur',dkTel:'tel',dkDeteste:'deteste',dkAnnee:'annee',dkPitch:'pitch',dkDecideur:'decideur',dkPasVendu:'pasvendu',dkRefs:'refs',dkLabel:'label',dkAccroche:'accroche',dkSources:'sources'};
   Object.keys(pmap).forEach(id=>{const v=g(id); if(v!==undefined)pf[pmap[id]]=v;});
   set2.profil=JSON.stringify(pf);
   set2.reglages=JSON.stringify(pupitre);
