@@ -400,52 +400,50 @@
   .trame2{position:absolute;bottom:-70px;left:-90px;width:540px;max-width:none;z-index:0;pointer-events:none;user-select:none;transform:rotate(180deg);transform-origin:bottom left;opacity:0;transition:opacity 1s ease .3s;}
   .trame2.lit{opacity:.55;}
   .dayw{position:relative;z-index:1;}
-  .day-hero{display:grid;grid-template-columns:1fr auto;gap:44px;align-items:center;padding:26px 0 34px;}
-  .day-p{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1.12;letter-spacing:-.9px;color:var(--ink);max-width:19ch;}
+  .day-hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;padding:14px 0 24px;}
+  .day-p{font-family:var(--serif);font-weight:500;font-size:35px;line-height:1.12;letter-spacing:-.8px;color:var(--ink);max-width:19ch;}
   .day-p em{font-style:normal;color:var(--copper);}
-  .day-s{font-size:15.5px;color:var(--dim);line-height:1.55;margin-top:18px;max-width:34ch;}
+  .day-s{font-size:15px;color:var(--dim);line-height:1.5;margin-top:14px;max-width:36ch;}
   .day-s b{color:var(--soft);font-weight:600;}
   /* Le phare : ta portée, en arcs */
   .phare{display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0;}
-  .phare svg{width:212px;height:212px;display:block;overflow:visible;}
+  .phare svg{width:186px;height:186px;display:block;overflow:visible;}
   .phare .pa{transition:opacity .6s cubic-bezier(.2,.7,.2,1),stroke .6s;}
   .phare .pa.off{stroke:var(--line2)!important;opacity:.5!important;}
   .phare-k{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
   .phare-v{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);margin-top:-8px;}
   .phare-v em{font-style:normal;color:var(--faint);font-weight:400;font-size:13px;}
-  /* Les gestes qui referment la journée */
-  .day-acts{background:var(--card);border:1px solid var(--line2);border-radius:var(--rl);box-shadow:var(--shm);overflow:hidden;}
-  .day-hd{display:flex;align-items:baseline;gap:12px;padding:15px 20px 13px;border-bottom:1px solid var(--line3);background:linear-gradient(140deg,var(--washc),var(--card) 60%);}
+  /* Les gestes qui referment la journée : trois cartes, aucun bloc lourd */
+  .day-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;}
   .day-hd .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   .day-hd .m{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap;}
-  .act{display:flex;align-items:center;gap:15px;padding:15px 20px;border-bottom:1px solid var(--line3);transition:background .13s;}
-  .act:last-child{border-bottom:none;}
-  .act:hover{background:var(--wash);}
-  .act.first{background:linear-gradient(90deg,var(--washc),transparent 72%);}
-  .act.first .act-t{font-size:16.5px;}
-  .act-n{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--faint);width:20px;flex-shrink:0;text-align:center;}
-  .act.first .act-n{color:var(--copper);}
-  .act-b{flex:1;min-width:0;}
-  .act-t{font-size:15px;font-weight:600;color:var(--ink);line-height:1.3;letter-spacing:-.01em;}
-  .act-w{font-size:12.5px;color:var(--dim);line-height:1.4;margin-top:2px;}
-  .act-w b{color:var(--soft);font-weight:600;}
-  .act-min{font-family:var(--mono);font-size:10px;color:var(--faint);white-space:nowrap;flex-shrink:0;}
-  .act-go{display:inline-flex;align-items:center;gap:7px;border:none;border-radius:9px;padding:9px 16px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;flex-shrink:0;transition:.14s cubic-bezier(.2,.7,.2,1);}
-  .act-go svg{width:13px;height:13px;transition:transform .15s;}
-  .act-go:hover svg{transform:translateX(3px);}
-  .act-go.raconter{background:var(--blue);color:#fff;} .act-go.raconter:hover{filter:brightness(1.12);}
-  .act-go.relancer{background:var(--copper);color:#fff;} .act-go.relancer:hover{background:var(--copper-d);}
-  .act-go.preparer{background:var(--card);color:var(--copper-d);border:1px solid var(--line2);} .act-go.preparer:hover{border-color:var(--copper);background:var(--washc);}
-  .act-go.loading{pointer-events:none;opacity:.75;} .act-go.loading svg{display:none;}
-  .act-go.loading::after{content:"";width:12px;height:12px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
-  .act-go.preparer.loading::after{border-color:var(--line2);border-top-color:var(--copper);}
-  .day-clear{display:flex;align-items:center;gap:14px;padding:22px 20px;}
+  .day-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .gc{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:16px 18px 14px;cursor:pointer;overflow:hidden;transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s;}
+  .gc::before{content:"";position:absolute;left:0;right:0;top:0;height:2.5px;background:var(--gc);}
+  .gc:hover{box-shadow:var(--shm);transform:translateY(-2px);border-color:var(--line2);}
+  .gc.first{background:linear-gradient(165deg,color-mix(in srgb,var(--gc) 7%,var(--card)),var(--card) 62%);}
+  .gc-top{display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .gc-n{font-family:var(--mono);font-size:10px;color:var(--gc);letter-spacing:.08em;}
+  .gc-min{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint);}
+  .gc-t{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.3px;line-height:1.15;color:var(--ink);}
+  .gc-w{font-size:12.5px;color:var(--dim);line-height:1.45;margin-top:6px;flex:1;}
+  .gc-w b{color:var(--soft);font-weight:600;}
+  .gc-go{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding-top:11px;border-top:1px solid var(--line3);font-family:inherit;font-size:12.5px;font-weight:700;color:var(--gc);background:none;border:none;cursor:pointer;align-self:stretch;justify-content:space-between;transition:gap .15s;}
+  .gc-go svg{width:14px;height:14px;transition:transform .16s cubic-bezier(.2,.7,.2,1);}
+  .gc:hover .gc-go svg{transform:translateX(4px);}
+  .gc-go.loading{pointer-events:none;opacity:.6;}
+  .gc-go.loading svg{display:none;}
+  .gc-go.loading::after{content:"";width:12px;height:12px;border:2px solid var(--line2);border-top-color:var(--gc);border-radius:50%;animation:spin .6s linear infinite;}
+  .gc.raconter{--gc:var(--blue);}
+  .gc.relancer{--gc:var(--copper);}
+  .gc.preparer{--gc:var(--copper-d);}
+  .day-clear{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--greenbd);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px;}
   .day-clear-i{width:34px;height:34px;border-radius:50%;background:var(--greenbg);color:var(--green-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .day-clear-i svg{width:17px;height:17px;stroke-width:2.4;}
   .day-clear-t{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--ink);}
   .day-clear-d{font-size:13px;color:var(--dim);margin-top:2px;line-height:1.45;}
   /* Les chiffres existent, ils ne dominent plus */
-  .day-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--faint);}
+  .day-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--faint);}
   .day-foot button{border:none;background:none;font-family:inherit;font-size:11px;color:var(--dim);cursor:pointer;padding:3px 0;transition:color .13s;}
   .day-foot button:hover{color:var(--copper-d);}
   .day-foot b{color:var(--soft);font-weight:500;}
@@ -462,7 +460,8 @@
     .phare{align-items:flex-start;} .phare svg{width:170px;height:170px;}
     .trame{width:480px;right:-80px;} .trame2{display:none;}
   }
-  @media(max-width:640px){.day-p{font-size:26px;}.act{flex-wrap:wrap;}.act-go{width:100%;justify-content:center;}.trame,.trame2{display:none;}}
+  @media(max-width:1080px){.day-cards{grid-template-columns:1fr 1fr;}}
+  @media(max-width:640px){.day-p{font-size:26px;}.day-cards{grid-template-columns:1fr;}.trame,.trame2{display:none;}}
   /* ══ Aujourd'hui : ta prochaine heure, pas un tableau de bord ══ */
   /* Ton état : une ligne, quatre segments cliquables */
   /* La boucle : le seul indicateur que personne d'autre ne peut afficher */
@@ -2815,35 +2814,37 @@ function dash(){
 
   // ─── Les gestes qui referment la journée ───
   const acts=[];
-  const RAC=[
-    n=>n<=0?"Vu aujourd'hui. Tout est encore frais, c'est le meilleur moment."
-           :`Vu il y a <b>${n} jours</b>. Chaque jour efface un détail.`,
-    n=>n<=0?"Vu aujourd'hui aussi. Deux minutes et il est en mémoire."
-           :`Vu il y a <b>${n} jours</b>. Il ne reste que les grandes lignes.`,
-    n=>n<=0?"Le troisième de la journée. Enchaîne pendant que tu y es."
-           :`Vu il y a <b>${n} jours</b>. Celui-là commence à s'effacer pour de bon.`
-  ];
-  aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,3).forEach((b,i)=>{
+  // La phrase dépend de l'âge du rendez-vous, jamais de sa position dans la liste
+  const jr=n=>n+(n>1?' jours':' jour');
+  const MEMES=["Tout est encore frais, c'est le meilleur moment.","Deux minutes et il est en mémoire.","Enchaîne pendant que tu y es."];
+  let sameDay=0;
+  aDeb.slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,3).forEach(b=>{
+    const n=days(b.created_at);
+    let w;
+    if(n<=0){w=`Vu aujourd'hui. ${MEMES[Math.min(sameDay,2)]}`;sameDay++;}
+    else if(n===1)w="Vu <b>hier</b>. Il reste l'essentiel, pas les détails.";
+    else if(n<=3)w=`Vu il y a <b>${jr(n)}</b>. Les détails commencent à s'effacer.`;
+    else if(n<=7)w=`Vu il y a <b>${jr(n)}</b>. Il ne reste que les grandes lignes.`;
+    else w=`Vu il y a <b>${jr(n)}</b>. Sauve ce qu'il en reste avant qu'il n'y ait plus rien.`;
     acts.push({min:2,cls:'raconter',lbl:'Raconter',
-      t:`Raconte ${trunc(b.entreprise||'ce rendez-vous',26)}`,
-      w:RAC[i](days(b.created_at)),
+      t:trunc(b.entreprise||'Ce rendez-vous',24), w,
       fn:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},220);}});
   });
   const froids=actifs.filter(d=>{const t=dealTemp(d);return (t==='chaud'||t==='close')&&days(d.updated_at)>=7;})
     .sort((a,b)=>days(b.updated_at)-days(a.updated_at));
   froids.slice(0,2).forEach(d=>{
     const n=days(d.updated_at);
-    acts.push({min:5,cls:'relancer',lbl:'Relancer',t:`Relance ${trunc(d.entreprise,26)}`,
-      w:`Chaude, mais silencieuse depuis <b>${n} jours</b>. Elle refroidit.`,
+    acts.push({min:5,cls:'relancer',lbl:'Relancer',t:trunc(d.entreprise,24),
+      w:`Chaude, mais silencieuse depuis <b>${jr(n)}</b>. Elle refroidit.`,
       fn:()=>{const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');}else openFiche(d);}});
   });
   if(acts.length<3){
     const dorm=actifs.filter(d=>days(d.updated_at)>=14&&!froids.includes(d)).sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
-    if(dorm)acts.push({min:5,cls:'relancer',lbl:'Réveiller',t:`Réveille ${trunc(dorm.entreprise,26)}`,
-      w:`En <b>${stg(dorm.etape).l.toLowerCase()}</b> depuis <b>${days(dorm.updated_at)} jours</b> sans un mouvement.`,
+    if(dorm)acts.push({min:5,cls:'relancer',lbl:'Réveiller',t:trunc(dorm.entreprise,24),
+      w:`En <b>${stg(dorm.etape).l.toLowerCase()}</b> depuis <b>${jr(days(dorm.updated_at))}</b> sans un mouvement.`,
       fn:()=>openFiche(dorm)});
   }
-  if(acts.length<3)acts.push({min:1,cls:'preparer',lbl:'Préparer',t:'Prépare ton prochain rendez-vous',
+  if(acts.length<3)acts.push({min:1,cls:'preparer',lbl:'Préparer un rendez-vous',t:'Ton prochain rendez-vous',
     w:'Deux clics, et Faro t\'arme des données du marché et de ta mémoire client.',
     fn:()=>{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');}});
   const list=acts.slice(0,4);
@@ -2914,8 +2915,15 @@ function dash(){
       <div class="day-acts">
         ${(!aDeb.length&&!froids.length)
           ? `<div class="day-clear"><span class="day-clear-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="day-clear-t">Rien ne traîne.</div><div class="day-clear-d">Tous tes rendez-vous sont racontés et aucune affaire ne refroidit. Prépare la suite quand tu veux.</div></div></div>`
-          : `<div class="day-hd"><span class="k">${resteJour?'Pour refermer ta journée':'Pour aller plus loin'}</span><span class="m">${list.length} geste${list.length>1?'s':''} · environ ${tot} min</span></div>`
-            +list.map((a,i)=>`<div class="act ${i===0?'first':''}"><span class="act-n">${i+1}</span><div class="act-b"><div class="act-t">${esc(a.t)}</div><div class="act-w">${a.w}</div></div><span class="act-min">${a.min} min</span><button class="act-go ${a.cls}" data-actb="${i}">${a.lbl}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>`).join('')}
+          : `<div class="day-hd"><span class="k">${resteJour?'Pour refermer ta journée':(aDeb.length?'Pour rattraper ton retard':'Pour aller plus loin')}</span><span class="m">${list.length} geste${list.length>1?'s':''} · environ ${tot} min</span></div>`
+            +`<div class="day-cards">`
+            +list.map((a,i)=>`<div class="gc ${a.cls} ${i===0?'first':''}" data-actb="${i}">
+                <div class="gc-top"><span class="gc-n">0${i+1}</span><span class="gc-min">${a.min} min</span></div>
+                <div class="gc-t">${esc(a.t)}</div>
+                <div class="gc-w">${a.w}</div>
+                <button class="gc-go" data-actb="${i}">${a.lbl}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>`).join('')
+            +`</div>`}
       </div>
       <div class="day-foot">
         <button data-dgo="prep"><b>${nb}</b> briefs</button><span class="sep">·</span>
@@ -2925,11 +2933,12 @@ function dash(){
         <span class="boucle"><b>${pct}%</b> de ta boucle refermée</span>
       </div>
     </div>`;
-    w.querySelectorAll('[data-actb]').forEach(b=>b.addEventListener('click',e=>{
-      e.stopPropagation();
-      if(b.classList.contains('loading'))return;
+    // La carte entière est cliquable, le lien montre juste où l'on va
+    w.querySelectorAll('.gc').forEach(card=>card.addEventListener('click',e=>{
+      const b=card.querySelector('.gc-go');
+      if(!b||b.classList.contains('loading'))return;
       b.classList.add('loading');
-      setTimeout(()=>{b.classList.remove('loading');list[+b.dataset.actb].fn();},250);
+      setTimeout(()=>{b.classList.remove('loading');list[+card.dataset.actb].fn();},250);
     }));
     w.querySelectorAll('[data-dgo]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.dgo)));
     // Les arcs s'étendent un par un
