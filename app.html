@@ -99,15 +99,20 @@
   .dk-in{position:relative;z-index:1;overflow-y:auto;padding:18px 20px 16px;}
   .dk-in::-webkit-scrollbar{width:5px;} .dk-in::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   /* Ce que cet étage produit, en direct */
-  .dk-out{position:relative;z-index:1;border-left:1px solid var(--line3);background:linear-gradient(170deg,var(--washc),var(--card) 55%);padding:18px 18px 16px;overflow-y:auto;}
+  .dk-out{position:relative;z-index:1;border-left:1px solid var(--line3);background:linear-gradient(170deg,var(--washc),var(--card) 48%);padding:0;display:flex;flex-direction:column;}
   .dk-out::-webkit-scrollbar{width:5px;} .dk-out::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
-  .dk-out-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:4px;}
-  .dk-out-n{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--ink);line-height:1;margin-bottom:14px;}
-  .dk-out-n em{font-style:normal;font-size:12px;color:var(--faint);font-weight:400;margin-left:4px;}
-  .dk-ins{display:flex;gap:9px;font-size:12.5px;color:var(--soft);line-height:1.45;padding:4px 0;animation:rise .3s cubic-bezier(.2,.7,.2,1) both;}
-  .dk-ins::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper);opacity:.55;margin-top:7px;flex-shrink:0;}
-  .dk-ins.vide{color:var(--faint);font-style:italic;}
-  .dk-ins.vide::before{background:var(--line2);opacity:1;}
+  .dk-out-h{padding:16px 18px 13px;border-bottom:1px solid var(--line3);flex-shrink:0;}
+  .dk-out-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--copper-d);margin-bottom:5px;}
+  .dk-out-n{display:flex;align-items:baseline;gap:6px;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--ink);line-height:1;}
+  .dk-out-n em{font-style:normal;font-size:11.5px;color:var(--faint);font-weight:400;}
+  .dk-out-l{flex:1;min-height:0;overflow-y:auto;padding:4px 18px 14px;}
+  .dk-out-l::-webkit-scrollbar{width:5px;} .dk-out-l::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
+  .dk-out-f{flex-shrink:0;padding:10px 18px 13px;border-top:1px solid var(--line3);font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--faint);display:flex;align-items:center;gap:7px;}
+  .dk-out-f b{color:var(--copper-d);font-weight:500;}
+  .dk-ins{display:grid;grid-template-columns:17px 1fr;gap:9px;font-size:12.5px;color:var(--soft);line-height:1.45;padding:10px 0;border-top:1px solid var(--line3);animation:rise .3s cubic-bezier(.2,.7,.2,1) both;}
+  .dk-ins:first-child{border-top:none;}
+  .dk-ins i{font-family:var(--mono);font-size:8.5px;font-style:normal;color:var(--copper);opacity:.7;padding-top:3px;}
+  .dk-ins.vide{grid-template-columns:1fr;color:var(--faint);font-style:italic;padding:12px 0;}
   .dk-card::-webkit-scrollbar{width:5px;} .dk-card::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   /* Le rail : où tu en es, et ce qui reste */
   .dk-rail{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;padding-top:2px;}
@@ -172,10 +177,10 @@
   .pu-ch .d{font-size:11.5px;color:var(--faint);margin-left:auto;}
   .pu-cb{padding:8px 20px 16px;}
   /* Un réglage : deux pôles, une piste, cinq crans */
-  .ax{padding:14px 0 12px;border-top:1px solid var(--line3);}
+  .ax{padding:11px 0 9px;border-top:1px solid var(--line3);}
   .ax:first-child{border-top:none;}
   .ax.a-approche{--ac:var(--copper);} .ax.a-ouverture{--ac:var(--blue);} .ax.a-closing{--ac:var(--green-d);}
-  .ax-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:2px;}
+  .ax-t{font-family:var(--serif);font-weight:600;font-size:14.5px;color:var(--ink);margin-bottom:1px;}
   /* L'infobulle : ce que chaque pôle veut dire, sans encombrer */
   .ax-i{width:15px;height:15px;border-radius:50%;border:1px solid var(--line2);background:none;color:var(--faint);font-family:var(--serif);font-size:10px;font-weight:700;line-height:1;cursor:help;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;transition:.14s;position:relative;}
   .ax-i:hover{border-color:var(--ac);color:var(--ac);}
@@ -187,7 +192,7 @@
   .ax-tip b{display:inline-block;margin-bottom:3px;}
   .ax-i:hover .ax-tip,.ax-i:focus-visible .ax-tip{opacity:1;visibility:visible;transform:none;}
   .ax-tip::before{top:auto;bottom:-4px;}
-  .ax-v{font-size:12px;color:var(--ac);margin-bottom:11px;min-height:17px;font-weight:500;}
+  .ax-v{font-size:12px;color:var(--ac);margin-bottom:9px;min-height:16px;font-weight:500;}
   /* La piste se glisse autant qu'elle se clique */
   .ax-track{position:relative;display:flex;align-items:center;height:24px;cursor:grab;touch-action:none;user-select:none;}
   .ax-track.grab{cursor:grabbing;}
@@ -200,10 +205,10 @@
   .ax-s.on::after{width:19px;height:19px;background:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 15%,transparent);}
   .ax-track.grab .ax-s.on::after{box-shadow:0 0 0 7px color-mix(in srgb,var(--ac) 18%,transparent);}
   .ax-s.obs::before{content:"";position:absolute;left:50%;bottom:-5px;width:1px;height:6px;background:var(--faint);transform:translateX(-50%);opacity:.7;}
-  .ax-poles{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .ax-poles{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
   .ax-poles .pole{display:inline-flex;align-items:center;gap:6px;}
   .ax-poles .pole:hover{color:var(--ac);}
-  .ax-obs{font-size:11.5px;color:var(--faint);line-height:1.45;margin-top:7px;}
+  .ax-obs{font-size:11px;color:var(--faint);line-height:1.4;margin-top:6px;}
   .ax-obs b{color:var(--dim);font-weight:600;}
   /* L'aperçu, qui se réécrit à chaque réglage */
   /* Les instructions réellement envoyées au modèle */
@@ -3434,7 +3439,7 @@ function pupitreObserve(){
 function pupitreStyle(){
   const l=AXES.map(a=>a.v[pupitre[a.k]]);
   const pf=profGet();
-  if(pf.role)l.push(`Le commercial est ${pf.role.toLowerCase()}. Adapte le registre à ce rôle.`);
+  if(pf.role)l.push(`Celui qui mène le rendez-vous a le rôle de ${pf.role.toLowerCase()}. Adapte le registre.`);
   if(pf.vous==='Tutoies')l.push(`Le commercial tutoie ses prospects. Tout le brief tutoie, sans exception.`);
   if(pf.vous==='Vouvoies')l.push(`Le commercial vouvoie ses prospects. Tout le brief vouvoie.`);
   if(pf.anc)l.push(`Il exerce ce métier depuis ${pf.anc.toLowerCase()}.`);
@@ -3500,7 +3505,7 @@ function etageInstr(k){
   const l=[];
   if(k==='toi'){
     if(g('full_name'))l.push(`Tes relances seront signées ${g('full_name').split(' ')[0]}.`);
-    if(pf.role)l.push(`Le commercial est ${pf.role.toLowerCase()}. Le registre s'adapte à ce rôle.`);
+    if(pf.role)l.push(`Son rôle : ${pf.role.toLowerCase()}. Le registre s'y adapte.`);
     if(pf.vous==='Tutoies')l.push(`Tout le brief tutoie, sans exception.`);
     if(pf.vous==='Vouvoies')l.push(`Tout le brief vouvoie.`);
     if(pf.anc)l.push(`Il exerce ce métier depuis ${pf.anc.toLowerCase()}.`);
@@ -3726,9 +3731,11 @@ function renderToi(){
       const kk=el.dataset.out;
       if(k&&kk!==k)return;
       const ins=etageInstr(kk);
-      el.innerHTML=`<div class="dk-out-k">Ce que Faro reçoit</div><div class="dk-out-n">${ins.length}<em>instruction${ins.length>1?'s':''}</em></div>`
-        +(ins.length?ins.map(x=>`<div class="dk-ins">${esc(x)}</div>`).join('')
-                    :`<div class="dk-ins vide">Rien pour l'instant. Remplis un champ, la phrase apparaît ici.</div>`);
+      const tot=ETAGES.reduce((a,x)=>a+etageInstr(x.k).length,0);
+      el.innerHTML=`<div class="dk-out-h"><div class="dk-out-k">Ce que Faro reçoit</div><div class="dk-out-n">${ins.length}<em>instruction${ins.length>1?'s':''} de cet étage</em></div></div>
+        <div class="dk-out-l">${ins.length?ins.map((x,n)=>`<div class="dk-ins"><i>${String(n+1).padStart(2,'0')}</i><span>${esc(x)}</span></div>`).join('')
+                    :`<div class="dk-ins vide">Rien pour l'instant. Remplis un champ, la phrase apparaît ici.</div>`}</div>
+        <div class="dk-out-f"><b>${tot}</b> au total, sur les sept étages</div>`;
     });
   }
   const lire=()=>{
