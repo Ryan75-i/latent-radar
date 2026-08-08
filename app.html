@@ -78,55 +78,63 @@
   .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
-  /* ══ Ce que Faro sait de toi : des constats, jamais des scores ══ */
-  .toi-hero{padding:8px 0 28px;max-width:64ch;}
-  .toi-p{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.18;letter-spacing:-.6px;color:var(--ink);}
+  /* ══ Ce que Faro sait de toi : un écran, deux colonnes, aucun défilement ══ */
+  #v-toi{overflow:hidden;}
+  .toi-hero{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:end;padding:4px 0 22px;}
+  .toi-p{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.18;letter-spacing:-.6px;color:var(--ink);max-width:32ch;}
   .toi-p em{font-style:normal;color:var(--copper);}
-  .toi-sub{font-size:14px;color:var(--faint);margin-top:12px;line-height:1.5;}
-  .toi-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 12px;}
-  .toi-k+.toi-k{margin-top:30px;}
-  .toi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:8px;}
-  /* Un constat : une phrase, sa preuve, sa nature */
-  .ob{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:16px 18px 14px;transition:box-shadow .18s,border-color .18s;}
-  .ob:hover{box-shadow:var(--shm);border-color:var(--line2);}
-  .ob-k{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--oc);margin-bottom:9px;}
-  .ob-k::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--oc);}
-  .ob-t{font-family:var(--serif);font-weight:600;font-size:16.5px;line-height:1.28;letter-spacing:-.25px;color:var(--ink);}
-  .ob-w{font-size:12.5px;color:var(--dim);line-height:1.5;margin-top:7px;}
+  .toi-sub{font-size:13.5px;color:var(--faint);margin-top:10px;line-height:1.5;max-width:46ch;}
+  /* Le compteur de matière, discret, en tête à droite */
+  .toi-jauge{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;}
+  .toi-jn{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1;color:var(--ink);}
+  .toi-jn em{font-style:normal;font-size:13px;color:var(--faint);font-weight:400;margin-left:3px;}
+  .toi-jk{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+  .toi-jb{display:flex;gap:3px;}
+  .toi-jb i{width:12px;height:4px;border-radius:2px;background:var(--line2);}
+  .toi-jb i.on{background:var(--copper);}
+  /* Deux colonnes de cartes */
+  .toi-2{display:grid;grid-template-columns:1.12fr 1fr;gap:14px;align-items:start;}
+  .tc{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;margin-bottom:14px;}
+  .tc:last-child{margin-bottom:0;}
+  .tc-h{display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;border-bottom:1px solid var(--line3);}
+  .tc-h .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
+  .tc-h .d{font-size:11.5px;color:var(--faint);margin-left:auto;white-space:nowrap;}
+  .tc-b{padding:6px 18px 14px;}
+  /* Un constat : sa nature en filet, sa phrase, sa preuve */
+  .ob{display:grid;grid-template-columns:3px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line3);}
+  .ob:first-child{border-top:none;}
+  .ob::before{content:"";background:var(--oc);border-radius:2px;}
+  .ob-t{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.28;letter-spacing:-.2px;color:var(--ink);}
+  .ob-w{font-size:12px;color:var(--dim);line-height:1.45;margin-top:4px;}
   .ob-w b{color:var(--soft);font-weight:600;}
-  .ob.force{--oc:var(--green-d);}
-  .ob.angle{--oc:var(--red);}
-  .ob.fait{--oc:var(--copper-d);}
-  .ob.tot{--oc:var(--faint);}
-  /* Par interlocuteur : la barre dit le nombre, le chiffre dit le taux */
-  .toi-post{display:grid;grid-template-columns:180px 1fr auto;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--line3);}
-  .toi-post:first-child{border-top:none;}
-  .tp-k{font-family:var(--serif);font-weight:600;font-size:14.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .tp-bar{height:6px;border-radius:4px;background:var(--line3);overflow:hidden;}
-  .tp-fill{display:block;height:100%;border-radius:4px;background:var(--copper);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
-  .tp-v{font-family:var(--mono);font-size:10.5px;color:var(--dim);white-space:nowrap;text-align:right;}
-  .tp-v b{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--ink);}
-  .tp-v.thin{color:var(--faint);}
-  .toi-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:16px 20px 14px;}
-  /* Ce que Faro en fait : la mémoire de toi devient un réglage */
-  .rg{display:grid;grid-template-columns:22px 1fr;gap:13px;padding:14px 0;border-top:1px solid var(--line3);}
-  .rg:first-of-type{border-top:none;}
-  .rg-i{width:22px;height:22px;border-radius:50%;background:var(--greenbg);color:var(--green-d);display:flex;align-items:center;justify-content:center;margin-top:1px;}
-  .rg-i svg{width:12px;height:12px;stroke-width:3;}
-  .rg-p{font-size:13.5px;color:var(--dim);line-height:1.5;}
-  .rg-p b{color:var(--soft);font-weight:600;}
-  .rg-e{display:flex;gap:9px;font-family:var(--serif);font-weight:500;font-size:15px;color:var(--ink);line-height:1.4;margin-top:6px;}
+  .ob.force{--oc:var(--green-d);} .ob.angle{--oc:var(--red);} .ob.fait{--oc:var(--copper-d);} .ob.tot{--oc:var(--line2);}
+  /* Ce que Faro en fait */
+  .rg{padding:12px 0;border-top:1px solid var(--line3);}
+  .rg:first-child{border-top:none;}
+  .rg-p{font-size:12px;color:var(--faint);line-height:1.45;}
+  .rg-p b{color:var(--dim);font-weight:600;}
+  .rg-e{display:flex;gap:8px;font-family:var(--serif);font-weight:500;font-size:14.5px;color:var(--ink);line-height:1.35;margin-top:5px;}
   .rg-e::before{content:"→";color:var(--copper);font-family:var(--sans);font-weight:700;flex-shrink:0;}
-  .st-f textarea{width:100%;min-height:96px;border:1.5px solid var(--line2);border-radius:10px;padding:13px 15px;font-family:var(--serif);font-size:15px;line-height:1.55;color:var(--ink);background:var(--card);outline:none;resize:vertical;transition:.15s;}
+  /* Par interlocuteur */
+  .toi-post{display:grid;grid-template-columns:1fr 90px auto;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line3);}
+  .toi-post:first-child{border-top:none;}
+  .tp-k{font-family:var(--serif);font-weight:600;font-size:13.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tp-bar{height:5px;border-radius:3px;background:var(--line3);overflow:hidden;}
+  .tp-fill{display:block;height:100%;border-radius:3px;background:var(--copper);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+  .tp-v{font-family:var(--mono);font-size:10px;color:var(--dim);white-space:nowrap;text-align:right;}
+  .tp-v b{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink);}
+  .tp-v.thin{color:var(--faint);}
+  /* Ce que tu dis à Faro */
+  .st-f textarea{width:100%;height:88px;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:14px;line-height:1.5;color:var(--ink);background:var(--card);outline:none;resize:none;transition:.15s;}
   .st-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
-  .st-f textarea::placeholder{color:var(--faint);font-family:var(--sans);font-size:14px;}
-  .st-row{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;}
-  .st-hint{font-size:12px;color:var(--faint);line-height:1.5;flex:1;min-width:240px;}
-  .st-save{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);border-radius:9px;padding:9px 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--copper-d);cursor:pointer;transition:.14s;}
+  .st-f textarea::placeholder{color:var(--faint);font-family:var(--sans);font-size:13px;}
+  .st-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
+  .st-hint{font-size:11.5px;color:var(--faint);line-height:1.45;flex:1;}
+  .st-save{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:8px 14px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--copper-d);cursor:pointer;flex-shrink:0;transition:.14s;}
   .st-save:hover{border-color:var(--copper);background:var(--washc);}
   .st-save.ok{border-color:var(--greenbd);background:var(--greenbg);color:var(--green-d);}
-  .toi-note{font-size:12px;color:var(--faint);line-height:1.5;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);}
-  @media(max-width:700px){.toi-post{grid-template-columns:1fr;gap:6px;}.tp-v{text-align:left;}.toi-p{font-size:24px;}}
+  .toi-note{font-size:11px;color:var(--faint);line-height:1.45;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line2);}
+  @media(max-width:980px){.toi-2{grid-template-columns:1fr;}.toi-hero{grid-template-columns:1fr;gap:16px;}.toi-jauge{align-items:flex-start;}#v-toi{overflow:visible;}}
   /* ══ Ta semaine : une jauge, un chiffre, une phrase ══ */
   .sw{min-height:calc(100vh - 156px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 0 30px;}
   .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:26px;}
@@ -3377,27 +3385,53 @@ function renderToi(){
       w:`<b>${topJour[1]}</b> de tes ${briefs.length} briefs. Les rendez-vous suivent souvent le même jour de la semaine.`});
   }
 
-  const regles=reglesActives();
-  const note=parPoste.some(([,v])=>v.c<MINI)
-    ? `Les interlocuteurs vus moins de trois fois sont affichés sans taux : un pourcentage sur un ou deux rendez-vous ne veut rien dire.`
+  const regles=reglesActives().slice(0,2);
+  // Les angles morts passent devant : c'est ce qui a de la valeur
+  const rang={angle:0,force:1,tot:2,fait:3};
+  const top=obs.slice().sort((a,b)=>(rang[a.c]??9)-(rang[b.c]??9)).slice(0,3);
+  const posts3=parPoste.slice(0,3);
+  const note=posts3.some(([,v])=>v.c<MINI)
+    ? `Sous trois rendez-vous, aucun taux n'est affiché : il ne voudrait rien dire.`
     : '';
+  const JAU=8, jn=Math.min(JAU,n);
 
   w.innerHTML=`
-    <div class="toi-hero"><div class="toi-p">${phrase}</div><div class="toi-sub">${sousPhrase}</div></div>
-    <div class="toi-k">Ce que Faro a retenu</div>
-    <div class="toi-grid">${obs.map(o=>`<div class="ob ${o.c}"><div class="ob-k">${o.k}</div><div class="ob-t">${o.t}</div><div class="ob-w">${o.w}</div></div>`).join('')}</div>
-    ${regles.length?`<div class="toi-k">Ce que Faro en fait, dans chacun de tes briefs</div>
-    <div class="toi-card">${regles.map(r=>`<div class="rg"><span class="rg-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="rg-p">${r.p}</div><div class="rg-e">${r.e}</div></div></div>`).join('')}</div>`:''}
-    <div class="toi-k">Ce que tu dis à Faro</div>
-    <div class="toi-card st-f">
-      <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je tutoie systématiquement. Je ne cite jamais de concurrent par son nom.">${esc(set.style||'')}</textarea>
-      <div class="st-row"><span class="st-hint">Ta manière de vendre, celle que les données ne peuvent pas deviner. Faro la respecte sans exception dans tous tes briefs.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
+    <div class="toi-hero">
+      <div><div class="toi-p">${phrase}</div><div class="toi-sub">${sousPhrase}</div></div>
+      <div class="toi-jauge">
+        <span class="toi-jk">Ce sur quoi il se fonde</span>
+        <span class="toi-jn">${n}<em>récit${n>1?'s':''}</em></span>
+        <span class="toi-jb">${Array.from({length:JAU},(_,i)=>`<i class="${i<jn?'on':''}"></i>`).join('')}</span>
+      </div>
     </div>
-    ${parPoste.length?`<div class="toi-k">Face à qui tu réussis</div>
-    <div class="toi-card">${parPoste.slice(0,6).map(([k,v])=>{
-      const assez=v.c>=MINI, r=Math.round(v.hot/v.c*100);
-      return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,26))}</span><span class="tp-bar"><span class="tp-fill" data-w="${assez?Math.max(r,3):0}"></span></span><span class="tp-v ${assez?'':'thin'}">${assez?`<b>${r}%</b> chauds · ${v.c} RDV`:`${v.c} RDV · trop peu pour conclure`}</span></div>`;
-    }).join('')}${note?`<div class="toi-note">${note}</div>`:''}</div>`:''}
+    <div class="toi-2">
+      <div>
+        <div class="tc">
+          <div class="tc-h"><span class="k">Ce que Faro a retenu</span><span class="d">tiré de tes récits</span></div>
+          <div class="tc-b">${top.map(o=>`<div class="ob ${o.c}"><div><div class="ob-t">${o.t}</div><div class="ob-w">${o.w}</div></div></div>`).join('')}</div>
+        </div>
+        ${posts3.length?`<div class="tc">
+          <div class="tc-h"><span class="k">Face à qui tu réussis</span></div>
+          <div class="tc-b">${posts3.map(([k,v])=>{
+            const assez=v.c>=MINI, r=Math.round(v.hot/v.c*100);
+            return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,24))}</span><span class="tp-bar"><span class="tp-fill" data-w="${assez?Math.max(r,3):0}"></span></span><span class="tp-v ${assez?'':'thin'}">${assez?`<b>${r}%</b> chauds · ${v.c}`:`${v.c} RDV · trop peu`}</span></div>`;
+          }).join('')}${note?`<div class="toi-note">${note}</div>`:''}</div>
+        </div>`:''}
+      </div>
+      <div>
+        ${regles.length?`<div class="tc">
+          <div class="tc-h"><span class="k">Ce qu'il en fait</span><span class="d">dans chacun de tes briefs</span></div>
+          <div class="tc-b">${regles.map(r=>`<div class="rg"><div class="rg-p">${r.p}</div><div class="rg-e">${r.e}</div></div>`).join('')}</div>
+        </div>`:''}
+        <div class="tc st-f">
+          <div class="tc-h"><span class="k">Ce que tu lui dis</span></div>
+          <div class="tc-b">
+            <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je tutoie systématiquement.">${esc(set.style||'')}</textarea>
+            <div class="st-row"><span class="st-hint">Ce que les données ne devineront jamais. Faro le respecte sans exception.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
   `;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     w.querySelectorAll('.tp-fill').forEach(el=>{el.style.width=(+el.dataset.w)+'%';});
