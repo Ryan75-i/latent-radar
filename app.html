@@ -78,48 +78,32 @@
   .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
-  /* ══ Ta semaine : le carnet qui se remplit, avec de vrais récits ══ */
-  .sw{max-width:1060px;padding:24px 0 34px;}
-  .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:18px;}
+  /* ══ Ta semaine : une jauge, un chiffre, une phrase ══ */
+  .sw{min-height:calc(100vh - 156px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 0 30px;}
+  .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:26px;}
   .sw-b i{width:6px;height:6px;border-radius:50%;background:var(--copper);animation:swPulse 2.2s ease-in-out infinite;}
   @keyframes swPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
-  .sw-t{font-family:var(--serif);font-weight:500;font-size:35px;line-height:1.12;letter-spacing:-.8px;color:var(--ink);margin-bottom:12px;}
-  .sw-s{font-size:15.5px;color:var(--dim);line-height:1.55;max-width:62ch;margin-bottom:28px;}
-  .sw-s b{color:var(--soft);font-weight:600;}
-  /* Le panneau de collecte, pleine largeur */
-  .sw-panel{background:var(--card);border:1px solid var(--line2);border-radius:var(--rl);box-shadow:var(--shm);overflow:hidden;margin-bottom:30px;}
-  .sw-ph{display:flex;align-items:baseline;gap:12px;padding:16px 20px 14px;border-bottom:1px solid var(--line3);background:linear-gradient(140deg,var(--washc),var(--card) 60%);}
-  .sw-ph .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
-  .sw-ph .n{margin-left:auto;font-family:var(--serif);font-weight:700;font-size:17px;color:var(--ink);}
-  .sw-ph .n em{font-style:normal;font-weight:400;font-size:13px;color:var(--faint);margin-left:3px;}
-  /* Un emplacement par récit : rempli, il porte un vrai nom */
-  .sw-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(126px,1fr));gap:8px;padding:18px 20px;}
-  .sw-sl{border:1px solid var(--line);border-radius:9px;padding:9px 11px;min-height:52px;display:flex;flex-direction:column;justify-content:center;gap:3px;background:var(--card);opacity:0;transform:translateY(6px);transition:opacity .4s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.2,.7,.2,1);}
-  .sw-sl.in{opacity:1;transform:none;}
-  .sw-sl.got{border-color:color-mix(in srgb,var(--copper) 34%,var(--line));background:linear-gradient(160deg,var(--washc),var(--card) 62%);}
-  .sw-sl .nm{font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink);line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .sw-sl .dt{font-family:var(--mono);font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--copper-d);}
-  .sw-sl.free{border-style:dashed;border-color:var(--line2);background:none;}
-  .sw-sl.free .nm{color:var(--line2);font-family:var(--mono);font-size:11px;font-weight:400;}
-  .sw-sl.next{border-color:var(--copper-l);animation:swNext 2s ease-in-out infinite;}
-  .sw-sl.next .nm{color:var(--copper-d);}
-  @keyframes swNext{0%,100%{opacity:1;}50%{opacity:.45;}}
-  .sw-pf{display:flex;align-items:center;gap:16px;padding:14px 20px;border-top:1px solid var(--line3);background:var(--wash);flex-wrap:wrap;}
-  .sw-when{font-size:13.5px;color:var(--soft);line-height:1.5;flex:1;min-width:280px;}
-  .sw-when b{color:var(--ink);font-weight:600;}
-  .sw-weeks{display:flex;align-items:center;gap:9px;flex-shrink:0;}
-  .sw-weeks span{display:flex;gap:4px;}
-  .sw-weeks i{width:26px;height:5px;border-radius:3px;background:var(--line2);}
-  .sw-weeks i.got{background:var(--copper);}
-  .sw-wl{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--faint);white-space:nowrap;}
-  /* Les trois promesses, en cartes plutôt qu'en liste */
-  .sw-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;}
-  .sw-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-  .sw-c{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 18px 16px;}
-  .sw-c-n{font-family:var(--mono);font-size:9.5px;color:var(--copper-d);letter-spacing:.08em;margin-bottom:10px;}
-  .sw-c-t{font-family:var(--serif);font-weight:600;font-size:16px;line-height:1.2;letter-spacing:-.25px;color:var(--ink);margin-bottom:7px;}
-  .sw-c-d{font-size:12.5px;color:var(--dim);line-height:1.5;}
-  @media(max-width:860px){.sw-3{grid-template-columns:1fr;}.sw-t{font-size:28px;}}
+  /* La jauge : un bloc par récit, rien d'autre à comprendre */
+  .sw-bars{display:flex;align-items:stretch;gap:7px;width:min(620px,86vw);height:76px;margin-bottom:30px;}
+  .sw-bars i{flex:1;border-radius:7px;background:var(--line3);transform:scaleY(.25);transform-origin:bottom;transition:transform .55s cubic-bezier(.2,.7,.2,1),background .4s;}
+  .sw-bars i.in{transform:scaleY(1);}
+  .sw-bars i.got{background:var(--copper);}
+  .sw-bars i.next{background:none;border:1.5px dashed var(--copper-l);animation:swNext 1.9s ease-in-out infinite;}
+  @keyframes swNext{0%,100%{opacity:1;}50%{opacity:.35;}}
+  .sw-n{font-family:var(--serif);font-weight:700;font-size:56px;line-height:1;letter-spacing:-1.6px;color:var(--copper);}
+  .sw-n em{font-style:normal;color:var(--faint);font-weight:400;font-size:24px;letter-spacing:-.5px;}
+  .sw-lb{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:12px;}
+  .sw-p{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.25;letter-spacing:-.5px;color:var(--ink);max-width:19ch;margin:28px 0 8px;}
+  .sw-p em{font-style:normal;color:var(--copper);}
+  .sw-s{font-size:14px;color:var(--dim);line-height:1.5;max-width:40ch;}
+  .sw-go{display:inline-flex;align-items:center;gap:9px;margin-top:26px;border:1px solid var(--line2);background:var(--card);border-radius:10px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:600;color:var(--copper-d);cursor:pointer;box-shadow:var(--sh);transition:border-color .15s,background .15s,transform .15s;}
+  .sw-go:hover{border-color:var(--copper);background:var(--washc);transform:translateY(-1px);}
+  .sw-go svg{width:16px;height:16px;overflow:visible;}
+  .sw-go:hover .arw-d{transform:translateX(3px);opacity:.55;}
+  .sw-go:hover .arw-s{transform:translateX(2px) scaleX(.8);transform-origin:left;}
+  .sw-go:hover .arw-a1{transform:translateX(3px);}
+  .sw-go:hover .arw-a2{opacity:.6;transform:translateX(3px);}
+  @media(max-width:640px){.sw-bars{height:56px;gap:4px;}.sw-n{font-size:42px;}.sw-p{font-size:20px;}}
   /* L'écran d'une page qui n'existe pas encore : honnête, jamais mort */
   .soon-p{display:flex;flex-direction:column;align-items:flex-start;padding:26px 0 40px;max-width:560px;}
   .soon-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:20px;}
@@ -2718,58 +2702,33 @@ const SOON={
   equipe:{g:'config',t:'Ton équipe',d:"Faro est pensé pour un commercial seul. Il pourra en accueillir plusieurs.",l:["Partager une mémoire client entre commerciaux.","Voir ce qui marche chez les autres, sans surveillance.","Un compte par personne, une mémoire commune."],w:"Bien plus tard, et seulement si des équipes le demandent."}
 };
 // Ta semaine ne fait pas semblant : elle montre la matière s'accumuler
+// Un point, une hampe, deux arcs : la marque Faro devenue flèche, partagée par toutes les pages
+const ARW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">'
+  +'<circle class="arw-d" cx="4.5" cy="12" r="1.9" fill="currentColor" stroke="none"/>'
+  +'<path class="arw-s" d="M9 12h4.5" stroke-width="2"/>'
+  +'<path class="arw-a1" d="M15.5 8.2a5.4 5.4 0 0 1 0 7.6" stroke-width="2"/>'
+  +'<path class="arw-a2" d="M18.6 5.4a9.4 9.4 0 0 1 0 13.2" stroke-width="1.6"/></svg>';
 function renderSemaine(){
-  const REC_CIBLE=15, SEM_CIBLE=4;
-  const faits=briefs.filter(b=>b.debrief).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-  const nr=faits.length;
-  const first=briefs.length?briefs.reduce((a,b)=>new Date(a.created_at)<new Date(b.created_at)?a:b):null;
-  const sem=first?Math.max(0,Math.floor(days(first.created_at)/7)):0;
-  const pRec=Math.min(1,nr/REC_CIBLE), pSem=Math.min(1,sem/SEM_CIBLE);
-  // Sous une semaine d'usage, aucun rythme hebdomadaire n'est calculable honnêtement
-  const rythme=sem>=1?nr/sem:0;
-  let quand;
-  if(pRec>=1&&pSem>=1)quand=`Faro a la matière qu'il lui faut. <b>Ta semaine s'ouvre au prochain lundi.</b>`;
-  else if(!rythme)quand=sem<1
-    ?`Tu viens de commencer. <b>Reviens dans une semaine</b>, Faro saura te dire quand cette page s'ouvrira.`
-    :`Faro attend tes récits. <b>Raconte tes rendez-vous</b> et cette page se remplira toute seule.`;
-  else{
-    const semRec=Math.ceil(Math.max(0,REC_CIBLE-nr)/Math.max(.35,rythme));
-    const semTot=Math.max(semRec,SEM_CIBLE-sem);
-    const ryth=(Math.round(rythme*10)/10).toString().replace('.',',');
-    if(semTot>13){
-      quand=`À ton rythme actuel, <b>${ryth} récit${rythme>=2?'s':''} par semaine</b>, il faudrait encore plusieurs mois. Raconte plus souvent et cette date se rapprochera vite.`;
-    } else {
-      const d=new Date(Date.now()+semTot*7*864e5);
-      const mss=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-      quand=`À ton rythme actuel, <b>${ryth} récit${rythme>=2?'s':''} par semaine</b>, Ta semaine s'ouvrira vers le <b>${d.getDate()} ${mss[d.getMonth()]}</b>.`;
-    }
-  }
-  const mshort=['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
-  const dshort=x=>{const d=new Date(x);return d.getDate()+' '+mshort[d.getMonth()];};
-  const slots=Array.from({length:REC_CIBLE},(_,i)=>{
-    const b=faits[i];
-    if(b)return `<div class="sw-sl got"><span class="nm">${esc(trunc(b.entreprise||'Rendez-vous',15))}</span><span class="dt">${dshort(b.created_at)}</span></div>`;
-    return `<div class="sw-sl free ${i===nr?'next':''}"><span class="nm">${i===nr?'le prochain':'—'}</span></div>`;
-  }).join('');
-  const PROM=[
-    ['01',"L'écart se resserre","Ce que tu avais prévu face à ce qui s'est réellement dit, semaine après semaine. S'il diminue, tu lis mieux tes rendez-vous."],
-    ['02','Les objections vues venir',"La part des objections que ton brief avait anticipées. Elle monte à mesure que Faro apprend ton marché."],
-    ['03','Le premier face au troisième',"Ton premier rendez-vous chez un client comparé au troisième. Ce que tu savais en entrant, ce que tu as obtenu en sortant."]
-  ];
+  const CIBLE=15;
+  const nr=briefs.filter(b=>b.debrief).length;
+  const reste=Math.max(0,CIBLE-nr);
+  const nWord=n=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze'][n]||String(n);
+  const pret=reste===0;
+  const phrase=pret
+    ? `Faro a ce qu'il lui faut. <em>Ta semaine s'ouvre lundi.</em>`
+    : `Encore <em>${nWord(reste)} récit${reste>1?'s':''}</em> et Faro pourra te dire si tu progresses.`;
+  const sous=pret
+    ? `Tu y verras l'écart entre ce que tu prévois et ce qui se passe, et s'il se resserre.`
+    : `Chaque rendez-vous que tu racontes remplit un bloc.`;
+  const aDeb=briefs.filter(b=>!b.debrief&&b.statut==='a_relancer').length;
   return `<div class="sw">
     <span class="sw-b"><i></i>En construction</span>
-    <div class="sw-t">Ta semaine</div>
-    <div class="sw-s">Aujourd'hui te dit quoi faire maintenant. Ta semaine te dira <b>si tu progresses</b>. Pour ça, Faro a besoin d'assez de rendez-vous vécus pour que la comparaison veuille dire quelque chose.</div>
-    <div class="sw-panel">
-      <div class="sw-ph"><span class="k">La matière captée</span><span class="n">${nr}<em>récit${nr>1?'s':''} sur ${REC_CIBLE}</em></span></div>
-      <div class="sw-slots">${slots}</div>
-      <div class="sw-pf">
-        <span class="sw-when">${quand}</span>
-        <span class="sw-weeks"><span>${Array.from({length:SEM_CIBLE},(_,i)=>`<i class="${i<sem?'got':''}"></i>`).join('')}</span><span class="sw-wl">${sem} semaine${sem>1?'s':''} d'usage sur ${SEM_CIBLE}</span></span>
-      </div>
-    </div>
-    <div class="sw-k">Ce qu'elle te montrera</div>
-    <div class="sw-3">${PROM.map(([n,t,d])=>`<div class="sw-c"><div class="sw-c-n">${n}</div><div class="sw-c-t">${t}</div><div class="sw-c-d">${d}</div></div>`).join('')}</div>
+    <div class="sw-bars">${Array.from({length:CIBLE},(_,i)=>`<i class="${i<nr?'got':(i===nr?'next':'')}"></i>`).join('')}</div>
+    <div class="sw-n">${nr}<em> / ${CIBLE}</em></div>
+    <div class="sw-lb">récits captés</div>
+    <div class="sw-p">${phrase}</div>
+    <div class="sw-s">${sous}</div>
+    ${pret?'':`<button class="sw-go" id="swGo">${aDeb?'Raconter un rendez-vous':'Préparer un rendez-vous'}${ARW}</button>`}
   </div>`;
 }
 function openSoon(k){
@@ -2779,10 +2738,16 @@ function openSoon(k){
     document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-soon'));
     navSet('dash','semaine');
     const cr0=$('crumb'); if(cr0)cr0.textContent='Ta semaine';
-    // Les emplacements se posent un par un
+    // Les blocs poussent un par un
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      $('soonW').querySelectorAll('.sw-sl').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),40+i*38));
+      $('soonW').querySelectorAll('.sw-bars i').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),60+i*42));
     }));
+    const sg=$('swGo');
+    if(sg)sg.addEventListener('click',()=>{
+      const und=briefs.find(b=>!b.debrief&&b.statut==='a_relancer');
+      if(und){current=und;go('dash');openBrief(und);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},220);}
+      else{ent=null;const q=$('qEnt');if(q)q.value='';go('nouveau');}
+    });
     window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
     return;
   }
@@ -3076,12 +3041,6 @@ function dash(){
   const vus=briefs.filter(b=>new Date(b.created_at)>=today0);
   const vusRac=vus.filter(b=>b.debrief).length;
   const resteJour=vus.length-vusRac;
-  // Un point, une hampe, deux arcs : la marque Faro devenue flèche
-  const ARW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">'
-    +'<circle class="arw-d" cx="4.5" cy="12" r="1.9" fill="currentColor" stroke="none"/>'
-    +'<path class="arw-s" d="M9 12h4.5" stroke-width="2"/>'
-    +'<path class="arw-a1" d="M15.5 8.2a5.4 5.4 0 0 1 0 7.6" stroke-width="2"/>'
-    +'<path class="arw-a2" d="M18.6 5.4a9.4 9.4 0 0 1 0 13.2" stroke-width="1.6"/></svg>';
   const GIC={
     mem:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 3z"/><path d="M9 21h6"/></svg>',
     doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12a2 2 0 0 1-2 2H4z"/><path d="M14 4v6h6"/><path d="M9 14h6M9 18h4"/></svg>',
