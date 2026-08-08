@@ -97,30 +97,44 @@
   .pu-ch .d{font-size:11.5px;color:var(--faint);margin-left:auto;}
   .pu-cb{padding:8px 20px 16px;}
   /* Un réglage : deux pôles, une piste, cinq crans */
-  .ax{padding:15px 0 13px;border-top:1px solid var(--line3);}
+  .ax{padding:14px 0 12px;border-top:1px solid var(--line3);}
   .ax:first-child{border-top:none;}
-  .ax-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:2px;}
-  .ax-v{font-size:12px;color:var(--copper-d);margin-bottom:12px;min-height:17px;}
-  .ax-track{position:relative;display:flex;align-items:center;gap:0;height:22px;}
-  .ax-line{position:absolute;left:6px;right:6px;top:50%;height:3px;border-radius:2px;background:var(--line3);transform:translateY(-50%);}
-  .ax-fill{position:absolute;top:50%;height:3px;border-radius:2px;background:var(--copper);transform:translateY(-50%);left:6px;width:0;transition:width .35s cubic-bezier(.2,.7,.2,1);}
-  .ax-s{position:relative;flex:1;height:22px;border:none;background:none;cursor:pointer;padding:0;}
+  .ax.a-approche{--ac:var(--copper);} .ax.a-ouverture{--ac:var(--blue);} .ax.a-closing{--ac:var(--green-d);}
+  .ax-h{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+  .ax-t{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);}
+  /* L'infobulle : ce que chaque pôle veut dire, sans encombrer */
+  .ax-i{width:15px;height:15px;border-radius:50%;border:1px solid var(--line2);background:none;color:var(--faint);font-family:var(--serif);font-size:10px;font-weight:700;line-height:1;cursor:help;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;transition:.14s;position:relative;}
+  .ax-i:hover{border-color:var(--ac);color:var(--ac);}
+  .ax-tip{position:absolute;left:0;top:calc(100% + 8px);width:262px;background:var(--ink);color:#F5F2EC;border-radius:9px;padding:11px 13px;font-size:11.5px;line-height:1.5;font-weight:400;font-family:var(--sans);box-shadow:var(--shl);opacity:0;visibility:hidden;transform:translateY(-3px);transition:.16s cubic-bezier(.2,.7,.2,1);z-index:20;text-align:left;pointer-events:none;}
+  .ax-tip b{color:var(--copper-l);font-weight:600;}
+  .ax-tip::before{content:"";position:absolute;left:14px;top:-4px;width:8px;height:8px;background:var(--ink);transform:rotate(45deg);}
+  .ax-i:hover .ax-tip,.ax-i:focus-visible .ax-tip{opacity:1;visibility:visible;transform:none;}
+  .ax-v{font-size:12px;color:var(--ac);margin-bottom:11px;min-height:17px;font-weight:500;}
+  /* La piste se glisse autant qu'elle se clique */
+  .ax-track{position:relative;display:flex;align-items:center;height:24px;cursor:grab;touch-action:none;user-select:none;}
+  .ax-track.grab{cursor:grabbing;}
+  .ax-line{position:absolute;left:6px;right:6px;top:50%;height:3px;border-radius:2px;background:var(--line3);transform:translateY(-50%);pointer-events:none;}
+  .ax-fill{position:absolute;top:50%;height:3px;border-radius:2px;background:var(--ac);transform:translateY(-50%);left:6px;width:0;transition:width .3s cubic-bezier(.2,.7,.2,1);pointer-events:none;}
+  .ax-track.grab .ax-fill{transition:none;}
+  .ax-s{position:relative;flex:1;height:24px;border:none;background:none;cursor:inherit;padding:0;}
   .ax-s::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:50%;background:var(--line2);transform:translate(-50%,-50%);transition:.2s cubic-bezier(.2,.7,.2,1);}
-  .ax-s:hover::after{background:var(--copper-l);transform:translate(-50%,-50%) scale(1.3);}
-  .ax-s.on::after{width:18px;height:18px;background:var(--copper);box-shadow:0 0 0 4px rgba(201,106,46,.14);}
-  .ax-s.obs::before{content:"";position:absolute;left:50%;bottom:-6px;width:1px;height:6px;background:var(--faint);transform:translateX(-50%);opacity:.7;}
-  .ax-poles{display:flex;justify-content:space-between;margin-top:9px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
-  .ax-obs{font-size:11.5px;color:var(--faint);line-height:1.45;margin-top:8px;}
+  .ax-track:hover .ax-s::after{background:color-mix(in srgb,var(--ac) 40%,var(--line2));}
+  .ax-s.on::after{width:19px;height:19px;background:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 15%,transparent);}
+  .ax-track.grab .ax-s.on::after{box-shadow:0 0 0 7px color-mix(in srgb,var(--ac) 18%,transparent);}
+  .ax-s.obs::before{content:"";position:absolute;left:50%;bottom:-5px;width:1px;height:6px;background:var(--faint);transform:translateX(-50%);opacity:.7;}
+  .ax-poles{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .ax-obs{font-size:11.5px;color:var(--faint);line-height:1.45;margin-top:7px;}
   .ax-obs b{color:var(--dim);font-weight:600;}
   /* L'aperçu, qui se réécrit à chaque réglage */
-  .pv-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
-  .pv-k+.pv-k{margin-top:16px;}
-  .pv-say{font-family:var(--serif);font-size:15.5px;line-height:1.5;color:var(--ink);padding-left:13px;border-left:2px solid var(--copper);transition:opacity .25s;}
-  .pv-say.vide{font-family:var(--sans);font-size:12.5px;color:var(--faint);border-left-color:var(--line2);font-style:italic;}
-  .pv-say.flash{opacity:.35;}
-  .pv-l{display:flex;gap:9px;font-size:12.5px;color:var(--dim);line-height:1.5;padding:4px 0;}
-  .pv-l::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--copper-l);margin-top:8px;flex-shrink:0;}
-  .pv-note{font-size:11px;color:var(--faint);line-height:1.45;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line2);}
+  /* Les instructions réellement envoyées au modèle */
+  .ins{display:grid;grid-template-columns:3px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line3);transition:background .3s;}
+  .ins:first-child{border-top:none;}
+  .ins::before{content:"";background:var(--ac);border-radius:2px;}
+  .ins.flash{background:color-mix(in srgb,var(--ac) 7%,transparent);}
+  .ins-k{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:4px;}
+  .ins-t{font-family:var(--serif);font-size:14.5px;line-height:1.4;color:var(--ink);}
+  .ins.a-approche{--ac:var(--copper);} .ins.a-ouverture{--ac:var(--blue);} .ins.a-closing{--ac:var(--green-d);}
+  .ins-note{font-size:11px;color:var(--faint);line-height:1.45;margin-top:11px;padding-top:10px;border-top:1px dashed var(--line2);}
   /* Ce que tu lui dis */
   .st-f textarea{width:100%;height:70px;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:14px;line-height:1.5;color:var(--ink);background:var(--card);outline:none;resize:none;transition:.15s;}
   .st-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
@@ -2264,7 +2278,6 @@
         <path d="M-6.2 340.0 A760 760 0 0 1 358.3 -765.9" stroke-width="0.80" opacity="0.018"></path>
       </g>
     </svg>
-    <div class="ptitle"><div><div class="eyebrow">Mémoire · De toi</div><h1>Ce que Faro sait de toi</h1><div class="sub">Ton profil de vendeur, tiré de tes rendez-vous. Il s'affine à chaque débrief.</div></div></div>
     <div id="toiW" style="display:flex;flex-direction:column;flex:1;min-height:0;"></div>
   </section>
 
@@ -3363,6 +3376,8 @@ function reglesActives(){
 // Les trois axes du pupitre, et ce que chaque position écrit dans le prompt
 const AXES=[
   {k:'approche',t:'Ton approche',a:'Chasseur',b:'Fermier',
+   ta:"tu vas chercher l'engagement dans ce rendez-vous. Faro pousse vers une décision, quitte à brusquer un peu.",
+   tb:"tu construis d'abord la relation. Faro laisse venir, sans jamais forcer la main.",
    v:['Va droit au but. Ce rendez-vous doit produire un engagement, pas une relation.',
       'Cherche un engagement, mais laisse la place à une deuxième rencontre.',
       'Équilibre : obtenir quelque chose sans forcer la relation.',
@@ -3370,6 +3385,8 @@ const AXES=[
       'Ne pousse vers aucune décision. Ce rendez-vous sert à comprendre et à exister.'],
    l:['Direct, obtient un engagement','Pousse, avec une porte de sortie','Équilibré','Construit la relation','Prend son temps, sans pousser']},
   {k:'ouverture',t:'Ton ouverture',a:'Directe',b:'Large',
+   ta:"deux phrases et tu es dans le sujet. Utile quand ton interlocuteur a peu de temps.",
+   tb:"tu situes son marché et son actualité avant de parler de toi. Utile face à un dirigeant qui veut être compris.",
    v:['L\'accroche fait deux phrases maximum et arrive immédiatement au sujet.',
       'L\'accroche reste courte, une phrase de contexte au plus.',
       'Une accroche normale : remerciement, cadrage du temps, sujet.',
@@ -3377,6 +3394,8 @@ const AXES=[
       'Ouvre large sur son marché et son actualité avant de parler de toi.'],
    l:['Deux phrases, puis le sujet','Courte, un peu de contexte','Standard','Situe son entreprise d\'abord','Ouvre sur son marché']},
   {k:'closing',t:'Ta sortie',a:'Pressant',b:'Patient',
+   ta:"tu repars avec une date et un engagement. Efficace, mais peut braquer sur un cycle long.",
+   tb:"tu laisses la porte ouverte sans rien imposer. Confortable, mais c'est là que les affaires s'endorment.",
    v:['La prochaine étape propose une date sous cinq jours et demande un engagement clair.',
       'La prochaine étape propose une date précise, sans exiger de réponse immédiate.',
       'La prochaine étape propose une date raisonnable.',
@@ -3399,29 +3418,6 @@ function pupitreObserve(){
   }
   return o;
 }
-// La phrase change avec les réglages : c'est l'intérêt du pupitre
-function pupitreApercu(){
-  const comp=(set.company||'').trim();
-  const val=(set.contexte||'').trim();
-  const first=t=>{const x=(t||'').split(/[.!?]/)[0].trim();return x.length>96?x.slice(0,95)+'…':x;};
-  const low=t=>t?t.charAt(0).toLowerCase()+t.slice(1):'';
-  if(!comp||!val)return null;
-  const OUV=[
-    `Merci de me recevoir. Chez ${comp}, ${low(first(val))}.`,
-    `Merci de me recevoir, je sais que votre temps est compté. Chez ${comp}, ${low(first(val))}.`,
-    `Merci de me recevoir, je sais que votre temps est compté. Chez ${comp}, ${low(first(val))}. Je me demandais où vous en étiez sur ce sujet.`,
-    `Merci de me recevoir. J'ai regardé votre activité avant de venir, et une chose m'a marqué. Chez ${comp}, ${low(first(val))}.`,
-    `Merci de me recevoir. Votre marché bouge beaucoup en ce moment, et j'avais envie de comprendre comment vous le vivez. Chez ${comp}, ${low(first(val))}.`
-  ];
-  const SORT=[
-    `On se cale quinze minutes jeudi avec la personne qui décide ?`,
-    `Je vous propose un point de quinze minutes jeudi prochain.`,
-    `Je vous propose qu'on se revoie dans les dix jours.`,
-    `Dites-moi quand ça vous arrange, je m'adapte.`,
-    `Je vous laisse y réfléchir, revenez vers moi quand vous voulez.`
-  ];
-  return {ouv:OUV[pupitre.ouverture],sort:SORT[pupitre.closing]};
-}
 // Les réglages deviennent des instructions, ajoutées à ce que tu écris toi-même
 function pupitreStyle(){
   return AXES.map(a=>a.v[pupitre[a.k]]).join('\n');
@@ -3435,10 +3431,10 @@ function renderToi(){
 
   const axHtml=AXES.map(a=>{
     const cur=pupitre[a.k], ob=obs[a.k];
-    return `<div class="ax" data-ax="${a.k}">
-      <div class="ax-t">${a.t}</div>
+    return `<div class="ax a-${a.k}" data-ax="${a.k}">
+      <div class="ax-h"><span class="ax-t">${a.t}</span><button class="ax-i" tabindex="0" aria-label="Ce que veulent dire ${a.a} et ${a.b}">i<span class="ax-tip"><b>${a.a}</b> ${esc(a.ta)}<br><br><b>${a.b}</b> ${esc(a.tb)}</span></button></div>
       <div class="ax-v" data-axv="${a.k}">${esc(a.l[cur])}</div>
-      <div class="ax-track"><span class="ax-line"></span><span class="ax-fill" data-axf="${a.k}"></span>
+      <div class="ax-track" data-axt="${a.k}"><span class="ax-line"></span><span class="ax-fill" data-axf="${a.k}"></span>
         ${a.v.map((_,i)=>`<button class="ax-s ${i===cur?'on':''} ${ob&&ob.i===i?'obs':''}" data-axk="${a.k}" data-axi="${i}" aria-label="${esc(a.l[i])}"></button>`).join('')}
       </div>
       <div class="ax-poles"><span>${a.a}</span><span>${a.b}</span></div>
@@ -3459,30 +3455,25 @@ function renderToi(){
       </div>
       <div>
         <div class="pu-card">
-          <div class="pu-ch"><span class="k">Ce que Faro écrira</span><span class="d">aperçu</span></div>
+          <div class="pu-ch"><span class="k">Ce que Faro recevra</span><span class="d">texte exact envoyé au modèle</span></div>
           <div class="pu-cb" id="puPreview"></div>
         </div>
         <div class="pu-card st-f">
-          <div class="pu-ch"><span class="k">Ce que tu lui dis</span></div>
+          <div class="pu-ch"><span class="k">Tes règles absolues</span><span class="d">jamais enfreintes</span></div>
           <div class="pu-cb">
-            <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je tutoie systématiquement.">${esc(set.style||'')}</textarea>
-            <div class="st-row"><span class="st-hint">Ce que les données ne devineront jamais. Faro le respecte sans exception.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
+            <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je ne cite jamais un concurrent par son nom. Je tutoie systématiquement.">${esc(set.style||'')}</textarea>
+            <div class="st-row"><span class="st-hint">Une règle par phrase. Faro les ajoute aux trois instructions ci-dessus, et ne les contredit jamais.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
           </div>
         </div>
       </div>
     </div>`;
 
-  const drawPreview=(flash)=>{
+  // La colonne droite montre le texte exact que le modèle recevra
+  const drawPreview=(k)=>{
     const el=$('puPreview'); if(!el)return;
-    const ap=pupitreApercu();
-    const h=ap
-      ? `<div class="pv-k">Son ouverture</div><div class="pv-say ${flash?'flash':''}">${esc(ap.ouv)}</div>
-         <div class="pv-k">Sa sortie</div><div class="pv-say ${flash?'flash':''}">${esc(ap.sort)}</div>
-         <div class="pv-note">Assemblage de tes champs, pas une génération. Le vrai brief est écrit pour l'entreprise en face.</div>`
-      : `<div class="pv-k">Son ouverture</div><div class="pv-say vide">Renseigne ton entreprise et ta proposition de valeur dans Mon offre pour voir l'aperçu bouger.</div>
-         <div class="pv-k">Ce que tes réglages imposent</div>${AXES.map(a=>`<div class="pv-l">${esc(a.v[pupitre[a.k]])}</div>`).join('')}`;
-    el.innerHTML=h;
-    if(flash)requestAnimationFrame(()=>requestAnimationFrame(()=>el.querySelectorAll('.pv-say').forEach(x=>x.classList.remove('flash'))));
+    el.innerHTML=AXES.map(a=>`<div class="ins a-${a.k} ${k===a.k?'flash':''}" data-ins="${a.k}"><div><div class="ins-k">${esc(a.t)}</div><div class="ins-t">${esc(a.v[pupitre[a.k]])}</div></div></div>`).join('')
+      +`<div class="ins-note">Ces trois phrases partent telles quelles dans chaque brief que tu génères. Bouge un curseur, la phrase change.</div>`;
+    if(k)setTimeout(()=>{const f=el.querySelector('.ins.flash');if(f)f.classList.remove('flash');},900);
   };
   const drawFill=()=>{
     AXES.forEach(a=>{
@@ -3490,20 +3481,49 @@ function renderToi(){
       if(f)f.style.width='calc('+(pupitre[a.k]/4*100)+'% - '+(pupitre[a.k]/4*12)+'px)';
     });
   };
-  drawPreview(false); requestAnimationFrame(drawFill);
+  drawPreview(null); requestAnimationFrame(drawFill);
   const tr=document.querySelector('#v-toi .toi-trame'); if(tr)setTimeout(()=>tr.classList.add('lit'),60);
 
   let saveT=null;
-  w.querySelectorAll('[data-axk]').forEach(b=>b.addEventListener('click',()=>{
-    const k=b.dataset.axk, i=+b.dataset.axi;
-    if(pupitre[k]===i)return;
+  const setAx=(k,i)=>{
+    i=Math.max(0,Math.min(4,i));
+    if(pupitre[k]===i)return false;
     pupitre[k]=i;
     w.querySelectorAll(`[data-axk="${k}"]`).forEach(x=>x.classList.toggle('on',+x.dataset.axi===i));
     const v=w.querySelector(`[data-axv="${k}"]`);
     if(v)v.textContent=(AXES.find(a=>a.k===k)||{l:[]}).l[i]||'';
-    drawFill(); drawPreview(true);
+    drawFill(); drawPreview(k);
     clearTimeout(saveT); saveT=setTimeout(savePupitre,700);
-  }));
+    return true;
+  };
+  // La piste se glisse : on lit la position du doigt, on cale sur le cran le plus proche
+  w.querySelectorAll('[data-axt]').forEach(tr=>{
+    const k=tr.dataset.axt;
+    const idxFromX=x=>{
+      const r=tr.getBoundingClientRect();
+      const pad=r.width/10;
+      const t=(x-r.left-pad)/Math.max(1,(r.width-pad*2));
+      return Math.round(Math.max(0,Math.min(1,t))*4);
+    };
+    let on=false;
+    tr.addEventListener('pointerdown',e=>{
+      on=true; tr.classList.add('grab');
+      try{tr.setPointerCapture(e.pointerId);}catch(err){}
+      setAx(k,idxFromX(e.clientX));
+    });
+    tr.addEventListener('pointermove',e=>{ if(on)setAx(k,idxFromX(e.clientX)); });
+    const stop=e=>{ if(!on)return; on=false; tr.classList.remove('grab'); try{tr.releasePointerCapture(e.pointerId);}catch(err){} };
+    tr.addEventListener('pointerup',stop);
+    tr.addEventListener('pointercancel',stop);
+    // Au clavier : flèches gauche et droite
+    tr.querySelectorAll('[data-axk]').forEach(b=>b.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        e.preventDefault();
+        setAx(k,pupitre[k]+(e.key==='ArrowRight'?1:-1));
+        const nb=w.querySelector(`[data-axk="${k}"][data-axi="${pupitre[k]}"]`); if(nb)nb.focus();
+      }
+    }));
+  });
 
   const sv=$('styleSave'), st=$('styleTxt');
   if(sv&&st)sv.addEventListener('click',async()=>{
