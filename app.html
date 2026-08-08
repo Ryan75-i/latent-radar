@@ -430,14 +430,14 @@
   .day-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;}
   .day-hd .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   .day-hd .m{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap;}
-  .day-cw{position:relative;}
-  /* overflow-x rogne aussi en vertical : on réserve la place du soulèvement et de l'ombre */
-  .day-cards{display:flex;align-items:stretch;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px;margin:-6px -2px -8px;scrollbar-width:none;}
+  .day-cw{position:relative;margin:0 -8px;}
+  /* overflow-x rogne aussi en vertical : on réserve la place du soulèvement, de l'ombre et des bordures */
+  .day-cards{display:flex;align-items:stretch;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:8px;padding:8px;margin:-8px 0 -10px;scrollbar-width:none;}
   .day-cards::-webkit-scrollbar{display:none;}
   .gc{flex:1 0 0;min-width:262px;scroll-snap-align:start;}
   /* Au-delà de trois, on fait défiler vers la droite */
   .day-cards.many .gc{flex:0 0 300px;}
-  .day-fade{position:absolute;top:6px;bottom:14px;right:0;width:56px;pointer-events:none;background:linear-gradient(90deg,rgba(247,247,245,0),var(--bg) 72%);opacity:0;transition:opacity .2s;}
+  .day-fade{position:absolute;top:8px;bottom:18px;right:0;width:64px;pointer-events:none;background:linear-gradient(90deg,rgba(247,247,245,0),var(--bg) 72%);opacity:0;transition:opacity .2s;}
   .day-cw.more .day-fade{opacity:1;}
   .day-nav{display:none;gap:5px;margin-left:auto;}
   .day-cw.more~.day-hd .day-nav,.day-hd .day-nav.on{display:flex;}
