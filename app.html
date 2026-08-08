@@ -78,6 +78,55 @@
   .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  /* ══ Ce que Faro sait de toi : des constats, jamais des scores ══ */
+  .toi-hero{padding:8px 0 28px;max-width:64ch;}
+  .toi-p{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.18;letter-spacing:-.6px;color:var(--ink);}
+  .toi-p em{font-style:normal;color:var(--copper);}
+  .toi-sub{font-size:14px;color:var(--faint);margin-top:12px;line-height:1.5;}
+  .toi-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 12px;}
+  .toi-k+.toi-k{margin-top:30px;}
+  .toi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:8px;}
+  /* Un constat : une phrase, sa preuve, sa nature */
+  .ob{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:16px 18px 14px;transition:box-shadow .18s,border-color .18s;}
+  .ob:hover{box-shadow:var(--shm);border-color:var(--line2);}
+  .ob-k{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--oc);margin-bottom:9px;}
+  .ob-k::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--oc);}
+  .ob-t{font-family:var(--serif);font-weight:600;font-size:16.5px;line-height:1.28;letter-spacing:-.25px;color:var(--ink);}
+  .ob-w{font-size:12.5px;color:var(--dim);line-height:1.5;margin-top:7px;}
+  .ob-w b{color:var(--soft);font-weight:600;}
+  .ob.force{--oc:var(--green-d);}
+  .ob.angle{--oc:var(--red);}
+  .ob.fait{--oc:var(--copper-d);}
+  .ob.tot{--oc:var(--faint);}
+  /* Par interlocuteur : la barre dit le nombre, le chiffre dit le taux */
+  .toi-post{display:grid;grid-template-columns:180px 1fr auto;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--line3);}
+  .toi-post:first-child{border-top:none;}
+  .tp-k{font-family:var(--serif);font-weight:600;font-size:14.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tp-bar{height:6px;border-radius:4px;background:var(--line3);overflow:hidden;}
+  .tp-fill{display:block;height:100%;border-radius:4px;background:var(--copper);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+  .tp-v{font-family:var(--mono);font-size:10.5px;color:var(--dim);white-space:nowrap;text-align:right;}
+  .tp-v b{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--ink);}
+  .tp-v.thin{color:var(--faint);}
+  .toi-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);padding:16px 20px 14px;}
+  /* Ce que Faro en fait : la mémoire de toi devient un réglage */
+  .rg{display:grid;grid-template-columns:22px 1fr;gap:13px;padding:14px 0;border-top:1px solid var(--line3);}
+  .rg:first-of-type{border-top:none;}
+  .rg-i{width:22px;height:22px;border-radius:50%;background:var(--greenbg);color:var(--green-d);display:flex;align-items:center;justify-content:center;margin-top:1px;}
+  .rg-i svg{width:12px;height:12px;stroke-width:3;}
+  .rg-p{font-size:13.5px;color:var(--dim);line-height:1.5;}
+  .rg-p b{color:var(--soft);font-weight:600;}
+  .rg-e{display:flex;gap:9px;font-family:var(--serif);font-weight:500;font-size:15px;color:var(--ink);line-height:1.4;margin-top:6px;}
+  .rg-e::before{content:"→";color:var(--copper);font-family:var(--sans);font-weight:700;flex-shrink:0;}
+  .st-f textarea{width:100%;min-height:96px;border:1.5px solid var(--line2);border-radius:10px;padding:13px 15px;font-family:var(--serif);font-size:15px;line-height:1.55;color:var(--ink);background:var(--card);outline:none;resize:vertical;transition:.15s;}
+  .st-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
+  .st-f textarea::placeholder{color:var(--faint);font-family:var(--sans);font-size:14px;}
+  .st-row{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;}
+  .st-hint{font-size:12px;color:var(--faint);line-height:1.5;flex:1;min-width:240px;}
+  .st-save{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);border-radius:9px;padding:9px 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--copper-d);cursor:pointer;transition:.14s;}
+  .st-save:hover{border-color:var(--copper);background:var(--washc);}
+  .st-save.ok{border-color:var(--greenbd);background:var(--greenbg);color:var(--green-d);}
+  .toi-note{font-size:12px;color:var(--faint);line-height:1.5;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);}
+  @media(max-width:700px){.toi-post{grid-template-columns:1fr;gap:6px;}.tp-v{text-align:left;}.toi-p{font-size:24px;}}
   /* ══ Ta semaine : une jauge, un chiffre, une phrase ══ */
   .sw{min-height:calc(100vh - 156px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 0 30px;}
   .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:26px;}
@@ -356,18 +405,7 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   /* Anneau cuivre sur le jour actuel de la grille */
   /* ══ Grille de chaleur : un carré par jour, 4 niveaux ══ */
-  .jheat{display:flex;gap:4px;}
-  .jhcol{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
-  .jhcell{display:block;width:100%;aspect-ratio:1;max-width:16px;border-radius:3px;background:#EFEAE0;transition:background .2s cubic-bezier(.2,.7,.2,1);}
-  .jhcell.l0{background:#EFEAE0;}
-  .jhcell.l1{background:#E7C9A8;}
-  .jhcell.l2{background:#D89355;}
-  .jhcell.l3{background:var(--copper-d);}
-  .jhcell.lx{background:transparent;}
-  .jhcell.t{box-shadow:0 0 0 1.5px var(--copper);}
   /* Version compacte dans la carte Ton rythme */
-  .jheat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:12px;font-family:var(--mono);font-size:9.5px;color:var(--faint);}
-  .jheat-legend .jhcell{width:11px;max-width:11px;height:11px;aspect-ratio:auto;}
   /* Hint D sur le CTA compagnon */
   .comp-cta .kbd-hint{margin-left:2px;}
   /* Accessibilité : focus clavier visible et élégant */
@@ -752,7 +790,6 @@
   .chip,.act-stage,.rf-tag,.hm-k{font-feature-settings:"tnum";}
   .pk-v,.hm-v,.ckk-v,.act-money{font-variant-numeric:tabular-nums;}
   /* Page Ton profil */
-  .toi-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px;}
   .toi-post{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line3);}
   .toi-post:last-child{border-bottom:none;}
   .tp-k{font-size:13px;font-weight:700;color:var(--ink);width:180px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -1078,11 +1115,6 @@
   .heat-cell.lx{background:transparent;}
   .heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:12px;font-size:10px;color:var(--faint);}
   .heat-legend .heat-cell{width:12px;height:12px;max-width:12px;}
-  .heat-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:auto;padding-top:18px;}
-  .heat-metric{position:relative;padding:12px 14px;background:var(--wash);border:1px solid var(--line3);border-radius:10px;border-left:3px solid var(--mc);}
-  .hm-v{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--mc);line-height:1;}
-  .hm-k{font-size:12px;font-weight:700;color:var(--ink);margin-top:5px;}
-  .hm-s{font-size:10.5px;color:var(--dim);margin-top:1px;}
   /* État apprentissage */
   .scorecard-learn{display:flex;flex-direction:column;align-items:center;text-align:center;padding:32px 22px;}
   .sl-ring{position:relative;width:80px;height:80px;margin-bottom:16px;}
@@ -3236,41 +3268,150 @@ function renderWelcome(welcome){
   });
   welcome.querySelector('#dwDemo').addEventListener('click',openDemoBrief);
 }
+// Ce que Faro compense sans le dire dans le brief
+function anglesMorts(){
+  const faits=briefs.filter(b=>b.debrief);
+  const n=faits.length;
+  if(n<3)return '';
+  const out=[];
+  const sansSuite=faits.filter(b=>!(b.debrief.next_action||'').trim()).length;
+  if(sansSuite/n>=.34)out.push("Il repart souvent sans prochaine action ni date. La prochaine étape doit contenir une date précise à proposer, jamais un vague \"on se recontacte\".");
+  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
+  if(actifs.filter(d=>!dealVal(d)).length>=2)out.push("Il chiffre rarement l'enjeu. Une des trois questions doit faire dire un ordre de grandeur budgétaire.");
+  const froids=faits.filter(b=>!['close','chaud'].includes(b.debrief.temperature)).length;
+  if(froids/n>=.6)out.push("Ses rendez-vous ressortent souvent tièdes. L'ouverture doit créer une raison d'agir maintenant, pas seulement présenter.");
+  return out.join('\n');
+}
+// La liste lisible des mêmes règles, pour la page
+function reglesActives(){
+  const faits=briefs.filter(b=>b.debrief);
+  const n=faits.length;
+  const out=[];
+  if(n<3)return out;
+  const sansSuite=faits.filter(b=>!(b.debrief.next_action||'').trim()).length;
+  if(sansSuite/n>=.34)out.push({p:`Tu repars <b>${sansSuite} fois sur ${n}</b> sans prochaine action.`,
+    e:'Faro met une date précise à proposer dans la colonne Sortir de tous tes briefs.'});
+  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
+  const sm=actifs.filter(d=>!dealVal(d)).length;
+  if(sm>=2)out.push({p:`<b>${sm} de tes affaires</b> n'ont pas de montant.`,
+    e:"Une de tes trois questions fait dire un ordre de grandeur budgétaire."});
+  const froids=faits.filter(b=>!['close','chaud'].includes(b.debrief.temperature)).length;
+  if(froids/n>=.6)out.push({p:`<b>${froids} rendez-vous sur ${n}</b> ressortent tièdes.`,
+    e:"L'ouverture cherche une raison d'agir maintenant, au lieu de présenter."});
+  return out;
+}
 function renderToi(){
   const w=$('toiW'); if(!w)return;
-  const debriefed=briefs.filter(b=>b.debrief);
-  const ws=weekStats();
-  const wins=deals.filter(d=>d.etape==='gagne'), losts=deals.filter(d=>d.etape==='perdu');
-  const closed=wins.length+losts.length;
-  const winRate=closed?Math.round(wins.length/closed*100):null;
-  const hotRate=debriefed.length?Math.round(debriefed.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length/debriefed.length*100):0;
-  if(debriefed.length<1){
-    w.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;text-align:center;"><div class="esvg">${ESVG.historique||''}</div><div class="empty">Débriefe tes premiers rendez-vous : ton profil se dessinera ici, et il s'affinera à chaque débrief.</div></div></div>`;
+  const faits=briefs.filter(b=>b.debrief);
+  const n=faits.length;
+  if(!n){
+    w.innerHTML=`<div class="card"><div class="cbd" style="padding:40px 20px;text-align:center;"><div class="esvg">${ESVG.historique||''}</div><div class="empty">Raconte tes premiers rendez-vous : ton profil se dessinera ici, et il s'affinera à chaque récit.</div></div></div>`;
     return;
   }
-  // Rythme 12 semaines
-  const today=new Date(); today.setHours(0,0,0,0);
-  const dayCount={}; briefs.forEach(b=>{const d=new Date(b.created_at);d.setHours(0,0,0,0);dayCount[d.getTime()]=(dayCount[d.getTime()]||0)+1;});
-  const dow=(today.getDay()+6)%7; const gridEnd=new Date(today); gridEnd.setDate(gridEnd.getDate()-dow+6);
-  let heat='<div class="jheat" style="max-width:640px;">'; let active=0;
-  for(let wk=11;wk>=0;wk--){heat+='<div class="jhcol">';for(let d=0;d<7;d++){const day=new Date(gridEnd);day.setDate(gridEnd.getDate()-(wk*7)+(d-6));const n=dayCount[day.getTime()]||0;if(n)active++;heat+=`<span class="jhcell l${day>today?'x':(n===0?0:n===1?1:n===2?2:3)}"></span>`;}heat+='</div>';}
-  heat+='</div>';
-  heat+='<div class="jheat-legend"><span>Moins</span><span class="jhcell l0"></span><span class="jhcell l1"></span><span class="jhcell l2"></span><span class="jhcell l3"></span><span>Plus</span></div>';
-  // Interlocuteurs qui te réussissent
+  const nWord=x=>['aucun','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][x]||String(x);
+  const MINI=3; // Rien n'est affirmé sous trois occurrences
+
+  // ─── Ce que les données permettent de dire, et rien de plus ───
+  const chauds=faits.filter(b=>['close','chaud'].includes(b.debrief.temperature)).length;
+  const sansSuite=faits.filter(b=>!(b.debrief.next_action||'').trim()).length;
+  const wins=deals.filter(d=>d.etape==='gagne'), losts=deals.filter(d=>d.etape==='perdu');
+  const clos=wins.length+losts.length;
+  const actifs=deals.filter(d=>dealEntered(d)&&!['gagne','perdu'].includes(d.etape));
+  const sansMontant=actifs.filter(d=>!dealVal(d)).length;
+  // Par poste d'interlocuteur
   const posts={};
-  debriefed.forEach(b=>{const k=cleanPoste(b.poste||'')||'Autre';posts[k]=posts[k]||{c:0,hot:0};posts[k].c++;if(['close','chaud'].includes(b.debrief.temperature))posts[k].hot++;});
-  const topPosts=Object.entries(posts).sort((a,b)=>b[1].c-a[1].c).slice(0,4);
-  const METRICS=[
-    {k:'Débriefs',v:debriefed.length,s:'capturés',col:'var(--blue)'},
-    {k:'Chaleur',v:hotRate+'%',s:'chauds ou closés',col:'var(--copper)'},
-    {k:winRate!=null?'Closing':'Série',v:winRate!=null?winRate+'%':ws.streak,s:winRate!=null?wins.length+' signée'+(wins.length>1?'s':''):'débriefs d\'affilée',col:'var(--green)'},
-    {k:'Jours actifs',v:active,s:'sur 12 semaines',col:'var(--gold)'}
-  ];
+  faits.forEach(b=>{const k=cleanPoste(b.poste||'')||'Autre';posts[k]=posts[k]||{c:0,hot:0};posts[k].c++;if(['close','chaud'].includes(b.debrief.temperature))posts[k].hot++;});
+  const parPoste=Object.entries(posts).sort((a,b)=>b[1].c-a[1].c);
+  const solides=parPoste.filter(([,v])=>v.c>=MINI);
+  const meilleur=solides.slice().sort((a,b)=>(b[1].hot/b[1].c)-(a[1].hot/a[1].c))[0];
+  // Le jour de la semaine où tu prépares le plus
+  const jours=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  const parJour={}; briefs.forEach(b=>{const j=new Date(b.created_at).getDay();parJour[j]=(parJour[j]||0)+1;});
+  const topJour=Object.entries(parJour).sort((a,b)=>b[1]-a[1])[0];
+
+  // ─── La phrase du haut : ce que Faro a compris, ou qu'il ne sait pas encore ───
+  let phrase, sousPhrase;
+  if(n<MINI){
+    phrase=`Faro te regarde encore. <em>${nWord(n)} récit${n>1?'s':''}</em>, c'est trop peu pour dire quoi que ce soit de toi.`;
+    sousPhrase=`À partir de trois récits, Faro commence à repérer tes constantes. Il ne dira jamais rien qu'il ne puisse prouver.`;
+  } else if(sansSuite/n>=.5){
+    phrase=`Ton angle mort est net : <em>tu repars ${sansSuite>n/2?'souvent':'parfois'} sans prochaine action.</em>`;
+    sousPhrase=`Sur ${nWord(n)} récits, ${nWord(sansSuite)} n'ont aucune suite écrite. C'est là que tes affaires s'arrêtent sans mourir.`;
+  } else if(meilleur){
+    phrase=`Tu réussis mieux face aux <em>${esc(meilleur[0].toLowerCase())}</em>.`;
+    sousPhrase=`${Math.round(meilleur[1].hot/meilleur[1].c*100)}% de tes rendez-vous avec eux ressortent chauds, sur ${nWord(meilleur[1].c)}.`;
+  } else {
+    phrase=`Faro commence à te lire. <em>Encore quelques récits</em> et il pourra nommer tes constantes.`;
+    sousPhrase=`Il lui faut au moins trois rendez-vous par type d'interlocuteur pour oser une comparaison.`;
+  }
+
+  // ─── Les constats, chacun avec sa preuve ───
+  const obs=[];
+  obs.push({c:'fait',k:'Ce que tu fais',t:`Tu as raconté ${nWord(n)} rendez-vous.`,
+    w:`Sur <b>${briefs.length}</b> préparés. C'est cette matière qui arme tous tes briefs suivants.`});
+  if(n>=MINI){
+    const pc=Math.round(chauds/n*100);
+    obs.push({c:pc>=50?'force':'angle',k:pc>=50?'Une force':'Un point à travailler',
+      t:pc>=50?`Un rendez-vous sur deux ressort chaud.`:`${nWord(chauds)} rendez-vous sur ${nWord(n)} ressortent chauds.`,
+      w:`<b>${pc}%</b> de tes récits sont notés chauds ou closés. ${pc>=50?'Tu tiens la température.':'Le reste refroidit faute de suite immédiate.'}`});
+  }
+  if(sansSuite>0){
+    obs.push({c:sansSuite/n>=.34?'angle':'fait',k:sansSuite/n>=.34?'Un angle mort':'À surveiller',
+      t:`${nWord(sansSuite)} rendez-vous sans prochaine action.`,
+      w:`Une affaire sans suite écrite s'arrête là, même quand elle allait bien. C'est le trou le plus discret de ta boucle.`});
+  }
+  if(sansMontant>0){
+    obs.push({c:'angle',k:'Un angle mort',t:`${nWord(sansMontant)} affaire${sansMontant>1?'s':''} sans montant.`,
+      w:`Tant que l'enjeu n'est pas chiffré, ni toi ni Faro ne pouvez dire ce que vaut ton trimestre.`});
+  }
+  if(clos>=MINI){
+    const wr=Math.round(wins.length/clos*100);
+    obs.push({c:wr>=50?'force':'fait',k:'Ton closing',t:`Tu signes ${nWord(wins.length)} affaire${wins.length>1?'s':''} sur ${nWord(clos)}.`,
+      w:`Soit <b>${wr}%</b> de tes affaires closes. La moyenne devient fiable à partir d'une dizaine.`});
+  } else if(clos>0){
+    obs.push({c:'tot',k:'Trop tôt',t:`${nWord(clos)} affaire${clos>1?'s':''} close${clos>1?'s':''}.`,
+      w:`Faro ne calcule pas de taux de closing avant <b>trois</b> affaires closes : ça ne voudrait rien dire.`});
+  }
+  if(topJour&&briefs.length>=6){
+    obs.push({c:'fait',k:'Ton rythme',t:`Tu prépares surtout le ${jours[+topJour[0]]}.`,
+      w:`<b>${topJour[1]}</b> de tes ${briefs.length} briefs. Les rendez-vous suivent souvent le même jour de la semaine.`});
+  }
+
+  const regles=reglesActives();
+  const note=parPoste.some(([,v])=>v.c<MINI)
+    ? `Les interlocuteurs vus moins de trois fois sont affichés sans taux : un pourcentage sur un ou deux rendez-vous ne veut rien dire.`
+    : '';
+
   w.innerHTML=`
-    <div class="toi-metrics">${METRICS.map(m=>`<div class="heat-metric" style="--mc:${m.col}"><div class="hm-v">${m.v}</div><div class="hm-k">${m.k}</div><div class="hm-s">${m.s}</div></div>`).join('')}</div>
-    <div class="card" style="margin-bottom:14px;"><div class="chd"><span class="t">Ton rythme de chasse</span><span class="d">Chaque carré, un jour. Plus c'est foncé, plus tu as préparé.</span></div><div class="cbd">${heat}</div></div>
-    ${topPosts.length?`<div class="card"><div class="chd"><span class="t">Tes interlocuteurs</span><span class="d">Qui te réussit le mieux, d'après tes débriefs.</span></div><div class="cbd p0">${topPosts.map(([k,v])=>{const r=Math.round(v.hot/v.c*100);return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,34))}</span><span class="tp-bar"><span class="tp-fill" style="width:${Math.max(r,4)}%"></span></span><span class="tp-v">${r}% chauds · ${v.c} RDV</span></div>`;}).join('')}</div></div>`:''}
+    <div class="toi-hero"><div class="toi-p">${phrase}</div><div class="toi-sub">${sousPhrase}</div></div>
+    <div class="toi-k">Ce que Faro a retenu</div>
+    <div class="toi-grid">${obs.map(o=>`<div class="ob ${o.c}"><div class="ob-k">${o.k}</div><div class="ob-t">${o.t}</div><div class="ob-w">${o.w}</div></div>`).join('')}</div>
+    ${regles.length?`<div class="toi-k">Ce que Faro en fait, dans chacun de tes briefs</div>
+    <div class="toi-card">${regles.map(r=>`<div class="rg"><span class="rg-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><div class="rg-p">${r.p}</div><div class="rg-e">${r.e}</div></div></div>`).join('')}</div>`:''}
+    <div class="toi-k">Ce que tu dis à Faro</div>
+    <div class="toi-card st-f">
+      <textarea id="styleTxt" placeholder="Je ne parle jamais prix au premier rendez-vous. Je tutoie systématiquement. Je ne cite jamais de concurrent par son nom.">${esc(set.style||'')}</textarea>
+      <div class="st-row"><span class="st-hint">Ta manière de vendre, celle que les données ne peuvent pas deviner. Faro la respecte sans exception dans tous tes briefs.</span><button class="st-save" id="styleSave">Enregistrer</button></div>
+    </div>
+    ${parPoste.length?`<div class="toi-k">Face à qui tu réussis</div>
+    <div class="toi-card">${parPoste.slice(0,6).map(([k,v])=>{
+      const assez=v.c>=MINI, r=Math.round(v.hot/v.c*100);
+      return `<div class="toi-post"><span class="tp-k">${esc(trunc(k,26))}</span><span class="tp-bar"><span class="tp-fill" data-w="${assez?Math.max(r,3):0}"></span></span><span class="tp-v ${assez?'':'thin'}">${assez?`<b>${r}%</b> chauds · ${v.c} RDV`:`${v.c} RDV · trop peu pour conclure`}</span></div>`;
+    }).join('')}${note?`<div class="toi-note">${note}</div>`:''}</div>`:''}
   `;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    w.querySelectorAll('.tp-fill').forEach(el=>{el.style.width=(+el.dataset.w)+'%';});
+  }));
+  const sv=$('styleSave'), st=$('styleTxt');
+  if(sv&&st)sv.addEventListener('click',async()=>{
+    const v=st.value.trim();
+    sv.disabled=true; sv.textContent='…';
+    try{
+      await sb.from('user_settings').upsert({user_id:uid,...set,style:v,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+      set.style=v; sv.classList.add('ok'); sv.textContent='Enregistré';
+      setTimeout(()=>{sv.classList.remove('ok');sv.textContent='Enregistrer';sv.disabled=false;},1800);
+    }catch(e){ sv.textContent='Échec'; setTimeout(()=>{sv.textContent='Enregistrer';sv.disabled=false;},1800); }
+  });
 }
 // Vélocité : jours moyens entre création et gain, sur les deals gagnés
 // ─── L'argent en roi ───
@@ -4796,18 +4937,21 @@ $('gen').addEventListener('click',async()=>{
     const s=b.synthese_post&&b.synthese_post.observations?b.synthese_post.observations.join(' '):'';
     return `RDV du ${new Date(b.created_at).toLocaleDateString('fr-FR')} (${b.debrief.temperature}) : ${b.debrief.next_action||''} ${s}`;
   }).join('\n'):'';
-  // Le parcours enrichit le contexte envoyé au modèle
-  const lbl=(list,k)=>{const o=list.find(x=>x.k===k);return o?o.n+' ('+o.d.replace(/\.$/,'')+')':'';};
-  const deep=[];
-  if(declSel)deep.push('COMMENT LE RENDEZ-VOUS EST NÉ : '+lbl(DECLS,declSel));
-  if(goalSel)deep.push('OBJECTIF DE SORTIE DU COMMERCIAL : '+lbl(GOALS,goalSel)+". Oriente tout le brief, et surtout la prochaine étape, vers cet objectif précis.");
-  if(roomSel)deep.push('QUI SERA DANS LA PIÈCE : '+lbl(ROOMS,roomSel));
   const conc=($('cxConc')&&$('cxConc').value.trim())||'';
-  if(conc)deep.push('CONCURRENT DÉJÀ EN PLACE : '+conc+". Construis la riposte en tenant compte de cette solution existante, sans la dénigrer frontalement.");
   const ech=($('cxEch')&&$('cxEch').value.trim())||'';
-  if(ech)deep.push('ÉCHÉANCE CONNUE : '+ech+'. Sers-t\'en pour créer une urgence légitime.');
-  const ctxTxt=[$('fCtx').value.trim(),deep.join('\n'),histo?('HISTORIQUE DES RDV PRÉCÉDENTS :\n'+histo):''].filter(Boolean).join('\n');
-  const payload={entreprise:ent.nom,entreprise_data:ent,site:ent.site||null,poste:posteSel,interlocuteur_nom:dirNom,type_rdv:typeRdv,offre:set.offre,valeur:set.contexte||'',company:set.company||'',preuves:set.preuves||'',cible:set.cible||'',contexte:ctxTxt};
+  const ctxTxt=$('fCtx').value.trim();
+  const payload={
+    entreprise:ent.nom,entreprise_data:ent,site:ent.site||null,poste:posteSel,interlocuteur_nom:dirNom,type_rdv:typeRdv,
+    offre:set.offre,valeur:set.contexte||'',company:set.company||'',preuves:set.preuves||'',cible:set.cible||'',
+    // Le parcours devient des paramètres propres, plus un pavé de texte
+    declencheur:declSel||null, objectif:goalSel||null, room:roomSel||null,
+    concurrent:conc||null, echeance:ech||null,
+    memoire:histo||null,
+    // Ce que tu as dit à Faro de ta manière de vendre, et ce qu'il compense
+    style:(set.style||'').trim()||null,
+    angles:anglesMorts()||null,
+    contexte:ctxTxt
+  };
   const b=$('gen'); b.classList.add('load'); b.disabled=true; $('genL').textContent='Faro compose…';
   const kb=b.querySelector('.kbd-hint'); if(kb)kb.style.display='none';
   const lines=[`Lecture de la fiche INSEE de ${ent.nom}`];
