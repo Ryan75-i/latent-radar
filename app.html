@@ -106,7 +106,7 @@
   .search svg{width:12px;height:12px;stroke-width:2;}
   .search .k{margin-left:auto;font-family:var(--mono);font-size:9px;border:1px solid var(--line2);border-radius:4px;padding:1px 5px;color:var(--faint);}
   .pill{font-family:var(--mono);font-size:10px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:6px;padding:4px 10px;white-space:nowrap;}
-  .page{padding:22px 24px 26px;max-width:1620px;width:100%;margin:0 auto;flex:1;}
+  .page{padding:22px 40px 26px;max-width:1400px;width:100%;margin:0 auto;flex:1;}
   .view{display:none;} .view.on{display:block;animation:up .3s cubic-bezier(.2,.7,.2,1);}
   .ptitle{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
   .ptitle h1{font-family:var(--serif);font-weight:600;font-size:24px;letter-spacing:-.015em;line-height:1.1;}
@@ -449,19 +449,29 @@
   .gc.first{background:linear-gradient(168deg,color-mix(in srgb,var(--gc) 6%,var(--card)),var(--card) 58%);}
   /* L'identité en tête : le logo et le nom sur la même ligne, la nature en pastille */
   /* Deux registres : DM Mono en marge, Fraunces pour ce qui compte, Inter pour le détail */
-  .gc-in{display:grid;grid-template-columns:52px 1fr;gap:0;padding:15px 16px 13px;flex:1;min-height:0;}
-  .gc-marge{display:flex;flex-direction:column;align-items:center;gap:8px;padding-right:12px;border-right:1px solid var(--line3);}
+  .gc-in{display:grid;grid-template-columns:56px 1fr;grid-template-rows:minmax(0,1fr);gap:0;padding:0;flex:1;min-height:0;}
+  /* La marge porte la couleur du geste : chaque carte se reconnaît de loin */
+  .gc-marge{display:flex;flex-direction:column;align-items:center;gap:9px;padding:15px 10px 13px;background:color-mix(in srgb,var(--gc) 8%,transparent);border-right:1px solid color-mix(in srgb,var(--gc) 20%,var(--line3));transition:background .18s;}
+  .gc:hover .gc-marge{background:color-mix(in srgb,var(--gc) 13%,transparent);}
   .gc-marge .mono{width:34px;height:34px;border-radius:9px;font-size:12px;flex-shrink:0;}
   .gc-ic{width:34px;height:34px;border-radius:9px;background:color-mix(in srgb,var(--gc) 11%,transparent);color:var(--gc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .gc-ic svg{width:17px;height:17px;stroke-width:1.9;}
   .gc-when{font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gc);text-align:center;line-height:1.25;}
-  .gc-b{padding-left:14px;min-width:0;display:flex;flex-direction:column;}
+  .gc-b{padding:15px 16px 13px;min-width:0;display:flex;flex-direction:column;height:100%;}
   /* Le pied se cale en bas : les boutons s'alignent d'une carte à l'autre */
   .gc-foot{margin-top:auto;}
   .gc-k{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gc);opacity:.7;margin-bottom:5px;}
   .gc-t{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.35px;line-height:1.12;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .gc-w{font-size:12.5px;color:var(--dim);line-height:1.5;margin-top:7px;}
   .gc-w b{color:var(--soft);font-weight:600;}
+  /* Ce qu'il te reste, et qui descend chaque jour */
+  .gc-bar{margin-top:12px;}
+  .gc-bar-t{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-bottom:6px;}
+  .gc-bar-t b{margin-left:auto;font-family:var(--serif);font-size:13px;font-weight:700;color:var(--gc);letter-spacing:0;text-transform:none;}
+  .gc-bar-k{height:4px;border-radius:3px;background:color-mix(in srgb,var(--gc) 13%,var(--line3));overflow:hidden;}
+  .gc-bar-k i{display:block;height:100%;border-radius:3px;background:var(--gc);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+  .gc-bar.low .gc-bar-t b{color:var(--red);}
+  .gc-bar.low .gc-bar-k i{background:var(--red);}
   .gc-foot{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line3);}
   /* Un seul cuivre plein par écran : ici les boutons sont en contour, la couleur porte le sens */
   .gc-go{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--gc);background:var(--card);border:1px solid var(--line2);border-radius:9px;padding:9px 15px;cursor:pointer;transition:border-color .14s cubic-bezier(.2,.7,.2,1),background .14s,transform .14s;}
@@ -2863,7 +2873,10 @@ function dash(){
     else if(n<=3)w=`Vu il y a <b>${jr(n)}</b>. Les détails commencent à s'effacer.`;
     else if(n<=7)w=`Vu il y a <b>${jr(n)}</b>. Il ne reste que les grandes lignes.`;
     else w=`Vu il y a <b>${jr(n)}</b>. Sauve ce qu'il en reste avant qu'il n'y ait plus rien.`;
+    // La mémoire s'efface d'environ douze points par jour, plancher à quinze
+    const frais=Math.max(.15,1-n*0.12);
     acts.push({min:2,cls:'raconter',ic:'mem',k:'Récit à capturer',lbl:'Raconter',when:n<=0?"auj.":n===1?'hier':n+' j',
+      bar:{v:frais,l:'détails encore en mémoire'},
       t:trunc(b.entreprise||'Ce rendez-vous',24), w, d:(b.deal_id?deals.find(x=>x.id===b.deal_id):null)||{entreprise:b.entreprise,entreprise_data:b.entreprise_data},
       fn:()=>{current=b;openBrief(b);setTimeout(()=>{if(typeof openRaconter==='function')openRaconter(false);},220);}});
   });
@@ -2881,6 +2894,7 @@ function dash(){
     acts.push({min:5,cls:'relancer',ic:'mail',k:'Relance à écrire',lbl:'Écrire la relance',when:n+' j',t:trunc(d.entreprise,24),
       w:chaud?`Chaude, mais silencieuse depuis <b>${jr(n)}</b>. Faro a déjà l'angle, il ne reste qu'à envoyer.`
              :`Tiède et sans nouvelle depuis <b>${jr(n)}</b>. Il faut une vraie raison de revenir, Faro en a une.`,d,
+      bar:{v:Math.max(.08,1-n/30),l:'chaleur restante'},
       fn:()=>{const lb=dealBriefs(d).find(x=>x.debrief);if(lb){current=lb;openRecap('relance');}else openFiche(d);}});
   });
   // Un brief préparé où tu n'es jamais allé : une fuite en amont de la boucle
@@ -2891,6 +2905,7 @@ function dash(){
     acts.push({min:1,cls:'prepare',ic:'doc',k:'Brief jamais joué',lbl:"J'y vais",when:n+' j',
       t:trunc(b.entreprise||'Ce brief',24),
       w:`Préparé il y a <b>${jr(n)}</b>, jamais utilisé. ${n>=14?'Ses données ont vieilli, relis-le avant d\'y aller.':'Il t\'attend encore.'}`,
+      bar:{v:Math.max(.1,1-n/21),l:'fraîcheur de ses données'},
       d:(b.deal_id?deals.find(x=>x.id===b.deal_id):null)||{entreprise:b.entreprise,entreprise_data:b.entreprise_data},
       fn:()=>{current=b;openBrief(b);}});
   });
@@ -2909,6 +2924,7 @@ function dash(){
     .sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
   if(dorm)acts.push({min:5,cls:'reveiller',ic:'snow',k:'Affaire qui dort',lbl:'La réveiller',when:days(dorm.updated_at)+' j',t:trunc(dorm.entreprise,24),
     w:`En <b>${stg(dorm.etape).l.toLowerCase()}</b> depuis <b>${jr(days(dorm.updated_at))}</b> sans un mouvement.`,d:dorm,
+    bar:{v:Math.max(.06,1-days(dorm.updated_at)/45),l:'avant qu\'elle soit perdue'},
     fn:()=>openFiche(dorm)});
   // Une affaire sans montant, quelle que soit sa température : Faro ne peut rien prévoir
   actifs.filter(d=>!dealVal(d)&&dealBriefs(d).some(b=>b.debrief)&&!froids.includes(d)).slice(0,1).forEach(d=>{
@@ -2920,6 +2936,7 @@ function dash(){
   const mort=actifs.filter(d=>days(d.updated_at)>=45).sort((a,b)=>days(b.updated_at)-days(a.updated_at))[0];
   if(mort)acts.push({min:1,cls:'trancher',ic:'flag',k:'À trancher',lbl:'Clore ou réveiller',when:days(mort.updated_at)+' j',t:trunc(mort.entreprise,24),
     w:`<b>${jr(days(mort.updated_at))}</b> sans un mouvement. Faro te propose de la clore, mais c'est toi qui décides.`,d:mort,
+    bar:{v:.04,l:'ce qu\'il en reste'},
     fn:()=>openFiche(mort)});
   if(acts.length<3)acts.push({min:1,cls:'preparer',ic:'plus',k:'Rien en attente',lbl:'Préparer un rendez-vous',when:'à venir',t:'Ton prochain rendez-vous',
     w:'Deux clics, et Faro t\'arme des données du marché et de ta mémoire client.',
@@ -3040,6 +3057,7 @@ function dash(){
                     <div class="gc-k">${esc(a.k||'')}</div>
                     <div class="gc-t">${esc(a.t)}</div>
                     <div class="gc-w">${a.w}</div>
+                    ${a.bar?`<div class="gc-bar ${a.bar.v<=.35?'low':''}"><div class="gc-bar-t"><span>${esc(a.bar.l)}</span><b>${Math.round(a.bar.v*100)}%</b></div><div class="gc-bar-k"><i data-w="${a.bar.v}"></i></div></div>`:''}
                     <div class="gc-foot"><button class="gc-go" data-actb="${i}">${a.lbl}${ARW}</button><span class="gc-hint">${a.min} min</span></div>
                   </div>
                 </div>
@@ -3055,6 +3073,11 @@ function dash(){
       </div>
     </div>`;
     // La carte entière est cliquable, le lien montre juste où l'on va
+    // Les barres se remplissent une fois la carte posée
+    w.querySelectorAll('.gc-bar-k i').forEach((el,i)=>{
+      const v=+el.dataset.w;
+      setTimeout(()=>{el.style.width=Math.max(3,v*100)+'%';},180+i*90);
+    });
     // Le carrousel : flèches, fondu à droite, et l'état des bornes
     const cw=$('dayCw'), cards=$('dayCards');
     if(cards){
