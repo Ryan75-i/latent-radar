@@ -42,9 +42,10 @@
   .sk{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--line3) 25%,#F6F1E4 50%,var(--line3) 75%);background-size:760px 100%;animation:shimmer 1.3s linear infinite;}
 
   /* ═══ Shell : sidebar + main ═══ */
-  .shell{display:block;min-height:100vh;}
+  /* Aucun nombre magique : la coque se répartit, elle ne se calcule pas */
+  .shell{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
   /* ══ Barre haute : les domaines. Sous-barre : ce qu'ils contiennent ══ */
-  .hdr{position:sticky;top:0;z-index:30;background:rgba(247,247,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line3);}
+  .hdr{flex-shrink:0;position:relative;z-index:30;background:rgba(247,247,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line3);}
   .hdr-1{display:flex;align-items:center;gap:20px;padding:0 24px;height:56px;max-width:1620px;margin:0 auto;}
   .hdr-logo svg{height:30px;width:auto;display:block;}
   .hdr-nav{display:flex;align-items:center;gap:2px;flex:1;min-width:0;}
@@ -84,10 +85,10 @@
   .toi-trame{position:absolute;top:auto;bottom:-90px;left:-120px;right:auto;width:820px;transform:scaleX(-1) rotate(6deg);transform-origin:bottom left;opacity:0;transition:opacity 1.1s ease .2s;}
   .toi-trame.lit{opacity:1;}
   .toi-hero,.toi-2{position:relative;z-index:1;}
-  .toi-hero{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:end;padding:4px 0 22px;}
-  .toi-p{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.18;letter-spacing:-.6px;color:var(--ink);max-width:32ch;}
+  .toi-hero{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;padding:0 0 18px;flex-shrink:0;}
+  .toi-p{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2;letter-spacing:-.5px;color:var(--ink);max-width:38ch;}
   .toi-p em{font-style:normal;color:var(--copper);}
-  .toi-sub{font-size:13.5px;color:var(--faint);margin-top:10px;line-height:1.5;max-width:46ch;}
+  .toi-sub{font-size:13px;color:var(--faint);margin-top:8px;line-height:1.5;max-width:54ch;}
   /* Le compteur de matière, discret, en tête à droite */
   .toi-jauge{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;}
   .toi-jn{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1;color:var(--ink);}
@@ -97,15 +98,15 @@
   .toi-jb i{width:12px;height:4px;border-radius:2px;background:var(--line2);}
   .toi-jb i.on{background:var(--copper);}
   /* Deux colonnes de cartes */
-  .toi-2{display:grid;grid-template-columns:1.12fr 1fr;gap:14px;align-items:start;}
+  .toi-2{display:grid;grid-template-columns:1.12fr 1fr;gap:14px;align-items:start;flex:1;min-height:0;}
   .tc{background:var(--card);border:1px solid var(--line);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden;margin-bottom:14px;}
   .tc:last-child{margin-bottom:0;}
   .tc-h{display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;border-bottom:1px solid var(--line3);}
   .tc-h .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);font-weight:600;}
   .tc-h .d{font-size:11.5px;color:var(--faint);margin-left:auto;white-space:nowrap;}
-  .tc-b{padding:6px 18px 14px;}
+  .tc-b{padding:4px 18px 12px;}
   /* Un constat : sa nature en filet, sa phrase, sa preuve */
-  .ob{display:grid;grid-template-columns:3px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line3);}
+  .ob{display:grid;grid-template-columns:3px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line3);}
   .ob:first-child{border-top:none;}
   .ob::before{content:"";background:var(--oc);border-radius:2px;}
   .ob-t{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.28;letter-spacing:-.2px;color:var(--ink);}
@@ -129,7 +130,7 @@
   .tp-v b{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink);}
   .tp-v.thin{color:var(--faint);}
   /* Ce que tu dis à Faro */
-  .st-f textarea{width:100%;height:88px;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:14px;line-height:1.5;color:var(--ink);background:var(--card);outline:none;resize:none;transition:.15s;}
+  .st-f textarea{width:100%;height:76px;border:1.5px solid var(--line2);border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:14px;line-height:1.5;color:var(--ink);background:var(--card);outline:none;resize:none;transition:.15s;}
   .st-f textarea:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(201,106,46,.09);}
   .st-f textarea::placeholder{color:var(--faint);font-family:var(--sans);font-size:13px;}
   .st-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
@@ -140,7 +141,7 @@
   .toi-note{font-size:11px;color:var(--faint);line-height:1.45;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line2);}
   @media(max-width:980px){.toi-2{grid-template-columns:1fr;}.toi-hero{grid-template-columns:1fr;gap:16px;}.toi-jauge{align-items:flex-start;}#v-toi{overflow:visible;}}
   /* ══ Ta semaine : une jauge, un chiffre, une phrase ══ */
-  .sw{min-height:calc(100vh - 156px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 0 30px;}
+  .sw{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 0 20px;}
   .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:26px;}
   .sw-b i{width:6px;height:6px;border-radius:50%;background:var(--copper);animation:swPulse 2.2s ease-in-out infinite;}
   @keyframes swPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
@@ -189,7 +190,7 @@
   .iconbtn svg{width:14px;height:14px;stroke-width:2;}
 
   /* La coque tient dans l'écran : 56 de barre haute, 40 de sous-barre */
-  .main{min-width:0;display:flex;flex-direction:column;height:calc(100vh - 96px);overflow:hidden;}
+  .main{min-width:0;display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;}
   .crumb{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;}
   .crumb .sep{color:var(--faint);font-weight:400;}
   .tsp{flex:1;}
@@ -210,10 +211,13 @@
   .view.on>.ptitle,.view.on>.aff-tools,.view.on>.pilot,.view.on>.hint{flex-shrink:0;}
   /* Une vue entière peut défiler quand son contenu est un formulaire long */
   .view.scrollhost.on{overflow-y:auto;overscroll-behavior:contain;padding-right:4px;margin-right:-4px;}
+  .view.scrollhost.on>.ptitle{position:sticky;top:0;z-index:2;background:var(--bg);padding-top:2px;}
   .view.scrollhost.on::-webkit-scrollbar{width:6px;}
   .view.scrollhost.on::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   @media(max-width:900px){
-    .main{height:auto;overflow:visible;}
+    .shell{display:block;height:auto;overflow:visible;}
+    .hdr{position:sticky;top:0;}
+    .main{overflow:visible;}
     .view.on{display:block;}
     .scrollz{overflow:visible;}
   }
