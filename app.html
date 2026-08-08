@@ -77,6 +77,38 @@
   .hdr-av{width:30px;height:30px;border-radius:8px;overflow:hidden;border:none;cursor:pointer;background:var(--copper);color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .hdr-av img{width:100%;height:100%;object-fit:cover;}
   .hdr-tok{font-family:var(--mono);font-size:10.5px;color:var(--copper-d);background:var(--washc);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  /* ══ Ta semaine : la matière s'accumule sous tes yeux ══ */
+  .sw{display:grid;grid-template-columns:1fr 300px;gap:52px;align-items:center;padding:26px 0 34px;max-width:1000px;}
+  .sw-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:18px;}
+  .sw-b i{width:6px;height:6px;border-radius:50%;background:var(--copper);animation:swPulse 2.2s ease-in-out infinite;}
+  @keyframes swPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
+  .sw-t{font-family:var(--serif);font-weight:500;font-size:35px;line-height:1.12;letter-spacing:-.8px;color:var(--ink);margin-bottom:12px;}
+  .sw-s{font-size:15px;color:var(--dim);line-height:1.55;max-width:44ch;margin-bottom:26px;}
+  /* Les deux jauges de matière */
+  .sw-g{margin-bottom:16px;max-width:420px;}
+  .sw-gt{display:flex;align-items:baseline;gap:10px;font-size:13px;color:var(--soft);margin-bottom:7px;}
+  .sw-gt b{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--ink);}
+  .sw-gt span{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--faint);}
+  .sw-gk{height:5px;border-radius:3px;background:var(--line3);overflow:hidden;}
+  .sw-gk i{display:block;height:100%;border-radius:3px;background:var(--copper);width:0;transition:width 1.1s cubic-bezier(.2,.7,.2,1);}
+  .sw-gk.ok i{background:var(--green);}
+  .sw-when{font-size:14px;color:var(--soft);line-height:1.55;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);max-width:44ch;}
+  .sw-when b{color:var(--ink);font-weight:600;}
+  .sw-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:26px 0 10px;}
+  .sw-l{display:flex;gap:11px;font-size:13.5px;color:var(--dim);line-height:1.5;padding:8px 0;border-top:1px solid var(--line3);max-width:52ch;}
+  .sw-l::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--copper-l);margin-top:8px;flex-shrink:0;}
+  .sw-l b{color:var(--soft);font-weight:600;}
+  /* Le phare en construction : ce qui est capté est plein, le reste attend */
+  .sw-viz{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .sw-viz svg{width:260px;height:260px;display:block;overflow:visible;}
+  .sw-core{animation:swCore 2.6s ease-in-out infinite;transform-origin:48px 120px;}
+  @keyframes swCore{0%,100%{opacity:1;}50%{opacity:.55;}}
+  .sw-arc-w{stroke:var(--line2);stroke-dasharray:3 7;animation:swMarch 5s linear infinite;}
+  @keyframes swMarch{to{stroke-dashoffset:-50;}}
+  .sw-arc-f{stroke:var(--copper);stroke-dasharray:0 999;transition:stroke-dasharray 1.3s cubic-bezier(.2,.7,.2,1) .3s;}
+  .sw-cap{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);text-align:center;}
+  .sw-cap b{display:block;font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);margin-bottom:4px;}
+  @media(max-width:900px){.sw{grid-template-columns:1fr;gap:28px;}.sw-viz{align-items:flex-start;}.sw-viz svg{width:200px;height:200px;}.sw-t{font-size:28px;}}
   /* L'écran d'une page qui n'existe pas encore : honnête, jamais mort */
   .soon-p{display:flex;flex-direction:column;align-items:flex-start;padding:26px 0 40px;max-width:560px;}
   .soon-b{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-d);background:var(--washc);border:1px solid var(--copper-l);border-radius:20px;padding:4px 12px;margin-bottom:20px;}
@@ -2660,7 +2692,7 @@ const NAVPRIM={dash:'dash',rdv:'prep',affaires:'affaires',memoire:'entreprises',
 const SOON={
   chasse:{g:'chasse',t:'La chasse',d:"Aujourd'hui tu prépares les rendez-vous que tu as déjà. Demain, Faro te dira qui démarcher avant tes concurrents.",l:["Les entreprises de ta cible qui viennent de lever, de recruter ou de changer de dirigeant.","Un score de timing : trop tôt, maintenant, trop tard.","Un brief prêt à générer sur chaque compte détecté."],w:"Après la bêta, si les premiers utilisateurs la réclament."},
   signaux:{g:'chasse',t:'Les signaux du marché',d:"Les mouvements de ton secteur, filtrés pour toi, avec l'angle commercial qui va avec.",l:["Recrutements, levées, annonces légales, marques déposées.","Filtrés sur ta cible type, pas sur toute la France.","Chaque signal devient une raison d'appeler."],w:"Après le branchement des sources publiques."},
-  semaine:{g:'dash',t:'Ta semaine',d:"Aujourd'hui te dit quoi faire maintenant. Ta semaine te dira où tu vas.",l:["Ton rythme de préparation et de récits, semaine après semaine.","Ce que tu as gagné, perdu, et pourquoi.","Le taux de bouclage de ta boucle dans le temps."],w:"Quand tu auras assez de rendez-vous pour que la courbe dise quelque chose."},
+  semaine:{g:'dash',t:'Ta semaine',d:"Aujourd'hui te dit quoi faire maintenant. Ta semaine te dira si tu progresses.",l:["L'écart entre le prévu et le vécu, et s'il se resserre.","Les objections qui ne te surprennent plus.","Ton premier rendez-vous chez un client, comparé au troisième."],w:"Quand Faro aura assez de rendez-vous vécus pour que la comparaison dise quelque chose."},
   modeles:{g:'rdv',t:'Tes modèles de brief',d:"Tes rendez-vous se ressemblent souvent. Faro apprendra tes structures préférées.",l:["Enregistrer une trame qui marche pour un type d'interlocuteur.","Réutiliser tes meilleures ouvertures et tes ripostes qui débloquent.","Partager une trame si tu travailles à plusieurs."],w:"Après la bêta."},
   simulateur:{g:'rdv',t:'Le simulateur de rendez-vous',d:"Faro joue ton prospect et te fait répéter avant d'y aller pour de vrai.",l:["Il objecte comme un DAF, un DSI ou un acheteur.","Il te dit ce que tu as esquivé et ce que tu n'as pas obtenu.","Tu t'entraînes trois minutes, tu entres armé."],w:"C'est l'idée la plus ambitieuse de la liste. Elle attend que le socle soit solide."},
   contrebrief:{g:'rdv',t:'Le contre-brief',d:"Le rendez-vous vu depuis le siège de l'acheteur. Ce qu'il prépare contre toi.",l:["Ce qu'il va comparer, et à qui.","Les questions qu'il te posera pour te faire baisser ton prix.","Ce qui le ferait dire non, avant qu'il le dise."],w:"Après la bêta."},
@@ -2671,8 +2703,76 @@ const SOON={
   connexions:{g:'config',t:'Tes connexions',d:"Les sources que Faro interroge pour armer tes briefs.",l:["Offres d'emploi, annonces légales, site web du prospect.","Ton agenda, pour te rappeler de préparer avant d'y aller.","Ton CRM, si tu en as un, en lecture seule."],w:"Les premières sources arrivent en priorité, elles ne coûtent rien."},
   equipe:{g:'config',t:'Ton équipe',d:"Faro est pensé pour un commercial seul. Il pourra en accueillir plusieurs.",l:["Partager une mémoire client entre commerciaux.","Voir ce qui marche chez les autres, sans surveillance.","Un compte par personne, une mémoire commune."],w:"Bien plus tard, et seulement si des équipes le demandent."}
 };
+// Ta semaine ne fait pas semblant : elle montre la matière s'accumuler
+function renderSemaine(){
+  const REC_CIBLE=15, SEM_CIBLE=4;
+  const nr=briefs.filter(b=>b.debrief).length;
+  const first=briefs.length?briefs.reduce((a,b)=>new Date(a.created_at)<new Date(b.created_at)?a:b):null;
+  const sem=first?Math.max(0,Math.floor(days(first.created_at)/7)):0;
+  const pRec=Math.min(1,nr/REC_CIBLE), pSem=Math.min(1,sem/SEM_CIBLE);
+  const rythme=sem>=1?nr/sem:nr;
+  // La date estimée sort de ton rythme réel, pas d'une promesse
+  let quand;
+  if(pRec>=1&&pSem>=1)quand=`Faro a la matière qu'il lui faut. <b>Ta semaine s'ouvre au prochain lundi.</b>`;
+  else if(!rythme)quand=`Faro attend tes récits. <b>Raconte tes rendez-vous</b> et cette page se remplira toute seule.`;
+  else{
+    const semRec=Math.ceil(Math.max(0,REC_CIBLE-nr)/Math.max(.35,rythme));
+    const semTot=Math.max(semRec,SEM_CIBLE-sem);
+    const ryth=(Math.round(rythme*10)/10).toString().replace('.',',');
+    if(semTot>13){
+      // Au-delà d'un trimestre, une date précise serait une fausse promesse
+      quand=`À ton rythme actuel, <b>${ryth} récit${rythme>=2?'s':''} par semaine</b>, il faudrait encore plusieurs mois. Raconte plus souvent et cette date se rapprochera vite.`;
+    } else {
+      const d=new Date(Date.now()+semTot*7*864e5);
+      const mss=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      quand=`À ton rythme actuel, <b>${ryth} récit${rythme>=2?'s':''} par semaine</b>, Ta semaine s'ouvrira vers le <b>${d.getDate()} ${mss[d.getMonth()]}</b>.`;
+    }
+  }
+  // Le phare se construit : l'arc plein est ce qui est capté
+  const AR=[['M63 94 A30 30 0 0 1 63 146',7,62.8],['M75 73.2 A54 54 0 0 1 75 166.8',6,113.1],
+            ['M87 52.4 A78 78 0 0 1 87 187.6',5,163.4],['M99 31.7 A102 102 0 0 1 99 208.3',4,213.6]];
+  const glob=(pRec+pSem)/2;
+  return `<div class="sw">
+    <div>
+      <span class="sw-b"><i></i>En construction</span>
+      <div class="sw-t">Ta semaine</div>
+      <div class="sw-s">Aujourd'hui te dit quoi faire maintenant. Ta semaine te dira <b>si tu progresses</b>. Pour ça, Faro a besoin d'assez de rendez-vous vécus pour que la comparaison veuille dire quelque chose.</div>
+      <div class="sw-g"><div class="sw-gt"><b>${nr}</b> récit${nr>1?'s':''} captés<span>sur ${REC_CIBLE}</span></div><div class="sw-gk ${pRec>=1?'ok':''}"><i data-w="${pRec.toFixed(3)}"></i></div></div>
+      <div class="sw-g"><div class="sw-gt"><b>${sem}</b> semaine${sem>1?'s':''} d'usage<span>sur ${SEM_CIBLE}</span></div><div class="sw-gk ${pSem>=1?'ok':''}"><i data-w="${pSem.toFixed(3)}"></i></div></div>
+      <div class="sw-when">${quand}</div>
+      <div class="sw-k">Ce qu'elle te montrera</div>
+      <div class="sw-l">L'écart entre ce que tu avais prévu et ce qui s'est dit, et <b>s'il se resserre</b> semaine après semaine.</div>
+      <div class="sw-l">Les objections qui <b>ne te surprennent plus</b>, parce que ton brief les avait vues venir.</div>
+      <div class="sw-l">Ton premier rendez-vous chez un client, <b>comparé au troisième</b>. Ce que tu savais en entrant, ce que tu as obtenu en sortant.</div>
+    </div>
+    <div class="sw-viz">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Faro capte la matière : ${Math.round(glob*100)} pour cent">
+        <circle class="sw-core" cx="48" cy="120" r="11" fill="var(--copper)"></circle>
+        <g fill="none" stroke-linecap="round">
+          ${AR.map(([d,sw,len])=>`<path class="sw-arc-w" d="${d}" stroke-width="${sw*0.55}"></path>`).join('')}
+          ${AR.map(([d,sw,len])=>`<path class="sw-arc-f" d="${d}" stroke-width="${sw}" data-len="${len}"></path>`).join('')}
+        </g>
+      </svg>
+      <div class="sw-cap"><b>${Math.round(glob*100)}%</b>de la matière captée</div>
+    </div>
+  </div>`;
+}
 function openSoon(k){
   const it=SOON[k]; if(!it)return;
+  if(k==='semaine'){
+    $('soonW').innerHTML=renderSemaine();
+    document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-soon'));
+    navSet('dash','semaine');
+    const cr0=$('crumb'); if(cr0)cr0.textContent='Ta semaine';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      $('soonW').querySelectorAll('.sw-gk i').forEach(el=>{el.style.width=Math.max(2,(+el.dataset.w)*100)+'%';});
+      const g=[...$('soonW').querySelectorAll('.sw-arc-f')];
+      const pr=parseFloat(($('soonW').querySelector('.sw-cap b')||{}).textContent)/100||0;
+      g.forEach((el,i)=>{const L=+el.dataset.len;setTimeout(()=>{el.style.strokeDasharray=(L*pr).toFixed(1)+' 999';},120*i);});
+    }));
+    window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+    return;
+  }
   $('soonW').innerHTML=`<div class="soon-p">
     <span class="soon-b">Bientôt</span>
     <div class="soon-t">${esc(it.t)}</div>
